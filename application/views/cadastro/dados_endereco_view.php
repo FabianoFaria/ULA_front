@@ -246,11 +246,14 @@ $().ready(function() {
 					foreach ($estados as $estado): {
 									    		
 						// $arrayE[] = $estado->nome;
+					if($estado->id_estado != $id_estado)
+					{
 				?>
 
 					<option value="<?php echo $estado->id_estado; ?>"><?php echo $estado->nome_estado; ?></option>
 
 				<?php
+					}
 
 					}endforeach;
 
@@ -264,11 +267,20 @@ $().ready(function() {
 					<?php
 						if($id_cidade != null)
 						{
-					?>
-						<option value="<?php echo $id_cidade; ?>"><?php echo $cidade ?></option>
-					<?php
 
-						}else{
+					?>
+						<option selected="true" value="<?php echo $id_cidade; ?>"><?php echo $cidade ?></option>
+
+					<?php
+						foreach ($cidadesSingle as $city) {
+							if($city->id != $id_cidade){
+					?>
+							<option value="<?php  echo $city->id ?>"><?php  echo $city->nome ?></option>
+					<?php
+							}//fim do if para cidades iguais...
+						}//fim do foreach das cidades do estado carregado
+
+						}else{ //fim do if do id cidade != null
 					?>
 						<option value="">Selecione uma cidade:</option>
 					<?php

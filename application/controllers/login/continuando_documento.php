@@ -52,6 +52,7 @@ class Continuando_documento extends CI_Controller {
         $data['cidades'] = $this->documentoModel->load_cidades();
         $data['estadoAdr'] = null;
         $data['cidadeAdr'] = null;
+        $data['cidadesSingle'] = null;
 
         $data['endereco'] = $this->Cont_doct->load_endereco($idRow);
         //Estrutura para tornar o endereço optativo
@@ -60,6 +61,10 @@ class Continuando_documento extends CI_Controller {
             if($data['endereco'][0]->state != null)
             {
                 $data['estadoAdr'] = $this->DetalhesModel->load_Addr_estado($data['endereco'][0]->state);
+                $data['cidadesSingle'] = $this->documentoModel->load_city_estado($data['endereco'][0]->state);
+
+                //var_dump($data['cidades']);
+                //die;
             }else
             {
                 $data['estadoAdr'] = null;
@@ -67,7 +72,7 @@ class Continuando_documento extends CI_Controller {
 
             if($data['endereco'][0]->city != null)
             {
-             $data['cidadeAdr'] = $this->DetalhesModel->load_Addr_city($data['endereco'][0]->state);
+             $data['cidadeAdr'] = $this->DetalhesModel->load_Addr_city($data['endereco'][0]->city);
             }else
             {
                 $data['cidadeAdr'] = null;

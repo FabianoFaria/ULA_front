@@ -98,6 +98,13 @@ class Novo_documento_model extends CI_Model {
         $query = $this->db->get('tbl_cidades');
         return $query->result();
     }
+    function load_city_estado($id_estado)
+    {
+        $this->db->select('*');
+        $this->db->where('estado', $id_estado);
+        $cidades = $this->db->get('tbl_cidades');
+        return $cidades->result();
+    }
 
     function load_cidades_ajx($id) /* sem o id do estado ainda*/
     {

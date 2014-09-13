@@ -34,7 +34,7 @@ class Detalhes_documento extends CI_Controller {
 
             if($data['endereco'][0]->city != "")
             {
-             $data['cidadeAdr'] = $this->DetalhesModel->load_Addr_city($data['endereco'][0]->state);
+             $data['cidadeAdr'] = $this->DetalhesModel->load_Addr_city($data['endereco'][0]->city);
             }else
             {
                 $data['cidadeAdr'] = null;
