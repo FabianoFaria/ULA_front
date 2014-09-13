@@ -1,0 +1,171 @@
+/*
+
+Sistema de apreenção
+
+Autor : Fabiano Faria Hatori
+
+Folha de estilo 
+
+*/
+
+
+
+/*header*/
+
+hr 
+{
+	size: 3px;
+}
+/* div do header do titulo  */
+.box_header
+{
+	background-color: #cccccc;
+	height: 120px;
+}
+
+/* div do usuario  */
+
+.box_user
+{
+	background-color: #cccccc !important;
+	border-radius: 0px !important;
+	border:  0px #cccccc !important;
+	height: 120px;
+}
+.navbar-inverse .navbar-nav > li > a
+{
+	color: #000000 !important;
+}
+
+.box_user h2 
+{
+	color: #000000;
+}
+
+.box_user h4 
+{
+	text-align: center;
+}
+
+
+/* main-menu */
+.main-menu
+{
+	min-height: 450px;
+}
+
+
+
+
+/*footer*/
+
+.footer_box
+{
+	background-color: #cccccc;
+	bottom: 0;
+	height: 100px;
+}
+.footer_box p
+{
+	text-align: center;
+	margin: 0 auto;
+	padding-top: 35px; 
+}
+
+/* misc */
+
+.sem_margin
+{
+	margin-right: 0px !important;
+	margin-left: 0px !important;
+}
+.sem_padding
+{
+	padding-left: 0px !important;
+	padding-right: 0px !important;
+}
+
+/* Tableas */
+
+.detalhesIPL 
+{ 
+	border-collapse: collapse;
+}
+
+th
+{
+	background-color: #f2f3f3;
+	border:  2px solid #edefef;
+	color: #000000;
+	height: 35px;
+	min-width: 200px;
+	padding: 15px;
+
+}
+
+td {
+    
+    border: 1px solid #edefef;
+    margin: 15px;
+    padding: 10px !important;
+}
+
+.endereco_Doct
+{
+	min-width: 150px;
+}
+
+.endereco_Doct th
+{
+	min-width: 120px;
+}
+.automoveis_list th
+{
+	min-width: 120px;
+}
+
+.mercadorias_list th
+{
+	min-width: 120px;
+}
+
+/***** classe imagem */
+
+.list_img
+{
+	height: 125px;
+	width: 250px;
+}
+
+/***  CSS data picker ****/
+
+#ui-datepicker-div
+{
+
+}
+
+.ui-datepicker 
+{
+    display: none;
+    width : 290px!important;
+ }
+
+.ui-datepicker-calendar th
+{
+	min-width: 40px;
+}
+
+.ui-datepicker-calendar tr td
+{
+	padding: 0 !important;
+}
+
+.ui-datepicker-month, .ui-datepicker-month option
+{
+	color: #000000;
+}
+
+.ui-datepicker-year, .ui-datepicker-year option
+{
+	color: #000000;
+}
