@@ -168,6 +168,7 @@ class Atualizar_documento_model extends CI_Model {
             'father' => $data['father'],
             'mother' => $data['mother'],
             'birth_dt' => $data['birth_dt'],
+            'endereco_contato' => $data['endereco_contato'],
             'birth_city' => $data['birth_city'],
             'birth_state' => $data['birth_state'],
             'birth_country' => $data['birth_country'],
@@ -178,9 +179,12 @@ class Atualizar_documento_model extends CI_Model {
             'IMEI' => $data['IMEI'],
             'operadora' => $data['operadora'],
             
-            'UPDATE_BY' => $data['UPDATED_BY'],
+            'UPDATE_BY' => $data['UPDATE_BY'],
             'LAST_UPDATE' => $data['LAST_UPDATE']        
             );
+
+        //var_dump($contact);
+        //die;
 
         $this->db->where('ID_contact', $id_contact);
         $this->db->update('tbl_contact', $contact);

@@ -1,4 +1,11 @@
 <?php
+
+// "Deixei o vaso se partir... só me resta saber quanto ouro precisarei para preencher suas rachaduras... e seguir adiante..."
+// https://www.youtube.com/watch?v=NLzpXciijjA
+// Foi tão rápido quando um sonho... mas foi tão intenso quanto uma tempestade... assim é a vida, algumas coisas só duram o suficiente para serem memoráveis...
+ 
+
+
 class Detalhes_documento_model extends CI_Model {
 
     function __construct() {
@@ -54,11 +61,11 @@ class Detalhes_documento_model extends CI_Model {
     public function load_Auto($idRow)
     {   
         $this->db->select('tbl_vehicle.ID_vehicle, tbl_vehicle.ROW_ID, tbl_vehicle.category, tbl_vehicle.model, tbl_vehicle.brand, tbl_vehicle.chassi, tbl_vehicle.renavan, tbl_vehicle.placa, tbl_estados.nome_estado as nome_estado, tbl_cidades.nome as cidade_nome, tbl_modelos.mode_nome, tbl_marcas.marc_nome, tbl_tipo_veiculo.tpve_nome');
-        $this->db->join('tbl_estados', 'tbl_estados.id_estado = tbl_vehicle.state');
-        $this->db->join('tbl_cidades', 'tbl_cidades.id = tbl_vehicle.city');
-        $this->db->join('tbl_tipo_veiculo','tbl_tipo_veiculo.tpve_cod = tbl_vehicle.category');
-        $this->db->join('tbl_marcas','tbl_marcas.marc_cod = tbl_vehicle.brand');
-        $this->db->join('tbl_modelos','tbl_modelos.mode_cod = tbl_vehicle.model');
+        $this->db->join('tbl_estados', 'tbl_estados.id_estado = tbl_vehicle.state', 'left');
+        $this->db->join('tbl_cidades', 'tbl_cidades.id = tbl_vehicle.city', 'left');
+        $this->db->join('tbl_tipo_veiculo','tbl_tipo_veiculo.tpve_cod = tbl_vehicle.category', 'left');
+        $this->db->join('tbl_marcas','tbl_marcas.marc_cod = tbl_vehicle.brand', 'left');
+        $this->db->join('tbl_modelos','tbl_modelos.mode_cod = tbl_vehicle.model', 'left');
     	$this->db->where('tbl_vehicle.ROW_ID', $idRow);
         $automoveis = $this->db->get('tbl_vehicle');
 
@@ -113,8 +120,8 @@ class Detalhes_documento_model extends CI_Model {
         $this->db->join('tbl_tipo_veiculo','tbl_tipo_veiculo.tpve_cod = tbl_vehicle.category');
         $this->db->join('tbl_marcas','tbl_marcas.marc_cod = tbl_vehicle.brand');
         $this->db->join('tbl_modelos','tbl_modelos.mode_cod = tbl_vehicle.model');
-        $this->db->join('tbl_cidades','tbl_cidades.id = tbl_vehicle.city');
-        $this->db->join('tbl_estados','tbl_estados.id_estado = tbl_vehicle.state');
+        //$this->db->join('tbl_cidades','tbl_cidades.id = tbl_vehicle.city');
+        //$this->db->join('tbl_estados','tbl_estados.id_estado = tbl_vehicle.state');
         $auto = $this->db->get_where('tbl_vehicle', array('ID_vehicle' => $id_auto));
         return $auto->result();
     }
@@ -133,8 +140,8 @@ class Detalhes_documento_model extends CI_Model {
     public function load_single_contato($id_Contato)
     {
         $this->db->join('tbl_pais','tbl_pais.Id_pais = tbl_contact.birth_country');
-        $this->db->join('tbl_estados','tbl_estados.id_estado = tbl_contact.birth_state');
-        $this->db->join('tbl_cidades','tbl_cidades.id = tbl_contact.birth_city');
+       // $this->db->join('tbl_estados','tbl_estados.id_estado = tbl_contact.birth_state');
+       // $this->db->join('tbl_cidades','tbl_cidades.id = tbl_contact.birth_city');
         $haul = $this->db->get_where('tbl_contact', array('ID_contact' => $id_Contato));
         return $haul->result();
     }

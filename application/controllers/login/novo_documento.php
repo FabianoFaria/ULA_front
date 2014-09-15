@@ -338,12 +338,13 @@ class Novo_documento extends CI_Controller {
                  $finalDate = date('y-m-d');
             }else
             if(strstr($this->input->post('nascimento'), '/', true)){
+                //var_dump($this->input->post('nascimento'));
                 //echo "/";
                 //die;
 
                 $dataEx = explode("/", $this->input->post('nascimento'));
-                $month = $dataEx[0];
-                $day = $dataEx[1];
+                $month = $dataEx[1];
+                $day = $dataEx[0];
                 $year = $dataEx[2];
                 $finalDate = $year."-".$month."-".$day;
             }else
@@ -351,6 +352,9 @@ class Novo_documento extends CI_Controller {
             {
                 $finalDate = $this->input->post('nascimento');
             }
+
+            //var_dump($finalDate);
+            //die;
 
              $dataEnvolvido['ID_contact'] = $this->input->post('contact_id');
              $dataEnvolvido['ROW_ID'] = $this->input->post('row_id');  
@@ -361,6 +365,7 @@ class Novo_documento extends CI_Controller {
              $dataEnvolvido['father'] = $this->input->post('nome_pai');
              $dataEnvolvido['mother'] = $this->input->post('nome_mae');
              $dataEnvolvido['birth_dt'] = $finalDate;
+             $dataEnvolvido['endereco_contato'] = $this->input->post('endereco_contato');
              $dataEnvolvido['birth_city'] = $this->input->post('cidade_nascimento');
              $dataEnvolvido['birth_state'] = $this->input->post('estado_nascimento');
              $dataEnvolvido['birth_country'] = $this->input->post('pais_nascimento');

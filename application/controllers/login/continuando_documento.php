@@ -115,7 +115,12 @@ class Continuando_documento extends CI_Controller {
         $data['estados'] = $this->documentoModel->load_estados();
         $data['cidades'] = $this->documentoModel->load_cidades();
         $data['documento'] = $this->Cont_doct->load_doct($idRow);
-        $data['endereco'] = $this->Cont_doct->load_endereco($idRow);
+       // $data['endereco'] = $this->Cont_doct->load_endereco($idRow);
+
+        $data['estadoAdr'] = null;
+        $data['cidadeAdr'] = null;
+        $data['cidadesSingle'] = null;
+
 
         $this->load->helper('form');
         $this->load->helper('url');
@@ -132,6 +137,8 @@ class Continuando_documento extends CI_Controller {
         $data['estados'] = $this->documentoModel->load_estados(); 
         $data['cidades'] = $this->documentoModel->load_cidades();
         $data['tipo_veiculos'] = $this->documentoModel->load_tipo_veiculo();
+        $data['cidadeAdr'] = null;
+        $data['estadoAdr'] = null;
 
 
         $this->load->helper('form');

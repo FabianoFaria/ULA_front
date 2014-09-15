@@ -34,6 +34,8 @@
 		//die;
 
 
+
+
 		if(($unidade_seguranca) != null )
 		{
 			$unidade_de_segurança = $unidade_seguranca[0]->forca_seguranca;
@@ -224,7 +226,7 @@
 				<th>Ações</th><th>Nome do envolvido</th><th>RG</th><th>CPF</th><th>Data de nascimento</th><th>Mâe do envolvido</th><th>Pai do envolvido</th>
 			</tr>
 
-		<?php  
+		<?php
 		foreach ($envolvidos as $envol) {
 			$IdEnvol = $envol->ID_contact;
 			$nomeEnvolvido = $envol->name;
@@ -261,7 +263,7 @@
 				<td><?php echo $nomeEnvolvido; ?></td>
 				<td><?php echo $RGEnvol; ?></td>
 				<td><?php echo $CPFEnvol; ?></td>
-				<td><?php echo $dataT; ?></td>
+				<td><?php echo $dataT;?></td>
 				<td><?php echo $motherEnvol; ?></td>
 				<td><?php echo $paiEnvol; ?></td>
 			</tr> 
@@ -292,9 +294,10 @@
 
 		<table class="table automoveis_list table-striped">
 			<tr>
-				<th>Ações</th><th>Veículo</th><th>Marca</th><th>Modelo</th><th>Chassi</th><th>Renavam</th><th>Placa</th><th>Cidade PLaca</th><th>UF Placa</th>
+				<th>Ações</th><th>Veículo</th><th>Modelo</th><th>Marca</th><th>Chassi</th><th>Renavam</th><th>Placa</th><th>Cidade PLaca</th><th>UF Placa</th>
 			</tr>
-		<?php  
+		<?php 
+
 		foreach ($automoveis as $carro) {
 
 			$id_carro = $carro->ID_vehicle;
@@ -326,8 +329,8 @@
 					 ?>
 				</td>
 				<td><?php echo $categoria; ?></td>
-				<td><?php echo $modelo; ?></td>
 				<td><?php echo $marca; ?></td>
+				<td><?php echo $modelo; ?></td>
 				<td><?php echo $chassi; ?></td>
 				<td><?php echo $renavan; ?></td>
 				<td><?php echo $placa; ?></td>

@@ -63,7 +63,6 @@ class Detalhes_documento extends CI_Controller {
 
         //var_dump($data['endereco']);
         //die;
-
         $data['automoveis'] =  $this->DetalhesModel->load_Auto($idRow);
         $data['mercadorias'] =  $this->DetalhesModel->load_Mercadoria($idRow);
         $data['envolvidos'] =  $this->DetalhesModel->load_Contato($idRow);
@@ -94,6 +93,68 @@ class Detalhes_documento extends CI_Controller {
         $data['estados'] = $this->documentoModel->load_estados(); 
         $data['cidades'] = $this->documentoModel->load_cidades();
         $data['tipo_veiculos'] = $this->documentoModel->load_tipo_veiculo();
+
+        $data['cidadeAdr'] = null;
+        $data['estadoAdr'] = null;
+
+        $data['marcasP'] = null;
+        $data['modelosP'] = null;
+
+       
+        /*
+        public 'tpve_cod' => null
+        public 'tpve_nome' => string 'AUTOMÃ“VEL' (length=10)
+        public 'tpve_status' => string '1' (length=1)
+
+        public 'marc_cod' => string '12' (length=2)
+        public 'marc_nome' => string 'BMW' (length=3)
+
+        public 'mode_cod' => string '291' (length=3)
+        public 'mode_status' => string '0' (length=1)
+        public 'mode_nome' => string '2002' (length=4)
+        */
+
+        if(!empty($data['automoveis']))
+        {
+            if($data['automoveis'][0]->category != '')
+            {
+               $data['marcasP'] = $this->documentoModel->load_marcas_veiculo($data['automoveis'][0]->category);
+            }else
+            {
+               $data['marcasP'] = null;
+            }
+
+            if($data['automoveis'][0]->brand != '')
+            {
+               $data['modelosP'] = $this->documentoModel->load_modelos_veiculo($data['automoveis'][0]->brand);
+            }else
+            {
+               $data['modelosP'] = null;
+            }
+
+
+
+            if($data['automoveis'][0]->state != "")
+            {
+                $data['estadoAdr'] = $this->DetalhesModel->load_Addr_estado($data['automoveis'][0]->state);
+                $data['cidadesSingle'] = $this->documentoModel->load_city_estado($data['automoveis'][0]->state);
+            }else
+            {
+                $data['estadoAdr'] = null;
+            }
+
+            if($data['automoveis'][0]->city != "")
+            {
+             $data['cidadeAdr'] = $this->DetalhesModel->load_Addr_city($data['automoveis'][0]->city);
+            }else
+            {
+                $data['cidadeAdr'] = null;
+            }
+        }
+
+
+         //var_dump($data['automoveis']);
+         // die;
 
         //load templates
         $this->load->view('templates/header');
@@ -129,6 +190,67 @@ class Detalhes_documento extends CI_Controller {
         $data['cidades'] = $this->documentoModel->load_cidades();
         $data['endereco'] = $this->Cont_doct->load_endereco($row_id);
         $data['contato'] =  $this->DetalhesModel->load_single_contato($row_contact);
+        $data['cidadeAdr'] = null;
+        $data['estadoAdr'] = null;
+
+        if(!empty($data['contato']))
+        {
+            if($data['contato'][0]->birth_state != "")
+            {
+                $data['estadoAdr'] = $this->DetalhesModel->load_Addr_estado($data['contato'][0]->birth_state);
+                $data['cidadesSingle'] = $this->documentoModel->load_city_estado($data['contato'][0]->birth_state);
+            }else
+            {
+                $data['estadoAdr'] = null;
+            }
+
+            if($data['contato'][0]->birth_city != "")
+            {
+             $data['cidadeAdr'] = $this->DetalhesModel->load_Addr_city($data['contato'][0]->birth_city);
+            }else
+            {
+                $data['cidadeAdr'] = null;
+            }
+        }
+
+
+        //var_dump($data['contato']);
+        //die;
+        /*
+
+            array
+  0 => 
+    object(stdClass)[10015]
+      public 'ID_contact' => string '17' (length=2)
+      public 'ROW_ID' => string '123' (length=3)
+      public 'name' => string 'Individuo Abc' (length=13)
+      public 'CPF' => string '13609613726' (length=11)
+      public 'rg' => string '' (length=0)
+      public 'passport' => string '' (length=0)
+      public 'father' => string '' (length=0)
+      public 'mother' => string '' (length=0)
+      public 'birth_dt' => string '2014-09-14' (length=10)
+      public 'endereco_contato' => string '' (length=0)
+      public 'birth_city' => string '0204' (length=4)
+      public 'birth_state' => string '03' (length=2)
+      public 'birth_country' => string '33' (length=2)
+      public 'ADDR_PR_ID' => null
+      public 'phone_PR_ID' => null
+      public 'UPDATE_BY' => string 'qwe' (length=3)
+      public 'LAST_UPDATE' => string '2014-09-14 15:04:32' (length=19)
+      public 'CREATED_BY' => string 'qwe' (length=3)
+      public 'CREATED' => string '2014-09-14 15:04:32' (length=19)
+      public 'telefone' => string '' (length=0)
+      public 'marca_telefone' => string '' (length=0)
+      public 'modelo_telefone' => string '' (length=0)
+      public 'IMEI' => string '' (length=0)
+      public 'operadora' => string '' (length=0)
+      public 'Id_pais' => string '33' (length=2)
+      public 'nome_pais' => string 'BRASIL' (length=6)
+      public 'country_name' => string 'BRAZIL' (length=6)
+
+        */
+
         $data['documento'] = $this->Cont_doct->load_doct($row_id);
 
         //load templates

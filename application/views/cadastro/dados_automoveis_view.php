@@ -12,10 +12,10 @@ $().ready(function() {
 				required: true
 			},
 			mark_veiculo: {
-				required: true
+				required: false
 			},
 			mod_veiculo: {
-				required: true
+				required: false
 			}
 		},
 		messages: {
@@ -101,12 +101,6 @@ function mostraModelos2(str) {
 
 	<?php
 
-			$arrayE = array();
-			$arrayC = array();
-			$arrayCategoria = array('A','B','C','D');
-			$arrayModelo = array('A','B','C','D');
-			$arrayMarca = array('A','B','C','D');
-
 			foreach ($documento as $doc) {
 				$Ipl = $doc->IPL;
 			}
@@ -123,6 +117,27 @@ function mostraModelos2(str) {
 
 			}endforeach;
 
+		//Os dados dos estados e cidades são carregados separadamente
+		if($cidadeAdr != null)
+		{
+			$nome_cidade = $cidadeAdr[0]->nome;
+			$id_cidade = $cidadeAdr[0]->id;
+		}else
+		{
+			$nome_cidade = "";
+			$id_cidade = "";
+		}
+
+		if($estadoAdr != null)
+		{
+			$nome_estado = $estadoAdr[0]->nome_estado;
+			$id_estado = $estadoAdr[0]->id_estado;
+		}else
+		{
+			$nome_estado = "";
+			$id_estado = "";
+		}
+
 		if($row_Auto != null)
 		{
 
@@ -133,12 +148,12 @@ function mostraModelos2(str) {
 				 $Renavan = $auto->renavan;
 				 $placa = $auto->placa;
 
-				 $id_cidade = $auto->id;
-				 $nome_cidade = $auto->nome;
-				 $id_estado = $auto->id_estado;
-				 $nome_estado = $auto->nome_estado;
+				 //$id_cidade = $auto->id;
+				// $nome_cidade = $auto->nome;
+				// $id_estado = $auto->id_estado;
+				 //$nome_estado = $auto->nome_estado;
 
-				$id_tipo_veiculo = $auto->tpve_cod;
+				$id_tipo_veiculo = $auto->category;
 				$tipo_veiculo = $auto->tpve_nome;
 				$id_marca = $auto->marc_cod;
 				$nome_marca = $auto->marc_nome;
@@ -156,10 +171,10 @@ function mostraModelos2(str) {
 			$Renavan = null;
 			$placa = null;
 				 
-			$id_cidade = null;
-			$nome_cidade = null;
-			$id_estado = null;
-			$nome_estado = null;
+			//$id_cidade = null;
+			//$nome_cidade = null;
+			//$id_estado = null;
+			//$nome_estado = null;
 
 			$id_tipo_veiculo = null;
 			$tipo_veiculo = null;
@@ -210,6 +225,8 @@ function mostraModelos2(str) {
 					<select name="cat_veiculo" onchange="mostraMarcas2(this.value)">
 
 						<?php
+
+						
 							if($tipo_veiculo != null)
 							{
 						?>
@@ -226,9 +243,12 @@ function mostraModelos2(str) {
 						<?php
 							foreach($tipo_veiculos as $tipo_veiculo):
 							{
+								if($id_tipo_veiculo != $tipo_veiculo->tpve_cod)
+								{
 						?>
 							<option value="<?php echo $tipo_veiculo->tpve_cod; ?>"><?php echo $tipo_veiculo->tpve_nome; ?></option>
 						<?php
+								}
 							}endforeach;
 						?>
 					</select>
@@ -241,11 +261,24 @@ function mostraModelos2(str) {
 							{
 						?>
 							<option selected="true" value="<?php echo $id_marca; ?>"><?php echo $nome_marca ?></option>
-						<?php
 
+						<?php
+								foreach ($marcasP as $marck) {
+								if($marck->marc_cod != $id_marca){
+						?>
+								<option value="<?php  echo $marck->marc_cod ?>"><?php  echo $marck->marc_nome ?></option>
+						<?php
+									}//fim do if para cidades iguais...
+								}//fim do foreach das cidades do estado carregado
+
+							}//fim do if id_marca != null
+							else{
+						?>
+							<option value="">selecione a marca do veiculo</option>
+						<?php
 							}
 						?>
-						<option value="">selecione a marca do veiculo</option>
+						
 					</select>
 				<div class="error"></div>
 
@@ -257,10 +290,22 @@ function mostraModelos2(str) {
 						?>
 							<option value="<?php echo $id_modelo ?>"><?php echo $nome_modelo ?></option>
 						<?php
+								foreach ($modelosP as $model) {
+								if($model->mode_cod != $id_modelo){
+						?>
+								<option value="<?php  echo $model->mode_cod ?>"><?php  echo $model->mode_nome ?></option>
+						<?php
+									}//fim do if para cidades iguais...
+								}//fim do foreach das cidades do estado carregado
+
+							} //fim do if id_modelo != null
+							else{
+						?>
+							<option value="">selecione o modelo do veiculo</option>
+						<?php
 
 							}
 						?>
-						<option value="">selecione o modelo do veiculo</option>
 					</select>
 				<div class="error"></div>
 
@@ -285,22 +330,31 @@ function mostraModelos2(str) {
 							<option value="<?php echo $id_estado; ?>"><?php echo $nome_estado ?></option>
 						<?php
 
+							}else{
+
+						?>
+							<option value="">Selecione um estado</option>
+						<?php	
 							}
 						?>
-						<option value="1">Selecione um estado:</option>
-							<?php
 
-								foreach ($estados as $estado): {
-							    
-							?>
+						<?php
 
-								<option value="<?php echo $estado->id_estado; ?>"><?php echo $estado->nome_estado; ?></option>
+							foreach ($estados as $estado): {
+											    		
+								// $arrayE[] = $estado->nome;
+							if($estado->id_estado != $id_estado)
+							{
+						?>
 
-							<?php
+							<option value="<?php echo $estado->id_estado; ?>"><?php echo $estado->nome_estado; ?></option>
 
-								 }endforeach;
+						<?php
+							}//fim do if...
 
-							?>
+							}endforeach;
+
+						?>
 
 					</select>
 				<br>
@@ -308,15 +362,27 @@ function mostraModelos2(str) {
 				<label for="cidade">Cidade :</label><br/>
 					<select id="listCidades" name="cidade_apr">
 						<?php
-							if(  $id_cidade != null)
+							if($id_cidade != null)
 							{
-						?>
-							<option value="<?php echo  $id_cidade; ?>"><?php echo $nome_cidade ?></option>
-						<?php
 
-							}
 						?>
-						<option value="1">Selecione uma cidade:</option>			
+							<option selected="true" value="<?php echo $id_cidade; ?>"><?php echo $nome_cidade ?></option>
+
+						<?php
+							foreach ($cidadesSingle as $city) {
+								if($city->id != $id_cidade){
+						?>
+								<option value="<?php  echo $city->id ?>"><?php  echo $city->nome ?></option>
+						<?php
+								}//fim do if para cidades iguais...
+							}//fim do foreach das cidades do estado carregado
+
+							}else{ //fim do if do id cidade != null
+						?>
+							<option value="">Selecione uma cidade:</option>
+						<?php
+							}
+						?>		
 					</select>
 				<br>
 				<br>
