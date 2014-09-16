@@ -152,10 +152,12 @@ class Continuando_documento extends CI_Controller {
     {
         $data['row_local'] = null;
         $data['id_Row'] = $idRow;
-        $data['endereco'] = $this->Cont_doct->load_endereco($idRow);
+        $data['endereco'] = $this->Cont_doct->load_endereco_wrs($idRow);
+      
+        $data['documento'] = $this->Cont_doct->load_doct($idRow);
+
         $data['estados'] = $this->documentoModel->load_estados(); 
         $data['cidades'] = $this->documentoModel->load_cidades();
-        $data['documento'] = $this->Cont_doct->load_doct($idRow);
 
         $data['unidades_medidas'] = $this->Cont_doct->load_unidades_medidas();
         $data['produtos'] = $this->Cont_doct->load_produtos();

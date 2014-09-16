@@ -53,6 +53,22 @@ class Novo_documento_model extends CI_Model {
         return $RowDeposito->result();
     }
 
+    function cadastrar_endereco_Wrs($dataEnderecoWrs) {
+        $this->db->insert('tbl_addr', $dataEnderecoWrs);
+        $this->db->select_max('ID_addr');
+        $RowEnderecoWrs = $this->db->get('tbl_addr');
+
+        return $RowEnderecoWrs->result();
+    }
+
+    function cadastra_wrs_addr($wrs_adrr) {
+        $this->db->insert('tbl_wrs_addr', $wrs_adrr);
+        $this->db->select_max('id_wrs_addr');
+        $wrsAddr = $this->db->get('tbl_wrs_addr');
+
+        return $wrsAddr->result();
+    }
+
     function cadastrar_anexos($data_anexo) {
         $this->db->insert('tbl_anexos', $data_anexo);
         $this->db->select_max('ID_anexos');

@@ -28,15 +28,21 @@ $().ready(function() {
 	// validate signup form on keyup and submit
 	$("#form-new_wrs-ipl").validate({
 		rules: {
-			endereco: {
+			produto_wrs: {
+				required: true
+			},
+			quantidade_wrs: {
 				required: true,
-				minlength: 3
+				minlength: 1
 			}
 		},
 		messages: {
-			endereco: {
-				required: "Endereço é obrigatorio!",
-				minlength: "Endereço deve ter no minimo 3 caracteres..."
+			produto_wrs: {
+				required: "Produto é obrigatorio!"
+			},
+			quantidade_wrs: {
+				required: "Quantidade é obrigatorio!",
+				minlength: "Quantidade deve ter pelo menos 1 caracterer"
 			}
 		}
 	});
@@ -79,7 +85,8 @@ $().ready(function() {
 
 		if($row_local != null)
 		{	
-			
+			//var_dump($local);
+			//die;
 
 			foreach($local as $loc)
 			{
@@ -139,8 +146,8 @@ $().ready(function() {
 				$cidade = $end->nome;
 				$id_estado = $end->id_estado;
 				$estado = $end->nome_estado;
-				$id_pais = $end->Id_pais;
-				$pais = $end->nome_pais;
+				//$id_pais = $end->Id_pais;
+				//$pais = $end->nome_pais;
 				}
 		}else{
 
@@ -160,8 +167,8 @@ $().ready(function() {
 				$cidade = null;
 				$id_estado = null;
 				$estado = null;
-				$id_pais = null;
-				$pais = null;
+				//$id_pais = null;
+				//$pais = null;
 		}
 
 		//var_dump($endereco);
@@ -184,17 +191,24 @@ $().ready(function() {
 					if($id_produto != null)
 					{
 				?>
-					<option value="<?php echo $id_produto; ?>"><?php echo $nome_produto ?></option>
+					<option selected="true" value="<?php echo $id_produto; ?>"><?php echo $nome_produto ?></option>
 				<?php
 
-					}
+					}else
+					{
 				?>
+					<option value="">Selecione um produto</option>
 				<?php
+					}//fim do else...
+
 					foreach($produtos as $prod):
-				{
+					{
+						if($id_produto != $prod->id_produto)
+						{
 				?>
 					<option value="<?php echo $prod->id_produto; ?>"><?php echo $prod->nome_produto; ?></option>
 				<?php
+						}
 					}endforeach;
 				?>
 			</select>
@@ -235,17 +249,22 @@ $().ready(function() {
 					<option value="<?php echo $id_marca; ?>"><?php echo $nome_marca ?></option>
 				<?php
 
-					}else{
+					}else
+					{
 				?>
+					<option value="">Selecione uma marca</option>
 				<?php
 					}
 				?>
 				<?php
 					foreach($marcas_prod as $marca):
 					{
+						if($marca->id_marca != $id_marca)
+						{
 				?>
 					<option value="<?php echo $marca->id_marca; ?>"><?php echo $marca->nome_marca; ?></option>
 				<?php
+						}
 					}endforeach;
 				?>
 			</select>
@@ -265,10 +284,13 @@ $().ready(function() {
 				<?php
 					foreach($tabacaleira as $taba):
 				{
+					if($taba->id_tabacalera != $id_tabacalera)
+					{
 				?>
 					<option value="<?php echo $taba->id_tabacalera; ?>"><?php echo $taba->nome_tabacalera; ?></option>
 				<?php
-					}endforeach;
+					}
+				}endforeach;
 				?>
 			</select>
 		<div class="error"></div>
@@ -279,40 +301,43 @@ $().ready(function() {
 			<input type="text" name="endereco" id="endereco" value="<?php echo $logradouro; ?>"/>
 		<div class="error"></div>
 
-		<label for="tipo_wrs">Numero :</label><br/>
-			<input type="text" name="tipo_wrs" value="<?php echo $numero; ?>"/>
+		<label for="numero_wrs">Numero :</label><br/>
+			<input type="text" id="numero_wrs" name="numero_wrs" value="<?php echo $numero; ?>"/>
 		<div class="error"></div>
 
 		<label for="complemento">Complemento :</label><br/> 
-			<input type="text" name="complemento" id="complemento" value="<?php echo $logradouro; ?>"/>
+			<input type="text" name="complemento" id="complemento" value="<?php echo $complemento; ?>"/>
 		<div class="error"></div>
 
 		<label for="bairro">Bairro :</label><br/>
-			<input type="text" name="bairro" id="bairro" value="<?php echo $numero; ?>"/>
+			<input type="text" name="bairro" id="bairro" value="<?php echo $bairro; ?>"/>
 		<div class="error"></div>
 
 		<label for="estado_apr">Estado da ocorrencia:</label><br/>
 			<select name="estado_apr" id="estado_apr" onchange="mostraCidades(this.value)">
 				<?php
-					if( $id_estado != null)
+					if( $id_estado != "")
 					{
 				?>
 					<option value="<?php echo $id_estado; ?>"><?php echo $estado ?></option>
 				<?php
 
-					}
+					}else{
 				?>
-
+						<option value="" selected="true">Selecione um estado</option>
 				<?php
+						 }
 
 					foreach ($estados as $estado): {
-									    		
-						// $arrayE[] = $estado->nome;
+
+						if($id_estado != $estado->id_estado)
+						{			    		
 				?>
 
 					<option value="<?php echo $estado->id_estado; ?>"><?php echo $estado->nome_estado; ?></option>
 
 				<?php
+						}
 
 					}endforeach;
 
@@ -347,8 +372,9 @@ $().ready(function() {
 		<br>
 		<br>
 
-		<input type="hidden" name="row_id" value="<?php echo $id_Row; ?>" />
+		<input type="hidden" name="row_id" value="<?php echo $id_Row; ?>" /> 
 		<input type="hidden" name="id_local" value="<?php echo $id_local; ?>" />
+		<input type="hidden" name="id_addr" value="<?php echo $ID_addr; ?>" />
 
 		<input type="submit" name="Cadastrar" value="Atualizar endereço da ocorrencia" />
 		<br>

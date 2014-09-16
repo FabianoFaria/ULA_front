@@ -106,6 +106,48 @@ class Atualizar_documento_model extends CI_Model {
         return true;
     }
 
+    public function atualizar_endereco_wrs($data)
+    {
+
+        /*
+             $dataEnderecoWrs['ROW_ID'] = $this->input->post('row_id');
+                $dataEnderecoWrs['address'] = $this->input->post('endereco');
+                $dataEnderecoWrs['nunber'] = $this->input->post('numero_wrs');
+                $dataEnderecoWrs['complement'] = $this->input->post('complemento');
+                $dataEnderecoWrs['district'] = $this->input->post('bairro');
+                $dataEnderecoWrs['state'] = $this->input->post('estado_apr');
+                $dataEnderecoWrs['city'] = $this->input->post('cidade_apr');
+                $dataEnderecoWrs['zipcode'] = $this->input->post('CEP');
+                $dataEnderecoWrs['ID_addr'] = $this->input->post('id_addr');
+                $dataEnderecoWrs['CREATED_BY'] = $user_name;
+                $dataEnderecoWrs['CREATED'] = $dataAtualizacao;
+                $dataEnderecoWrs['UPDATE_BY'] = $user_name;
+                $dataEnderecoWrs['LAST_UPDATE'] = $dataAtualizacao;
+    
+        */
+       // echo $data['ROW_ID'];
+
+        $id_adr = $data['ID_addr'];
+
+        $doct= array(
+            'address' => $data['address'] ,
+            'nunber' => $data['nunber'] ,
+            'complement' =>    $data['complement'] ,
+            'district' =>    $data['district'] , 
+            'city' => $data['city'] , 
+            'state' => $data['state'] ,
+            'zipcode' => $data['zipcode'],
+            'country' =>        $data['country'],
+            'UPDATE_BY' => $data['UPDATED_BY'],
+            'LAST_UPDATE' => $data['LAST_UPDATE']
+            );
+
+        $this->db->where('ID_addr', $id_adr);
+        $this->db->update('tbl_addr', $doct);
+        
+        return true;
+    }
+
     public function atualiza_auto($data)
     {
        // echo $data['ROW_ID'];

@@ -77,10 +77,10 @@ class Detalhes_documento_model extends CI_Model {
     public function load_Mercadoria($idRow)
     {
         $this->db->select('*');
-        $this->db->join('tbl_tabacalera','tbl_tabacalera.id_tabacalera = tbl_haul.tabacalera');
-        $this->db->join('tbl_produtos','tbl_produtos.id_produto = tbl_haul.product');
-        $this->db->join('tbl_marcas_produtos','tbl_marcas_produtos.id_marca = tbl_haul.brand');
-        $this->db->join('tbl_unidade_medidas','tbl_unidade_medidas.id_unidade_medida = tbl_haul.unit');
+        $this->db->join('tbl_tabacalera','tbl_tabacalera.id_tabacalera = tbl_haul.tabacalera', 'left');
+        $this->db->join('tbl_produtos','tbl_produtos.id_produto = tbl_haul.product', 'left');
+        $this->db->join('tbl_marcas_produtos','tbl_marcas_produtos.id_marca = tbl_haul.brand', 'left');
+        $this->db->join('tbl_unidade_medidas','tbl_unidade_medidas.id_unidade_medida = tbl_haul.unit', 'left');
     	$mercadorias = $this->db->get_where('tbl_haul', array('ROW_ID' => $idRow));
     	return $mercadorias->result();
     }
@@ -94,10 +94,10 @@ class Detalhes_documento_model extends CI_Model {
     public function load_Armazem($idRow)
     {
         $this->db->select('*');
-        $this->db->join('tbl_tabacalera','tbl_tabacalera.id_tabacalera = tbl_wrs.tabacalera_produto_deposito');
-        $this->db->join('tbl_produtos','tbl_produtos.id_produto = tbl_wrs.produto_deposito');
-        $this->db->join('tbl_marcas_produtos','tbl_marcas_produtos.id_marca = tbl_wrs.marca_produto_deposito');
-        $this->db->join('tbl_unidade_medidas','tbl_unidade_medidas.id_unidade_medida = tbl_wrs.unidade_produto_deposito');
+        $this->db->join('tbl_tabacalera','tbl_tabacalera.id_tabacalera = tbl_wrs.tabacalera_produto_deposito', 'left');
+        $this->db->join('tbl_produtos','tbl_produtos.id_produto = tbl_wrs.produto_deposito', 'left');
+        $this->db->join('tbl_marcas_produtos','tbl_marcas_produtos.id_marca = tbl_wrs.marca_produto_deposito', 'left');
+        $this->db->join('tbl_unidade_medidas','tbl_unidade_medidas.id_unidade_medida = tbl_wrs.unidade_produto_deposito', 'left');
 		$locais = $this->db->get_where('tbl_wrs', array('ROW_ID' => $idRow));
     	return $locais->result();
     }
@@ -149,10 +149,10 @@ class Detalhes_documento_model extends CI_Model {
     public function load_single_wrs($id_wrs)
     {
         $this->db->select('*');
-        $this->db->join('tbl_tabacalera','tbl_tabacalera.id_tabacalera = tbl_wrs.tabacalera_produto_deposito');
-        $this->db->join('tbl_produtos','tbl_produtos.id_produto = tbl_wrs.produto_deposito');
-        $this->db->join('tbl_marcas_produtos','tbl_marcas_produtos.id_marca = tbl_wrs.marca_produto_deposito');
-        $this->db->join('tbl_unidade_medidas','tbl_unidade_medidas.id_unidade_medida = tbl_wrs.unidade_produto_deposito');
+        $this->db->join('tbl_tabacalera','tbl_tabacalera.id_tabacalera = tbl_wrs.tabacalera_produto_deposito', 'left');
+        $this->db->join('tbl_produtos','tbl_produtos.id_produto = tbl_wrs.produto_deposito', 'left');
+        $this->db->join('tbl_marcas_produtos','tbl_marcas_produtos.id_marca = tbl_wrs.marca_produto_deposito', 'left');
+        $this->db->join('tbl_unidade_medidas','tbl_unidade_medidas.id_unidade_medida = tbl_wrs.unidade_produto_deposito', 'left');
         $wrs = $this->db->get_where('tbl_wrs', array('ID_wrs' => $id_wrs));
         return $wrs->result();
     }

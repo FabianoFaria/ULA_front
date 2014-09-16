@@ -32,9 +32,21 @@ class Continuando_documento_model extends CI_Model {
     { 
         $this->db->select('*');
         $this->db->join('tbl_pais','tbl_pais.Id_pais = tbl_addr.country');
-        //$this->db->join('tbl_cidades','tbl_cidades.id = tbl_addr.city');
-        //$this->db->join('tbl_estados','tbl_estados.id_estado = tbl_addr.state');
+        $this->db->join('tbl_cidades','tbl_cidades.id = tbl_addr.city', 'left');
+        $this->db->join('tbl_estados','tbl_estados.id_estado = tbl_addr.state', 'left');
         $queryDoct = $this->db->get_where('tbl_addr', array('ROW_ID' => $idRow));
+        return $queryDoct->result();
+    }
+
+    public function load_endereco_wrs($idRow)
+    {
+        $this->db->select('*');
+        $this->db->join('tbl_cidades','tbl_cidades.id = tbl_addr.city', 'left');
+        $this->db->join('tbl_estados','tbl_estados.id_estado = tbl_addr.state', 'left');
+        $this->db->join('tbl_main', 'tbl_main.parent_id = tbl_addr.ROW_ID');
+        $this->db->join('tbl_wrs_addr', 'tbl_wrs_addr.id_addr = tbl_addr.ID_addr');
+        $this->db->where('tbl_addr.ROW_ID', $idRow);
+        $queryDoct = $this->db->get('tbl_addr');
         return $queryDoct->result();
     }
 

@@ -57,6 +57,7 @@ $().ready(function() {
 				minlength: 3
 			},
 			CPF: {
+				required: false,
 				verificaCPF: true
 			},
 			estado_nascimento: {
@@ -75,6 +76,7 @@ $().ready(function() {
 				minlength: "Nome do envolvido deve ter pelo menos 3 caracteres..."
 			},
 			CPF: {
+				required: " l",
 				verificaCPF: "CPF deve ser um CPF valido!"
 			},
 			estado_nascimento: {

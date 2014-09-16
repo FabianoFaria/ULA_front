@@ -147,12 +147,15 @@ $().ready(function() {
 						}
 					?>
 					<?php
-						foreach($unidades_seguranca as $segurança):
+						foreach($unidades_seguranca as $segurança)
 						{
+							if($doc->id_unidade != $segurança->id_unidade)
+							{
 					?>
 						<option value="<?php echo $segurança->id_unidade; ?>"><?php echo $segurança->forca_seguranca; ?></option>
 					<?php
-						}endforeach;
+							}
+						} //fim do foreach...
 					?>
 				</select>
 			<div class="error"><?php echo form_error('unidade_seguranca'); ?></div>
@@ -189,12 +192,14 @@ $().ready(function() {
 											foreach ($estados as $estado): {
 															    		
 												// $arrayE[] = $estado->nome;
+												if($doc->id_estado != $estado->id_estado)
+												{
 										?>
 
 											<option value="<?php echo $estado->id_estado; ?>"><?php echo $estado->nome_estado; ?></option>
-
+												
 										<?php
-
+												}
 											}endforeach;
 
 										?>

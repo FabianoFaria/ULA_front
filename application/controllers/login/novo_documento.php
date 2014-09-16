@@ -435,17 +435,40 @@ class Novo_documento extends CI_Controller {
                 $dataDeposito['quantidade_deposito'] = $this->input->post('quantidade_wrs');          
                 $dataDeposito['tabacalera_produto_deposito'] = $this->input->post('tabacalera_wrs');
 
+
+
+                $dataEnderecoWrs['ROW_ID'] = $this->input->post('row_id');
+                $dataEnderecoWrs['address'] = $this->input->post('endereco');
+                $dataEnderecoWrs['nunber'] = $this->input->post('numero_wrs');
+                $dataEnderecoWrs['complement'] = $this->input->post('complemento');
+                $dataEnderecoWrs['district'] = $this->input->post('bairro');
+                $dataEnderecoWrs['state'] = $this->input->post('estado_apr');
+                $dataEnderecoWrs['city'] = $this->input->post('cidade_apr');
+                $dataEnderecoWrs['zipcode'] = $this->input->post('CEP');
+                $dataEnderecoWrs['ID_addr'] = $this->input->post('id_addr');
+                $dataEnderecoWrs['CREATED_BY'] = $user_name;
+                $dataEnderecoWrs['CREATED'] = $dataAtualizacao;
+                $dataEnderecoWrs['UPDATE_BY'] = $user_name;
+                $dataEnderecoWrs['LAST_UPDATE'] = $dataAtualizacao;
+                //$Row_Depo = $this->documentoModel->cadastrar_depodito($dataDeposito);
+
                 //var_dump($dataDeposito);
                 //die;
 
             $Row_Depo = 0;
+            $wrs_addr = 0;
+            $rowOBJ = 0;
+            $id_temp_addr = 0;
+
+            //Cadastrar atualizar o que foi apreendido...
 
              if($this->input->post('id_local') != null)
             {   
                 $dataDeposito['UPDATED_BY'] = $user_name;
                 $dataDeposito['LAST_UPDATE'] = $dataAtualizacao;
 
-                $Row_Depo = $this->atualizarDoct->atualiza_wrs($dataDeposito);
+                $this->atualizarDoct->atualiza_wrs($dataDeposito);
+                $Row_Depo = $this->input->post('id_local');
             } 
                 else
             {
@@ -454,6 +477,7 @@ class Novo_documento extends CI_Controller {
                 $dataDeposito['CREATED'] = $dataAtualizacao;
                 $dataDeposito['UPDATED_BY'] = $user_name;
                 $dataDeposito['LAST_UPDATE'] = $dataAtualizacao;
+
                 $Row_Depo = $this->documentoModel->cadastrar_depodito($dataDeposito);
 
                 $rowOBJ = $Row_Depo[0];
@@ -474,6 +498,45 @@ class Novo_documento extends CI_Controller {
 
 
             }
+
+            //Cadastrar o endereço do deposito...
+
+            if($dataEnderecoWrs['ID_addr'] != null)
+            {
+                $this->atualizarDoct->atualizar_endereco_wrs($dataEnderecoWrs);
+
+                $wrs_addr = $dataEnderecoWrs['ID_addr'];
+                $id_temp_addr = $wrs_addr;
+            }else{
+                $wrs_addr = $this->documentoModel->cadastrar_endereco_wrs($dataEnderecoWrs);
+
+                $rowOBJAddr = $wrs_addr[0];
+                $id_temp_addr = $rowOBJAddr->ID_addr;
+            }
+
+
+            //Salvar relação na tabela tbl_wrs_addr...
+            $rowOBJ = $Row_Depo[0];
+            $id_temp_wrs = $rowOBJ->ID_wrs;
+
+
+
+            if(($Row_Depo[0] != 0) && ($wrs_addr[0] != 0))
+            {
+                $wrs_adrr['id_wrs'] = $id_temp_wrs;
+                $wrs_adrr['id_addr'] = $id_temp_addr;
+                $wrs_adrr['CREATED_BY'] = $user_name;
+                $wrs_adrr['CREATED'] = $dataAtualizacao;
+                $wrs_adrr['UPDATED_BY'] =  $user_name;
+                $wrs_adrr['LAST_UPDATE'] = $dataAtualizacao;
+
+                $wrs_addr = $this->documentoModel->cadastra_wrs_addr($wrs_adrr);
+            }
+
+
+
+
+
 
               if($Row_Depo != 0)
                 {
