@@ -105,17 +105,6 @@ function mostraModelos2(str) {
 				$Ipl = $doc->IPL;
 			}
 
-			foreach ($estados as $estado): {
-								    		
-				$arrayE[] = $estado->nome_estado;
-
-			}endforeach;
-
-			foreach ($cidades as $cidade): { /*Implementar ajax aqui!!!!*/
-								    		
-				$arrayC[] = $cidade->nome;
-
-			}endforeach;
 
 		//Os dados dos estados e cidades são carregados separadamente
 		if($cidadeAdr != null)
@@ -155,11 +144,13 @@ function mostraModelos2(str) {
 
 				$id_tipo_veiculo = $auto->category;
 				$tipo_veiculo = $auto->tpve_nome;
-				$id_marca = $auto->marc_cod;
+				$id_marca = $auto->brand;
 				$nome_marca = $auto->marc_nome;
 				$id_modelo = $auto->mode_cod;
 				$nome_modelo = $auto->mode_nome;
 			}
+
+			 //var_dump($marcasP);
 
 			//var_dump($automoveis);
 			//die;

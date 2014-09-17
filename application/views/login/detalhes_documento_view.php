@@ -21,13 +21,18 @@
 
          $last_update = $day2."/".$month2."/".$year2;
 
+         if($documento->arrest_date != "0000-00-00")
+         {
+			$dataEx = explode("-", $documento->arrest_date);
+        	$month = $dataEx[1];
+        	$day = $dataEx[2];
+        	$year = $dataEx[0];
 
-		$dataEx = explode("-", $documento->arrest_date);
-        $month = $dataEx[1];
-        $day = $dataEx[2];
-        $year = $dataEx[0];
-
-        $dataF = $day."/".$month."/".$year;
+        	$dataF = $day."/".$month."/".$year;
+        }else
+        {
+        	$dataF = "";
+        }
 
 	}
 		//var_dump($documento);		
@@ -239,13 +244,19 @@
 			$estadoEnvol = $envol->birth_state;
 			$paisEnvol = $envol->birth_country;
 
-		$dataCon = explode("-", $envol->birth_dt);
-        $month = $dataCon[1];
-        $day = $dataCon[2];
-        $year = $dataCon[0];
+			if($envol->birth_dt != "0000-00-00")
+			{
+				$dataCon = explode("-", $envol->birth_dt);
+        		$month = $dataCon[1];
+        		$day = $dataCon[2];
+        		$year = $dataCon[0];
 
-        $dataT = $day."/".$month."/".$year;
-
+        		$dataT = $day."/".$month."/".$year;
+			}else
+			{
+				$dataT = "";
+			}
+		
 		?>
 
 			<tr>

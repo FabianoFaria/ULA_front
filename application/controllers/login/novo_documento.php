@@ -335,7 +335,7 @@ class Novo_documento extends CI_Controller {
 
             if(($this->input->post('nascimento')) == "")
             {
-                 $finalDate = date('y-m-d');
+                 $finalDate = "";
             }else
             if(strstr($this->input->post('nascimento'), '/', true)){
                 //var_dump($this->input->post('nascimento'));
@@ -521,7 +521,7 @@ class Novo_documento extends CI_Controller {
 
 
 
-            if(($Row_Depo[0] != 0) && ($wrs_addr[0] != 0))
+            if(($id_temp_wrs != 0) && ($id_temp_addr != 0))
             {
                 $wrs_adrr['id_wrs'] = $id_temp_wrs;
                 $wrs_adrr['id_addr'] = $id_temp_addr;

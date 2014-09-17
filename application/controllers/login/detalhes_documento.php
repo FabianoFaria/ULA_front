@@ -267,7 +267,8 @@ class Detalhes_documento extends CI_Controller {
         $data['local'] =  $this->DetalhesModel->load_single_wrs($row_local);
         $data['documento'] = $this->Cont_doct->load_doct($row_id);
 
-        $data['endereco'] = $this->Cont_doct->load_endereco($row_id);
+        //$data['endereco'] = $this->Cont_doct->load_endereco($row_id);
+        $data['endereco'] = $this->Cont_doct->load_endereco_wrs($row_id);
 
         $data['unidades_medidas'] = $this->Cont_doct->load_unidades_medidas();
         $data['produtos'] = $this->Cont_doct->load_produtos();

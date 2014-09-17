@@ -98,6 +98,7 @@ class Detalhes_documento_model extends CI_Model {
         $this->db->join('tbl_produtos','tbl_produtos.id_produto = tbl_wrs.produto_deposito', 'left');
         $this->db->join('tbl_marcas_produtos','tbl_marcas_produtos.id_marca = tbl_wrs.marca_produto_deposito', 'left');
         $this->db->join('tbl_unidade_medidas','tbl_unidade_medidas.id_unidade_medida = tbl_wrs.unidade_produto_deposito', 'left');
+        $this->db->where('tbl_wrs.deletado', 0);
 		$locais = $this->db->get_where('tbl_wrs', array('ROW_ID' => $idRow));
     	return $locais->result();
     }
@@ -118,10 +119,10 @@ class Detalhes_documento_model extends CI_Model {
     {
         $this->db->select('*');
         $this->db->join('tbl_tipo_veiculo','tbl_tipo_veiculo.tpve_cod = tbl_vehicle.category');
-        $this->db->join('tbl_marcas','tbl_marcas.marc_cod = tbl_vehicle.brand');
-        $this->db->join('tbl_modelos','tbl_modelos.mode_cod = tbl_vehicle.model');
-        //$this->db->join('tbl_cidades','tbl_cidades.id = tbl_vehicle.city');
-        //$this->db->join('tbl_estados','tbl_estados.id_estado = tbl_vehicle.state');
+        $this->db->join('tbl_marcas','tbl_marcas.marc_cod = tbl_vehicle.brand' , 'left');
+        $this->db->join('tbl_modelos','tbl_modelos.mode_cod = tbl_vehicle.model', 'left');
+        $this->db->join('tbl_cidades','tbl_cidades.id = tbl_vehicle.city', 'left');
+        $this->db->join('tbl_estados','tbl_estados.id_estado = tbl_vehicle.state', 'left');
         $auto = $this->db->get_where('tbl_vehicle', array('ID_vehicle' => $id_auto));
         return $auto->result();
     }

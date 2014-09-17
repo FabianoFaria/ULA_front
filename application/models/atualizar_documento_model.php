@@ -346,8 +346,11 @@ class Atualizar_documento_model extends CI_Model {
 
     public function deleta_wrs($id_wrs)
     {
+
+        $data = array('deletado' => 1);
         $this->db->where('ID_wrs', $id_wrs);
-        $this->db->delete('tbl_wrs');
+        $this->db->update('tbl_wrs', $data); 
+        //$this->db->delete('tbl_wrs');
 
         return true;
 

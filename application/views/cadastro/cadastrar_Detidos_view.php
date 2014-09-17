@@ -199,7 +199,7 @@ function mostraCidades(str) {
 				$passport = $cont->passport;
 				$father = $cont->father;
 				$mother = $cont->mother;
-				$birth_dt = $cont->birth_dt;
+				//
 				$birth_city = $cont->birth_city;
 				$birth_state = $cont->birth_state;
 				$birth_country = $cont->birth_country;
@@ -217,12 +217,27 @@ function mostraCidades(str) {
 				$IMEI = $cont->IMEI;
 				$operadora = $cont->operadora;
 
-				$birth_dt = explode("-", $cont->birth_dt);
-		        $month = $birth_dt[1];
-		        $day = $birth_dt[2];
-		        $year = $birth_dt[0];
+				$birth_dt = $cont->birth_dt;
 
-		        $dataF = $day."/".$month."/".$year;
+				//var_dump($birth_dt);
+				//die;
+
+				if($birth_dt == "0000-00-00")
+		    	{
+		    		$dataF = "";
+		    	}else
+				if($birth_dt != "")
+				{
+					$birth_dt = explode("-", $cont->birth_dt);
+		        	$month = $birth_dt[1];
+		        	$day = $birth_dt[2];
+		        	$year = $birth_dt[0];
+
+		        	$dataF = $day."/".$month."/".$year;
+		    	}else
+		    	{
+		    		$dataF = "";
+		    	}
 			}
 		}else
 		{
@@ -332,7 +347,7 @@ function mostraCidades(str) {
 
 					}else {
 				?>
-					<option value="33" select="true">BRASIL</option>
+					<option value="33" select="true">Brasil</option>
 				<?php
 					}
 				?>
