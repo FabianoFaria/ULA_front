@@ -447,7 +447,7 @@ function mostraCidades(str) {
 						}
 					?>							
 				</select>
-		<div class="error"><?php echo form_error('cidade_nascimento'); ?></div>
+		<div class="error"></div>
 
 		
 
@@ -574,7 +574,8 @@ function mostraCidades(str) {
 						}
 					?>							
 				</select>
-		<div class="error"><?php echo form_error('cidade_nascimento'); ?></div>
+		<div class="error"></div> 
+		<input type="hidden" name="Addr_id" value="<?php //echo $id_contact; ?>" />
 
 
 
