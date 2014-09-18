@@ -376,6 +376,20 @@ class Novo_documento extends CI_Controller {
              $dataEnvolvido['IMEI'] = $this->input->post('IMEI');
              $dataEnvolvido['operadora'] = $this->input->post('operadora');
 
+             //Dados para salvar os dados do endereço do envolvido...
+
+             $dataAdr['ROW_ID'] = $this->input->post('row_id');
+             $dataAdr['address'] = $this->input->post('endereco');
+             $dataAdr['nunber'] = $this->input->post('numero_addr');
+             $dataAdr['complement'] = $this->input->post('complemento');
+             $dataAdr['district'] = $this->input->post('bairro');
+             $dataAdr['country'] = $this->input->post('pais_apr');
+             $dataAdr['city'] = $this->input->post('cidade_apr');
+             $dataAdr['state'] = $this->input->post('estado_apr');
+             $dataAdr['zipcode'] = $this->input->post('CEP');
+             $dataAdr['CREATED_BY'] = $user_name;
+             $dataAdr['CREATED'] = $dataAtualizacao;
+
              //var_dump($dataEnvolvido['CPF']);
              //die;
 

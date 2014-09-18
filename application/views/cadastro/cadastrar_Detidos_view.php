@@ -449,12 +449,140 @@ function mostraCidades(str) {
 				</select>
 		<div class="error"><?php echo form_error('cidade_nascimento'); ?></div>
 
+		
+
+		<br>
+		<hr>
+		<h3>Dados de Endereço do Detido :</h3>
+		<br>
+
 		<label for="endereco_contato">Endereço :</label><br/>
 		<input type="text" name="endereco_contato" id="endereco_contato" value="<?php echo $endereco_detido; ?>"/>
 		<div class="error"></div>
 
-		<hr>
+		<label for="numero_addr">Numero:</label><br/>
+		<input type="text" name="numero_addr" value="<?php // echo $numero; ?>"/>
+		<div class="error"></div>
 
+		<label for="complemento">Complemento:</label><br/>
+		<input type="text" name="complemento" value="<?php //echo $complemento; ?>"/>
+		<div class="error"></div>
+
+		<label for="bairro">Bairro:</label><br/>
+		<input type="text" name="bairro" value="<?php //echo $bairro; ?>"/>
+		<div class="error"></div>
+
+		<label for="CEP">CEP:</label><br/>
+		<input type="text" name="CEP" value="<?php //echo $CEP; ?>"/>
+		<div class="error"></div>
+
+		<label for="pais_nascimento">Pais de nascimento :</label><br/>
+			<select name="pais_nascimento" id="pais_nascimento" onchange="mostraEstCID(this.value)">
+					
+				<?php
+					if( $country_id != null)
+					{
+				?>
+					<option value="<?php echo $country_id; ?>"><?php echo $country_name ?></option>
+				<?php
+
+					}else {
+				?>
+					<option value="33" select="true">Brasil</option>
+				<?php
+					}
+				?>
+			
+				<?php
+
+					foreach ($paises as $pais): {
+									    		
+						// $arrayE[] = $estado->nome;
+				?>
+
+					<option value="<?php echo $pais->Id_pais; ?>"><?php echo $pais->nome_pais; ?></option>
+
+				<?php
+
+					}endforeach;
+
+				?>
+				</select>
+
+		<div class="error"></div>
+
+		<label for="estado_nascimento">Estado de nascimento :</label><br/>
+			<select name="estado_nascimento" id="estado_nascimento" onchange="mostraCidades(this.value)">
+				<?php
+					if( $id_estado != null)
+					{
+				?>
+					<option value="<?php echo $id_estado; ?>"><?php echo $estado ?></option>
+				<?php
+
+					}else{
+				?>
+					<option value="" selected="true">Selecione um estado:</option>
+				<?php
+					}
+				?>				
+
+				<?php
+
+					foreach ($estados as $estado): {
+									    		
+							// $arrayE[] = $estado->nome;
+					if($estado->id_estado != $id_estado)
+					{
+				?>
+
+					<option value="<?php echo $estado->id_estado; ?>"><?php echo $estado->nome_estado; ?></option>
+
+				<?php
+					}//fim do if...
+
+
+					}endforeach;
+
+				?>
+
+			</select>
+			<div class="error"></div>
+
+		<label for="cidade_nascimento">Cidade de nascimento :</label><br/>
+			<select id="cidade_nascimento" name="cidade_nascimento">
+				<?php
+						if($id_cidade != null)
+						{
+
+					?>
+						<option selected="true" value="<?php echo $id_cidade; ?>"><?php echo $cidade ?></option>
+
+					<?php
+						foreach ($cidadesSingle as $city) {
+							if($city->id != $id_cidade){
+					?>
+							<option value="<?php  echo $city->id ?>"><?php  echo $city->nome ?></option>
+					<?php
+							}//fim do if para cidades iguais...
+						}//fim do foreach das cidades do estado carregado
+
+						}else{ //fim do if do id cidade != null
+					?>
+						<option value="">Selecione uma cidade:</option>
+					<?php
+						}
+					?>							
+				</select>
+		<div class="error"><?php echo form_error('cidade_nascimento'); ?></div>
+
+
+
+
+
+		<hr>
+		<h3>Dados de contato do Detido :</h3>
+		<br>
 
 		<label for="telefone">Telefone :</label><br/>
 		<input type="text" name="telefone" id="telefone" value="<?php echo $telefone; ?>"/>
@@ -499,7 +627,7 @@ function mostraCidades(str) {
 						}//fim do foreach das cidades do estado carregado
 					?>								
 				</select>
-		<div class="error"><?php echo form_error('cidade_nascimento'); ?></div>
+		<div class="error"></div>
 
 		<br>
 		<br>
