@@ -12,6 +12,9 @@ $().ready(function() {
 				required: true,
 				digits:true
 			},
+			medida: {
+				required: true
+			},
 			listProdutos: {
 				required: true
 			}
@@ -20,6 +23,9 @@ $().ready(function() {
 			quantidade: {
 				required: "Quantidade é obrigatorio!",
 				digits: "Quantidade deve ser apenas numeros"
+			},
+			medida: {
+				required: "Favor informar uma medida"
 			},
 			listProdutos: {
 				required: "Favor informar um produto"
@@ -142,7 +148,7 @@ $().ready(function() {
 		<label for="listProdutos">Produto :</label><br/>
 			<select name="listProdutos" id="listProdutos" >
 				<?php
-					if($id_marca != null)
+					if($id_produto != null)
 					{
 				?>
 					<option value="<?php echo $id_produto; ?>"><?php echo $nome_produto ?></option>
@@ -158,9 +164,12 @@ $().ready(function() {
 				<?php
 					foreach($produtos as $prod):
 				{
+					if($id_produto != $prod->id_produto)
+						{
 				?>
 					<option value="<?php echo $prod->id_produto; ?>"><?php echo $prod->nome_produto; ?></option>
 				<?php
+						}
 					}endforeach;
 				?>
 			</select>
@@ -169,20 +178,26 @@ $().ready(function() {
 		<label for="medida">Unidade de medida:</label><br/>
 			<select name="medida" id="listMedidas" >
 				<?php
-					if($id_marca != null)
+					if($id_unidade != null)
 					{
 				?>
 					<option value="<?php echo $id_unidade; ?>"><?php echo $medida ?></option>
 				<?php
 
-					}
+					}else
+					{
 				?>
+					<option value="">Selecione unidade de medida</option>
 				<?php
+					}
 					foreach($unidades_medidas as $medidas):
 					{
+						if($id_unidade != $medidas->id_unidade_medida)
+						{
 				?>
 					<option value="<?php echo $medidas->id_unidade_medida; ?>"><?php echo $medidas->unidade_medida; ?></option>
 				<?php
+						}
 					}endforeach;
 				?>
 			</select>
@@ -203,15 +218,18 @@ $().ready(function() {
 
 					}else{
 				?>
+					<option value="">Selecione a marca do produto</option>
 				<?php
-					}
-				?>
-				<?php
+					} //fim do else...
+				
 					foreach($marcas_prod as $marca):
 					{
+						if($marca->id_marca != $id_marca)
+						{
 				?>
 					<option value="<?php echo $marca->id_marca; ?>"><?php echo $marca->nome_marca; ?></option>
 				<?php
+						} //fim do if de id_marca == Marca->id_marca...
 					}endforeach;
 				?>
 			</select>
@@ -226,14 +244,19 @@ $().ready(function() {
 					<option value="<?php echo $id_tabacalera; ?>"><?php echo $nome_tabacalera ?></option>
 				<?php
 
-					}
+					}else {
 				?>
+					<option value="">Selecione tabacalera</option>
 				<?php
+					}//Fim do else de id_tabacalera...
 					foreach($tabacaleira as $taba):
-				{
+					{ 
+						if($taba->id_tabacalera != $id_tabacalera)
+						{
 				?>
 					<option value="<?php echo $taba->id_tabacalera; ?>"><?php echo $taba->nome_tabacalera; ?></option>
 				<?php
+						}
 					}endforeach;
 				?>
 			</select>

@@ -31,6 +31,9 @@ $().ready(function() {
 			produto_wrs: {
 				required: true
 			},
+			unidade_wrs: {
+				required: true
+			},
 			quantidade_wrs: {
 				required: true,
 				minlength: 1
@@ -39,6 +42,9 @@ $().ready(function() {
 		messages: {
 			produto_wrs: {
 				required: "Produto é obrigatorio!"
+			},
+			unidade_wrs: {
+				required: "Favor selecionar uma medida"
 			},
 			quantidade_wrs: {
 				required: "Quantidade é obrigatorio!",
@@ -72,12 +78,6 @@ $().ready(function() {
 <div class="row sem_margin">
 
 	<?php
-
-		$arrayE = array();
-		$arrayC = array();
-		$arrayProduto = array('A','B','C','D');
-		$arrayModelo = array('A','B','C','D');
-		$arrayUnidade = array('A','B','C','D');
 
 		foreach ($documento as $doc) {
 			$Ipl = $doc->IPL;
@@ -223,14 +223,20 @@ $().ready(function() {
 					<option value="<?php echo $id_unidade; ?>"><?php echo $medida ?></option>
 				<?php
 
-					}
+					}else
+					 {
 				?>
+					<option value="">Selecione uma unidade</option>
 				<?php
+					} //fim do else..
 					foreach($unidades_medidas as $medidas):
 					{
+						if($medidas->id_unidade_medida != $id_unidade)
+						{
 				?>
 					<option value="<?php echo $medidas->id_unidade_medida; ?>"><?php echo $medidas->unidade_medida; ?></option>
 				<?php
+						}
 					}endforeach;
 				?>
 			</select>
@@ -279,18 +285,21 @@ $().ready(function() {
 					<option value="<?php echo $id_tabacalera; ?>"><?php echo $nome_tabacalera ?></option>
 				<?php
 
-					}
+					}else
+						{
 				?>
+					<option value="">Selecione uma tabacalera</option>
 				<?php
+						}
 					foreach($tabacaleira as $taba):
-				{
-					if($taba->id_tabacalera != $id_tabacalera)
 					{
+						if($taba->id_tabacalera != $id_tabacalera)
+						{
 				?>
-					<option value="<?php echo $taba->id_tabacalera; ?>"><?php echo $taba->nome_tabacalera; ?></option>
+						<option value="<?php echo $taba->id_tabacalera; ?>"><?php echo $taba->nome_tabacalera; ?></option>
 				<?php
-					}
-				}endforeach;
+						}
+					}endforeach;
 				?>
 			</select>
 		<div class="error"></div>
@@ -343,6 +352,7 @@ $().ready(function() {
 
 				?>
 
+
 			</select>
 			<div class="error"><?php echo form_error('estado_apr'); ?></div>
 
@@ -359,7 +369,21 @@ $().ready(function() {
 					?>
 						<option value="">Selecione uma cidade:</option>
 					<?php
-						}
+						 }
+
+					foreach ($singleS as $cidades): {
+
+						if($id_cidade != $cidades->id)
+						{			    		
+					?>
+
+						<option value="<?php echo $cidades->id; ?>"><?php echo $cidades->nome; ?></option>
+
+					<?php
+							}
+
+						}endforeach;
+
 					?>
 											
 				</select>

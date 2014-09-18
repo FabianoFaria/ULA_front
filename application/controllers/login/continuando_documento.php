@@ -150,9 +150,15 @@ class Continuando_documento extends CI_Controller {
 
     public function Depositos($idRow)
     {
+        $data['singleS'] = null;
         $data['row_local'] = null;
         $data['id_Row'] = $idRow;
         $data['endereco'] = $this->Cont_doct->load_endereco_wrs($idRow);
+       
+        if($data['endereco'][0]->state != 0)
+        {
+            $data['singleS'] = $this->documentoModel->load_city_estado($data['endereco'][0]->state);
+        }
       
         $data['documento'] = $this->Cont_doct->load_doct($idRow);
 

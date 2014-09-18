@@ -412,7 +412,7 @@
 			$IdLocal = $local->ID_wrs;
 			$produto = $local->nome_produto;
 			$quantidade = $local->quantidade_deposito;
-			$unidadeMedida = $local->sigla_unidade;
+			$unidadeMedida = $local->unidade_medida;
 			$marcaP = $local->nome_marca;
 
 		?>

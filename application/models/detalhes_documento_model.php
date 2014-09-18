@@ -130,9 +130,9 @@ class Detalhes_documento_model extends CI_Model {
     public function load_single_Haul($id_haul)
     {
         $this->db->select('*');
-        $this->db->join('tbl_tabacalera','tbl_tabacalera.id_tabacalera = tbl_haul.tabacalera');
-        $this->db->join('tbl_produtos','tbl_produtos.id_produto = tbl_haul.product');
-        $this->db->join('tbl_marcas_produtos','tbl_marcas_produtos.id_marca = tbl_haul.brand');
+        $this->db->join('tbl_tabacalera','tbl_tabacalera.id_tabacalera = tbl_haul.tabacalera', 'left');
+        $this->db->join('tbl_produtos','tbl_produtos.id_produto = tbl_haul.product', 'left');
+        $this->db->join('tbl_marcas_produtos','tbl_marcas_produtos.id_marca = tbl_haul.brand', 'left');
         $this->db->join('tbl_unidade_medidas','tbl_unidade_medidas.id_unidade_medida = tbl_haul.unit');
         $haul = $this->db->get_where('tbl_haul', array('ID_HAUL' => $id_haul));
         return $haul->result();

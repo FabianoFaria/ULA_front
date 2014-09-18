@@ -261,7 +261,7 @@ class Detalhes_documento extends CI_Controller {
 
     public function atualizar_warehouse($row_id, $row_local)
     {
-
+        $data['singleS'] = null;
         $data['row_local'] = $row_local;
         $data['id_Row'] = $row_id;
         $data['local'] =  $this->DetalhesModel->load_single_wrs($row_local);
@@ -269,7 +269,13 @@ class Detalhes_documento extends CI_Controller {
 
         //$data['endereco'] = $this->Cont_doct->load_endereco($row_id);
         $data['endereco'] = $this->Cont_doct->load_endereco_wrs($row_id);
+        if($data['endereco'][0]->state != 0)
+        {
+            $data['singleS'] = $this->documentoModel->load_city_estado($data['endereco'][0]->state);
+        }
 
+        $data['estados'] = $this->documentoModel->load_estados(); 
+        $data['cidades'] = $this->documentoModel->load_cidades();
         $data['unidades_medidas'] = $this->Cont_doct->load_unidades_medidas();
         $data['produtos'] = $this->Cont_doct->load_produtos();
         $data['marcas_prod'] = $this->Cont_doct->load_marcas_prod();
