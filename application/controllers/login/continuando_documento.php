@@ -114,8 +114,13 @@ class Continuando_documento extends CI_Controller {
         $data['paises'] = $this->documentoModel->load_paises();
         $data['estados'] = $this->documentoModel->load_estados();
         $data['cidades'] = $this->documentoModel->load_cidades();
+        $data['operadoras'] = $this->documentoModel->load_operadoras();
+
+        //var_dump($data['operadoras']);
+        //die;
+
         $data['documento'] = $this->Cont_doct->load_doct($idRow);
-       // $data['endereco'] = $this->Cont_doct->load_endereco($idRow);
+        //$data['endereco'] = $this->Cont_doct->load_endereco_detido($idRow);
 
         $data['estadoAdr'] = null;
         $data['cidadeAdr'] = null;
@@ -155,7 +160,7 @@ class Continuando_documento extends CI_Controller {
         $data['id_Row'] = $idRow;
         $data['endereco'] = $this->Cont_doct->load_endereco_wrs($idRow);
        
-        if($data['endereco'][0]->state != 0)
+        if($data['endereco'] != null)
         {
             $data['singleS'] = $this->documentoModel->load_city_estado($data['endereco'][0]->state);
         }

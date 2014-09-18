@@ -219,12 +219,17 @@ function mostraCidades(str) {
 				//$cidade = $cont->nome;
 				//$id_estado = $cont->id_estado;
 				//$estado = $cont->nome_estado;
+				 //public 'id_operadora' => string '1' (length=1)
+      			 //public 'nome_operadora' => string 'Tim' (length=3)
+      			 //public 'logo' => null
+
 
 				$telefone = $cont->telefone;
 				$marca_telefone = $cont->marca_telefone;
 				$modelo_telefone = $cont->modelo_telefone;
 				$IMEI = $cont->IMEI;
-				$operadora = $cont->operadora;
+				$operadora = $cont->id_operadora;
+				$nome_operadora = $cont->nome_operadora;
 
 				$birth_dt = $cont->birth_dt;
 
@@ -473,7 +478,7 @@ function mostraCidades(str) {
 					if($operadora != null)
 					{
 				?>
-					<option value="<?php echo $operadora; ?>"><?php echo $operadora ?></option>
+					<option value="<?php echo $operadora; ?>"><?php echo $nome_operadora; ?></option>
 				<?php
 
 					}else{
@@ -482,11 +487,17 @@ function mostraCidades(str) {
 				<?php
 					}
 				?>
-					<option value="VIVO">VIVO</option>
-					<option value="TIM">TIM</option>
-					<option value="Claro">Claro</option>
-					<option value="Oi">Oi</option>
-					<option value="Nextel">Nextel</option>						
+
+
+					<?php
+						foreach ($operadoras as $operadoraS) {
+							if($operadoraS->id_operadora != $operadora){
+					?>
+							<option value="<?php  echo $operadoraS->id_operadora ?>"><?php  echo $operadoraS->nome_operadora ?></option>
+					<?php
+							}//fim do if para cidades iguais...
+						}//fim do foreach das cidades do estado carregado
+					?>								
 				</select>
 		<div class="error"><?php echo form_error('cidade_nascimento'); ?></div>
 

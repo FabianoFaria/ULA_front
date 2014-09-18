@@ -202,7 +202,7 @@ $().ready(function() {
 
 					}else {
 				?>
-					<option value="33" select="true">BRASIL</option>
+					<option value="33" select="true">Brasil</option>
 				<?php
 					}
 				?>

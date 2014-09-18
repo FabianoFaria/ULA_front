@@ -36,6 +36,8 @@ class Detalhes_documento_model extends CI_Model {
         //, tbl_estados.nome_estado, tbl_cidades.nome as cidade_nome
        // $this->db->join('tbl_estados', 'tbl_estados.id_estado = tbl_addr.state');
        // $this->db->join('tbl_cidades', 'tbl_addr.city = tbl_cidades.id' );
+        $this->db->join('tbl_wrs_addr', 'tbl_wrs_addr.id_addr != tbl_addr.ID_addr');
+        //$this->db->where('tbl_addr.ID_addr !=','tbl_wrs_addr.id_addr');
         $this->db->where('ROW_ID', $idRow); 
     	$endereco =	$this->db->get('tbl_addr');
 
@@ -143,6 +145,7 @@ class Detalhes_documento_model extends CI_Model {
         $this->db->join('tbl_pais','tbl_pais.Id_pais = tbl_contact.birth_country');
        // $this->db->join('tbl_estados','tbl_estados.id_estado = tbl_contact.birth_state');
        // $this->db->join('tbl_cidades','tbl_cidades.id = tbl_contact.birth_city');
+        $this->db->join('tbl_operadora','tbl_operadora.id_operadora = tbl_contact.operadora', 'left');
         $haul = $this->db->get_where('tbl_contact', array('ID_contact' => $id_Contato));
         return $haul->result();
     }

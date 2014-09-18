@@ -134,6 +134,13 @@ class Novo_documento_model extends CI_Model {
         return $query->result();
     }
 
+    function load_operadoras()
+    {
+        $this->db->where('deletado', 0);
+        $query = $this->db->get('tbl_operadora');
+        return $query->result();
+    }
+
     function load_marcas_veiculo($id)
     {
         $this->db->select('tpve_cod, tbl_marcas.marc_cod, marc_nome');
