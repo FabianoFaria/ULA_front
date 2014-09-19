@@ -115,6 +115,7 @@ class Continuando_documento extends CI_Controller {
         $data['estados'] = $this->documentoModel->load_estados();
         $data['cidades'] = $this->documentoModel->load_cidades();
         $data['operadoras'] = $this->documentoModel->load_operadoras();
+        $data['endereco'] = null;
 
         //var_dump($data['operadoras']);
         //die;

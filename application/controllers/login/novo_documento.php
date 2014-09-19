@@ -365,7 +365,7 @@ class Novo_documento extends CI_Controller {
              $dataEnvolvido['father'] = $this->input->post('nome_pai');
              $dataEnvolvido['mother'] = $this->input->post('nome_mae');
              $dataEnvolvido['birth_dt'] = $finalDate;
-             $dataEnvolvido['endereco_contato'] = $this->input->post('endereco_contato');
+             //$dataEnvolvido['endereco_contato'] = $this->input->post('endereco_contato');
              $dataEnvolvido['birth_city'] = $this->input->post('cidade_nascimento');
              $dataEnvolvido['birth_state'] = $this->input->post('estado_nascimento');
              $dataEnvolvido['birth_country'] = $this->input->post('pais_nascimento');
@@ -378,20 +378,29 @@ class Novo_documento extends CI_Controller {
 
              //Dados para salvar os dados do endereço do envolvido...
 
+
+             $dataAdr['ID_addr'] = null;
+             if($this->input->post('row_id') != ""){
+                $dataAdr['ID_addr'] = $this->input->post('Addr_id');
+             }
+
              $dataAdr['ROW_ID'] = $this->input->post('row_id');
-             $dataAdr['address'] = $this->input->post('endereco');
-             $dataAdr['nunber'] = $this->input->post('numero_addr');
+             $dataAdr['address'] = $this->input->post('endereco_contato');
+             $dataAdr['nunber'] = $this->input->post('numero_addr_contato');
              $dataAdr['complement'] = $this->input->post('complemento');
              $dataAdr['district'] = $this->input->post('bairro');
-             $dataAdr['country'] = $this->input->post('pais_apr');
+             $dataAdr['country'] = $this->input->post('pais_detido');
              $dataAdr['city'] = $this->input->post('cidade_apr');
              $dataAdr['state'] = $this->input->post('estado_apr');
              $dataAdr['zipcode'] = $this->input->post('CEP');
              $dataAdr['CREATED_BY'] = $user_name;
              $dataAdr['CREATED'] = $dataAtualizacao;
+             $dataAdr['UPDATE_BY'] = $user_name;
+             $dataAdr['LAST_UPDATE'] = $dataAtualizacao;
 
-             //var_dump($dataEnvolvido['CPF']);
+             //var_dump($dataAdr);
              //die;
+
 
             $Row_Deti = 0;
              if($this->input->post('contact_id') != null)
@@ -425,6 +434,46 @@ class Novo_documento extends CI_Controller {
                             $Novo_main = $this->documentoModel->cadastrar_main($row_main);
 
             }
+
+            ///Inicio do cadastro do endereço do detido
+
+            //Cadastrar o endereço do deposito...
+
+            if($dataAdr['ID_addr'] != null)
+            {
+                $this->atualizarDoct->atualizar_endereco_wrs($dataAdr);
+
+                $wrs_addr = $dataAdr['ID_addr'];
+                $id_temp_addr = $wrs_addr;
+            }else{
+                $wrs_addr = $this->documentoModel->cadastrar_endereco_wrs($dataAdr);
+
+                $rowOBJAddr = $wrs_addr[0];
+                $id_temp_addr = $rowOBJAddr->ID_addr;
+            }
+
+
+            //Salvar relação na tabela tbl_wrs_addr...
+            //$rowOBJ = $Row_Depo[0];
+            $id_temp_wrs = $rowOBJ->ID_wrs;
+
+
+
+            if(($param != 0) && ($id_temp_addr != 0))
+            {
+                $con_adrr['id_con'] = $param;
+                $con_adrr['id_addr'] = $id_temp_addr;
+                $con_adrr['CREATED_BY'] = $user_name;
+                $con_adrr['CREATED'] = $dataAtualizacao;
+                $con_adrr['UPDATED_BY'] =  $user_name;
+                $con_adrr['LAST_UPDATE'] = $dataAtualizacao;
+
+                $wrs_addr = $this->documentoModel->cadastra_con_addr($con_adrr);
+            }
+
+             ///fim do cadastro do endereço do detido
+
+
             if($Row_Deti != 0)
             {
                 redirect('/detalhes_documento/getTheRow/'.$this->input->post('row_id').'');

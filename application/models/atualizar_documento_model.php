@@ -210,7 +210,7 @@ class Atualizar_documento_model extends CI_Model {
             'father' => $data['father'],
             'mother' => $data['mother'],
             'birth_dt' => $data['birth_dt'],
-            'endereco_contato' => $data['endereco_contato'],
+            //'endereco_contato' => $data['endereco_contato'],
             'birth_city' => $data['birth_city'],
             'birth_state' => $data['birth_state'],
             'birth_country' => $data['birth_country'],
@@ -328,8 +328,17 @@ class Atualizar_documento_model extends CI_Model {
 
     public function deleta_pessoas($id_contact)
     {
+        //$this->db->where('ID_contact', $id_contact);
+        //$this->db->delete('tbl_contact');
+
+        //return true;
+
+        $data = array(
+            'deletado' => 1
+            );
+
         $this->db->where('ID_contact', $id_contact);
-        $this->db->delete('tbl_contact');
+        $this->db->update('tbl_contact', $data); 
 
         return true;
 

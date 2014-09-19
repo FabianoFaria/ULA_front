@@ -81,7 +81,7 @@ $().ready(function() {
 		},
 		messages: {
 			nomeD: {
-				required: "Nome do emvolvido é oblrigatorio",
+				required: "Nome do envolvido é oblrigatorio",
 				minlength: "Nome do envolvido deve ter pelo menos 3 caracteres..."
 			},
 			CPF: {
@@ -142,37 +142,35 @@ function mostraCidades(str) {
 	xmlhttp.send();
 	}
 
+
+function mostraCidadesB(str) {
+	if (str=="") {
+		document.getElementById("cidade_apr").innerHTML="";
+		return;
+				}
+	if (window.XMLHttpRequest) {
+		// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp=new XMLHttpRequest();
+		} else { // code for IE6, IE5
+			xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+			}
+	xmlhttp.onreadystatechange=function() {
+		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+			document.getElementById("cidade_apr").innerHTML=xmlhttp.responseText;
+		}
+	}
+	xmlhttp.open("GET","<?php echo base_url(); ?>index.php/login/novo_documento/chamaCidade/"+str,true);
+	xmlhttp.send();
+	}
+
 </script>
 
 <div class="row sem_margin">
 	<?php
 
-		
-			$arrayE = array();
-			$arrayC = array();
-			$arrayCategoria = array('A','B','C','D');
-			$arrayModelo = array('A','B','C','D');
-			$arrayMarca = array('A','B','C','D');
-
-			foreach ($documento as $doc) {
-				$Ipl = $doc->IPL;
-			}
-
-			//foreach ($endereco as $addr) {
-			//	$id_addr = $addr->ID_addr;
-			//}
-
-			foreach ($estados as $estado): {
-								    		
-				$arrayE[] = $estado->nome_estado;
-
-			}endforeach;
-
-			foreach ($cidades as $cidade): { /*Implementar ajax aqui!!!!*/
-								    		
-				$arrayC[] = $cidade->nome;
-
-			}endforeach;
+		foreach ($documento as $doc) {
+			$Ipl = $doc->IPL;
+		}
 
 		//Os dados dos estados e cidades são carregados separadamente
 		if($cidadeAdr != null)
@@ -214,7 +212,7 @@ function mostraCidades(str) {
 				$birth_country = $cont->birth_country;
 				$country_id = $cont->birth_country;
 				$country_name = $cont->nome_pais;
-				$endereco_detido = $cont->endereco_contato;
+				//$endereco_detido = $cont->endereco_contato;
 				//$id_cidade = $cont->id;
 				//$cidade = $cont->nome;
 				//$id_estado = $cont->id_estado;
@@ -222,7 +220,6 @@ function mostraCidades(str) {
 				 //public 'id_operadora' => string '1' (length=1)
       			 //public 'nome_operadora' => string 'Tim' (length=3)
       			 //public 'logo' => null
-
 
 				$telefone = $cont->telefone;
 				$marca_telefone = $cont->marca_telefone;
@@ -252,6 +249,7 @@ function mostraCidades(str) {
 		    	{
 		    		$dataF = "";
 		    	}
+
 			}
 		}else
 		{
@@ -285,6 +283,43 @@ function mostraCidades(str) {
 			$pais = null;
 			$dataF = "";
 		}
+
+		if($endereco != null)
+		{	
+			foreach( $endereco as $end_det)
+			{	
+				$id_addr = $end_det->ID_addr;
+				$id_pais_det = $end_det->Id_pais;
+				$nome_pais_det = $end_det->nome_pais;
+				$id_estado_det = $end_det->state;
+				$estado_det = $end_det->nome_estado;
+				$id_cidade_det = $end_det->city;
+				$cidade_det = $end_det->nome;
+
+				$endereco_det = $end_det->address;
+				$numero_det = $end_det->nunber;
+				$complemento_det = $end_det->complement;
+				$distrito_det = $end_det->district;
+				$cep_det = $end_det->zipcode;
+			}
+		}
+		else{
+			$id_pais_det = null;
+			$nome_pais_det = null;
+			$id_estado_det = null;
+			$estado_det = null;
+			$id_cidade_det = null;
+			$cidade_det = null;
+
+			$endereco_det = null;
+			$numero_det = null;
+			$complemento_det = null;
+			$distrito_det = null;
+			$cep_det = null;
+			$id_addr = null;
+		}
+
+
 		//var_dump($contato);
 		//die;
 
@@ -308,7 +343,7 @@ function mostraCidades(str) {
 			});
 		</script>
 
-		<h2><?php echo $titulo; ?> Dados dos detidos :<a href="<?php echo base_url("/index.php/detalhes_documento/getTheRow/".$id_Row.""); ?>"><?php echo $Ipl; ?></a>
+		<h2><?php echo $titulo; ?> Dados do detido :<a href="<?php echo base_url("/index.php/detalhes_documento/getTheRow/".$id_Row.""); ?>"><?php echo $Ipl; ?></a>
 </h2>
 	<hr>
 	
@@ -449,41 +484,40 @@ function mostraCidades(str) {
 				</select>
 		<div class="error"></div>
 
-		
 
 		<br>
 		<hr>
-		<h3>Dados de Endereço do Detido :</h3>
+		<h3>Dados do endereço do detido :</h3>
 		<br>
 
 		<label for="endereco_contato">Endereço :</label><br/>
-		<input type="text" name="endereco_contato" id="endereco_contato" value="<?php echo $endereco_detido; ?>"/>
+		<input type="text" name="endereco_contato" id="endereco_contato" value="<?php echo $endereco_det; ?>"/>
 		<div class="error"></div>
 
-		<label for="numero_addr">Numero:</label><br/>
-		<input type="text" name="numero_addr" value="<?php // echo $numero; ?>"/>
+		<label for="numero_addr_contato">Numero:</label><br/>
+		<input type="text" name="numero_addr_contato" value="<?php  echo $numero_det; ?>"/>
 		<div class="error"></div>
 
-		<label for="complemento">Complemento:</label><br/>
-		<input type="text" name="complemento" value="<?php //echo $complemento; ?>"/>
+		<label for="complemento_contato">Complemento:</label><br/>
+		<input type="text" name="complemento" value="<?php echo $complemento_det; ?>"/>
 		<div class="error"></div>
 
 		<label for="bairro">Bairro:</label><br/>
-		<input type="text" name="bairro" value="<?php //echo $bairro; ?>"/>
+		<input type="text" name="bairro" value="<?php echo $distrito_det; ?>"/>
 		<div class="error"></div>
 
 		<label for="CEP">CEP:</label><br/>
-		<input type="text" name="CEP" value="<?php //echo $CEP; ?>"/>
+		<input type="text" name="CEP" value="<?php echo $cep_det; ?>"/>
 		<div class="error"></div>
 
-		<label for="pais_nascimento">Pais de nascimento :</label><br/>
-			<select name="pais_nascimento" id="pais_nascimento" onchange="mostraEstCID(this.value)">
+		<label for="pais_detido">Pais de nascimento :</label><br/>
+			<select name="pais_detido" id="pais_detido" onchange="mostraEstCID(this.value)">
 					
 				<?php
-					if( $country_id != null)
+					if( $id_pais_det != null)
 					{
 				?>
-					<option value="<?php echo $country_id; ?>"><?php echo $country_name ?></option>
+					<option value="<?php echo $id_pais_det; ?>"><?php echo $nome_pais_det; ?></option>
 				<?php
 
 					}else {
@@ -498,11 +532,14 @@ function mostraCidades(str) {
 					foreach ($paises as $pais): {
 									    		
 						// $arrayE[] = $estado->nome;
+						if($id_pais_det != $pais->Id_pais)
+						{
 				?>
 
 					<option value="<?php echo $pais->Id_pais; ?>"><?php echo $pais->nome_pais; ?></option>
 
 				<?php
+						}
 
 					}endforeach;
 
@@ -511,13 +548,13 @@ function mostraCidades(str) {
 
 		<div class="error"></div>
 
-		<label for="estado_nascimento">Estado de nascimento :</label><br/>
-			<select name="estado_nascimento" id="estado_nascimento" onchange="mostraCidades(this.value)">
+		<label for="estado_apr">Estado :</label><br/>
+			<select name="estado_apr" id="estado_apr" onchange="mostraCidadesB(this.value)">
 				<?php
-					if( $id_estado != null)
+					if( $id_estado_det != null)
 					{
 				?>
-					<option value="<?php echo $id_estado; ?>"><?php echo $estado ?></option>
+					<option value="<?php echo $id_estado_det; ?>"><?php echo $estado_det ?></option>
 				<?php
 
 					}else{
@@ -525,14 +562,14 @@ function mostraCidades(str) {
 					<option value="" selected="true">Selecione um estado:</option>
 				<?php
 					}
-				?>				
+				?>	
 
 				<?php
 
 					foreach ($estados as $estado): {
 									    		
 							// $arrayE[] = $estado->nome;
-					if($estado->id_estado != $id_estado)
+					if($estado->id_estado != $id_estado_det)
 					{
 				?>
 
@@ -549,18 +586,19 @@ function mostraCidades(str) {
 			</select>
 			<div class="error"></div>
 
-		<label for="cidade_nascimento">Cidade de nascimento :</label><br/>
-			<select id="cidade_nascimento" name="cidade_nascimento">
+		<label for="cidade_apr">Cidade :</label><br/>
+			<select id="cidade_apr" name="cidade_apr">
 				<?php
-						if($id_cidade != null)
+
+						if($id_cidade_det != null)
 						{
 
 					?>
-						<option selected="true" value="<?php echo $id_cidade; ?>"><?php echo $cidade ?></option>
+						<option selected="true" value="<?php echo $id_cidade_det; ?>"><?php echo $cidade_det ?></option>
 
 					<?php
-						foreach ($cidadesSingle as $city) {
-							if($city->id != $id_cidade){
+						foreach ($estadoDet as $city) {
+							if($city->id != $id_cidade_det){
 					?>
 							<option value="<?php  echo $city->id ?>"><?php  echo $city->nome ?></option>
 					<?php
@@ -575,14 +613,14 @@ function mostraCidades(str) {
 					?>							
 				</select>
 		<div class="error"></div> 
-		<input type="hidden" name="Addr_id" value="<?php //echo $id_contact; ?>" />
+		<input type="hidden" name="Addr_id" value="<?php echo $id_addr; ?>" />
 
 
 
 
 
 		<hr>
-		<h3>Dados de contato do Detido :</h3>
+		<h3>Dados de contato do detido :</h3>
 		<br>
 
 		<label for="telefone">Telefone :</label><br/>

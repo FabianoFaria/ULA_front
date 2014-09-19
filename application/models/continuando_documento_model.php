@@ -38,6 +38,20 @@ class Continuando_documento_model extends CI_Model {
         return $queryDoct->result();
     }
 
+    public function load_endereco_contato($idRow, $row_contact)
+    { 
+        $this->db->select('*');
+        $this->db->join('tbl_pais','tbl_pais.Id_pais = tbl_addr.country');
+        $this->db->join('tbl_cidades','tbl_cidades.id = tbl_addr.city', 'left');
+        $this->db->join('tbl_estados','tbl_estados.id_estado = tbl_addr.state', 'left');
+        $this->db->join('tbl_con_addr', 'tbl_con_addr.id_addr = tbl_addr.ID_addr', 'left');
+        $this->db->join('tbl_contact', 'tbl_contact.ID_contact = tbl_con_addr.id_con', 'left');
+        $this->db->where('tbl_contact.name !=', "");
+        $this->db->where('tbl_contact.ID_contact', $row_contact);
+        $queryDoct = $this->db->get_where('tbl_addr', array('tbl_addr.ROW_ID' => $idRow));
+        return $queryDoct->result();
+    }
+
     public function load_endereco_wrs($idRow)
     {
         $this->db->select('*');

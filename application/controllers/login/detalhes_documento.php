@@ -189,13 +189,22 @@ class Detalhes_documento extends CI_Controller {
         $data['estados'] = $this->documentoModel->load_estados(); 
         $data['cidades'] = $this->documentoModel->load_cidades();
         $data['operadoras'] = $this->documentoModel->load_operadoras();
-        $data['endereco'] = $this->Cont_doct->load_endereco($row_id);
+        $data['endereco'] = $this->Cont_doct->load_endereco_contato($row_id, $row_contact);
         $data['contato'] =  $this->DetalhesModel->load_single_contato($row_contact);
         $data['cidadeAdr'] = null;
         $data['estadoAdr'] = null;
+        $data['estadoDet'] = null;
 
-        //($data['contato']);
+        //var_dump($data['endereco']);
         //die;
+
+        if( $data['endereco'] != null)
+        {
+             $data['estadoDet'] = $this->documentoModel->load_city_estado($data['endereco'][0]->state);
+        }else
+        {
+             $data['estadoDet'] = null;    
+        }
 
         if(!empty($data['contato']))
         {

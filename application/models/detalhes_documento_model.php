@@ -89,6 +89,7 @@ class Detalhes_documento_model extends CI_Model {
 
     public function load_Contato($idRow)
     {
+        $this->db->where('deletado', 0);
     	$envolvidos = $this->db->get_where('tbl_contact', array('ROW_ID' => $idRow));
     	return $envolvidos->result();
     }

@@ -61,7 +61,15 @@ class Novo_documento_model extends CI_Model {
         return $RowEnderecoWrs->result();
     }
 
-    function cadastra_wrs_addr($wrs_adrr) {
+    function cadastra_con_addr($con_adrr) {
+        $this->db->insert('tbl_con_addr', $con_adrr);
+        $this->db->select_max('id_con_addr');
+        $conAddr = $this->db->get('tbl_con_addr');
+
+        return $conAddr->result();
+    }
+
+     function cadastra_wrs_addr($wrs_adrr) {
         $this->db->insert('tbl_wrs_addr', $wrs_adrr);
         $this->db->select_max('id_wrs_addr');
         $wrsAddr = $this->db->get('tbl_wrs_addr');
