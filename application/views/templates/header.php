@@ -36,17 +36,13 @@
 		<div class="row sem_margin">
 
             <div class="navbar navbar-inverse box_user" role="navigation">
-              <div class="container-fluid">
-                <div class="navbar-header">
-                  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                  </button>
-                  <a class="navbar-brand" href="<?php echo base_url("/index.php/area_restrita"); ?>"><h2>Sistema de registro de apreensão</h2></a>
+              <div class="row sem_margin">
+                <div class=" col-md-3">
+                  <a class="navbar-brand" href="<?php echo base_url("/index.php/area_restrita"); ?>"><h3>Sistema de registro de apreensão</h3></a>
                 </div>
-                <div class="navbar-collapse collapse">
+                <div class="col-md-3">
+                </div>
+                <div class="navbar-collapse collapse col-md-6">
                     <?php
 
                     $user_name = "p";
@@ -56,11 +52,26 @@
 
                     if($user_name != "p")
                     {  ?>
-                      <ul class="nav navbar-nav navbar-right">
+                      <ul class="nav navbar-nav navbar-right nav-pills">
                         <li><a href="#">Dashboard</a></li>
-                        <li><a href="#">Settings</a></li>
-                        <li><a href="#">Perfil <?php echo $user_name; ?></a></li>
-                        <li><a href="<?php echo base_url("/index.php/logout"); ?>">Sair</a></li>
+                        <li>
+                            <a id="drop4" href="#" data-toggle="dropdown" role="button">Cadastro<span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                              <li>Produtos</li>
+                              <li>Marcas</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a id="drop4" href="#" data-toggle="dropdown" role="button"><?php echo $user_name; ?> <i class="fa fa-user"></i><span class="caret"></span></a>
+                            <ul id="menu1" class="dropdown-menu" aria-labelledby="drop4" role="menu">
+                              <li>Perfil</li>
+                              <li>Configuração</li>
+                            </ul>
+
+                        </li>
+
+                        <li><a href="<?php echo base_url("/index.php/logout"); ?>">Sair <i class="fa fa-times"></i>
+</a></li>
                       </ul>
                       <form class="navbar-form navbar-right">
                         <input type="text" class="form-control" placeholder="Pesquisar...">

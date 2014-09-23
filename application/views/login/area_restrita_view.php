@@ -1,12 +1,9 @@
 <div class="row sem_margin">
-        <div class="col-md-12 col-sm-12 col-xs-12 main-menu">
-
-                <h2>Área restrita</h2>
-                <div class="row">
-                    <div class="col-md-3 col-sm-3 col-xs-3 lista-menu  sidebar">
-
-                        <ul class="nav nav-sidebar">
-                                
+        <div class="col-md-12 col-sm-12 col-xs-12 main-menu sem_margin sem_padding">
+                <div class="row sem_margin altura-min">
+                    <div class="col-md-2 col-sm-2 col-xs-2 lista-menu  sidebar sem_margin">
+                        <h2>Área restrita</h2>
+                        <ul class="nav nav-sidebar"> 
                                 <?php
                                 //trecho para habilitar ou não a edição de conteudo
                                 if( ($this->session->userdata('status')) <= 1 )
@@ -33,15 +30,17 @@
                         <br>
                        
                     </div> <!-- fim da classe lista-menu -->
-                    <div class="col-md-3 col-sm-3 col-xs-3">
-                    </div>
-                    <div class="col-md-6 col-sm-6 col-xs-6 lista-menu table-responsive">
+                    <div class="col-md-10 col-sm-10 col-xs-10 lista-ipls table-responsive">
                         <h3>Ultimos documentos cadastrados</h3>
                         <table class="table table-striped">
                           <thead>
                             <tr>
-                              <th>Nome/numero IPL</th>
                               <th>Ação</th>
+                              <th>Nome/numero IPL</th>
+                              <th>Origem</th>
+                              <th>Data</th>
+                              
+                              
                             </tr>
                           </thead>
                           <tbody>
@@ -59,10 +58,29 @@
                                 {
 
                                         foreach ($result as $doc) {
+
+
+                                            //var_dump($doc);
+                                            //die;
+
+
+                                            $dataTemp = explode(" ", $doc->arrest_date);
+                                            $dataEx2 = explode("-", $dataTemp[0]);
+                                            $month2 = $dataEx2[1];
+                                            $day2 = $dataEx2[2];
+                                            $year2 = $dataEx2[0];
+
+                                            $data_aprensao = $day2."/".$month2."/".$year2;
+
                                         
                                 ?>
                                 <tr>
-                                    <td><?php echo $doc->IPL; ?></td><td><a href="<?php echo base_url(); ?>index.php/detalhes_documento/getTheRow/<?php echo $doc->ROW_ID; ?>">Editar Documento</a> | <a href="<?php echo base_url("index.php/deletar_documento/".$doc->ROW_ID.""); ?>">Apagar documento</a> </td>
+                                   <td><a href="<?php echo base_url(); ?>index.php/detalhes_documento/getTheRow/<?php echo $doc->ROW_ID; ?>">Editar</a> | <a href="<?php echo base_url("index.php/deletar_documento/".$doc->ROW_ID.""); ?>">Excluir</a> </td>
+                                   <td><?php echo $doc->IPL; ?></td>
+                                   <td><?php echo $doc->qualification; ?></td>
+                                   <td><?php echo $data_aprensao ?></td>
+                                   
+                                 
                                 </tr>
                                 <?php
                                         }//fim do foreach...

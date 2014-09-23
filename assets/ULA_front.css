@@ -16,6 +16,7 @@ hr
 {
 	size: 3px;
 }
+
 /* div do header do titulo  */
 .box_header
 {
@@ -31,10 +32,16 @@ hr
 	border-radius: 0px !important;
 	border:  0px #cccccc !important;
 	height: 120px;
+	margin-bottom: 0 !important;
 }
+
 .navbar-inverse .navbar-nav > li > a
 {
-	color: #000000 !important;
+	color: #ffffff;
+}
+.navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus
+{
+	background-color: #172D3A !important;
 }
 
 .box_user h2 
@@ -42,9 +49,16 @@ hr
 	color: #000000;
 }
 
+.box_user h3
+{
+	text-align: center;
+	color: #000000;
+}
+
 .box_user h4 
 {
 	text-align: center;
+	color: #000000;
 }
 
 
@@ -52,6 +66,7 @@ hr
 .main-menu
 {
 	min-height: 450px;
+	margin-bottom: 0px;
 }
 
 
@@ -85,6 +100,14 @@ hr
 	padding-right: 0px !important;
 }
 
+/*Menu pagina principla*/
+
+.lista-menu
+{
+	background-color: #e6e6e6;
+	height: 100%;
+}
+
 /* Tableas */
 
 .detalhesIPL 
@@ -98,7 +121,7 @@ th
 	border:  2px solid #edefef;
 	color: #000000;
 	height: 35px;
-	min-width: 200px;
+	min-width: 155px;
 	padding: 15px;
 
 }
@@ -127,6 +150,11 @@ td {
 .mercadorias_list th
 {
 	min-width: 120px;
+}
+
+.altura-min
+{
+	min-height: 300px;
 }
 
 /***** classe imagem */

@@ -20,8 +20,13 @@ class Atualizar_documento_model extends CI_Model {
         //retorna os documentos que estão ativos no banco de dados...
 
         $this->db->limit($limit, $start);
-        $this->db->order_by("ROW_ID", "desc");
-        $this->db->where('status_doct', 0);
+        $this->db->order_by("tbl_doct.ROW_ID", "desc");
+        //$this->db->join('tbl_main','tbl_main.parent_id = tbl_doct.ROW_ID', 'full outer');
+        //$this->db->join('tbl_addr','tbl_addr.ID_addr = tbl_main.CHILD_ID' , 'left');
+        //$this->db->join('tbl_estados','tbl_estados.id_estado = tbl_addr.state', 'left');
+        //$this->db->join('tbl_cidades','tbl_cidades.id = tbl_addr.city', 'left');
+        //$this->db->where('tbl_main.CHILD_TBL','tbl_addr');
+        $this->db->where('tbl_doct.status_doct', 0);
         $query = $this->db->get('tbl_doct');
 
         if($query->num_rows() > 0)
