@@ -55,17 +55,29 @@
                       <ul class="nav navbar-nav navbar-right nav-pills">
                         <li><a href="#">Dashboard</a></li>
                         <li>
-                            <a id="drop4" href="#" data-toggle="dropdown" role="button">Cadastro<span class="caret"></span></a>
+                            <a id="drop4" href="#" data-toggle="dropdown" role="button">Cadastro <i class="fa fa-plus-circle"></i>
+<span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                              <li>Produtos</li>
-                              <li>Marcas</li>
+                              <li role="presentation">
+                                <a href="<?php echo base_url("/index.php/logout"); ?>"><i class="fa fa-cubes"></i>
+ Produtos</a>
+                              </li>
+                              <li role="presentation">
+                                <a href="<?php echo base_url("/index.php/logout"); ?>"><i class="fa fa-cubes"></i>
+ Marcas</a>
+                              </li>
                             </ul>
                         </li>
                         <li>
                             <a id="drop4" href="#" data-toggle="dropdown" role="button"><?php echo $user_name; ?> <i class="fa fa-user"></i><span class="caret"></span></a>
                             <ul id="menu1" class="dropdown-menu" aria-labelledby="drop4" role="menu">
-                              <li>Perfil</li>
-                              <li>Configuração</li>
+                              <li role="presentation">
+                                <a href="<?php echo base_url("/index.php/logout"); ?>"><i class="fa fa-user"></i> Perfil </a>
+                              </li>
+                              <li role="presentation">
+                                <a href="<?php echo base_url("/index.php/logout"); ?>"><i class="fa fa-cogs"></i>
+ Configuração</a>
+                              </li>
                             </ul>
 
                         </li>
