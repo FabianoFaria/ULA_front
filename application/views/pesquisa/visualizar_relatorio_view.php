@@ -30,6 +30,9 @@
 
 
     </div> 
+    <?php
+        if($ocorrencia['endereco'][0] != ""){
+    ?>
     <div class="col-md-6 col-sm-6 col-xs-6">
         <h3>Endereço da ocorrencia</h3>
         <p>Cidade da ocorrencia : <?php echo $ocorrencia['endereco'][0]->nome_estado ?></p>
@@ -41,7 +44,10 @@
 
 
         
-    </div>    
+    </div>   
+    <?php
+        } 
+    ?> 
 
     <div class="row sem_margin">   
 

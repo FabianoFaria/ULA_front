@@ -1,3 +1,49 @@
+<script>
+$(document).ready(function () {
+
+    jQuery.validator.addMethod('comparedata', function (value, element, param) {
+        var date1=document.getElementById("dataInicial").value;
+        var date2=document.getElementById("dataFinal").value;
+
+        if ($.datepicker.parseDate('dd/mm/yy', date2) > $.datepicker.parseDate('dd/mm/yy', date1)) {
+            return true;
+        }else
+            return false;
+
+    }, 'Data fina deve ser maior que data inicial');
+
+});
+
+
+$().ready(function() {
+    // validate signup form on keyup and submit
+    $("#form-relatorio-ipl").validate({
+        rules: {
+            dataInicial: {
+                required: true      
+            },
+            dataFinal: {
+                required: true,
+                comparedata: true
+            }
+        },
+        messages: {
+            dataInicial: {
+                required: "Data inicial é obrigatorio"
+            },
+            dataFinal: {
+                required: "Data final é obrigatorio",
+                comparedata: "Data final menor que data inicial"
+            }
+        }
+
+    });
+});
+     $( "#form-relatorio-ipl" ).submit(function( event ) {
+    alert( "Cadastro será enviado para avaliação!, você será redirecionado para a pagina principal" );
+    event.preventDefault();
+    });
+</script>
 <?php
         
         $thisYear = date('Y');
@@ -7,18 +53,40 @@
 
 <div class="row sem_margin">
         <script>
-                $(function() {
+               $(function() {
 
-                $( "#primeira_data" ).datepicker();
-                $.datepicker.formatDate( "yy-mm-dd" );
+            //$( "#datepicker" ).datepicker();
+            //$.datepicker.formatDate( "dd-mm-yy" );
+            $("#dataFinal").datepicker({
+                dateFormat: 'dd/mm/yy',
+                dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado','Domingo'],
+                dayNamesMin: ['D','S','T','Q','Q','S','S','D'],
+                dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb','Dom'],
+                monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+                monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
+                maxDate: 0,
+                changeMonth: true,
+                changeYear: true
                 });
+            });
         </script>
         <script>
-                $(function() {
+               $(function() {
 
-                $( "#segunda_data" ).datepicker();
-                $.datepicker.formatDate( "yy-mm-dd" );
+            //$( "#datepicker" ).datepicker();
+            //$.datepicker.formatDate( "dd-mm-yy" );
+            $("#dataInicial").datepicker({
+                dateFormat: 'dd/mm/yy',
+                dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado','Domingo'],
+                dayNamesMin: ['D','S','T','Q','Q','S','S','D'],
+                dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb','Dom'],
+                monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+                monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
+                maxDate: 0,
+                changeMonth: true,
+                changeYear: true
                 });
+            });
         </script>
         <div class="col-md-12 col-sm-12 col-xs-12 main-menu">
         	<div class="row">
@@ -29,37 +97,20 @@
 
                         <h3>Pesquise documentos por datas</h3>
                         <br>
-                        <form action="pesquisa/relatorios_gen/visualizarRel" id="form-update-ipl" method="post">
-                                
-                               <label for="anoRelatorio">Selecione o ano:</label><br/>
-                               <select name="anoRelatorio" id="anoRelatorio">
-                                <?php
-                                        for($i =0 ; $i<5; $i++)
-                                        {
-                                                echo "<option value='".(date('Y') - $i)."'>".(date('Y') - $i)."</option>";
-                                        }
-                                ?>
-     
-                               </select>
-                        <br>
+                        <form action="pesquisa/relatorios_gen/visualizarRel" id="form-relatorio-ipl" method="post">
                         
-                                <label for="mesRelatorio">Selecione o mês:</label><br/>
-                                <select name="mesRelatorio" id="mesRelatorio">
-                                        <option value="1">Janeiro</option>
-                                        <option value="2">Fevereiro</option>
-                                        <option value="3">Março</option>
-                                        <option value="4">Abril</option>
-                                        <option value="5">Maio</option>
-                                        <option value="6">Junho</option>
-                                        <option value="7">Julho</option>
-                                        <option value="8">Agosto</option>
-                                        <option value="9">Setembro</option>
-                                        <option value="10">Outubro</option>
-                                        <option value="11">Novembro</option>
-                                        <option value="12">Dezembro</option>
-                               </select>
                                <br>
-                               <br>
+
+                               <label for="dataInicial">Data inicial :</label><br/>
+                                <input id="dataInicial" type="text" name="dataInicial" value=""/>
+                                <div class="error"></div>
+
+
+                               <label for="dataFinal">Data final :</label><br/>
+                                <input id="dataFinal" type="text" name="dataFinal" value=""/>
+                                <div class="error"></div>
+
+
                                <input type="submit" name="Visualizar" value="Vizualizar Relatorio" />
                         </form>
 

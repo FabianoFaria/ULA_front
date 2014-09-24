@@ -47,56 +47,39 @@ class Relatorios_gen extends CI_Controller {
 
     public function visualizarRel()
     {
-       
-        $mes = $this->input->post('mesRelatorio');
-        $ano =  $this->input->post('anoRelatorio');
-        $diaI = 01;
-        $diaF = 29;
+        $dataIni = $this->input->post('dataInicial');
+        $dataFim = $this->input->post('dataFinal');
 
-        switch ($mes) {
-            case '1':
-                 $diaF = 31;
-                break;
-             case '2':
-                 $diaF = 28;
-                break;
-             case '3':
-                 $diaF = 31;
-                break;
-             case '4':
-                 $diaF = 30;
-                break;
-             case '5':
-                 $diaF = 31;
-                break;
-             case '6':
-                 $diaF = 30;
-                break;
-             case '7':
-                 $diaF = 31;
-                break;
-             case '8':
-                 $diaF = 31;
-                break;
-             case '9':
-                 $diaF = 30;
-                break;
-             case '10':
-                 $diaF = 31;
-                break;
-             case '11':
-                 $diaF = 30;
-                break;
-             case '12':
-                 $diaF = 31;
-                break;
-            default:
-                $diaF = 30;
-                break;
-        }
 
-        $dataIni = $ano."/".$mes."/".$diaI;
-        $dataFim = $ano."/".$mes."/".$diaF; 
+        //Data inicial...
+        $dataTemp1 = explode("/", $dataIni);
+        $dia1 = $dataTemp1[0];
+        $mes1 = $dataTemp1[1];
+        $ano1 = $dataTemp1[2];
+        $dataFinal1 = $ano1."/".$mes1."/".$dia1;
+
+        //Data final...
+
+        $dataTemp2 = explode("/", $dataFim);
+        $dia2 = $dataTemp2[0];
+        $mes2 = $dataTemp2[1];
+        $ano2 = $dataTemp2[2];
+        $dataFinal2 = $ano2."/".$mes2."/".$dia2;
+
+        //var_dump($dataFinal1);
+        //var_dump($dataFinal2);
+        //die;
+
+        $dataIni = $dataFinal1;
+        $dataFim = $dataFinal2; 
+
+        /*
+            string '08/09/2014' (length=10)
+
+string '24/09/2014' (length=10)
+
+
+        */
 
        // echo $dataIni;
        // echo "</br>";
@@ -122,9 +105,12 @@ class Relatorios_gen extends CI_Controller {
 
            $endereço = $this->relatorio->load_documento_endereco($data->ROW_ID);
             //var_dump($endereço);
-
-           $dataDocumento['endereco'] = $endereço;   
-
+           if($endereço != null) {
+                $dataDocumento['endereco'] = $endereço;   
+            }else
+            {
+                $dataDocumento['endereco'][0] = "";
+            }
             $veiculos = $this->relatorio->load_documento_auto($data->ROW_ID);
             //var_dump($veiculos);
 
