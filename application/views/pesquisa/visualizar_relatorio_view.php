@@ -5,10 +5,11 @@
 ?>
 
 <div class="row sem_margin">
-        <div class="col-md-12 col-sm-12 col-xs-12 main-menu">
+    <div class="col-md-12 col-sm-12 col-xs-12 main-menu">
 
-                <h2>Exibição do relatorio</h2>
-                <div class="row">
+        <h2>Exibição do relatorio</h2>
+        <div class="row">
+    
                     
 <?php
 
@@ -16,11 +17,18 @@
                             
        // var_dump($ocorrencia['veiculos']);
 
+        $dataEx = explode("-", $ocorrencia['documento'][0]->arrest_date);
+            $month = $dataEx[1];
+            $day = $dataEx[2];
+            $year = $dataEx[0];
+
+            $dataF = $day."/".$month."/".$year;
+
 ?>
-    <div class="col-md-6 col-sm-6 col-xs-6">
+    <div class="col-md-6 col-sm-6 col-xs-6 well">
         <h3>Detalhes da ocorrencia</h3>
 
-        <p>Data da ocorrencia : <?php echo $ocorrencia['documento'][0]->arrest_date?></p>
+        <p>Data da ocorrencia : <?php echo $dataF ?></p>
         </br>
         <p>Força de segurança : <?php echo $ocorrencia['documento'][0]->forca_seguranca?></p>
         <p>Nome da operação : <?php echo $ocorrencia['documento'][0]->operation?></p>
@@ -87,26 +95,25 @@
     </div>
 
 
-
-
 <?php
 
         //$dados['dataI'] = $dataIni;
         //$dados['dataF'] = $dataFim;
 
+
     } //Fim do foreach conteudo as ocorrencia....
+
 
 ?>
 
                 <form id="gerar_doc" action="<?php echo base_url() ?>index.php/pesquisa/relatorios_gen/relatorio_mes" method="post">
-                    <input type="hidden" name="dataI" value="<?php echo $dataI; ?>">
-                    <input type="hidden" name="dataF" value="<?php echo $dataF; ?>">
+                    <input type="hidden" name="dataI" value="<?php echo $dataRI; ?>">
+                    <input type="hidden" name="dataF" value="<?php echo $dataRF; ?>">
                     <input type="submit" value="gerar . DOC">
-
                 </form>
 
 
-                </div> <!-- fim do row -->
+            </div> <!-- fim do row -->
                 <br>
                 <br>
                 <br>

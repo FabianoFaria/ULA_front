@@ -50,7 +50,6 @@ class Relatorios_gen extends CI_Controller {
         $dataIni = $this->input->post('dataInicial');
         $dataFim = $this->input->post('dataFinal');
 
-
         //Data inicial...
         $dataTemp1 = explode("/", $dataIni);
         $dia1 = $dataTemp1[0];
@@ -59,7 +58,6 @@ class Relatorios_gen extends CI_Controller {
         $dataFinal1 = $ano1."/".$mes1."/".$dia1;
 
         //Data final...
-
         $dataTemp2 = explode("/", $dataFim);
         $dia2 = $dataTemp2[0];
         $mes2 = $dataTemp2[1];
@@ -103,6 +101,7 @@ string '24/09/2014' (length=10)
 
            $dataDocumento['documento'] = $documento;
 
+           //Endereços....
            $endereço = $this->relatorio->load_documento_endereco($data->ROW_ID);
             //var_dump($endereço);
            if($endereço != null) {
@@ -111,18 +110,53 @@ string '24/09/2014' (length=10)
             {
                 $dataDocumento['endereco'][0] = "";
             }
+            //Mercadorias....
+            $mercadorias = $this->relatorio->load_mercadoria_relatorio($data->ROW_ID);
+             if($mercadorias != null) {
+                $dataDocumento['mercadorias'] = $mercadorias;   
+            }else
+            {
+                $dataDocumento['mercadorias'][0] = "";
+            }
+
+            //Pessoas envolvidas...
+
+            $envolvidos = $this->relatorio->load_documento_envolvidos($data->ROW_ID);
+             if($envolvidos != null) {
+                $dataDocumento['envolvidos'] = $envolvidos;   
+            }else
+            {
+                $dataDocumento['envolvidos'][0] = "";
+            }
+
+            //Veiculos....
             $veiculos = $this->relatorio->load_documento_auto($data->ROW_ID);
             //var_dump($veiculos);
 
             $dataDocumento['veiculos'] = $veiculos;
 
+            //Armazens casas locais...
+
+            $armazens = $this->relatorio->load_documento_envolvidos($data->ROW_ID);
+             if($armazens != null) {
+                $dataDocumento['armazens'] = $armazens;   
+            }else
+            {
+                $dataDocumento['armazens'][0] = "";
+            }
+
+            //Imagens da operação...
+
+
             array_push($dadosArray , $dataDocumento);
         }
-        $dados['dataI'] = $dataIni;
-        $dados['dataF'] = $dataFim; 
+        $dados['dataRI'] = $dataIni;
+        $dados['dataRF'] = $dataFim; 
+
         $dados['conteudo'] = $dadosArray;
 
-        //var_dump($dadosArray);
+        //var_dump($dados['dataF']);
+        //var_dump($dados['dataI']);
         //die;
 
         $this->load->view('templates/header');
@@ -133,10 +167,26 @@ string '24/09/2014' (length=10)
     public function relatorio_mes()
     {
         
-        $dataGeracao = date("d-M-Y H:i:s ");
+        $dataGeracao = date("d/m/Y H:i:s ");
 
-        $dataI = $this->input->post('dataI');
-        $dataF =  $this->input->post('dataF');
+        $dataDateI = $this->input->post('dataI');
+        $dataDateF =  $this->input->post('dataF');
+
+
+
+        $dataEx = explode("/",  $this->input->post('dataI'));
+        $month = $dataEx[1];
+        $day = $dataEx[2];
+        $year = $dataEx[0];
+
+        $dataI = $day."/".$month."/".$year;
+
+        $dataEx2 = explode("/", $this->input->post('dataF'));
+        $month2 = $dataEx2[1];
+        $day2 = $dataEx2[2];
+        $year2 = $dataEx2[0];
+
+        $dataF = $day2."/".$month2."/".$year2;
 
         echo $dataGeracao;
 
@@ -161,13 +211,14 @@ string '24/09/2014' (length=10)
 
         $this->word->addFontStyle('TStyle', array('bold'=>true, 'calibri'=>true, 'size'=>28));
         $this->word->addParagraphStyle('pTStyle', array('align'=>'center', 'spaceAfter'=>100));
-        $section->addText('Relatorio de '.$dataI.' a '.$dataF, 'TStyle', 'pTStyle');
+        $section->addText('Relatorio de apreensao do periodo de :', 'TStyle', 'pTStyle');
+        $section->addText($dataI.' a '.$dataF,  'TStyle', 'pTStyle');
         $section->addTextBreak(15);
 
 
         ////Codigo contendo os dados a serem impressos no documento word...
 
-        $dataRelatorio = $this->relatorio->load_documentos($dataI ,$dataF);
+        $dataRelatorio = $this->relatorio->load_documentos($dataDateI ,$dataDateF);
 
         $dadosArray = array( );
 
@@ -180,13 +231,25 @@ string '24/09/2014' (length=10)
 
             $documento = $this->relatorio->load_documento_completo($data->ROW_ID);
 
+
+            $section->addText('-----------------//------------------------------------//------------------', 'SimStyle');
+            $section->addTextBreak(1);
+
+
             foreach ($documento as $doct) 
             {
+
+                $dataEx3 = explode("-", $doct->arrest_date);
+                $month3 = $dataEx3[1];
+                $day3 = $dataEx3[2];
+                $year3 = $dataEx3[0];
+
+                $dataOcorrencia = $day3."/".$month3."/".$year3;
 
                
                 $section->addText('Detalhes da ocorrencia : '.$doct->IPL ,'SimpleStyle');
                 $section->addTextBreak(1);
-                $section->addText('Data da operacao : '.$doct->arrest_date, 'SimStyle');
+                $section->addText('Data da operacao : '.$dataOcorrencia, 'SimStyle');
                 $section->addTextBreak(1);
                 $section->addText('Forca de seguranca : '.$doct->forca_seguranca, 'SimStyle');
                 $section->addTextBreak(1);
@@ -237,11 +300,17 @@ string '24/09/2014' (length=10)
 
              $veiculos = $this->relatorio->load_documento_auto($data->ROW_ID);
             //var_dump($veiculos);
+              
+
+            if( $veiculos != null){
+
+               $section->addText('Veiculos envolvidos','SimpleStyle');
+               $section->addTextBreak(1);
 
              foreach ($veiculos as $veic) {
                 
-                $section->addText('Veiculos envolvidos','SimpleStyle');
-                $section->addTextBreak(1);
+                //$section->addText('Veiculos envolvidos','SimpleStyle');
+                //$section->addTextBreak(1);
                 $section->addText('Veiculo  : '.$veic->tpve_nome, 'SimStyle');
                 $section->addTextBreak(1);
                 $section->addText('Placa : '.$veic->placa, 'SimStyle');
@@ -251,7 +320,13 @@ string '24/09/2014' (length=10)
                 $section->addText('Marca - modelo :'.$veic->marc_nome." - ".$veic->mode_nome, 'SimStyle');
                 $section->addTextBreak(1);
 
+                }
+            } //Fim do if de veiculos envolvidos...
+            else{
+                $section->addText('-----------------//------------------------------------//------------------', 'SimStyle');
+                $section->addTextBreak(3);
             }
+
 
 
             /*

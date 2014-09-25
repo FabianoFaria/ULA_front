@@ -68,6 +68,19 @@ class Relatorios_model extends CI_Model {
         return $query->result();  
     }
 
+    function load_mercadoria_relatorio($idDoct)
+    {
+        $this->db->select('*');
+        $this->db->join('tbl_haul','tbl_haul.ID_HAUL = tbl_main.CHILD_ID');
+        $this->db->join('tbl_unidade_medidas','tbl_unidade_medidas.id_unidade_medida = tbl_haul.unit', 'left');
+        $this->db->join('tbl_tabacalera','tbl_tabacalera.id_tabacalera = tbl_haul.tabacalera', 'left');
+        $this->db->join('tbl_marcas','tbl_marcas.marc_cod = tbl_haul.brand', 'left');
+        $this->db->join('tbl_produtos','tbl_produtos.id_produto = tbl_haul.product', 'left');
+        $this->db->where('tbl_main.CHILD_TBL', 'tbl_haul');
+        $this->db->where('tbl_main.parent_id', $idDoct);
+        $query = $this->db->get('tbl_main');
+        return $query->result();  
+    }
 
     function load_documento_auto($idDoct)
     {
@@ -99,7 +112,27 @@ class Relatorios_model extends CI_Model {
         return $query->result();  
     }
 
+    function load_documento_envolvidos($idDoct)
+    {
+        $this->db->select('*');
+        $this->db->join('tbl_contact','tbl_contact.ROW_ID = tbl_main.parent_id');
+        $this->db->join('tbl_pais', 'tbl_pais.Id_pais = tbl_contact.birth_country', 'left');
+        $this->db->join('tbl_estados', 'tbl_estados.id_estado = tbl_contact.birth_state', 'left');
+        $this->db->join('tbl_cidades', 'tbl_cidades.id = tbl_contact.birth_city', 'left');
+        $this->db->where('tbl_main.parent_id', $idDoct);
+        $this->db->where('tbl_main.CHILD_TBL', 'tbl_contact');
+        $query = $this->db->get('tbl_main');
+        return $query->result();
+    }
 
+    function load_documento_warehouse($idDoct)
+    {
+        $this->db->select('*');
+        $this->db->where('tbl_main.parent_id', $idDoct);
+        $this->db->where('tbl_main.CHILD_TBL', 'tbl_contact');
+        $query = $this->db->get('tbl_main');
+        return $query->result();
+    }
 
 }
 
