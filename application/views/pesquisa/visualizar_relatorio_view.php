@@ -40,6 +40,8 @@
     </div> 
     <?php
         if($ocorrencia['endereco'][0] != ""){
+
+            //var_dump($ocorrencia['endereco'][0]);
     ?>
     <div class="col-md-6 col-sm-6 col-xs-6">
         <h3>Endereço da ocorrencia</h3>
@@ -95,7 +97,64 @@
     </div>
 
 
+    <div class="row sem_margin">   
+
+        <div class="col-md-6 col-sm-6 col-xs-6">
+
+            <h3>Imagens da ocorrencia :</h3>
+            <?php
+
+
+            foreach ($ocorrencia['imagens'] as $imagens) {   //$dataDocumento['imagens'] 
+                                
+                    //var_dump($imagens);
+                    if($imagens != null){
+                ?>
+
+            
+            <p>Nome da foto : <?php echo $imagens->title_image ?></p>
+            <img class="list_img" src="<?php echo base_url()."/imagens_doct/".$imagens->nome_image_doct; ?>" /></img>
+            <hr>
+
+            <?php
+                    }//fim do if
+                } //Fim do foreach...
+
+            ?>
+
+        </div>
+
+
+
+
+    </div>
+
+
+
+
+
 <?php
+
+            /*
+                 public 'ID_main' => string '294' (length=3)
+      public 'ROW_ID' => string '131' (length=3)
+      public 'parent_id' => string '131' (length=3)
+      public 'parent_TBL' => string 'tbl_doct' (length=8)
+      public 'CHILD_ID' => string '11' (length=2)
+      public 'CHILD_TBL' => string 'tbl_image_doct' (length=14)
+      public 'UPDATED_BY' => string 'Niguem' (length=6)
+      public 'LAST_UPDATE' => string '0000-00-00 00:00:00' (length=19)
+      public 'CREATED_BY' => string 'qwe' (length=3)
+      public 'CREATED' => string '2014-09-25 03:07:44' (length=19)
+      public 'id_image' => string '11' (length=2)
+      public 'id_row' => string '131' (length=3)
+      public 'title_image' => string 'Foto A' (length=6)
+      public 'nome_image_doct' => string '13d6d38b47e0d6a9b714618e37751984.jpg' (length=36)
+      public 'UPDATE_BY' => string 'Ninguem' (length=7)
+
+            */
+    
+
 
         //$dados['dataI'] = $dataIni;
         //$dados['dataF'] = $dataFim;

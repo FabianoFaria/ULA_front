@@ -119,8 +119,10 @@ string '24/09/2014' (length=10)
                 $dataDocumento['mercadorias'][0] = "";
             }
 
-            //Pessoas envolvidas...
+            //var_dump($mercadorias);
 
+            //Pessoas envolvidas...
+            //$envolvidos = $this->relatorio->load_documento_envolvidos($data->ROW_ID);
             $envolvidos = $this->relatorio->load_documento_envolvidos($data->ROW_ID);
              if($envolvidos != null) {
                 $dataDocumento['envolvidos'] = $envolvidos;   
@@ -128,6 +130,51 @@ string '24/09/2014' (length=10)
             {
                 $dataDocumento['envolvidos'][0] = "";
             }
+
+            /*
+                object(stdClass)[34]
+      public 'ID_main' => string '215' (length=3)
+      public 'ROW_ID' => string '123' (length=3)
+      public 'parent_id' => string '123' (length=3)
+      public 'parent_TBL' => string 'tbl_doct' (length=8)
+      public 'CHILD_ID' => string '16' (length=2)
+      public 'CHILD_TBL' => string 'tbl_contact' (length=11)
+      public 'UPDATED_BY' => string 'Niguem' (length=6)
+      public 'LAST_UPDATE' => string '2014-09-16 02:56:24' (length=19)
+      public 'CREATED_BY' => string 'qwe' (length=3)
+      public 'CREATED' => string '2014-09-13 20:31:18' (length=19)
+      public 'ID_contact' => string '16' (length=2)
+      public 'name' => string 'Individuo A' (length=11)
+      public 'CPF' => string '13609613726' (length=11)
+      public 'rg' => string '' (length=0)
+      public 'passport' => string '' (length=0)
+      public 'father' => string '' (length=0)
+      public 'mother' => string '' (length=0)
+      public 'birth_dt' => string '2014-09-09' (length=10)
+      public 'birth_city' => string '1743' (length=4)
+      public 'birth_state' => string '08' (length=2)
+      public 'birth_country' => string '33' (length=2)
+      public 'ADDR_PR_ID' => null
+      public 'phone_PR_ID' => null
+      public 'UPDATE_BY' => string 'qwe' (length=3)
+      public 'telefone' => string '' (length=0)
+      public 'marca_telefone' => string '' (length=0)
+      public 'modelo_telefone' => string '' (length=0)
+      public 'IMEI' => string '' (length=0)
+      public 'operadora' => string '' (length=0)
+      public 'deletado' => string '0' (length=1)
+      public 'Id_pais' => string '33' (length=2)
+      public 'nome_pais' => string 'Brasil' (length=6)
+      public 'country_name' => string 'BRAZIL' (length=6)
+      public 'id_estado' => string '08' (length=2)
+      public 'uf' => string 'ES' (length=2)
+      public 'nome_estado' => string 'EspÃ­rito Santo' (length=15)
+      public 'id' => string '1743' (length=4)
+      public 'estado' => string '08' (length=2)
+      public 'nome' => string 'Acioli' (length=6)
+            */
+
+            //var_dump($dataDocumento['envolvidos']);
 
             //Veiculos....
             $veiculos = $this->relatorio->load_documento_auto($data->ROW_ID);
@@ -145,8 +192,36 @@ string '24/09/2014' (length=10)
                 $dataDocumento['armazens'][0] = "";
             }
 
+            //var_dump($armazens);
+
             //Imagens da operação...
 
+            $imagens = $this->relatorio->load_documento_imagens($data->ROW_ID);
+             if($imagens != null) {
+                $dataDocumento['imagens'] = $imagens;   
+            }else
+            {
+                $dataDocumento['imagens'][0] = "";
+            }
+
+            /*
+                 public 'ID_main' => string '294' (length=3)
+      public 'ROW_ID' => string '131' (length=3)
+      public 'parent_id' => string '131' (length=3)
+      public 'parent_TBL' => string 'tbl_doct' (length=8)
+      public 'CHILD_ID' => string '11' (length=2)
+      public 'CHILD_TBL' => string 'tbl_image_doct' (length=14)
+      public 'UPDATED_BY' => string 'Niguem' (length=6)
+      public 'LAST_UPDATE' => string '0000-00-00 00:00:00' (length=19)
+      public 'CREATED_BY' => string 'qwe' (length=3)
+      public 'CREATED' => string '2014-09-25 03:07:44' (length=19)
+      public 'id_image' => string '11' (length=2)
+      public 'id_row' => string '131' (length=3)
+      public 'title_image' => string 'Foto A' (length=6)
+      public 'nome_image_doct' => string '13d6d38b47e0d6a9b714618e37751984.jpg' (length=36)
+      public 'UPDATE_BY' => string 'Ninguem' (length=7)
+
+            */
 
             array_push($dadosArray , $dataDocumento);
         }
@@ -201,7 +276,7 @@ string '24/09/2014' (length=10)
         $this->word->addParagraphStyle('pTStyle', array('spaceAfter'=>100));
 
         $this->word->addFontStyle('SimpleStyle', array('bold'=>false, 'calibri'=>true, 'size'=>18));
-        $this->word->addFontStyle('SimStyle', array('bold'=>false, 'arial'=>true, 'size'=>14));
+        $this->word->addFontStyle('SimStyle', array('bold'=>false, 'arial'=>true, 'size'=>12));
 
 
         // Add text elements
@@ -248,13 +323,13 @@ string '24/09/2014' (length=10)
 
                
                 $section->addText('Detalhes da ocorrencia : '.$doct->IPL ,'SimpleStyle');
-                $section->addTextBreak(1);
+               
                 $section->addText('Data da operacao : '.$dataOcorrencia, 'SimStyle');
-                $section->addTextBreak(1);
+             
                 $section->addText('Forca de seguranca : '.$doct->forca_seguranca, 'SimStyle');
-                $section->addTextBreak(1);
+                
                 $section->addText('Nome da operacao : '.$doct->operation, 'SimStyle');
-                $section->addTextBreak(1);
+            
                 $section->addText('Resumo da operacao : '.$doct->summary, 'SimStyle');
                 $section->addTextBreak(1);
                
@@ -283,21 +358,81 @@ string '24/09/2014' (length=10)
 
            $endereço = $this->relatorio->load_documento_endereco($data->ROW_ID);
             //var_dump($endereço);
+           /*
 
-            foreach ($endereço as $end) {
+            IMPRIMIR TODOS OS ENDEREÇOS RELACIONADOS A ESSA OCORRENCIA...
+            foreach ($endereço[0] as $end) { 
                 
                 $section->addText('Endereco da ocorrencia','SimpleStyle');
-                $section->addTextBreak(1);
+                
                 $section->addText('Endereço : '.$end->address, 'SimStyle');
-                $section->addTextBreak(1);
+                
                 $section->addText('Bairro : '.$end->district, 'SimStyle');
-                $section->addTextBreak(1);
+           
                 $section->addText('Cidade - estado :'.$end->nome." - ".$end->nome_estado, 'SimStyle');
                 $section->addTextBreak(1);
 
+            }*/
+            if($endereço != null)
+            {
+                 $section->addText('Endereco da ocorrencia','SimpleStyle');
+                
+                $section->addText('Endereço : '.$endereço[0]->address, 'SimStyle');
+                
+                $section->addText('Bairro : '.$endereço[0]->district, 'SimStyle');
+           
+                $section->addText('Cidade - estado :'.$endereço[0]->nome." - ".$endereço[0]->nome_estado, 'SimStyle');
+                $section->addTextBreak(1);
             }
 
+            //Fim da exibição de endereços...
 
+            //Inicio da exibição de envolvidos...
+            /*
+             object(stdClass)[33]
+      public 'ID_contact' => string '16' (length=2)
+      public 'name' => string 'Individuo A' (length=11)
+      public 'CPF' => string '13609613726' (length=11)
+      public 'rg' => string '' (length=0)
+      public 'passport' => string '' (length=0)
+      public 'father' => string '' (length=0)
+      public 'mother' => string '' (length=0)
+      public 'birth_dt' => string '2014-09-09' (length=10)
+      public 'nome_pais' => string 'Brasil' (length=6)
+      public 'nome_estado' => string 'EspÃ­rito Santo' (length=15)
+      public 'nome' => string 'Acioli' (length=6)
+      */
+
+            $envolvidos = $this->relatorio->load_documento_envolvidos($data->ROW_ID);
+
+            if( $envolvidos != null){
+
+               $section->addText('Pessoas envolvidos','SimpleStyle');
+               $section->addTextBreak(1);
+
+             foreach ($envolvidos as $pessoas) {
+                
+                //$section->addText('Veiculos envolvidos','SimpleStyle');
+                //$section->addTextBreak(1);
+                $section->addText('Nome do envolvido  : '.$pessoas->name, 'SimStyle');
+                
+                $section->addText('CPF : '.$pessoas->CPF, 'SimStyle');
+                
+                $section->addText('RG : '.$pessoas->rg, 'SimStyle');
+                
+                $section->addText('Estado - Cidade :'.$pessoas->nome_estado." - ".$pessoas->nome, 'SimStyle');
+                $section->addTextBreak(1);
+
+                }
+            } //Fim do if de veiculos envolvidos...
+            else{
+                $section->addText('Pessoas envolvidas nesta ocorrencia: 0', 'SimStyle');
+                $section->addTextBreak(1);
+            }
+
+            //Fim da exibição de envolvidos
+
+            //Inicio da exibição de veiculos 
              $veiculos = $this->relatorio->load_documento_auto($data->ROW_ID);
             //var_dump($veiculos);
               
@@ -312,19 +447,52 @@ string '24/09/2014' (length=10)
                 //$section->addText('Veiculos envolvidos','SimpleStyle');
                 //$section->addTextBreak(1);
                 $section->addText('Veiculo  : '.$veic->tpve_nome, 'SimStyle');
-                $section->addTextBreak(1);
+                
                 $section->addText('Placa : '.$veic->placa, 'SimStyle');
-                $section->addTextBreak(1);
+                
                 $section->addText('Chassi : '.$veic->chassi, 'SimStyle');
-                $section->addTextBreak(1);
+                
                 $section->addText('Marca - modelo :'.$veic->marc_nome." - ".$veic->mode_nome, 'SimStyle');
                 $section->addTextBreak(1);
 
                 }
             } //Fim do if de veiculos envolvidos...
             else{
-                $section->addText('-----------------//------------------------------------//------------------', 'SimStyle');
-                $section->addTextBreak(3);
+                $section->addText('Veiculos envolvidos : 0', 'SimStyle');
+                $section->addTextBreak(1);
+            }
+
+            //Inicio das imagens da ocorrencia...
+
+            $imagens = $this->relatorio->load_documento_imagens($data->ROW_ID);
+
+            if( $imagens != null){
+
+
+               $section->addText('Imagens da ocorrencia','SimpleStyle');
+               $section->addTextBreak(1);
+
+             foreach ($imagens as $img) {
+                
+                //$section->addText('Fotos da Ocorrencia','SimpleStyle');
+                //$section->addTextBreak(1);
+                $section->addText('Nome da imagem  : '.$img->title_image, 'SimStyle');
+                //$section->addImage(FCPATH.'/imagens_doct/'.$img->nome_image_doct);
+                //$section->addTextBreak(1);
+        
+                $section->addImage(FCPATH.'/imagens_doct/'.$img->nome_image_doct, array('width'=>210, 'height'=>210, 'align'=>'right'));
+                $section->addTextBreak(1);
+        
+               // $section->addImage(FCPATH.'/imagens_doct/'.$img->nome_image_doct, array('width'=>100, 'height'=>100, 'align'=>'right'));
+                
+              
+                $section->addTextBreak(1);
+
+                }
+            } //Fim do if de Imagens da ocorrencia...
+            else{
+                $section->addText('-', 'SimStyle');
+                $section->addTextBreak(1);
             }
 
 
