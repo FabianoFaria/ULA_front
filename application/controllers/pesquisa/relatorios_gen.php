@@ -110,6 +110,20 @@ string '24/09/2014' (length=10)
             {
                 $dataDocumento['endereco'][0] = "";
             }
+
+
+            //Endereços deposito....
+           $endereçoDeposito = $this->relatorio->load_endereco_wrs_relatorio($data->ROW_ID);
+            //var_dump($endereçoDeposito);
+           if($endereçoDeposito != null) {
+                $dataDocumento['endereco_deposito'] = $endereçoDeposito;   
+            }else
+            {
+                $dataDocumento['endereco_deposito'][0] = "";
+            }
+            //var_dump($dataDocumento['endereco_deposito']);
+
+
             //Mercadorias....
             $mercadorias = $this->relatorio->load_mercadoria_relatorio($data->ROW_ID);
              if($mercadorias != null) {
@@ -182,17 +196,21 @@ string '24/09/2014' (length=10)
 
             $dataDocumento['veiculos'] = $veiculos;
 
-            //Armazens casas locais...
 
-            $armazens = $this->relatorio->load_documento_envolvidos($data->ROW_ID);
-             if($armazens != null) {
-                $dataDocumento['armazens'] = $armazens;   
+            //Produtos aprendidos por depositos....
+
+            $produtos_armazens = $this->relatorio->load_armazem_relatorio($data->ROW_ID);
+             if($produtos_armazens != null) {
+
+                //var_dump($produtos_armazens);
+
+                $dataDocumento['produto_armazens'] = $produtos_armazens;   
             }else
             {
-                $dataDocumento['armazens'][0] = "";
+                $dataDocumento['produto_armazens'][0] = "";
             }
 
-            //var_dump($armazens);
+
 
             //Imagens da operação...
 
@@ -375,7 +393,7 @@ string '24/09/2014' (length=10)
             }*/
             if($endereço != null)
             {
-                 $section->addText('Endereco da ocorrencia','SimpleStyle');
+                $section->addText('Endereco da ocorrencia','SimpleStyle');
                 
                 $section->addText('Endereço : '.$endereço[0]->address, 'SimStyle');
                 
@@ -385,9 +403,9 @@ string '24/09/2014' (length=10)
                 $section->addTextBreak(1);
             }
 
-            //Fim da exibição de endereços...
+            //Fim da exibição de endereços..............................................
 
-            //Inicio da exibição de envolvidos...
+            //Inicio da exibição de envolvidos..........................................
             /*
              object(stdClass)[33]
       public 'ID_contact' => string '16' (length=2)
@@ -424,13 +442,13 @@ string '24/09/2014' (length=10)
                 $section->addTextBreak(1);
 
                 }
-            } //Fim do if de veiculos envolvidos...
+            } //Fim do if de veiculos envolvidos........................................
             else{
                 $section->addText('Pessoas envolvidas nesta ocorrencia: 0', 'SimStyle');
                 $section->addTextBreak(1);
             }
 
-            //Fim da exibição de envolvidos
+            //Fim da exibição de envolvidos.............................................
 
             //Inicio da exibição de veiculos 
              $veiculos = $this->relatorio->load_documento_auto($data->ROW_ID);
@@ -456,13 +474,105 @@ string '24/09/2014' (length=10)
                 $section->addTextBreak(1);
 
                 }
-            } //Fim do if de veiculos envolvidos...
+            } //Fim do if de veiculos envolvidos.........................................
             else{
                 $section->addText('Veiculos envolvidos : 0', 'SimStyle');
                 $section->addTextBreak(1);
             }
 
-            //Inicio das imagens da ocorrencia...
+
+            //Inicio de exibição das mercadorias apreendidas.............................
+
+                //Inicio da exibição de veiculos 
+                $mercadorias = $this->relatorio->load_mercadoria_relatorio($data->ROW_ID);
+                //var_dump($veiculos);
+
+            if( $mercadorias != null){
+
+               $section->addText('Mercadorias apreendidas','SimpleStyle');
+               $section->addTextBreak(1);
+
+             foreach ($mercadorias as $merc) {
+                
+                //$section->addText('Veiculos envolvidos','SimpleStyle');
+                //$section->addTextBreak(1);
+                $section->addText('Produto   : '.$merc->nome_produto, 'SimStyle');
+                
+                $section->addText('Marca : '.$merc->nome_marca, 'SimStyle');
+                
+                $section->addText('Tabacalera : '.$merc->nome_tabacalera, 'SimStyle');
+                
+                $section->addText('Marca - modelo :'.$merc->qty." - ".$merc->unidade_medida, 'SimStyle');
+                $section->addTextBreak(1);
+
+                }
+
+
+            } //Fim do if de veiculos envolvidos.........................................
+            else{
+                $section->addText('Mercadorias Apreendidas : 0', 'SimStyle');
+                $section->addTextBreak(1);
+            }
+
+            //Fim da exibição das mercadorias apreenção..................................
+
+            //Inicio do endereço do deposio .............................................
+
+            $endereçoDeposito = $this->relatorio->load_endereco_wrs_relatorio($data->ROW_ID);
+
+            if($endereçoDeposito != null)
+            {
+                $section->addText('Endereço do deposito','SimpleStyle');
+                $section->addTextBreak(1);
+                
+                $section->addText('Endereço : '.$endereçoDeposito[0]->address, 'SimStyle');
+                
+                $section->addText('Bairro : '.$endereçoDeposito[0]->district, 'SimStyle');
+           
+                $section->addText('Cidade - estado :'.$endereçoDeposito[0]->nome." - ".$endereçoDeposito[0]->nome_estado, 'SimStyle');
+                $section->addTextBreak(1);
+            }
+            else{
+                  $section->addText(' ', 'SimStyle');
+                  $section->addTextBreak(1);
+            }
+
+
+            //Fim do endereço do deposito................................................
+
+
+            //Inicio dos produtos do deposito............................................
+
+            $produtoDeposito = $this->relatorio->load_armazem_relatorio($data->ROW_ID);
+
+            if( $produtoDeposito != null){
+
+               $section->addText('Produtos apreendidos no deposito','SimpleStyle');
+               $section->addTextBreak(1);
+
+             foreach ($produtoDeposito as $produtosDep) {
+                
+                //$section->addText('Veiculos envolvidos','SimpleStyle');
+                //$section->addTextBreak(1);
+                $section->addText('Produto   : '.$produtosDep->nome_produto, 'SimStyle');
+                
+                $section->addText('Marca : '.$produtosDep->nome_marca, 'SimStyle');
+                
+                $section->addText('Tabacalera : '.$produtosDep->nome_tabacalera, 'SimStyle');
+                
+                $section->addText('Marca - modelo :'.$produtosDep->qty." - ".$produtosDep->unidade_medida, 'SimStyle');
+                $section->addTextBreak(1);
+
+                }
+            } //Fim do if de veiculos envolvidos.........................................
+            else{
+                $section->addText('Veiculos envolvidos : 0', 'SimStyle');
+                $section->addTextBreak(1);
+            }
+
+            //Fim dos produtos do deposito...............................................
+
+            //Inicio das imagens da ocorrencia............................................
 
             $imagens = $this->relatorio->load_documento_imagens($data->ROW_ID);
 

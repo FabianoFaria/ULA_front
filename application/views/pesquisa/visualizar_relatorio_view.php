@@ -57,7 +57,71 @@
     </div>   
     <?php
         } 
+    ?>
+
+     <?php
+        if($ocorrencia['endereco_deposito'][0] != ""){
+
+            //var_dump($ocorrencia['endereco'][0]);
+    ?>
+    <div class="col-md-6 col-sm-6 col-xs-6">
+        <h3>Endereço do deposito</h3>
+        <p>Cidade da ocorrencia : <?php echo $ocorrencia['endereco_deposito'][0]->nome_estado ?></p>
+        <p>Estado da ocorrencia : <?php echo $ocorrencia['endereco_deposito'][0]->nome ?></p>
+        <p>Endereço : <?php echo $ocorrencia['endereco_deposito'][0]->address ?></p>
+        <p>Numero : <?php echo $ocorrencia['endereco_deposito'][0]->nunber ?></p>
+        <p>Complemento : <?php echo $ocorrencia['endereco_deposito'][0]->complement ?></p>
+        <p>Bairro : <?php echo $ocorrencia['endereco_deposito'][0]->district ?></p>
+
+        
+    </div>   
+    <?php
+        } 
     ?> 
+
+ 
+    <div class="row sem_margin">    <!-- Exibir produtos do deposito -->
+
+        <div class="col-md-6 col-sm-6 col-xs-6">
+
+
+            <?php
+
+            if($ocorrencia['produto_armazens'][0] != "")
+            {
+                ?>
+                <h3>Produtos aprendidos no depositos</h3>
+                <?php
+                foreach ($ocorrencia['produto_armazens'] as $produtosDep) {
+                                    
+                        //var_dump($produtosDep);
+
+                    ?>
+
+                <p>Produto : <?php echo $produtosDep->nome_produto ?></p>
+                <p>Unidade : <?php echo $produtosDep->unidade_medida ?></p>
+                <p>Quantidade : <?php echo $produtosDep->quantidade_deposito ?></p>
+                <p>Marca : <?php echo $produtosDep->nome_marca ?></p>
+                <p>Tabacalera : <?php echo $produtosDep->nome_tabacalera ?></p>
+                
+
+                <hr>
+
+                <?php
+
+                    }
+                }
+            ?>
+
+        </div>
+
+
+
+
+    </div>
+
+
+     
 
     <div class="row sem_margin">   
 
@@ -90,8 +154,6 @@
             ?>
 
         </div>
-
-
 
 
     </div>
