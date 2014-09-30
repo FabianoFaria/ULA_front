@@ -6,6 +6,7 @@ class Login extends CI_Controller {
 
     function __construct() {
         parent::__construct();
+        $this->load->model('User_model', 'user');
     }
 
     function index() {
@@ -65,6 +66,18 @@ class Login extends CI_Controller {
         $this->session->sess_destroy();
         redirect('login');
         //redirect(site_url('login'));
+    }
+
+    function perfil()
+    {
+        $user_name = $this->session->userdata('username');
+
+        $data['usuario'] = $this->user->perfil_usr($user_name);
+
+        $this->load->helper('url');
+        $this->load->view('templates/header');
+        $this->load->view('login/perfil_user_view', $data);
+        $this->load->view('templates/footer');
     }
 
 }

@@ -30,4 +30,12 @@ class User_model extends CI_Model {
            //$this->load->view(base_url().'/application/views/login/sessao_expirada_view');
         }
     }
+
+    function perfil_usr($usr)
+    {
+        $this->db->where('username', $usr);
+        $this->db->where('status >=', 1); // Verifica o status do usuário
+        $query = $this->db->get('tbl_user');
+        return $query->result();
+    }
 }
