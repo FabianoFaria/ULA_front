@@ -80,4 +80,9 @@ class Login extends CI_Controller {
         $this->load->view('templates/footer');
     }
 
+    function cadastrarUsuario()
+    {
+        echo "link temporario...";
+    }
+
 }

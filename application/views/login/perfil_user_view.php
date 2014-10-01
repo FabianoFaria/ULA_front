@@ -18,10 +18,27 @@ $().ready(function() {
                 required: true
             },
              novaSenha: {
-                required: true
+                required: {
+                    depends: function () {
+                        if($('#novaSenha').val()!=''){
+                            return true;
+                        }else{
+                            return false;
+                        }
+                    }
+                }
             },
              confirmaSenha: {
-                required: true
+                required: {
+                     depends: function () {
+                        if($('#confirmaSenha').val()!=''){
+                            return true;
+                        }else{
+                            return false;
+                        }
+                    }
+                },
+                equalTo: "#novaSenha"
             }
         },
         messages: {
@@ -38,10 +55,12 @@ $().ready(function() {
                 required: "Favor informar uma nova senha"
             },
             confirmaSenha: {
-                required: "Favor confirmar a nova senha"
+                required: "Favor confirmar a nova senha",
+                equalTo: "Senha de confirmação deve ser identica a nova senha"
             }
         }
     });
+    
     
     
     jQuery.extend(jQuery.validator.messages, {
@@ -112,7 +131,7 @@ $().ready(function() {
 
         <!-- abre o formulário de cadastro -->
 
-        <form id="form-user-ipl" action="login/novo_documento/cadastrar_mercadoria" method="post">
+        <form id="form-user-ipl" action="<?php echo base_url("index.php/login/cadastrarUsuario"); ?>" method="post">
 
             <label for="loginName">Login  :</label><br/>
             <input type="text" name="loginName" id="loginName" value="<?php echo $username ?>"/>
@@ -134,13 +153,13 @@ $().ready(function() {
             <br>
 
             <label for="novaSenha">Nova senha :</label><br/>
-            <input type="text" name="novaSenha" id="novaSenha" value=""/>
+            <input type="password" name="novaSenha" id="novaSenha" value=""/>
             <div class="error"></div>
             
             <br>
 
             <label for="confirmaSenha">Confirma nova senha :</label><br/>
-            <input type="text" name="confirmaSenha" id="confirmaSenha" value=""/>
+            <input type="password" name="confirmaSenha" id="confirmaSenha" value=""/>
             <div class="error"></div>
             
             <br>
