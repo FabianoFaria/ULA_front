@@ -109,7 +109,7 @@ $().ready(function() {
             $ID_user = "";
             $username = "";
             $nome_usuario = "";
-            $status = "";
+            $status = "1";
             $acao = "";
             $btnLabel = "Cadastrar usuario";
         }
@@ -131,7 +131,7 @@ $().ready(function() {
 
         <!-- abre o formulário de cadastro -->
 
-        <form id="form-user-ipl" action="<?php echo base_url("index.php/login/cadastrarUsuario"); ?>" method="post">
+        <form id="form-user-ipl" action="<?php echo base_url("index.php/login/login/cadastrarUsuario"); ?>" method="post">
 
             <label for="loginName">Login  :</label><br/>
             <input type="text" name="loginName" id="loginName" value="<?php echo $username ?>"/>

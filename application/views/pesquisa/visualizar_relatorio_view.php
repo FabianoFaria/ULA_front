@@ -2,7 +2,18 @@
 <?php
 
    // var_dump($conteudo);
+
+    setlocale( LC_ALL, 'pt_BR', 'pt_BR.iso-8859-1', 'pt_BR.utf-8', 'portuguese' );
+
+    date_default_timezone_set( 'America/Sao_Paulo' );
+
+  //  echo strftime( '%A, %d de %B de %Y', strtotime( date( 'Y-m-d' ) ) );
+
+
 ?>
+
+
+
 
 <div class="row sem_margin">
     <div class="col-md-12 col-sm-12 col-xs-12 main-menu">
