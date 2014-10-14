@@ -2,7 +2,7 @@
  
 require_once APPPATH."/third_party/PHPWord.php"; 
  
-class Word extends PHPWord { 
+class Word extends PhpWord { 
     public function __construct() { 
         parent::__construct(); 
     } 

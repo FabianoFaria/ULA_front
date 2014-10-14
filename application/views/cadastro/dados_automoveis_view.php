@@ -242,6 +242,7 @@ function mostraModelos2(str) {
 								}
 							}endforeach;
 						?>
+					
 					</select>
 				<div class="error"><?php echo form_error('cat_veiculo'); ?></div>
 
@@ -269,7 +270,7 @@ function mostraModelos2(str) {
 						<?php
 							}
 						?>
-						
+						<option value=" "> </option>
 					</select>
 				<div class="error"></div>
 
@@ -297,6 +298,7 @@ function mostraModelos2(str) {
 
 							}
 						?>
+						<option value=" "> </option>
 					</select>
 				<div class="error"></div>
 
@@ -346,7 +348,7 @@ function mostraModelos2(str) {
 							}endforeach;
 
 						?>
-
+						<option value=" "> </option>
 					</select>
 				<br>
 
@@ -373,7 +375,8 @@ function mostraModelos2(str) {
 							<option value="">Selecione uma cidade:</option>
 						<?php
 							}
-						?>		
+						?>
+						<option value=" "> </option>		
 					</select>
 				<br>
 				<br>

@@ -415,6 +415,7 @@ function mostraCidadesB(str) {
 					}endforeach;
 
 				?>
+					<option value=" "> </option>
 				</select>
 
 		<div class="error"></div>
@@ -453,7 +454,7 @@ function mostraCidadesB(str) {
 					}endforeach;
 
 				?>
-
+				<option value=" "> </option>
 			</select>
 			<div class="error"></div>
 
@@ -480,7 +481,8 @@ function mostraCidadesB(str) {
 						<option value="">Selecione uma cidade:</option>
 					<?php
 						}
-					?>							
+					?>	
+					<option value=" "> </option>						
 				</select>
 		<div class="error"></div>
 
@@ -544,6 +546,7 @@ function mostraCidadesB(str) {
 					}endforeach;
 
 				?>
+					<option value=" "> </option>
 				</select>
 
 		<div class="error"></div>
@@ -582,7 +585,7 @@ function mostraCidadesB(str) {
 					}endforeach;
 
 				?>
-
+				<option value=" "> </option>
 			</select>
 			<div class="error"></div>
 
@@ -610,7 +613,8 @@ function mostraCidadesB(str) {
 						<option value="">Selecione uma cidade:</option>
 					<?php
 						}
-					?>							
+					?>
+					<option value=" "> </option>						
 				</select>
 		<div class="error"></div> 
 		<input type="hidden" name="Addr_id" value="<?php echo $id_addr; ?>" />
@@ -664,7 +668,8 @@ function mostraCidadesB(str) {
 					<?php
 							}//fim do if para cidades iguais...
 						}//fim do foreach das cidades do estado carregado
-					?>								
+					?>
+					<option value=" "> </option>							
 				</select>
 		<div class="error"></div>
 

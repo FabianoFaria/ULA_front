@@ -273,6 +273,7 @@ $().ready(function() {
 						}
 					}endforeach;
 				?>
+				<option value=" "> </option>
 			</select>
 		<div class="error"></div>
 
@@ -301,6 +302,7 @@ $().ready(function() {
 						}
 					}endforeach;
 				?>
+				<option value=" "> </option>
 			</select>
 		<div class="error"></div>
 
@@ -352,7 +354,7 @@ $().ready(function() {
 
 				?>
 
-
+				<option value=" "> </option>
 			</select>
 			<div class="error"><?php echo form_error('estado_apr'); ?></div>
 
@@ -385,7 +387,7 @@ $().ready(function() {
 						}endforeach;
 
 					?>
-											
+					<option value=" "> </option>						
 				</select>
 			<div class="error"><?php echo form_error('cidade_apr'); ?></div>
 

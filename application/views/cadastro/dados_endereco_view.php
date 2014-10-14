@@ -258,6 +258,7 @@ $().ready(function() {
 					}endforeach;
 
 				?>
+					<option value=" "> </option>
 			</select>
 			<div class="error"><?php echo form_error('estado_apr'); ?></div>
 
@@ -284,7 +285,8 @@ $().ready(function() {
 						<option value="">Selecione uma cidade:</option>
 					<?php
 						}
-					?>						
+					?>
+					<option value=" "> </option>					
 				</select>
 			<div class="error"><?php echo form_error('cidade_apr'); ?></div>
 

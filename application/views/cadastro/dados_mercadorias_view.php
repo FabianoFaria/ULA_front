@@ -232,6 +232,7 @@ $().ready(function() {
 						} //fim do if de id_marca == Marca->id_marca...
 					}endforeach;
 				?>
+				<option value=" "> </option>
 			</select>
 		<div class="error"><?php echo form_error('marca'); ?></div>
 
@@ -259,6 +260,7 @@ $().ready(function() {
 						}
 					}endforeach;
 				?>
+				<option value=" "> </option>
 			</select>
 		<div class="error"><?php echo form_error('tabacalera'); ?></div>
 		<br>

@@ -86,6 +86,10 @@ string '24/09/2014' (length=10)
 
         $dataRelatorio = $this->relatorio->load_documentos($dataIni ,$dataFim);
 
+         //$caixasCigarros = $this->relatorio->total_veiculos_relatorio($dataIni ,$dataFim);
+
+          //var_dump($caixasCigarros);
+
         $dadosArray = array( );
 
         foreach ($dataRelatorio as $data) 
@@ -139,7 +143,10 @@ string '24/09/2014' (length=10)
             //$envolvidos = $this->relatorio->load_documento_envolvidos($data->ROW_ID);
             $envolvidos = $this->relatorio->load_documento_envolvidos($data->ROW_ID);
              if($envolvidos != null) {
-                $dataDocumento['envolvidos'] = $envolvidos;   
+
+                //var_dump($envolvidos);
+
+                $dataDocumento['envolvidos'] = $envolvidos;     
             }else
             {
                 $dataDocumento['envolvidos'][0] = "";
@@ -259,11 +266,18 @@ string '24/09/2014' (length=10)
 
     public function relatorio_mes()
     {
-        
+
+
+        setlocale( LC_ALL, 'pt_BR', 'pt_BR.iso-8859-1', 'pt_BR.utf-8', 'portuguese' );
+
+        date_default_timezone_set( 'America/Sao_Paulo' );  
+
+
         $dataGeracao = date("d/m/Y H:i:s ");
 
         $dataDateI = $this->input->post('dataI');
         $dataDateF =  $this->input->post('dataF');
+
 
 
 
@@ -337,36 +351,434 @@ string '24/09/2014' (length=10)
                 $day3 = $dataEx3[2];
                 $year3 = $dataEx3[0];
 
-                $dataOcorrencia = $day3."/".$month3."/".$year3;
+                $dataOcorrencia = $day3."-".$month3."-".$year3;
 
+                //  echo strftime( '%A, %d de %B de %Y', strtotime( date( 'Y-m-d' ) ) );
+
+                $section->addText('Em  '.strftime( '%d de %B de %Y', strtotime( $dataOcorrencia ) ), 'SimStyle');
+
+                $section->addText('Auto de Apresentação e Apreensão '.$doct->IPL ,'SimpleStyle');
                
-                $section->addText('Detalhes da ocorrencia : '.$doct->IPL ,'SimpleStyle');
-               
-                $section->addText('Data da operacao : '.$dataOcorrencia, 'SimStyle');
-             
-                $section->addText('Forca de seguranca : '.$doct->forca_seguranca, 'SimStyle');
-                
-                $section->addText('Nome da operacao : '.$doct->operation, 'SimStyle');
+                $section->addText('IPL - '.$doct->IPL.' - '. $doct->forca_seguranca ,'SimpleStyle');
+                if($doct->link_arrest != null)
+                {
+                  $section->addText('Link para a reportagem : '.$doct->link_arrest, 'SimStyle');
+                }
+                if($doct->operation != null)
+                {
+                  $section->addText('Nome da operaçâo : '.$doct->operation, 'SimStyle');
+                }
+
+                if($doct->operation != null)
+                {
+                  $section->addText('Nome da operaçâo : '.$doct->operation, 'SimStyle');
+                  $section->addText('Resumo da operacao : '.$doct->summary, 'SimStyle');
+                }
             
-                $section->addText('Resumo da operacao : '.$doct->summary, 'SimStyle');
+                
                 $section->addTextBreak(1);
                
             }
 
+            $section->addText('Nesta data foram aprendidos : ', 'SimStyle');
 
-            /*
+            /* Lista de veiculos apreendidos... */
 
+             $veiculos = $this->relatorio->load_documento_auto($data->ROW_ID);
 
-        <h3>Detalhes da ocorrencia</h3>
+             if( $veiculos != null){
 
-        <p>Data da ocorrencia : <?php echo $ocorrencia['documento'][0]->arrest_date?></p>
-        </br>
-        <p>Força de segurança : <?php echo $ocorrencia['documento'][0]->forca_seguranca?></p>
-        <p>Nome da operação : <?php echo $ocorrencia['documento'][0]->operation?></p>
-        <p>Resumo da operação : <?php echo $ocorrencia['documento'][0]->summary?></p>
-        
-        */
+               //$section->addText('Veiculos envolvidos','SimpleStyle');
+               $section->addTextBreak(1);
+
+               /*
             
+                  public 'ID_vehicle' => string '27' (length=2)
+  public 'ROW_ID' => string '123' (length=3)
+  public 'category' => string '1' (length=1)
+  public 'model' => string '291' (length=3)
+  public 'brand' => string '12' (length=2)
+  public 'chassi' => string '' (length=0)
+  public 'renavan' => string '' (length=0)
+  public 'placa' => string '' (length=0)
+  public 'nome_estado' => null
+  public 'cidade_nome' => null
+  public 'mode_nome' => string '2002' (length=4)
+  public 'marc_nome' => string 'BMW' (length=3)
+  public 'tpve_nome' => string 'AUTOMÓVEL' (length=10)
+
+               */
+
+
+             foreach ($veiculos as $veic) {
+
+               if($veic->marc_nome != '')
+              {
+                $veiculoNome = $veic->marc_nome;
+              }else{
+                $veiculoNome = " ";
+              }
+
+               if($veic->mode_nome != '')
+              {
+                $veiculoModelo = $veic->mode_nome;
+              }
+              else{
+                $veiculoModelo = " ";
+              }
+
+              /*`Placa */
+              if($veic->placa != '')
+              {
+                $veiculoPlaca = "Placa : ".$veic->placa;
+              }else{
+                $veiculoPlaca = " ";
+              }
+              /* Chassi */
+              if($veic->chassi != '')
+              {
+                $veiculoChassi = "Chassi : ".$veic->chassi;
+              }else{
+                $veiculoChassi = " ";
+              }
+
+              /* Renavam */  
+              if($veic->renavan != '')
+              {
+                $veiculoRenavam = "Chassi : ".$veic->renavan;
+              }else{
+                $veiculoRenavam = " ";
+              }
+
+              /* cidade e estado */
+              if($veic->cidade_nome != '')
+              {
+                $veiculoCidade = "Proveniente de  : ".$veic->cidade_nome;
+              }else{
+                $veiculoCidade = " ";
+              }
+
+
+               if($veic->uf_estado != '')
+              {
+                if($veiculoCidade != " ")
+                {
+                  $veiculoEstado = "/".$veic->uf_estado;
+                }else{
+                  $veiculoEstado = "Proveniente de : ".$veic->uf_estado;
+                }
+              }else{
+                $veiculoEstado = " ";
+              }
+
+                
+                //$section->addText('Veiculos envolvidos','SimpleStyle');
+                //$section->addTextBreak(1);
+                $section->addText('Veiculo  : '.$veiculoNome.' '.$veiculoModelo.' '.$veiculoPlaca.' '.$veiculoChassi.' '.$veiculoCidade.''.$veiculoEstado, 'SimStyle');
+                
+                $section->addTextBreak(1);
+
+                }
+            } //Fim do if de veiculos envolvidos.........................................
+            else{
+               // $section->addText('Veiculos envolvidos : 0', 'SimStyle');
+                $section->addTextBreak(1);
+            }
+
+
+            /* lista dos produtos apreendidos... */
+
+               $mercadorias = $this->relatorio->load_mercadoria_relatorio($data->ROW_ID);
+                //var_dump($veiculos);
+
+            if( $mercadorias != null){
+
+               //$section->addText('Mercadorias apreendidas','SimpleStyle');
+               $section->addTextBreak(1);
+
+             foreach ($mercadorias as $merc) {
+                
+                //$section->addText('Veiculos envolvidos','SimpleStyle');
+                //$section->addTextBreak(1);
+                $section->addText('Aproximadamente '.$merc->qty. ' '.$merc->unidade_medida.' de '.$merc->nome_produto, 'SimStyle');
+                if($merc->nome_marca != null)
+                {
+                  $section->addText('O produto era da marca : '.$merc->nome_marca, 'SimStyle');
+                }
+                if($merc->nome_tabacalera != null )
+                {
+                  $section->addText('Tabacalera : '.$merc->nome_tabacalera, 'SimStyle');
+                }
+                
+                //$section->addText('Marca - modelo :'.." - "., 'SimStyle');
+                $section->addTextBreak(1);
+
+                }
+            } //Fim do if de mercadorias apreendidas.........................................
+            else{
+                //$section->addText('Mercadorias Apreendidas : 0', 'SimStyle');
+                $section->addTextBreak(1);
+            }
+
+
+            /*Endereço da apreensão....................................................*/
+
+
+
+
+            /*Lista de envolvidos aprenedidos .........................................*/
+
+             $envolvidos = $this->relatorio->load_documento_envolvidos($data->ROW_ID);
+
+            if( $envolvidos != null){
+
+               $section->addText('As mercadorias estavam em poder de: ','SimpleStyle');
+               $section->addTextBreak(1);
+
+             foreach ($envolvidos as $pessoas) {
+                
+                //$section->addText('Veiculos envolvidos','SimpleStyle');
+                //$section->addTextBreak(1);
+
+              if($pessoas->father != '')
+              {
+                $filho = "filho de ";
+              }
+              else
+              {
+                $filho = " ";
+              }
+
+               if($pessoas->mother != '')
+              {
+                $filho = "filho de ";
+              }
+              else
+              {
+                $filho = " ";
+              }
+              /////////////////////////////////////////////////
+
+              if($pessoas->father != '')
+              {
+                $paiEnvolvido = $pessoas->father;
+              }
+              else
+              {
+                $paiEnvolvido = "";
+              }
+
+              if($pessoas->mother != '')
+              {
+                if($paiEnvolvido != '')
+                {
+                  $maeEnvolvido = " e ".$pessoas->mother;
+                }
+                else{
+                  $maeEnvolvido = $pessoas->mother;
+                }
+              }
+              else
+              {
+                $maeEnvolvido = "";
+              }
+              //////////////////////////////////////////////////
+
+              if($pessoas->birth_dt != '')
+              {
+                $dataEx4 = explode("-", $pessoas->birth_dt);
+                  $month4 = $dataEx4[1];
+                  $day4 = $dataEx4[2];
+                  $year4 = $dataEx4[0];
+                  $dataNascDet =  ", nascido aos ".$day4."/".$month4."/".$year4;
+              }else
+              {
+                $dataNascDet = "";
+              }
+
+              if($pessoas->birth_dt != '')
+              {
+
+              }
+
+      /*
+         /*
+                object(stdClass)[34]
+      public 'ID_main' => string '215' (length=3)
+      public 'ROW_ID' => string '123' (length=3)
+      public 'parent_id' => string '123' (length=3)
+      public 'parent_TBL' => string 'tbl_doct' (length=8)
+      public 'CHILD_ID' => string '16' (length=2)
+      public 'CHILD_TBL' => string 'tbl_contact' (length=11)
+      public 'UPDATED_BY' => string 'Niguem' (length=6)
+      public 'LAST_UPDATE' => string '2014-09-16 02:56:24' (length=19)
+      public 'CREATED_BY' => string 'qwe' (length=3)
+      public 'CREATED' => string '2014-09-13 20:31:18' (length=19)
+      public 'ID_contact' => string '16' (length=2)
+      public 'name' => string 'Individuo A' (length=11)
+      public 'CPF' => string '13609613726' (length=11)
+      public 'rg' => string '' (length=0)
+      public 'passport' => string '' (length=0)
+      public 'father' => string '' (length=0)
+      public 'mother' => string '' (length=0)
+      public 'birth_dt' => string '2014-09-09' (length=10)
+      public 'birth_city' => string '1743' (length=4)
+      public 'birth_state' => string '08' (length=2)
+      public 'birth_country' => string '33' (length=2)
+      public 'ADDR_PR_ID' => null
+      public 'phone_PR_ID' => null
+      public 'UPDATE_BY' => string 'qwe' (length=3)
+      public 'telefone' => string '' (length=0)
+      public 'marca_telefone' => string '' (length=0)
+      public 'modelo_telefone' => string '' (length=0)
+      public 'IMEI' => string '' (length=0)
+      public 'operadora' => string '' (length=0)
+      public 'deletado' => string '0' (length=1)
+      public 'Id_pais' => string '33' (length=2)
+      public 'nome_pais' => string 'Brasil' (length=6)
+      public 'country_name' => string 'BRAZIL' (length=6)
+      public 'id_estado' => string '08' (length=2)
+      public 'uf' => string 'ES' (length=2)
+      public 'nome_estado' => string 'EspÃ­rito Santo' (length=15)
+      public 'id' => string '1743' (length=4)
+      public 'estado' => string '08' (length=2)
+      public 'nome' => string 'Acioli' (length=6)
+
+
+        public 'ID_contact' => string '39' (length=2)
+      public 'name' => string 'Detido Abc' (length=10)
+      public 'CPF' => string '' (length=0)
+      public 'rg' => string '' (length=0)
+      public 'passport' => string '' (length=0)
+      public 'father' => string 'Pai do individuo' (length=16)
+      public 'mother' => string 'Mae do individuo' (length=16)
+      public 'birth_dt' => string '0000-00-00' (length=10)
+      public 'nome_pais' => string 'Brasil' (length=6)
+      public 'nome_estado' => null
+      public 'nome' => null
+
+      public 'ID_addr' => string '122' (length=3)
+      public 'address' => string 'EndereÃ§o Detido' (length=16)
+      public 'nunber' => string '123' (length=3)
+      public 'complement' => string '' (length=0)
+      public 'district' => string '' (length=0)
+
+      public 'end_pais' => string 'Brasil' (length=6)
+      public 'end_est' => string 'Pernambuco' (length=10)
+      public 'end_Cid' => null
+
+            */
+
+        if($pessoas->nome != '')
+        {
+          $cidadeNasc = "em ".$pessoas->nome;
+        }
+        else{
+          $cidadeNasc = " ";
+        }
+
+        if($pessoas->nome_estado != '')
+        {
+          if($cidadeNasc != '')
+          {
+            $estadoNasc =  "/".$pessoas->uf;
+          }
+          else{
+            $estadoNasc =  "em ".$pessoas->uf;
+          }
+          
+        }
+        else{
+          $estadoNasc = '';
+        }
+
+        /* se possuir CPF */
+
+        if($pessoas->CPF != '' )
+        {
+          $cpfEnvolvido = "Portador do CPF ".$pessoas->CPF;
+        }else
+        {
+          $cpfEnvolvido = "";
+        }
+
+        /* se possuir rg */
+
+        if($pessoas->rg != '' )
+        {
+          if($cpfEnvolvido != '')
+          {
+            $rgEnvolvido =  "Portador do RG ".$pessoas->rg;
+          }
+          else{
+            $rgEnvolvido =  "e do RG ".$pessoas->rg;
+          }
+        }else
+        {
+          $rgEnvolvido = "";
+        }
+
+        /* Endereço do envolvido */
+
+        if($pessoas->address != '' )
+        {
+          $enderecoResidencia = "residente em ".$pessoas->address;
+        }else
+        {
+          $enderecoResidencia = "";
+        }
+
+        /* estado e cidade do individuo */
+         if($pessoas->end_Cid != '')
+        {
+          $cidadeEnd = "em ".$pessoas->end_Cid;
+        }
+        else{
+          $cidadeEnd = "";
+        }
+
+        if($pessoas->end_uf != '')
+        {
+          if($cidadeEnd != ' ')
+          {
+            $estadoEnd =  "/".$pessoas->end_uf;
+          }
+          else{
+            $estadoEnd =  "em ".$pessoas->end_uf;
+          }
+          
+        }
+        else{
+          $estadoEnd = '';
+        }
+
+        /* telefone do detido  */
+
+        if($pessoas->telefone != '' )
+        {
+          $telefoneDetido = "Celular  ".$pessoas->telefone;
+        }else
+        {
+          $telefoneDetido = "";
+        }
+
+              
+                /*Paragrafo responsavel pelos dados dos detidos */
+                $section->addText( strtoupper($pessoas->name).', nascido no '.$pessoas->nome_pais.' '.$filho.' '.$paiEnvolvido.' '.$maeEnvolvido.' '.$dataNascDet. ' '.
+                  $cidadeNasc."".$estadoNasc." ,". $cpfEnvolvido. " ".$rgEnvolvido." ,".$enderecoResidencia." ".$cidadeEnd."".$estadoEnd.
+                  "".$telefoneDetido, 'SimStyle');
+                
+                $section->addTextBreak(1);
+
+                }
+            } //Fim do if de veiculos envolvidos........................................
+            else{
+               // $section->addText('Pessoas envolvidas nesta ocorrencia: 0', 'SimStyle');
+                $section->addTextBreak(1);
+            }
+
+            //Fim da exibição de envolvidos.............................................
+
 
 
 
@@ -390,23 +802,87 @@ string '24/09/2014' (length=10)
                 $section->addText('Cidade - estado :'.$end->nome." - ".$end->nome_estado, 'SimStyle');
                 $section->addTextBreak(1);
 
-            }*/
+                object(stdClass)[47]
+                  public 'ID_addr' => string '113' (length=3)
+                  public 'address' => string 'Rua da ocorrencia' (length=17)
+                  public 'nunber' => string '125' (length=3)
+                  public 'complement' => string 'Ocorrencia' (length=10)
+                  public 'district' => string 'Bairro' (length=6)
+                  public 'nome_estado' => string 'Acre' (length=4)
+                  public 'nome' => string 'Assis Brasil' (length=12)
+
+
+            }
+            */
             if($endereço != null)
             {
-                $section->addText('Endereco da ocorrencia','SimpleStyle');
-                
-                $section->addText('Endereço : '.$endereço[0]->address, 'SimStyle');
-                
-                $section->addText('Bairro : '.$endereço[0]->district, 'SimStyle');
-           
-                $section->addText('Cidade - estado :'.$endereço[0]->nome." - ".$endereço[0]->nome_estado, 'SimStyle');
+
+              if($endereço[0]->address != '')
+              {
+                $logradouro = $endereço[0]->address;
+              }
+              else {
+                $logradouro = " ";
+              }
+
+              if($endereço[0]->nunber != '')
+              {
+                $numeroEnd = "numero ".$endereço[0]->nunber;
+              }else{
+                $numeroEnd = "";
+              }
+
+              if($endereço[0]->nunber != '')
+              {
+                $numeroEnd = "numero ".$endereço[0]->nunber;
+              }else{
+                $numeroEnd = "";
+              }
+
+              if($endereço[0]->complement != '')
+              {
+                $complementEnd = " com a referencia ".$endereço[0]->complement;
+              }else{
+                $complementEnd = "";
+              }
+
+              if($endereço[0]->district != '')
+              {
+                $bairroEnd = " no bairro ".$endereço[0]->district;
+              }else{
+                $bairroEnd = "";
+              }
+
+              if($endereço[0]->nome != '')
+              {
+                $cidadeEnd = " na cidade de  ".$endereço[0]->nome;
+              }else{
+                $cidadeEnd = "";
+              }
+
+              if($endereço[0]->uf != '')
+              {
+                if($endereço[0]->nome != '')
+                {
+                  $estadoEnd = "/".$endereço[0]->uf;
+                }else{
+                  $estadoEnd = "no estado de ".$endereço[0]->uf;
+                }
+              }else{
+                $estadoEnd = "";
+              }
+
+
+
+                $section->addText('A referida apreensâo ocorreu nas proximidade do endereço : '.$logradouro.' '.$numeroEnd.' '.$complementEnd.' '.$bairroEnd.' '.$cidadeEnd.' '.$estadoEnd ,'SimStyle');
+
                 $section->addTextBreak(1);
             }
 
             //Fim da exibição de endereços..............................................
 
             //Inicio da exibição de envolvidos..........................................
-            /*
+      /*
              object(stdClass)[33]
       public 'ID_contact' => string '16' (length=2)
       public 'name' => string 'Individuo A' (length=11)
@@ -421,98 +897,14 @@ string '24/09/2014' (length=10)
       public 'nome' => string 'Acioli' (length=6)
       */
 
-            $envolvidos = $this->relatorio->load_documento_envolvidos($data->ROW_ID);
+           
 
-            if( $envolvidos != null){
-
-               $section->addText('Pessoas envolvidos','SimpleStyle');
-               $section->addTextBreak(1);
-
-             foreach ($envolvidos as $pessoas) {
-                
-                //$section->addText('Veiculos envolvidos','SimpleStyle');
-                //$section->addTextBreak(1);
-                $section->addText('Nome do envolvido  : '.$pessoas->name, 'SimStyle');
-                
-                $section->addText('CPF : '.$pessoas->CPF, 'SimStyle');
-                
-                $section->addText('RG : '.$pessoas->rg, 'SimStyle');
-                
-                $section->addText('Estado - Cidade :'.$pessoas->nome_estado." - ".$pessoas->nome, 'SimStyle');
-                $section->addTextBreak(1);
-
-                }
-            } //Fim do if de veiculos envolvidos........................................
-            else{
-                $section->addText('Pessoas envolvidas nesta ocorrencia: 0', 'SimStyle');
-                $section->addTextBreak(1);
-            }
-
-            //Fim da exibição de envolvidos.............................................
-
-            //Inicio da exibição de veiculos 
-             $veiculos = $this->relatorio->load_documento_auto($data->ROW_ID);
-            //var_dump($veiculos);
-              
-
-            if( $veiculos != null){
-
-               $section->addText('Veiculos envolvidos','SimpleStyle');
-               $section->addTextBreak(1);
-
-             foreach ($veiculos as $veic) {
-                
-                //$section->addText('Veiculos envolvidos','SimpleStyle');
-                //$section->addTextBreak(1);
-                $section->addText('Veiculo  : '.$veic->tpve_nome, 'SimStyle');
-                
-                $section->addText('Placa : '.$veic->placa, 'SimStyle');
-                
-                $section->addText('Chassi : '.$veic->chassi, 'SimStyle');
-                
-                $section->addText('Marca - modelo :'.$veic->marc_nome." - ".$veic->mode_nome, 'SimStyle');
-                $section->addTextBreak(1);
-
-                }
-            } //Fim do if de veiculos envolvidos.........................................
-            else{
-                $section->addText('Veiculos envolvidos : 0', 'SimStyle');
-                $section->addTextBreak(1);
-            }
 
 
             //Inicio de exibição das mercadorias apreendidas.............................
 
                 //Inicio da exibição de veiculos 
-                $mercadorias = $this->relatorio->load_mercadoria_relatorio($data->ROW_ID);
-                //var_dump($veiculos);
-
-            if( $mercadorias != null){
-
-               $section->addText('Mercadorias apreendidas','SimpleStyle');
-               $section->addTextBreak(1);
-
-             foreach ($mercadorias as $merc) {
-                
-                //$section->addText('Veiculos envolvidos','SimpleStyle');
-                //$section->addTextBreak(1);
-                $section->addText('Produto   : '.$merc->nome_produto, 'SimStyle');
-                
-                $section->addText('Marca : '.$merc->nome_marca, 'SimStyle');
-                
-                $section->addText('Tabacalera : '.$merc->nome_tabacalera, 'SimStyle');
-                
-                $section->addText('Marca - modelo :'.$merc->qty." - ".$merc->unidade_medida, 'SimStyle');
-                $section->addTextBreak(1);
-
-                }
-
-
-            } //Fim do if de veiculos envolvidos.........................................
-            else{
-                $section->addText('Mercadorias Apreendidas : 0', 'SimStyle');
-                $section->addTextBreak(1);
-            }
+               
 
             //Fim da exibição das mercadorias apreenção..................................
 
@@ -522,15 +914,61 @@ string '24/09/2014' (length=10)
 
             if($endereçoDeposito != null)
             {
-                $section->addText('Endereço do deposito','SimpleStyle');
+
+               if($endereçoDeposito[0]->address != '')
+              {
+                $logradouroDept = $endereçoDeposito[0]->address;
+              }
+              else {
+                $logradouroDept = " ";
+              }
+
+              if($endereçoDeposito[0]->nunber != '')
+              {
+                $numeroDept = "numero ".$endereçoDeposito[0]->nunber;
+              }else{
+                $numeroDept = "";
+              }
+
+              if($endereçoDeposito[0]->complement != '')
+              {
+                $complementDept = " com a referencia ".$endereçoDeposito[0]->complement;
+              }else{
+                $complementDept = "";
+              }
+
+              if($endereçoDeposito[0]->district != '')
+              {
+                $bairroDept = " no bairro ".$endereçoDeposito[0]->district;
+              }else{
+                $bairroDept = "";
+              }
+
+              if($endereçoDeposito[0]->nome != '')
+              {
+                $cidadeDept = " na cidade de  ".$endereçoDeposito[0]->nome;
+              }else{
+                $cidadeDept = "";
+              }
+
+              if($endereçoDeposito[0]->uf != '')
+              {
+                if($endereçoDeposito[0]->nome != '')
+                {
+                  $estadoDept = "/".$endereçoDeposito[0]->uf;
+                }else{
+                  $estadoDept = "no estado de ".$endereçoDeposito[0]->uf;
+                }
+              }else{
+                $estadoDept = "";
+              }
+
+
+
+                $section->addText('Os seguintes produtos foram apreendidos no seguinte endereço : '.$logradouroDept.' '.$numeroDept.' '.$complementDept.' '.$bairroDept.' '.$cidadeDept.' '.$estadoDept ,'SimStyle');
+
                 $section->addTextBreak(1);
-                
-                $section->addText('Endereço : '.$endereçoDeposito[0]->address, 'SimStyle');
-                
-                $section->addText('Bairro : '.$endereçoDeposito[0]->district, 'SimStyle');
-           
-                $section->addText('Cidade - estado :'.$endereçoDeposito[0]->nome." - ".$endereçoDeposito[0]->nome_estado, 'SimStyle');
-                $section->addTextBreak(1);
+
             }
             else{
                   $section->addText(' ', 'SimStyle');
@@ -544,29 +982,70 @@ string '24/09/2014' (length=10)
             //Inicio dos produtos do deposito............................................
 
             $produtoDeposito = $this->relatorio->load_armazem_relatorio($data->ROW_ID);
+            $produtos_armazens = $this->relatorio->load_armazem_relatorio($data->ROW_ID);
 
             if( $produtoDeposito != null){
 
-               $section->addText('Produtos apreendidos no deposito','SimpleStyle');
-               $section->addTextBreak(1);
+               //$section->addText('Produtos apreendidos no deposito','SimpleStyle');
+               //$section->addTextBreak(1);
 
              foreach ($produtoDeposito as $produtosDep) {
+
+
+              if($produtosDep->nome_produto != '')
+              {
+                $nomeProdutoDept = $produtosDep->nome_produto;
+              }else{
+                $produtoDept = " ";
+              }
+              /* quantidade */
+
+               if($produtosDep->quantidade_deposito != '')
+              {
+                $quantProdutoDept = $produtosDep->quantidade_deposito;
+              }else{
+                $quantProdutoDept = " ";
+              }
+
+              /* Unidade de medida */
+
+              if($produtosDep->unidade_medida != '')
+              {
+                $unidadeProdutoDept = $produtosDep->unidade_medida;
+              }else{
+                $unidadeProdutoDept = " ";
+              }
+
+
+              /* nome da marca  */
+              if($produtosDep->nome_marca){
+                $marcaProd = " ,da marca :".$produtosDep->nome_marca;
+              }else{
+                $marcaProd = "";
+              }
+
+               /* tabacalera  */
+              if($produtosDep->nome_marca){
+                $tabacaleraProd = " ,da tabacalera :".$produtosDep->nome_tabacalera;
+              }else{
+                $tabacaleraProd = "";
+              }
                 
                 //$section->addText('Veiculos envolvidos','SimpleStyle');
                 //$section->addTextBreak(1);
-                $section->addText('Produto   : '.$produtosDep->nome_produto, 'SimStyle');
+                $section->addText(''.$quantProdutoDept.' '.$unidadeProdutoDept.' de '.$nomeProdutoDept.' '.$marcaProd.' '.$tabacaleraProd, 'SimStyle');
                 
-                $section->addText('Marca : '.$produtosDep->nome_marca, 'SimStyle');
+                //$section->addText('Marca : '.$produtosDep->nome_marca, 'SimStyle');
                 
-                $section->addText('Tabacalera : '.$produtosDep->nome_tabacalera, 'SimStyle');
+                //$section->addText('Tabacalera : '.$produtosDep->nome_tabacalera, 'SimStyle');
                 
-                $section->addText('Marca - modelo :'.$produtosDep->qty." - ".$produtosDep->unidade_medida, 'SimStyle');
+               // $section->addText('Marca - modelo :'.$produtosDep->qty." - ".$produtosDep->unidade_medida, 'SimStyle');
                 $section->addTextBreak(1);
 
                 }
             } //Fim do if de veiculos envolvidos.........................................
             else{
-                $section->addText('Veiculos envolvidos : 0', 'SimStyle');
+                //$section->addText('deposito  : 0', 'SimStyle');
                 $section->addTextBreak(1);
             }
 
@@ -586,12 +1065,12 @@ string '24/09/2014' (length=10)
                 
                 //$section->addText('Fotos da Ocorrencia','SimpleStyle');
                 //$section->addTextBreak(1);
-                $section->addText('Nome da imagem  : '.$img->title_image, 'SimStyle');
+                //$section->addText('Nome da imagem  : '.$img->title_image, 'SimStyle');
                 //$section->addImage(FCPATH.'/imagens_doct/'.$img->nome_image_doct);
                 //$section->addTextBreak(1);
         
-                $section->addImage(FCPATH.'/imagens_doct/'.$img->nome_image_doct, array('width'=>210, 'height'=>210, 'align'=>'right'));
-                $section->addTextBreak(1);
+                $section->addImage(FCPATH.'/imagens_doct/'.$img->nome_image_doct, array('width'=>210, 'height'=>210));
+                //$section->addTextBreak(1);
         
                // $section->addImage(FCPATH.'/imagens_doct/'.$img->nome_image_doct, array('width'=>100, 'height'=>100, 'align'=>'right'));
                 
@@ -625,10 +1104,6 @@ string '24/09/2014' (length=10)
         <p>Bairro : <?php echo $ocorrencia['endereco'][0]->district ?></p>
 
 
-
-
-
-
            $dataDocumento['endereco'] = $endereço;   
 
             $veiculos = $this->relatorio->load_documento_auto($data->ROW_ID);
@@ -638,7 +1113,64 @@ string '24/09/2014' (length=10)
 
             array_push($dadosArray , $dataDocumento);*/
 
+
         }
+
+
+            /* Data inicial e data final   $dataDateI ,$dataDateF */  
+
+            $totalVeiculos = $this->relatorio->total_veiculos_relatorio($dataDateI ,$dataDateF);
+            $totalDepositos = $this->relatorio->total_depositos($dataDateI ,$dataDateF);
+            $totalCaminhao = $this->relatorio->total_veiculos_caminhao_relatorio($dataDateI ,$dataDateF);
+            $totalOnibus = $this->relatorio->total_veiculos_onibus_relatorio($dataDateI ,$dataDateF);
+
+           /*Adição de tabela com dados */
+
+            /*
+            for($i = 1; $i <= 2; $i++) {
+            $table->addRow();
+            $table->addCell(2000)->addText("Cell $i");
+            $table->addCell(2000)->addText("Cell $i");
+            $table->addCell(2000)->addText("Cell $i");
+            $table->addCell(2000)->addText("Cell $i");
+            $text = ($i % 2 == 0) ? 'X' : '';
+            $table->addCell(500)->addText($text);
+            }
+            */
+
+
+            $section->addTextBreak(1);
+
+            $styleTable = array('borderSize'=>6, 'borderColor'=>'006699', 'cellMargin'=>80);
+            $styleFirstRow = array('borderBottomSize'=>18, 'borderBottomColor'=>'0000FF', 'bgColor'=>'66BBFF');
+            // Define cell style arrays
+            $styleCell = array('valign'=>'center');
+            $styleCellBTLR = array('valign'=>'center', 'textDirection'=>PHPWord_Style_Cell::TEXT_DIR_BTLR);
+            // Define font style for first row
+            $fontStyle = array('bold'=>true, 'align'=>'center');
+
+
+            $table = $section->addTable('resumoDoMes');
+
+            $this->word->addTableStyle('resumoDoMes', $styleTable, $styleFirstRow);
+
+             // Add row
+            $table->addRow(900);
+            // Add cells
+            $table->addCell(6000, $styleCell)->addText('Resumo do relatorio ', $styleTable);
+            
+            $table->addRow();
+            $table->addCell(2000, $styleCell)->addText(' Caixas de cigarros', $styleTable);
+            $table->addCell(2000, $styleCell)->addText(' '.$totalVeiculos.' veiculos', $styleTable);
+            $table->addCell(2000, $styleCell)->addText(' '.$totalCaminhao.' Caminhoes', $styleTable);
+            $table->addCell(2000, $styleCell)->addText(' '.$totalOnibus.' Onibus', $styleTable);
+            $table->addCell(2000, $styleCell)->addText(' '.$totalDepositos.' Depositos', $styleTable);
+
+
+             $section->addTextBreak(1);
+
+
+
 
 
 

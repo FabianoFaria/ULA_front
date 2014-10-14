@@ -24,6 +24,7 @@
                     
 <?php
 
+
     foreach ($conteudo as $ocorrencia) {
                             
        // var_dump($ocorrencia['veiculos']);
@@ -100,6 +101,8 @@
 
             if($ocorrencia['produto_armazens'][0] != "")
             {
+                //var_dump($ocorrencia['produto_armazens']);
+
                 ?>
                 <h3>Produtos aprendidos no depositos</h3>
                 <?php

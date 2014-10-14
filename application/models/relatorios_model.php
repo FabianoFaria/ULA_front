@@ -58,7 +58,7 @@ class Relatorios_model extends CI_Model {
     	// public 'ROW_ID' => string '45' (length=2)
 
     	//$this->db->select('*');        tbl_addr. 
-        $this->db->select('tbl_addr.ID_addr, tbl_addr.address, tbl_addr.nunber, tbl_addr.complement, tbl_addr.district, tbl_estados.nome_estado, tbl_cidades.nome');
+        $this->db->select('tbl_addr.ID_addr, tbl_addr.address, tbl_addr.nunber, tbl_addr.complement, tbl_addr.district, tbl_estados.nome_estado, tbl_estados.uf, tbl_cidades.nome');
     	//$this->db->distinct('ROW_ID');
     	$this->db->join('tbl_addr','tbl_addr.ROW_ID = tbl_main.parent_id', 'left');
         $this->db->join('tbl_estados', 'tbl_estados.id_estado = tbl_addr.state', 'left');
@@ -123,7 +123,7 @@ class Relatorios_model extends CI_Model {
     {
     	// public 'ROW_ID' => string '45' (length=2)
         $this->db->distinct('tbl_vehicle.ID_vehicle');
-    	$this->db->select('tbl_vehicle.ID_vehicle, tbl_vehicle.ROW_ID, tbl_vehicle.category, tbl_vehicle.model, tbl_vehicle.brand, tbl_vehicle.chassi, tbl_vehicle.renavan, tbl_vehicle.placa, tbl_estados.nome_estado as nome_estado, tbl_cidades.nome as cidade_nome, tbl_modelos.mode_nome, tbl_marcas.marc_nome, tbl_tipo_veiculo.tpve_nome');
+    	$this->db->select('tbl_vehicle.ID_vehicle, tbl_vehicle.ROW_ID, tbl_vehicle.category, tbl_vehicle.model, tbl_vehicle.brand, tbl_vehicle.chassi, tbl_vehicle.renavan, tbl_vehicle.placa, tbl_estados.nome_estado as nome_estado, tbl_estados.uf as uf_estado, tbl_cidades.nome as cidade_nome, tbl_modelos.mode_nome, tbl_marcas.marc_nome, tbl_tipo_veiculo.tpve_nome');
         $this->db->join('tbl_vehicle','tbl_vehicle.ROW_ID = tbl_main.parent_id', 'left');
         $this->db->join('tbl_estados', 'tbl_estados.id_estado = tbl_vehicle.state', 'left');
         $this->db->join('tbl_cidades', 'tbl_cidades.id = tbl_vehicle.city', 'left');
@@ -151,11 +151,24 @@ class Relatorios_model extends CI_Model {
 
     function load_documento_envolvidos($idDoct)
     {
-        $this->db->select('tbl_contact.ID_contact, tbl_contact.name, tbl_contact.CPF, tbl_contact.rg, tbl_contact.passport, tbl_contact.father, tbl_contact.mother, tbl_contact.birth_dt, tbl_pais.nome_pais, tbl_estados.nome_estado, tbl_cidades.nome');
+        //tbl_contact.ID_contact, tbl_contact.name, tbl_contact.CPF, tbl_contact.rg, tbl_contact.passport, tbl_contact.father, tbl_contact.mother, tbl_contact.birth_dt, tbl_pais.nome_pais, tbl_estados.nome_estado, tbl_cidades.nome'
+        //paisL.nome_pais, tbl_addr.
+        $this->db->select('tbl_contact.ID_contact, tbl_contact.name, tbl_contact.CPF, tbl_contact.rg, tbl_contact.passport, tbl_contact.father, tbl_contact.mother,
+         tbl_contact.birth_dt, tbl_pais.nome_pais, tbl_estados.nome_estado, tbl_estados.uf, tbl_cidades.nome,tbl_addr.ID_addr, tbl_addr.address, tbl_addr.nunber, 
+         tbl_addr.complement, tbl_addr.district, paisL.nome_pais as end_pais, estadoL.nome_estado as end_est, estadoL.uf as end_uf, cidadeL.nome as end_Cid,
+         tbl_contact.telefone ,tbl_contact.marca_telefone ,tbl_contact.IMEI ,tbl_contact.operadora, tbl_operadora.nome_operadora');
         $this->db->join('tbl_contact','tbl_contact.ID_contact = tbl_main.CHILD_ID');
         $this->db->join('tbl_pais', 'tbl_pais.Id_pais = tbl_contact.birth_country', 'left');
         $this->db->join('tbl_estados', 'tbl_estados.id_estado = tbl_contact.birth_state', 'left');
         $this->db->join('tbl_cidades', 'tbl_cidades.id = tbl_contact.birth_city', 'left');
+        $this->db->join('tbl_con_addr','tbl_con_addr.id_con = tbl_contact.ID_contact', 'left');
+        $this->db->join('tbl_addr','tbl_addr.ID_addr = tbl_con_addr.id_addr', 'left');
+        $this->db->join('tbl_operadora','tbl_operadora.id_operadora = tbl_contact.operadora', 'left');
+
+        $this->db->join('tbl_pais AS paisL', 'paisL.Id_pais = tbl_addr.country', 'left');
+        $this->db->join('tbl_estados AS estadoL', 'estadoL.id_estado = tbl_addr.state', 'left');
+        $this->db->join('tbl_cidades AS cidadeL', 'cidadeL.id = tbl_addr.city', 'left');
+
         $this->db->where('tbl_main.parent_id', $idDoct);
         $this->db->where('tbl_main.CHILD_TBL', 'tbl_contact');
         $query = $this->db->get('tbl_main');
@@ -204,8 +217,72 @@ class Relatorios_model extends CI_Model {
         return $queryDoct->result();
     }
 
+    function total_veiculos_relatorio($inicio, $final)
+    {
+
+        /*
+        $this->db->count_all('tbl_vehicle.ID_vehicle');
+        $this->db->distinct('tbl_vehicle.ID_vehicle');
+        $this->db->join('tbl_vehicle','tbl_vehicle.ROW_ID = tbl_main.parent_id', 'left');
+        $this->db->where('tbl_main.parent_id', $idDoct);
+        $this->db->where('tbl_main.CHILD_TBL', 'tbl_vehicle');
+        $query = $this->db->get('tbl_main');
+        return $query->result();
+        */
+
+
+        $this->db->select('*');
+        $this->db->join('tbl_main','tbl_doct.ROW_ID = tbl_main.parent_id', 'left');
+        $this->db->where('tbl_main.CHILD_TBL', 'tbl_vehicle');
+        $where = "tbl_doct.arrest_date BETWEEN '$inicio%' AND '$final%'";
+        $this->db->where($where);
+        $this->db->where('tbl_doct.status_doct','0');
+        $query = $this->db->get('tbl_doct');
+        return $query->num_rows();  
+
+    }
+
+    function total_veiculos_caminhao_relatorio($inicio, $final)
+    {
+        $this->db->select('*');
+        $this->db->join('tbl_main','tbl_doct.ROW_ID = tbl_main.parent_id', 'left');
+        $this->db->where('tbl_main.CHILD_TBL', 'tbl_vehicle');
+        $this->db->join('tbl_vehicle','tbl_vehicle.ID_vehicle = tbl_main.CHILD_ID', 'left');
+        $this->db->where('tbl_vehicle.category', '2');
+        $where = "tbl_doct.arrest_date BETWEEN '$inicio%' AND '$final%'";
+        $this->db->where($where);
+        $this->db->where('tbl_doct.status_doct','0');
+        $query = $this->db->get('tbl_doct');
+        return $query->num_rows();  
+
+    }
+
+    function total_veiculos_onibus_relatorio($inicio, $final)
+    {
+        $this->db->select('*');
+        $this->db->join('tbl_main','tbl_doct.ROW_ID = tbl_main.parent_id', 'left');
+        $this->db->where('tbl_main.CHILD_TBL', 'tbl_vehicle');
+        $this->db->join('tbl_vehicle','tbl_vehicle.ID_vehicle = tbl_main.CHILD_ID', 'left');
+        $this->db->where('tbl_vehicle.category', '5');
+        $where = "tbl_doct.arrest_date BETWEEN '$inicio%' AND '$final%'";
+        $this->db->where($where);
+        $this->db->where('tbl_doct.status_doct','0');
+        $query = $this->db->get('tbl_doct');
+        return $query->num_rows();  
+
+    }
+
+    function total_depositos($inicio, $final)
+    {
+        $this->db->select('*');
+        $this->db->join('tbl_main','tbl_doct.ROW_ID = tbl_main.parent_id', 'left');
+        $this->db->where('tbl_main.CHILD_TBL', 'tbl_wrs');
+        $where = "tbl_doct.arrest_date BETWEEN '$inicio%' AND '$final%'";
+        $this->db->where($where);
+        $this->db->where('tbl_doct.status_doct','0');
+        $query = $this->db->get('tbl_doct');
+        return $query->num_rows();
+    }
+
 }
-
-
-
 ?>
