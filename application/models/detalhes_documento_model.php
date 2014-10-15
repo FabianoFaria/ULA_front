@@ -121,7 +121,7 @@ class Detalhes_documento_model extends CI_Model {
     public function load_single_auto($id_auto)
     {
         $this->db->select('*');
-        $this->db->join('tbl_tipo_veiculo','tbl_tipo_veiculo.tpve_cod = tbl_vehicle.category');
+        $this->db->join('tbl_tipo_veiculo','tbl_tipo_veiculo.tpve_cod = tbl_vehicle.category', 'left');
         $this->db->join('tbl_marcas','tbl_marcas.marc_cod = tbl_vehicle.brand' , 'left');
         $this->db->join('tbl_modelos','tbl_modelos.mode_cod = tbl_vehicle.model', 'left');
         $this->db->join('tbl_cidades','tbl_cidades.id = tbl_vehicle.city', 'left');

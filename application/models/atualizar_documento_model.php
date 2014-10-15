@@ -168,6 +168,7 @@ class Atualizar_documento_model extends CI_Model {
             'placa' => $data['placa'],
             'city' => $data['city'],
             'state' => $data['state'],
+            'detalhes_veiculos' => $data['detalhes_veiculos'],
             'UPDATE_BY' => $data['UPDATED_BY'],
             'LAST_UPDATE' => $data['LAST_UPDATE']         
             );
@@ -219,6 +220,7 @@ class Atualizar_documento_model extends CI_Model {
             'birth_city' => $data['birth_city'],
             'birth_state' => $data['birth_state'],
             'birth_country' => $data['birth_country'],
+            'comentarios_detidos' => $data['comentarios_detidos'],
 
             'telefone' => $data['telefone'],
             'marca_telefone' => $data['marca_telefone'],

@@ -210,6 +210,7 @@ class Novo_documento extends CI_Controller {
          $dataAuto['placa'] = $this->input->post('placa_n');
          $dataAuto['city'] = $this->input->post('cidade_apr');
          $dataAuto['state'] = $this->input->post('estado_apr');
+         $dataAuto['detalhes_veiculos'] = $this->input->post('detalhes_veiculos');
 
         $Row_auto = null;
         if($this->input->post('id_auto') != null)
@@ -375,6 +376,7 @@ class Novo_documento extends CI_Controller {
              $dataEnvolvido['modelo_telefone'] = $this->input->post('modelo_telefone');
              $dataEnvolvido['IMEI'] = $this->input->post('IMEI');
              $dataEnvolvido['operadora'] = $this->input->post('operadora');
+             $dataEnvolvido['comentarios_detidos'] = $this->input->post('comentariosDet');
 
              //Dados para salvar os dados do endereço do envolvido...
 

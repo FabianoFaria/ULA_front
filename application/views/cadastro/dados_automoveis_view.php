@@ -9,13 +9,32 @@ $().ready(function() {
 	$("#form-new-ipl").validate({
 		rules: {
 			cat_veiculo: {
-				required: true
+				required: {
+					depends: function () {
+						if($('#detalhes_veiculos').val()===''){
+							return true;
+						}else{
+							return false;
+						}
+					}
+				}
 			},
 			mark_veiculo: {
 				required: false
 			},
 			mod_veiculo: {
 				required: false
+			},
+			detalhes_veiculos: {
+				required :{
+					depends: function () {
+						if($('#cat_veiculo').val()===''){
+							return true;
+						}else{
+							return false;
+						}
+					}
+				}
 			}
 		},
 		messages: {
@@ -27,6 +46,9 @@ $().ready(function() {
 			},
 			mod_veiculo: {
 				required: "Favor selecionar o modelo de carro!"
+			},
+			detalhes_veiculos :{
+				required : "Caso nâo tenha informações sobre o veiculo informar isso em detalhes"
 			}
 		}
 	});
@@ -148,6 +170,7 @@ function mostraModelos2(str) {
 				$nome_marca = $auto->marc_nome;
 				$id_modelo = $auto->mode_cod;
 				$nome_modelo = $auto->mode_nome;
+				$detalhes_veic = $auto->detalhes_veiculos;
 			}
 
 			 //var_dump($marcasP);
@@ -173,6 +196,7 @@ function mostraModelos2(str) {
 			$nome_marca = null;
 			$id_modelo = null;
 			$nome_modelo = null;
+			$detalhes_veic = null;
 
 		}
 
@@ -379,6 +403,9 @@ function mostraModelos2(str) {
 						<option value=" "> </option>		
 					</select>
 				<br>
+				<label for="detalhes_veiculos">Comentarios sobre detidos :</label><br/>
+				<textarea id="detalhes_veiculos" name="detalhes_veiculos"><?php echo $detalhes_veic; ?></textarea>
+
 				<br>
 
 				<input type="hidden" name="row_id" value="<?php echo $id_Row; ?>" />

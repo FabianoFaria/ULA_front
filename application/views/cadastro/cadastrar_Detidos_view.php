@@ -53,7 +53,16 @@ $().ready(function() {
 	$("#form-new-contact-ipl").validate({
 		rules: {
 			nomeD: {
-				required: true,
+				required: {
+					depends: function () {
+						if($('#comentariosDet').val()===''){
+							return true;
+						}else{
+							return false;
+						}
+					//return $("#CPF").val()!='';
+					}
+				},
 				minlength: 3
 			},
 			CPF: {
@@ -77,6 +86,18 @@ $().ready(function() {
 			},
 			telefone: {
 				digits: true
+			},
+			comentariosDet: {
+				required :{
+					depends: function () {
+						if($('#nomeD').val()===''){
+							return true;
+						}else{
+							return false;
+						}
+					//return $("#CPF").val()!='';
+					}
+				}
 			}
 		},
 		messages: {
@@ -96,6 +117,9 @@ $().ready(function() {
 			},
 			telefone: {
 				digits: "Somente digitos.."
+			},
+			comentariosDet: {
+				required : "Comentarios sâo obrigatorios"
 			}
 		}
 	});
@@ -227,6 +251,7 @@ function mostraCidadesB(str) {
 				$IMEI = $cont->IMEI;
 				$operadora = $cont->id_operadora;
 				$nome_operadora = $cont->nome_operadora;
+				$comentarioDet = $cont->comentarios_detidos;
 
 				$birth_dt = $cont->birth_dt;
 
@@ -278,6 +303,7 @@ function mostraCidadesB(str) {
 			$modelo_telefone = null;
 			$IMEI = null;
 			$operadora = null;
+			$comentarioDet = "";
 
 			$id_pais = null;
 			$pais = null;
@@ -672,6 +698,10 @@ function mostraCidadesB(str) {
 					<option value=" "> </option>							
 				</select>
 		<div class="error"></div>
+		<br>
+
+		<label for="comentariosDet">Comentarios sobre detidos :</label><br/>
+		<textarea id="comentariosDet" name="comentariosDet"><?php echo $comentarioDet; ?></textarea>
 
 		<br>
 		<br>
