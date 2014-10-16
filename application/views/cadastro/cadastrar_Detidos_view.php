@@ -225,6 +225,7 @@ function mostraCidadesB(str) {
 				$id_contact = $cont->ID_contact;
 				$ROW_ID = $cont->ROW_ID;
 				$name = $cont->name;
+				$gernre = $cont->genre;
 				$CPF = $cont->CPF;
 				$rg = $cont->rg;
 				$passport = $cont->passport;
@@ -283,6 +284,7 @@ function mostraCidadesB(str) {
 			$id_contact = null;
 			$ROW_ID = Null;
 			$name = Null;
+			$gernre = "F";
 			$CPF = Null;
 			$rg = "";
 			$passport = "";
@@ -364,7 +366,8 @@ function mostraCidadesB(str) {
         		monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
         		maxDate: 0,
         		changeMonth: true,
-        		changeYear: true
+        		changeYear: true,
+        		yearRange: "-100:+0"
 				});
 			});
 		</script>
@@ -384,6 +387,11 @@ function mostraCidadesB(str) {
 
 	   	<label for="nomeD">Nome do detido:</label><br/>
 		<input type="text" name="nomeD" id="nomeD" value="<?php echo $name; ?>"/>
+		<div class="error"><?php echo form_error('nomeD'); ?></div>
+
+		<label for="genero">Nome do detido:</label><br/>
+		<input type="radio" name="genero" value="F" <?php if($gernre == "F"){echo "checked='true'";} ?> /> Feminino<br />
+		<input type="radio" name="genero" value="M" <?php if($gernre == "M"){echo "checked='true'";} ?> /> Masculino<br />
 		<div class="error"><?php echo form_error('nomeD'); ?></div>
 
 		<label for="CPF">CPF :</label><br/>

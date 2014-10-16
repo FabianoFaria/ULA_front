@@ -359,7 +359,8 @@ class Novo_documento extends CI_Controller {
 
              $dataEnvolvido['ID_contact'] = $this->input->post('contact_id');
              $dataEnvolvido['ROW_ID'] = $this->input->post('row_id');  
-             $dataEnvolvido['name'] = $this->input->post('nomeD');          
+             $dataEnvolvido['name'] = $this->input->post('nomeD');
+             $dataEnvolvido['genre'] = $this->input->post('genero');          
              $dataEnvolvido['CPF'] = $this->input->post('CPF');
              $dataEnvolvido['rg'] = $this->input->post('rg');
              $dataEnvolvido['passport'] = $this->input->post('passaporte');

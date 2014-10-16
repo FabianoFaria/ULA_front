@@ -209,7 +209,8 @@ class Atualizar_documento_model extends CI_Model {
         $id_contact = $data['ID_contact'];
 
         $contact= array(
-            'name' => $data['name'],
+            'name' => $data['name'],  
+            'genre' => $data['genre'],
             'CPF' => $data['CPF'],
             'rg' => $data['rg'],
             'passport' => $data['passport'],
