@@ -12,7 +12,7 @@ class Pesquisa_avancada extends CI_Controller {
         $this->load->library('upload');
         $this->load->model('User_model', 'user');
         $this->load->model('Novo_documento_model', 'documentoModel');
-        $this->load->model('pesquisa/pesquisa_model', 'pesquisaAVD');
+        $this->load->model('pesquisa_model', 'pesquisaAVD');
         $this->user->logged();
     }
 
@@ -45,7 +45,14 @@ class Pesquisa_avancada extends CI_Controller {
         foreach ($list_documentos as $documentos) {
             //$dataCidades = $cidades;
 
-            echo "<tr><td>".$documentos->IPL."</td><td>".$documentos->operation."</td><td>".$documentos->security_unit."</td><td>".$documentos->arrest_date."</td></tr>";
+            $dataEx = explode("-", $documentos->arrest_date);
+            $month = $dataEx[1];
+            $day = $dataEx[2];
+            $year = $dataEx[0];
+
+            $dataF = $day."/".$month."/".$year;
+
+            echo "<tr><td><a href=".base_url()."index.php/detalhes_documento/getTheRow/".$documentos->ROW_ID.">".$documentos->IPL."</a></td><td>".$documentos->operation."</td><td>".$documentos->security_unit."</td><td>".$dataF."</td></tr>";
         }
         
        // return $dataCidades;       

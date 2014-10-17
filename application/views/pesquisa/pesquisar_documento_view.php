@@ -1,7 +1,7 @@
 <script>
 	function mostraBusca(str) {
 	if (str=="") {
-	document.getElementById("listResultados").innerHTML="<p>Nenhum resultado</p>";
+	document.getElementById("listResultadosRow").innerHTML="<p>Nenhum resultado</p>";
 	return;
 	 }
 	if (window.XMLHttpRequest) {
@@ -12,7 +12,7 @@
 	}
 	xmlhttp.onreadystatechange=function() {
 	 if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-	document.getElementById("listResultados").innerHTML=xmlhttp.responseText;
+	document.getElementById("listResultadosRow").innerHTML=xmlhttp.responseText;
 	}
 	}
 	xmlhttp.open("GET","<?php echo base_url(); ?>index.php/pesquisa/pesquisa_avancada/chamaDoct/"+str,true);
@@ -27,7 +27,7 @@
                 
                 <div class="col-md-4 col-sm-4 col-xs-4 formulario_pesquisa">
 
-                	<h3>Parametros de pequisa</h3>
+                	<h3>-</h3>
 
                 	<p>Informe uma palavra para pesquisa</p>
                 	<form>
@@ -44,11 +44,13 @@
 
                 	<table id="listResultados">
 						<tr>
-							<th>Qualificação</th><th>Unidade de segurança</th><th>Nome da operação</th><th>Data da apreensão</th>
+							<th>IPL </th><th>Unidade de segurança</th><th>Nome da operação</th><th>Data da apreensão</th>
 						</tr>
-						<tr>
-							<td></td><td></td><td></td><td></td>
-						</tr>
+						<tbody id="listResultadosRow">
+							<tr>
+								<td></td><td></td><td></td><td></td>
+							</tr>
+						</tbody>
                 	</table>
 
                 </div>
