@@ -197,3 +197,7 @@ td {
 {
 	color: #000000;
 }
+
+.altMin {
+	min-height: 410px;
+}

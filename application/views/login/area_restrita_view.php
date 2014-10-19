@@ -14,7 +14,7 @@
                                 }
                                 ?>
                                 
-                                <li><a href="<?php echo base_url(); ?>index.php/pesquisar_documento">Pesquisar documento já existente</a></li>
+                                <li><a href="<?php echo base_url(); ?>index.php/pesquisar_documento">Pesquisar cadastrados</a></li>
                                 <li><a href="<?php echo base_url(); ?>index.php/pesquisa_avancada">Efetuar pesquisa de documentos</a></li>
                                 <li><a href="<?php echo base_url(); ?>index.php/gerarRelatorios">Gerar relatorios</a></li>
                                 <!-- conforme for avançando eu adiciono novos itens -->

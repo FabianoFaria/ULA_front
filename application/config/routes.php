@@ -53,7 +53,6 @@ $route['continuar_documento/(:any)'] = "login/continuando_documento/$1";
 $route['continuar_documento/Endereco/(:any)'] = 'login/continuando_documento/Endereco/$1';
 
 $route['atualizar_documento'] = 'login/atualizar_documento';
-$route['pesquisar_documento'] = 'login/pesquisar_documento';
 $route['detalhes_documento/(:any)'] = "login/detalhes_documento/$1";
 
 /* Deletar registros...*/
@@ -71,7 +70,7 @@ $route['deletar_image/(:any)'] = "login/atualizar_documento/deleta_image/$1";
 $route['pesquisa_avancada'] = "pesquisa/pesquisa_avancada";
 $route['gerarRelatorios'] = "pesquisa/relatorios_gen";
 $route['relatorio_gerado'] = "relatorios";
-
+$route['pesquisar_documento'] = 'login/pesquisar_documento';
 
 /* Paginas basicas ....*/
 $route['logout'] = 'login/login/logout';
