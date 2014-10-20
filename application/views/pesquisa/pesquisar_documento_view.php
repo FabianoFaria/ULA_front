@@ -21,7 +21,7 @@
 </script>
 <div class="row sem_margin">
         <div class="col-md-12 col-sm-12 col-xs-12 main-menu">
-        	<div class="row">
+        	<div class="row altMin">
                 <h2> Pesquisar documento</h2>
 
                 
@@ -43,10 +43,10 @@
 
 
                 	<table id="listResultados">
-						<tr>
+						<!-- <tr>
 							<th>IPL </th><th>Unidade de segurança</th><th>Nome da operação</th><th>Data da apreensão</th>
-						</tr>
-						<tbody id="listResultadosRow">
+						</tr> -->
+ 						<tbody id="listResultadosRow">
 							<tr>
 								<td></td><td></td><td></td><td></td>
 							</tr>

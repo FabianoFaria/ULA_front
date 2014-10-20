@@ -42,6 +42,8 @@ class Pesquisa_avancada extends CI_Controller {
         $dataCidades = array();
 
 
+        echo "<tr> <th> IPL </th><th> Operação </th><th>Unidade de segurança</th><th>Data da apreensão</th>  </tr>  <tbody id='listResultadosRow'>";
+
         foreach ($list_documentos as $documentos) {
             //$dataCidades = $cidades;
 
@@ -52,7 +54,7 @@ class Pesquisa_avancada extends CI_Controller {
 
             $dataF = $day."/".$month."/".$year;
 
-            echo "<tr><td><a href=".base_url()."index.php/detalhes_documento/getTheRow/".$documentos->ROW_ID.">".$documentos->IPL."</a></td><td>".$documentos->operation."</td><td>".$documentos->security_unit."</td><td>".$dataF."</td></tr>";
+            echo "<tr><td><a href=".base_url()."index.php/detalhes_documento/getTheRow/".$documentos->ROW_ID.">".$documentos->IPL."</a></td><td>".$documentos->operation."</td><td>".$documentos->forca_seguranca."</td><td>".$dataF."</td></tr>";
         }
         
        // return $dataCidades;       

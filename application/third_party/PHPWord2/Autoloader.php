@@ -17,6 +17,8 @@
 
 namespace PhpWord;
 
+echo "teste de include";
+
 /**
  * Autoloader
  */

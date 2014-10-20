@@ -17,6 +17,8 @@
 
 namespace PhpOffice\PhpWord;
 
+echo "teste de include";
+
 /**
  * PHPWord settings class
  *

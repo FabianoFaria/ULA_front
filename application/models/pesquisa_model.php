@@ -9,6 +9,7 @@ class Pesquisa_model extends CI_Model {
     function load_docs_ajx($termo)
     {
     	$this->db->like('tbl_doct.IPL', $termo);
+        $this->db->join('tbl_unidade_seguranca', 'tbl_unidade_seguranca.id_unidade = tbl_doct.security_unit', 'left');
     	$this->db->where('tbl_doct.status_doct', 0);
 		$this->db->order_by("tbl_doct.IPL", "asc"); 
 		$query = $this->db->get('tbl_doct');

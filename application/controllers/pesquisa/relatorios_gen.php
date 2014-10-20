@@ -1232,9 +1232,242 @@ string '24/09/2014' (length=10)
         $objWriter->save('php://output');
 
     }
+////////////////////////////////////////////////////////////////////********
+
+
+////////////////////////////////////////////////////////////////////********
+
+
+/////////////////////////////////Funções para a nova versão do phpWord //////////////////////
+/**
+ * Write documents
+ *
+ * @param \PhpOffice\PhpWord\PhpWord $phpWord
+ * @param string $filename
+ * @param array $writers
+ */
+public function getEndingNotes($writers)
+{
+    $result = '';
+
+    // Do not show execution time for index
+    if (!IS_INDEX) {
+        $result .= date('H:i:s') . " Done writing file(s)" . EOL;
+        $result .= date('H:i:s') . " Peak memory usage: " . (memory_get_peak_usage(true) / 1024 / 1024) . " MB" . EOL;
+    }
+
+    // Return
+    if (CLI) {
+        $result .= 'The results are stored in the "results" subdirectory.' . EOL;
+    } else {
+        if (!IS_INDEX) {
+            $types = array_values($writers);
+            $result .= '<p>&nbsp;</p>';
+            $result .= '<p>Results: ';
+            foreach ($types as $type) {
+                if (!is_null($type)) {
+                    $resultFile = 'results/' . SCRIPT_FILENAME . '.' . $type;
+                    if (file_exists($resultFile)) {
+                        $result .= "<a href='{$resultFile}' class='btn btn-primary'>{$type}</a> ";
+                    }
+                }
+            }
+            $result .= '</p>';
+        }
+    }
+
+    return $result;
+}
+
+public function write($phpWord, $filename, $writers)
+{
+    $result = '';
+
+    // Write documents
+    foreach ($writers as $writer => $extension) {
+        $result .= date('H:i:s') . " Write to {$writer} format";
+        if (!is_null($extension)) {
+            $xmlWriter = IOFactory::createWriter($phpWord, $writer);
+            $xmlWriter->save(__DIR__ . "/{$filename}.{$extension}");
+            rename(__DIR__ . "/{$filename}.{$extension}", __DIR__ . "/results/{$filename}.{$extension}");
+
+            // Finally, write the document:
+            $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
+            $objWriter->save('helloWorld.docx');
+
+        } else {
+            $result .= ' ... NOT DONE!';
+        }
+        $result .= EOL;
+    }
+
+    $result .= $this->getEndingNotes($writers);
+
+    return $result;
+}
+
 
     public function gera_word()
     {
-      
+
+      $this->load->library('word2');
+
+
+        // Set writers
+        $writers = array('Word2007' => 'docx', 'ODText' => 'odt', 'RTF' => 'rtf', 'HTML' => 'html', 'PDF' => 'pdf');
+
+        // Set PDF renderer
+        if (Settings::getPdfRendererPath() === null) {
+            $writers['PDF'] = null;
+        }
+
+        // Return to the caller script when runs by CLI
+        if (CLI) {
+            return;
+        }
+
+        // Set titles and names
+        $pageHeading = str_replace('_', ' ', SCRIPT_FILENAME);
+        $pageTitle = IS_INDEX ? 'Welcome to ' : "{$pageHeading} - ";
+        $pageTitle .= 'PHPWord';
+        $pageHeading = IS_INDEX ? '' : "<h1>{$pageHeading}</h1>";
+
+        // Populate samples
+        $files = '';
+        if ($handle = opendir('.')) {
+            while (false !== ($file = readdir($handle))) {
+                if (preg_match('/^Sample_\d+_/', $file)) {
+                    $name = str_replace('_', ' ', preg_replace('/(Sample_|\.php)/', '', $file));
+                    $files .= "<li><a href='{$file}'>{$name}</a></li>";
+                }
+            }
+            closedir($handle);
+        }
+
+
+
+      //include_once 'Sample_Header.php';
+
+      // New Word Document
+      echo date('H:i:s') , " Create new PhpWord object" , EOL;
+      $phpWord = new \PhpOffice\PhpWord\PhpWord();
+      $phpWord->addFontStyle('rStyle', array('bold' => true, 'italic' => true, 'size' => 16, 'allCaps' => true, 'doubleStrikethrough' => true));
+      $phpWord->addParagraphStyle('pStyle', array('align' => 'center', 'spaceAfter' => 100));
+      $phpWord->addTitleStyle(1, array('bold' => true), array('spaceAfter' => 240));
+
+      // New portrait section
+      $section = $phpWord->addSection();
+
+      // Simple text
+      $section->addTitle('Welcome to PhpWord', 1);
+      $section->addText('Hello World!');
+
+      // Two text break
+      $section->addTextBreak(2);
+
+      // Defined style
+      $section->addText('I am styled by a font style definition.', 'rStyle');
+      $section->addText('I am styled by a paragraph style definition.', null, 'pStyle');
+      $section->addText('I am styled by both font and paragraph style.', 'rStyle', 'pStyle');
+
+      $section->addPageBreak();
+
+      // Inline font style
+      $fontStyle['name'] = 'Times New Roman';
+      $fontStyle['size'] = 20;
+      $fontStyle['bold'] = true;
+      $fontStyle['italic'] = true;
+      $fontStyle['underline'] = 'dash';
+      $fontStyle['strikethrough'] = true;
+      $fontStyle['superScript'] = true;
+      $fontStyle['color'] = 'FF0000';
+      $fontStyle['fgColor'] = 'yellow';
+      $fontStyle['smallCaps'] = true;
+      $section->addText('I am inline styled.', $fontStyle);
+
+      $section->addTextBreak();
+
+      // Link
+      $section->addLink('http://www.google.com', 'Google');
+      $section->addTextBreak();
+
+      // Image
+      //$section->addImage('resources/_earth.jpg', array('width'=>18, 'height'=>18));
+
+      // Save file
+      //echo write($phpWord, basename(__FILE__, '.php'), $writers);
+      //if (!CLI) {
+          //include_once 'Sample_Footer.php';
+     // }
+      // Save file
+      echo $this->write($phpWord, basename(__FILE__, '.php'), $writers);
+      if (!CLI) {
+          //include_once 'Sample_Footer.php';
+      }
+    }
+}
+
+class IOFactory
+{
+    /**
+     * Create new writer
+     *
+     * @param PhpWord $phpWord
+     * @param string $name
+     * @return \PhpOffice\PhpWord\Writer\WriterInterface
+     * @throws \PhpOffice\PhpWord\Exception\Exception
+     */
+    public static function createWriter(PhpWord $phpWord, $name = 'Word2007')
+    {
+        $class = 'PhpOffice\\PhpWord\\Writer\\' . $name;
+        if (class_exists($class) && self::isConcreteClass($class)) {
+            return new $class($phpWord);
+        } else {
+            throw new Exception("\"{$name}\" is not a valid writer.");
+        }
+    }
+
+    /**
+     * Create new reader
+     *
+     * @param string $name
+     * @return \PhpOffice\PhpWord\Reader\ReaderInterface
+     * @throws \PhpOffice\PhpWord\Exception\Exception
+     */
+    public static function createReader($name = 'Word2007')
+    {
+        $class = 'PhpOffice\\PhpWord\\Reader\\' . $name;
+        if (class_exists($class) && self::isConcreteClass($class)) {
+            return new $class();
+        } else {
+            throw new Exception("\"{$name}\" is not a valid reader.");
+        }
+    }
+
+    /**
+     * Loads PhpWord from file
+     *
+     * @param string $filename The name of the file
+     * @param string $readerName
+     * @return PhpWord
+     */
+    public static function load($filename, $readerName = 'Word2007')
+    {
+        $reader = self::createReader($readerName);
+
+        return $reader->load($filename);
+    }
+
+    /**
+     * Check if it's a concrete class (not abstract nor interface)
+     *
+     * @param string $class
+     * @return bool
+     */
+    private static function isConcreteClass($class)
+    {
+        $reflection = new \ReflectionClass($class);
+
+        return !$reflection->isAbstract() && !$reflection->isInterface();
     }
 }
