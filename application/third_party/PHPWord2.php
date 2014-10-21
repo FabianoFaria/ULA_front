@@ -21,6 +21,7 @@ require_once __DIR__ . '\PhpWord2\Settings.php';
 
 require_once __DIR__ . '\PhpWord2\DocumentProperties.php';
 require_once __DIR__ . '\PhpWord2\Settings.php';
+require_once __DIR__ . '\PhpWord2\Style.php';
 
 Autoloader::register();
 Settings::loadConfig();

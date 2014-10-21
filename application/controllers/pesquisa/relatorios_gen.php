@@ -1292,7 +1292,7 @@ public function write($phpWord, $filename, $writers)
             rename(__DIR__ . "/{$filename}.{$extension}", __DIR__ . "/results/{$filename}.{$extension}");
 
             // Finally, write the document:
-            $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
+            $objWriter = \PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
             $objWriter->save('helloWorld.docx');
 
         } else {
@@ -1350,7 +1350,7 @@ public function write($phpWord, $filename, $writers)
 
       // New Word Document
       echo date('H:i:s') , " Create new PhpWord object" , EOL;
-      $phpWord = new \PhpOffice\PhpWord\PhpWord();
+      $phpWord = new \PhpWord();
       $phpWord->addFontStyle('rStyle', array('bold' => true, 'italic' => true, 'size' => 16, 'allCaps' => true, 'doubleStrikethrough' => true));
       $phpWord->addParagraphStyle('pStyle', array('align' => 'center', 'spaceAfter' => 100));
       $phpWord->addTitleStyle(1, array('bold' => true), array('spaceAfter' => 240));
