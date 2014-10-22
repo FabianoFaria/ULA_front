@@ -15,9 +15,9 @@
  * @license     http://www.gnu.org/licenses/lgpl.txt LGPL version 3
  */
 
-namespace PhpWord;
+namespace PhpOffice\PhpWord;
 
-echo "teste de include";
+//echo "teste de include";
 
 /**
  * Autoloader

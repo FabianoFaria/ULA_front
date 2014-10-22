@@ -89,7 +89,7 @@ $().ready(function() {
             });
         </script>
         <div class="col-md-12 col-sm-12 col-xs-12 main-menu">
-        	<div class="row">
+        	<div class="row altMin">
                 <h2> Gerar relatorios </h2>
 
                 

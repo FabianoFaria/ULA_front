@@ -15,7 +15,7 @@
  * @license     http://www.gnu.org/licenses/lgpl.txt LGPL version 3
  */
 
-namespace PhpOffice\PhpWord;
+//namespace PhpOffice\PhpWord;
 
 use PhpOffice\PhpWord\Style\AbstractStyle;
 use PhpOffice\PhpWord\Style\Font;

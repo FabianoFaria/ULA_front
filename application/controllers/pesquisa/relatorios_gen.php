@@ -1322,15 +1322,20 @@ public function write($phpWord, $filename, $writers)
         }
 
         // Return to the caller script when runs by CLI
-        if (CLI) {
-            return;
-        }
+        //if (CLI) {
+         //   return;
+        //}
 
         // Set titles and names
-        $pageHeading = str_replace('_', ' ', SCRIPT_FILENAME);
-        $pageTitle = IS_INDEX ? 'Welcome to ' : "{$pageHeading} - ";
-        $pageTitle .= 'PHPWord';
-        $pageHeading = IS_INDEX ? '' : "<h1>{$pageHeading}</h1>";
+        //$pageHeading = str_replace('_', ' ', SCRIPT_FILENAME);
+        $pageHeading = "page heading";
+
+
+        //$pageTitle = IS_INDEX ? 'Welcome to ' : "{$pageHeading} - ";
+
+        $pageTitle = "titulo da pagina";
+        //$pageTitle .= 'PHPWord';
+        //$pageHeading = IS_INDEX ? '' : "<h1>{$pageHeading}</h1>";
 
         // Populate samples
         $files = '';
@@ -1347,10 +1352,12 @@ public function write($phpWord, $filename, $writers)
 
 
       //include_once 'Sample_Header.php';
+      require_once APPPATH."third_party/PHPWord2/PhpWord.php";
+
 
       // New Word Document
-      echo date('H:i:s') , " Create new PhpWord object" , EOL;
-      $phpWord = new \PhpWord();
+      echo date('H:i:s') , " Create new PhpWord object";
+      $phpWord = new \PhpOffice\PhpWord\PhpWord();
       $phpWord->addFontStyle('rStyle', array('bold' => true, 'italic' => true, 'size' => 16, 'allCaps' => true, 'doubleStrikethrough' => true));
       $phpWord->addParagraphStyle('pStyle', array('align' => 'center', 'spaceAfter' => 100));
       $phpWord->addTitleStyle(1, array('bold' => true), array('spaceAfter' => 240));

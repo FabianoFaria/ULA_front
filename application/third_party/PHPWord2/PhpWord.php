@@ -15,7 +15,8 @@
  * @license     http://www.gnu.org/licenses/lgpl.txt LGPL version 3
  */
 
-namespace PhpOffice\PhpWord;
+//namespace PhpOffice\PhpWord;
+
 
 use PhpOffice\PhpWord\Collection\Endnotes;
 use PhpOffice\PhpWord\Collection\Footnotes;
