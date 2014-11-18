@@ -47,7 +47,9 @@ class Relatorios_model extends CI_Model {
     	//$this->db->where('tbl_main.parent_id', $idDoct);
     	//$this->db->join('tbl_doct','tbl_doct.ROW_ID = tbl_main.parent_id');
         $this->db->select('*');
+         $this->db->order_by("tbl_doct.arrest_date", "desc"); 
         $this->db->join('tbl_unidade_seguranca','tbl_unidade_seguranca.id_unidade = tbl_doct.security_unit', 'left');
+        $this->db->join('tbl_estados', 'tbl_estados.id_estado = tbl_doct.arrest_destination', 'left');
         $this->db->where('tbl_doct.ROW_ID', $idDoct);
     	$query = $this->db->get('tbl_doct');
         return $query->result();  
@@ -277,6 +279,18 @@ class Relatorios_model extends CI_Model {
         $this->db->select('*');
         $this->db->join('tbl_main','tbl_doct.ROW_ID = tbl_main.parent_id', 'left');
         $this->db->where('tbl_main.CHILD_TBL', 'tbl_wrs');
+        $where = "tbl_doct.arrest_date BETWEEN '$inicio%' AND '$final%'";
+        $this->db->where($where);
+        $this->db->where('tbl_doct.status_doct','0');
+        $query = $this->db->get('tbl_doct');
+        return $query->num_rows();
+    }
+
+    function total_ocorrencias($inicio, $final)
+    {
+        $this->db->select('*');
+        $this->db->join('tbl_main','tbl_doct.ROW_ID = tbl_main.parent_id', 'left');
+        $this->db->where('tbl_main.CHILD_TBL', null);
         $where = "tbl_doct.arrest_date BETWEEN '$inicio%' AND '$final%'";
         $this->db->where($where);
         $this->db->where('tbl_doct.status_doct','0');

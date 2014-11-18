@@ -46,6 +46,10 @@ $route['area_restrita'] = 'login/area_restrita/main_page/';
 $route['area_restrita/main_page/'] = 'login/area_restrita/';
 $route['area_restrita/main_page/(:any)'] = 'login/area_restrita/main_page/$i';
 
+$route['/login/login/usuariosCadastrados'] = 'login/login/usuariosCadastrados/';
+$route['/login/login/usuariosCadastrados/'] = 'login/login/';
+$route['/login/login/usuariosCadastrados/(:any)'] = 'login/login/usuariosCadastrados/$i';
+
 $route['novo_documento'] = 'login/novo_documento';
 $route['novo_documento/cadastrarProtocolo'] = 'login/novo_documento/cadastrarProtocolo';
 $route['continuar_documento'] = 'login/continuando_documento';

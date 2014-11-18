@@ -9,7 +9,7 @@
                                 if( ($this->session->userdata('status')) <= 1 )
                                 { 
                                 ?>
-                                <li><a href="<?php echo base_url(); ?>index.php/novo_documento">Inserir novo documento</a></li>
+                                    <li><a href="<?php echo base_url(); ?>index.php/novo_documento">Inserir novo documento</a></li>
                                 <?php
                                 }
                                 ?>

@@ -201,3 +201,16 @@ td {
 .altMin {
 	min-height: 410px;
 }
+
+/***** CSS para a impressão de relatorio *****/
+
+
+.quebra_pagina{
+	background-color: #cccccc;
+	height: 5000px;
+}
+
+.quebra_pagina h2{
+	color: #ffffff;
+	text-align: center;
+}

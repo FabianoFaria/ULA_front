@@ -1,4 +1,46 @@
 <script>
+jQuery.validator.addMethod("verificaCPF", function(value, element) {
+
+        value = value.replace('.','');
+
+        value = value.replace('.','');
+
+        cpf = value.replace('-','');
+
+        while(cpf.length < 11) cpf = "0"+ cpf;
+
+        var expReg = /^0+$|^1+$|^2+$|^3+$|^4+$|^5+$|^6+$|^7+$|^8+$|^9+$/;
+
+        var a = [];
+
+        var b = new Number;
+
+        var c = 11;
+
+        for (i=0; i<11; i++){
+
+            a[i] = cpf.charAt(i);
+
+            if (i < 9) b += (a[i] * --c);
+
+        }
+
+        if ((x = b % 11) < 2) { a[9] = 0 } else { a[9] = 11-x }
+
+        b = 0;
+
+        c = 11;
+
+        for (y=0; y<10; y++) b += (a[y] * c--);
+
+        if ((x = b % 11) < 2) { a[10] = 0; } else { a[10] = 11-x; }
+
+        if ((cpf.charAt(9) != a[9]) || (cpf.charAt(10) != a[10]) || cpf.match(expReg)) return false;
+
+        return true;
+
+}); // Mensagem padrão
+
 $( "#form-user-ipl" ).submit(function( event ) {
     alert( "Cadastro será enviado para avaliação!, você será redirecionado para a pagina principal" );
     event.preventDefault();
@@ -28,6 +70,19 @@ $().ready(function() {
                     }
                 }
             },
+            cpfName: {
+                 verificaCPF: {
+                    depends: function () {
+                        if($('#cpfName').val()!=''){
+                            return true;
+                        }else{
+                            return false;
+                        }
+                    //return $("#CPF").val()!='';
+                    }
+                }
+                //verificaCPF: true
+            },
              confirmaSenha: {
                 required: {
                      depends: function () {
@@ -53,6 +108,9 @@ $().ready(function() {
             },
             novaSenha: {
                 required: "Favor informar uma nova senha"
+            },
+            cpfName: {
+                required: "Favor informar um CPF valido"
             },
             confirmaSenha: {
                 required: "Favor confirmar a nova senha",
@@ -97,7 +155,8 @@ $().ready(function() {
                 $username = $user->username;
                 $nome_usuario = $user->nome_usuario;
                 $status = $user->status;
-                $acao = "";
+                $cpf_usuario = $user->cpf_usuario;
+                $acao = "atualizarUsuario";
                 $btnLabel = "Atualizar usuario";
             }
 
@@ -110,8 +169,14 @@ $().ready(function() {
             $username = "";
             $nome_usuario = "";
             $status = "1";
-            $acao = "";
+            $cpf_usuario = "";
+            $acao = "registrarUsuario";
             $btnLabel = "Cadastrar usuario";
+        }
+
+        if($usuario_atualizador != null)
+        {
+            $acao = "atualizarUsuarioAlvo";
         }
 
             //$data['unidades_medidas'] = $this->Cont_doct->load_unidades_medidas($idRow);
@@ -131,7 +196,7 @@ $().ready(function() {
 
         <!-- abre o formulário de cadastro -->
 
-        <form id="form-user-ipl" action="<?php echo base_url("index.php/login/login/cadastrarUsuario"); ?>" method="post">
+        <form id="form-user-ipl" action="<?php echo base_url("index.php/login/login/".$acao.""); ?>" method="post">
 
             <label for="loginName">Login  :</label><br/>
             <input type="text" name="loginName" id="loginName" value="<?php echo $username ?>"/>
@@ -141,6 +206,12 @@ $().ready(function() {
 
             <label for="userName">Nome de usuario :</label><br/>
             <input type="text" name="userName" id="userName" value="<?php echo $nome_usuario ?>"/>
+            <div class="error"></div>
+            
+            <br>
+
+            <label for="cpfName">CPF do usuario :</label><br/>
+            <input type="text" name="cpfName" id="cpfName" value="<?php echo $cpf_usuario ?>"/>
             <div class="error"></div>
             
             <br>

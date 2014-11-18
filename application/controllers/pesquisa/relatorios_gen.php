@@ -45,6 +45,132 @@ class Relatorios_gen extends CI_Controller {
 
     }
 
+       public function gera_word2()
+    {
+
+      $this->load->library('word');
+
+       setlocale( LC_ALL, 'pt_BR', 'pt_BR.iso-8859-1', 'pt_BR.utf-8', 'portuguese' );
+
+        date_default_timezone_set( 'America/Sao_Paulo' );  
+
+
+        $dataGeracao = date("d/m/Y H:i:s ");
+
+        $dataDateI = $this->input->post('dataI');
+        $dataDateF =  $this->input->post('dataF');
+
+
+        ////Codigo contendo os dados a serem impressos no documento word...
+
+        //Data inicial...
+        $dataTemp1 = explode("/", $dataDateI);
+        $dia1 = $dataTemp1[0];
+        $mes1 = $dataTemp1[1];
+        $ano1 = $dataTemp1[2];
+        $dataFinal1 = $ano1."/".$mes1."/".$dia1;
+
+        //Data final...
+        $dataTemp2 = explode("/", $dataDateF);
+        $dia2 = $dataTemp2[0];
+        $mes2 = $dataTemp2[1];
+        $ano2 = $dataTemp2[2];
+        $dataFinal2 = $ano2."/".$mes2."/".$dia2;
+
+        $dataIni = $dataFinal1;
+        $dataFim = $dataFinal2; 
+
+        $dataRelatorio = $this->relatorio->load_documentos($dataDateI ,$dataDateF);
+
+        $dadosArray = array( );
+
+        foreach ($dataRelatorio as $data) 
+        {
+
+           $dataDocumento['data'] = $data;
+
+            $documento = $this->relatorio->load_documento_completo($data->ROW_ID);
+
+           $dataDocumento['documento'] = $documento;
+           $endereço = $this->relatorio->load_documento_endereco($data->ROW_ID);
+            //var_dump($endereço);
+           if($endereço != null) {
+                $dataDocumento['endereco'] = $endereço;   
+            }else
+            {
+                $dataDocumento['endereco'][0] = "";
+            }
+           $endereçoDeposito = $this->relatorio->load_endereco_wrs_relatorio($data->ROW_ID);
+            //var_dump($endereçoDeposito);
+           if($endereçoDeposito != null) {
+                $dataDocumento['endereco_deposito'] = $endereçoDeposito;   
+            }else
+            {
+                $dataDocumento['endereco_deposito'][0] = "";
+            }
+            $mercadorias = $this->relatorio->load_mercadoria_relatorio($data->ROW_ID);
+             if($mercadorias != null) {
+                $dataDocumento['mercadorias'] = $mercadorias;   
+            }else
+            {
+                $dataDocumento['mercadorias'][0] = "";
+            }
+
+            $envolvidos = $this->relatorio->load_documento_envolvidos($data->ROW_ID);
+             if($envolvidos != null) {
+                $dataDocumento['envolvidos'] = $envolvidos;     
+            }else
+            {
+                $dataDocumento['envolvidos'][0] = "";
+            }
+
+            //Veiculos....
+            $veiculos = $this->relatorio->load_documento_auto($data->ROW_ID);
+            //var_dump($veiculos);
+
+            $dataDocumento['veiculos'] = $veiculos;
+
+            $produtos_armazens = $this->relatorio->load_armazem_relatorio($data->ROW_ID);
+             if($produtos_armazens != null) {
+
+                $dataDocumento['produto_armazens'] = $produtos_armazens;   
+            }else
+            {
+                $dataDocumento['produto_armazens'][0] = "";
+            }
+
+            $imagens = $this->relatorio->load_documento_imagens($data->ROW_ID);
+             if($imagens != null) {
+                $dataDocumento['imagens'] = $imagens;   
+            }else
+            {
+                $dataDocumento['imagens'][0] = "";
+            }
+
+            array_push($dadosArray , $dataDocumento);
+        }
+
+         $dados['totalOcorrencias'] = $this->relatorio->total_ocorrencias($dataDateI ,$dataDateF);
+
+        $dados['totalVeiculos'] = $this->relatorio->total_veiculos_relatorio($dataDateI ,$dataDateF);
+        $dados['totalDepositos'] = $this->relatorio->total_depositos($dataDateI ,$dataDateF);
+        $dados['totalCaminhao'] = $this->relatorio->total_veiculos_caminhao_relatorio($dataDateI ,$dataDateF);
+        $dados['totalOnibus'] = $this->relatorio->total_veiculos_onibus_relatorio($dataDateI ,$dataDateF);   
+
+
+        $dados['relatorioIni'] = $dataDateI; 
+        $dados['relatorioFim'] = $dataDateF;
+        $dados['conteudo'] = $dadosArray;
+       // $this->load->view('pesquisa/gera_relatorio_final_view', $dadosArray);
+
+        ////////////////// Manda os dados gerados para serem tranformardos em .doc ///////////////////////
+
+       $htmlRelatorio =  $this->load->view('pesquisa/gera_relatorio_final_view', $dados);
+      
+
+      new Word($htmlRelatorio);
+    }
+
     public function visualizarRel()
     {
         $dataIni = $this->input->post('dataInicial');
@@ -1477,4 +1603,6 @@ class IOFactory
 
         return !$reflection->isAbstract() && !$reflection->isInterface();
     }
+
+
 }

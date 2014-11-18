@@ -241,7 +241,7 @@
 
 ?>
 
-                <form id="gerar_doc" action="<?php echo base_url() ?>index.php/pesquisa/relatorios_gen/relatorio_mes" method="post">
+                <form id="gerar_doc" action="<?php echo base_url() ?>index.php/pesquisa/relatorios_gen/gera_word2" method="post">
                     <input type="hidden" name="dataI" value="<?php echo $dataRI; ?>">
                     <input type="hidden" name="dataF" value="<?php echo $dataRF; ?>">
                     <input type="submit" value="gerar . DOC">

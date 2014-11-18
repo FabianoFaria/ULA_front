@@ -53,21 +53,43 @@
                     if($user_name != "p")
                     {  ?>
                       <ul class="nav navbar-nav navbar-right nav-pills">
-                        <li><a href="#">Dashboard</a></li>
+                        <li><a id="drop5" href="#" data-toggle="dropdown" role="button">Dashboard <span class="caret"></a>
+                           <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+
+                              <li role="presentation">
+                                  <a href="<?php echo base_url("/index.php/login/login/usuariosCadastrados"); ?>"><i class="fa fa-cubes"></i> Usuarios cadastrados </a>
+                              </li>
+                           </ul>
+                        </li>
+                       
+                        <?php
+                            //trecho para habilitar ou não a edição de conteudo
+                          if( ($this->session->userdata('status')) <= 1 )
+                            { 
+                        ?>
                         <li>
                             <a id="drop4" href="#" data-toggle="dropdown" role="button">Cadastro <i class="fa fa-plus-circle"></i>
 <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                              <li role="presentation">
-                                <a href="#"><i class="fa fa-cubes"></i>
- Produtos</a>
-                              </li>
-                              <li role="presentation">
-                                <a href="#"><i class="fa fa-cubes"></i>
- Marcas</a>
-                              </li>
-                            </ul>
-                        </li>
+
+
+                                <li role="presentation">
+                                  <a href="<?php echo base_url("/index.php/login/login/cadastrarUsuario"); ?>"><i class="fa fa-user"></i> Usuario </a>
+                                </li>
+                                <li role="presentation">
+                                  <a href="<?php echo base_url("/index.php/login/cadastro_conteudo/produtos_cadastrados"); ?>"><i class="fa fa-cubes"></i> Produtos </a>
+                                </li>
+                                <!-- <li role="presentation">
+                                  <a href="#"><i class="fa fa-cubes"></i> Veiculos</a>
+                                </li> -->
+
+                              </ul>
+                          </li>
+                          <?php
+                            }
+                        ?>
+                              
+                           
                         <li>
                             <a id="drop4" href="#" data-toggle="dropdown" role="button"><?php echo $user_name; ?> <i class="fa fa-user"></i><span class="caret"></span></a>
                             <ul id="menu1" class="dropdown-menu" aria-labelledby="drop4" role="menu">
