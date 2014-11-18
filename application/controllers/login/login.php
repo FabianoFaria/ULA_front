@@ -141,7 +141,7 @@ class Login extends CI_Controller {
          {
             $status_final = 0;
          }else
-         if($status == 'Ativado')
+         if($status == 'Ativo')
          {
             $status_final = 1;
          }
@@ -151,7 +151,7 @@ class Login extends CI_Controller {
          $data = array(
          'username' => $username,   
          'nome_usuario' =>  $nome_usuario,
-         'status' => $status ,
+         'status' => $status_final,
          'cpf_usuario' => $cpf_usuario,
          'password' => $password,
          'UPDATED_BY' => $usuario_atualizador,
@@ -179,7 +179,7 @@ class Login extends CI_Controller {
          {
             $status_final = 0;
          }else
-         if($status == 'Ativado')
+         if($status == 'Ativo')
          {
             $status_final = 1;
          }
@@ -189,7 +189,7 @@ class Login extends CI_Controller {
          $data = array(
          'username' => $username,   
          'nome_usuario' =>  $nome_usuario,
-         'status' => $status ,
+         'status' => $status_final ,
          'cpf_usuario' => $cpf_usuario,
          'password' => $password,
          'UPDATED_BY' => $usuario_atualizador
@@ -211,13 +211,24 @@ class Login extends CI_Controller {
          $cpf_usuario = $this->input->post('cpfName');
          $password = md5($this->input->post('novaSenha'));
 
+         $status_final = 0;
+
+         if($status == 'Desativado')
+         {
+            $status_final = 0;
+         }else
+         if($status == 'Ativo')
+         {
+            $status_final = 1;
+         }
+
 
          //Settar os dados na sessao...
          $data = array(
          'ID_user' => $ID_user,
          'username' => $username,   
          'nome_usuario' =>  $nome_usuario,
-         'status' => $status ,
+         'status' => $status_final ,
          'cpf_usuario' => $cpf_usuario,
          'password' => $password,
          'UPDATED_BY' => $usuario_atualizador
