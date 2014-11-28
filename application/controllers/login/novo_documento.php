@@ -87,13 +87,13 @@ class Novo_documento extends CI_Controller {
         //var_dump($finalDate);
         //die;
 
-        $data['IPL'] = $this->input->post('Ipl_manual');
+        $data['IPL'] = strtoupper(strtr($this->input->post('Ipl_manual') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
         $data['qualification'] = $this->input->post('qualificacao');
         $data['security_unit'] = $this->input->post('unidade_seguranca');
         $data['arrest_date'] = $finalDate;
         $data['link_arrest'] = $this->input->post('linkOps');
-        $data['summary'] = $this->input->post('resumoOps');
-        $data['operation'] = $this->input->post('nomeOps');
+        $data['summary'] = strtoupper(strtr($this->input->post('resumoOps') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
+        $data['operation'] =   strtoupper(strtr($this->input->post('nomeOps') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
         $data['arrest_destination'] = $this->input->post('destinoCarga');
         $data['CREATED_BY'] = $user_name;
         $data['CREATED'] = $dataAtualizacao;
@@ -147,10 +147,10 @@ class Novo_documento extends CI_Controller {
         $dataAtualizacao = date('y-m-d H:i:s');
 
             $dataAdr['ROW_ID'] = $this->input->post('Row_id');
-            $dataAdr['address'] = $this->input->post('endereco');
-            $dataAdr['nunber'] = $this->input->post('numero_addr');
-            $dataAdr['complement'] = $this->input->post('complemento');
-            $dataAdr['district'] = $this->input->post('bairro');
+            $dataAdr['address'] = strtoupper(strtr($this->input->post('endereco') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
+            $dataAdr['nunber'] = strtoupper(strtr($this->input->post('numero_addr') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
+            $dataAdr['complement'] = strtoupper(strtr($this->input->post('complemento') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
+            $dataAdr['district'] = strtoupper(strtr($this->input->post('bairro') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
             $dataAdr['country'] = $this->input->post('pais_apr');
             $dataAdr['city'] = $this->input->post('cidade_apr');
             $dataAdr['state'] = $this->input->post('estado_apr');
@@ -205,12 +205,12 @@ class Novo_documento extends CI_Controller {
          $dataAuto['category'] = $this->input->post('cat_veiculo');          
          $dataAuto['model'] = $this->input->post('mod_veiculo');
          $dataAuto['brand'] = $this->input->post('mark_veiculo');
-         $dataAuto['chassi'] = $this->input->post('chassi');
-         $dataAuto['renavan'] = $this->input->post('renavan');
-         $dataAuto['placa'] = $this->input->post('placa_n');
+         $dataAuto['chassi'] = strtoupper(strtr($this->input->post('chassi') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
+         $dataAuto['renavan'] = strtoupper(strtr($this->input->post('renavan') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
+         $dataAuto['placa'] = strtoupper(strtr($this->input->post('placa_n') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
          $dataAuto['city'] = $this->input->post('cidade_apr');
          $dataAuto['state'] = $this->input->post('estado_apr');
-         $dataAuto['detalhes_veiculos'] = $this->input->post('detalhes_veiculos');
+         $dataAuto['detalhes_veiculos'] = strtoupper(strtr($this->input->post('detalhes_veiculos') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
 
         $Row_auto = null;
         if($this->input->post('id_auto') != null)
@@ -359,13 +359,13 @@ class Novo_documento extends CI_Controller {
 
              $dataEnvolvido['ID_contact'] = $this->input->post('contact_id');
              $dataEnvolvido['ROW_ID'] = $this->input->post('row_id');  
-             $dataEnvolvido['name'] = $this->input->post('nomeD');
+             $dataEnvolvido['name'] = strtoupper(strtr($this->input->post('nomeD') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
              $dataEnvolvido['genre'] = $this->input->post('genero');          
              $dataEnvolvido['CPF'] = $this->input->post('CPF');
              $dataEnvolvido['rg'] = $this->input->post('rg');
              $dataEnvolvido['passport'] = $this->input->post('passaporte');
-             $dataEnvolvido['father'] = $this->input->post('nome_pai');
-             $dataEnvolvido['mother'] = $this->input->post('nome_mae');
+             $dataEnvolvido['father'] = strtoupper(strtr($this->input->post('nome_pai') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
+             $dataEnvolvido['mother'] = strtoupper(strtr($this->input->post('nome_mae') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
              $dataEnvolvido['birth_dt'] = $finalDate;
              //$dataEnvolvido['endereco_contato'] = $this->input->post('endereco_contato');
              $dataEnvolvido['birth_city'] = $this->input->post('cidade_nascimento');
@@ -377,7 +377,7 @@ class Novo_documento extends CI_Controller {
              $dataEnvolvido['modelo_telefone'] = $this->input->post('modelo_telefone');
              $dataEnvolvido['IMEI'] = $this->input->post('IMEI');
              $dataEnvolvido['operadora'] = $this->input->post('operadora');
-             $dataEnvolvido['comentarios_detidos'] = $this->input->post('comentariosDet');
+             $dataEnvolvido['comentarios_detidos'] = strtoupper(strtr($this->input->post('comentariosDet'),"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
 
              //Dados para salvar os dados do endereço do envolvido...
 
@@ -388,10 +388,10 @@ class Novo_documento extends CI_Controller {
              }
 
              $dataAdr['ROW_ID'] = $this->input->post('row_id');
-             $dataAdr['address'] = $this->input->post('endereco_contato');
-             $dataAdr['nunber'] = $this->input->post('numero_addr_contato');
-             $dataAdr['complement'] = $this->input->post('complemento');
-             $dataAdr['district'] = $this->input->post('bairro');
+             $dataAdr['address'] = strtoupper(strtr($this->input->post('endereco_contato') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
+             $dataAdr['nunber'] = strtoupper(strtr($this->input->post('numero_addr_contato') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
+             $dataAdr['complement'] = strtoupper(strtr($this->input->post('complemento') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
+             $dataAdr['district'] = strtoupper(strtr($this->input->post('bairro') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
              $dataAdr['country'] = $this->input->post('pais_detido');
              $dataAdr['city'] = $this->input->post('cidade_apr');
              $dataAdr['state'] = $this->input->post('estado_apr');
@@ -504,10 +504,10 @@ class Novo_documento extends CI_Controller {
 
 
                 $dataEnderecoWrs['ROW_ID'] = $this->input->post('row_id');
-                $dataEnderecoWrs['address'] = $this->input->post('endereco');
-                $dataEnderecoWrs['nunber'] = $this->input->post('numero_wrs');
-                $dataEnderecoWrs['complement'] = $this->input->post('complemento');
-                $dataEnderecoWrs['district'] = $this->input->post('bairro');
+                $dataEnderecoWrs['address'] = strtoupper(strtr($this->input->post('endereco') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
+                $dataEnderecoWrs['nunber'] = strtoupper(strtr($this->input->post('numero_wrs') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
+                $dataEnderecoWrs['complement'] = strtoupper(strtr($this->input->post('complemento') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
+                $dataEnderecoWrs['district'] = strtoupper(strtr($this->input->post('bairro') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
                 $dataEnderecoWrs['state'] = $this->input->post('estado_apr');
                 $dataEnderecoWrs['city'] = $this->input->post('cidade_apr');
                 $dataEnderecoWrs['zipcode'] = $this->input->post('CEP');

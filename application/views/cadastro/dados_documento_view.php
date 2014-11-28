@@ -160,7 +160,7 @@ $().ready(function() {
 				</select>
 			<div class="error"><?php echo form_error('unidade_seguranca'); ?></div>
 
-			<label for="dataOps">Data da apreenção:</label><br/>
+			<label for="dataOps">Data da apreensão:</label><br/>
 			<input id="datepicker" type="text" name="dataOps" value="<?php echo  $dataF;  ?> "/>
 			<div class="error"><?php echo form_error('dataOps'); ?></div>
 
@@ -176,7 +176,7 @@ $().ready(function() {
 			<input name="nomeOps" value="<?php echo  $doc->operation;  ?>"/>
 			<div class="error"><?php echo form_error('nomeOps'); ?></div>
 
-			<label for="destinoCarga">Destino da apreenção :</label><br/>
+			<label for="destinoCarga">Destino da apreensão :</label><br/>
 				<select name="destinoCarga" id="destinoCarga" onchange="">
 										<?php
 											if(($doc->id_estado) != 0)

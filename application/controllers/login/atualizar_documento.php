@@ -79,8 +79,8 @@ class Atualizar_documento extends CI_Controller {
         $data['security_unit'] = $this->input->post('unidade_seguranca');
         $data['arrest_date'] = $finalDate;
         $data['link_arrest'] = $this->input->post('linkOps');
-        $data['summary'] = $this->input->post('resumoOps');
-        $data['operation'] = $this->input->post('nomeOps');
+        $data['summary'] = strtoupper(strtr($this->input->post('resumoOps') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
+        $data['operation'] = strtoupper(strtr($this->input->post('nomeOps') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
         $data['arrest_destination'] = $this->input->post('destinoCarga');
         $data['UPDATE_BY'] = $user_name;
         $data['LAST_UPDATE'] = $dataAtualizacao;
@@ -111,10 +111,10 @@ class Atualizar_documento extends CI_Controller {
        //  $row->ROW_ID;
          $dataAdr['Adr_ID'] = $this->input->post('Addr_id');          
          $dataAdr['ROW_ID'] = $this->input->post('Row_id');
-         $dataAdr['address'] = $this->input->post('endereco');
-         $dataAdr['nunber'] = $this->input->post('numero_addr');
-         $dataAdr['complement'] = $this->input->post('complemento');
-         $dataAdr['district'] = $this->input->post('bairro');
+         $dataAdr['address'] = strtoupper(strtr($this->input->post('endereco') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
+         $dataAdr['nunber'] = strtoupper(strtr($this->input->post('numero_addr') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
+         $dataAdr['complement'] = strtoupper(strtr($this->input->post('complemento') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
+         $dataAdr['district'] = strtoupper(strtr($this->input->post('bairro') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
          $dataAdr['country'] = $this->input->post('pais_apr');
          $dataAdr['city'] = $this->input->post('cidade_apr');
          $dataAdr['state'] = $this->input->post('estado_apr');
@@ -148,9 +148,9 @@ class Atualizar_documento extends CI_Controller {
          $dataAuto['category'] = $this->input->post('cat_veiculo');          
          $dataAuto['model'] = $this->input->post('mod_veiculo');
          $dataAuto['brand'] = $this->input->post('mark_veiculo');
-         $dataAuto['chassi'] = $this->input->post('chassi');
-         $dataAuto['renavan'] = $this->input->post('renavan');
-         $dataAuto['placa'] = $this->input->post('placa_n');
+         $dataAuto['chassi'] =  strtoupper(strtr($this->input->post('chassi') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
+         $dataAuto['renavan'] =  strtoupper(strtr($this->input->post('renavan') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
+         $dataAuto['placa'] =  strtoupper(strtr($this->input->post('placa_n') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
          $dataAuto['city'] = $this->input->post('cidade');
          $dataAuto['state'] = $this->input->post('estado');
          $dataAuto['UPDATE_BY'] = $user_name;

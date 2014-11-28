@@ -403,7 +403,7 @@ function mostraModelos2(str) {
 						<option value=" "> </option>		
 					</select>
 				<br>
-				<label for="detalhes_veiculos">Comentarios sobre detidos :</label><br/>
+				<label for="detalhes_veiculos">Comentarios sobre automóveis :</label><br/>
 				<textarea id="detalhes_veiculos" name="detalhes_veiculos"><?php echo $detalhes_veic; ?></textarea>
 
 				<br>

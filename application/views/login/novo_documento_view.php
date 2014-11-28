@@ -132,7 +132,7 @@ $().ready(function() {
 									</select>
 							    <div class="error"></div>
 
-							    <label for="dataOps">Data da apreenção:</label><br/>
+							    <label for="dataOps">Data da apreensão:</label><br/>
 							    <input id="datepicker" type="text" name="dataOps" value="<?php echo set_value('dataOps'); ?>"/>
 							    <div class="error"><?php echo form_error('dataOps'); ?></div>
 
@@ -148,7 +148,7 @@ $().ready(function() {
 							    <input name="nomeOps" value="<?php echo set_value('nomeOps'); ?>"/>
 							    <div class="error"></div>					
 
-							    <label for="destinoCarga">Destino da apreenção :</label><br/>
+							    <label for="destinoCarga">Destino da apreensão :</label><br/>
 							   		<select name="destinoCarga" id="destinoCarga" onchange="">
 										<option value="">Informe o estado de destino :</option>
 										<?php

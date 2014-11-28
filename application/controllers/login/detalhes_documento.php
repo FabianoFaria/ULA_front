@@ -9,7 +9,10 @@ class Detalhes_documento extends CI_Controller {
         $this->load->helper('url');
         $this->load->helper('form');
         $this->load->model('User_model', 'user');
-        $this->load->model('Dados_diversos_model', 'dadosDiver');
+        $this->load->model('cadastro/Dados_diversos_model', 'dadosDiver'); 
+        $this->load->model('Detalhes_documento_model','DetalhesModel');
+        $this->load->model('Continuando_documento_model','Cont_doct');
+        $this->load->model('Novo_documento_model','documentoModel');
         $this->user->logged();
     }
     

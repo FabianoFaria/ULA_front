@@ -270,7 +270,7 @@ $().ready(function() {
 		<input type="hidden" name="id_haul" value="<?php echo $ID_haul; ?>" />
 
 
-		<input type="submit" name="Cadastrar" value="Cadastrar mercadoria do deposito" />
+		<input type="submit" name="Cadastrar" value="Cadastrar Mercadoria"/>
 		<br>
 		<br>
 		<br>
