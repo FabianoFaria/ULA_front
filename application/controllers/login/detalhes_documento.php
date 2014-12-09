@@ -19,7 +19,7 @@ class Detalhes_documento extends CI_Controller {
     public function index($idRow) {
         $data['Ultimo_documento'] = $this->DetalhesModel->load_Ipls($idRow);
         $data['unidade_seguranca'] = $this->DetalhesModel->load_unidade_seg($idRow);
-        $data['endereco'] =  $this->DetalhesModel->load_Addr($idRow);
+        $data['endereco'] =  $this->DetalhesModel->load_Addr_detalhes_doc($idRow);
         $data['cidadeAdr'] = null;
         $data['estadoAdr'] = null;
 
@@ -328,6 +328,5 @@ class Detalhes_documento extends CI_Controller {
         $this->load->view('cadastro/dados_image_doct_view', $data);
         $this->load->view('templates/footer');
     }
-
 
 }

@@ -119,6 +119,7 @@
 				$CEP = $end->zipcode;
 				$pais = $end->country;
 				$actionAdr = "";
+				$actionLink = "continuar_documento/Endereco/".$ROW_ID;
 			} //fim do foraech
 		}else{
 			$EndRowid = "";
@@ -129,6 +130,7 @@
 			$CEP = "";
 			$pais = "";
 			$actionAdr = "";
+			$actionLink = "continuar_documento/CadEndereco/".$ROW_ID;
 		}
 	?>
 
@@ -140,7 +142,7 @@
 			if( ($this->session->userdata('status')) <= 1 )
 			{ 
 		?>
-		 <h4><a href="<?php echo base_url("index.php/continuar_documento/Endereco/".$ROW_ID.""); ?>"><i class="fa fa-pencil"></i> Editar</a></h4>
+		 <h4><a href="<?php echo base_url("index.php/".$actionLink); ?>"><i class="fa fa-pencil"></i> Editar</a></h4>
 		 <?php
 		 	}
 		 ?>
@@ -555,4 +557,3 @@
 
 
 
-</div>

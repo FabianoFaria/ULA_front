@@ -155,7 +155,7 @@ class Relatorios_model extends CI_Model {
     {
         //tbl_contact.ID_contact, tbl_contact.name, tbl_contact.CPF, tbl_contact.rg, tbl_contact.passport, tbl_contact.father, tbl_contact.mother, tbl_contact.birth_dt, tbl_pais.nome_pais, tbl_estados.nome_estado, tbl_cidades.nome'
         //paisL.nome_pais, tbl_addr.
-        $this->db->select('tbl_contact.ID_contact, tbl_contact.name, tbl_contact.CPF, tbl_contact.rg, tbl_contact.passport, tbl_contact.father, tbl_contact.mother,
+        $this->db->select('tbl_contact.ID_contact, tbl_contact.name, tbl_contact.CPF, tbl_contact.rg, tbl_contact.profession, tbl_contact.passport, tbl_contact.father, tbl_contact.mother,
          tbl_contact.birth_dt, tbl_pais.nome_pais, tbl_estados.nome_estado, tbl_estados.uf, tbl_cidades.nome,tbl_addr.ID_addr, tbl_addr.address, tbl_addr.nunber, 
          tbl_addr.complement, tbl_addr.district, paisL.nome_pais as end_pais, estadoL.nome_estado as end_est, estadoL.uf as end_uf, cidadeL.nome as end_Cid,
          tbl_contact.telefone ,tbl_contact.marca_telefone ,tbl_contact.IMEI ,tbl_contact.operadora, tbl_operadora.nome_operadora');
@@ -274,6 +274,40 @@ class Relatorios_model extends CI_Model {
 
     }
 
+    function total_caixa_cigarros($inicio, $final)
+    {
+        //$this->db->select('*');
+        $this->db->select_sum('tbl_haul.qty');
+        $this->db->join('tbl_main','tbl_doct.ROW_ID = tbl_main.parent_id', 'left');
+        $this->db->where('tbl_main.CHILD_TBL', 'tbl_haul');
+        $this->db->join('tbl_haul','tbl_haul.ID_HAUL = tbl_main.CHILD_ID', 'left');
+        $this->db->where('tbl_haul.product', '10');
+        $this->db->where('tbl_haul.unit', '7');
+        $where = "tbl_doct.arrest_date BETWEEN '$inicio%' AND '$final%'";
+        $this->db->where($where);
+        $this->db->where('tbl_doct.status_doct','0');
+        $query = $this->db->get('tbl_doct');
+        return $query->result();
+
+    }
+
+    function total_caixa_cigarros_wrs($inicio, $final)
+    {
+        //$this->db->select('*');
+        $this->db->select_sum('tbl_wrs.quantidade_deposito');
+        $this->db->join('tbl_main','tbl_doct.ROW_ID = tbl_main.parent_id', 'left');
+        $this->db->where('tbl_main.CHILD_TBL', 'tbl_wrs');
+        $this->db->join('tbl_wrs','tbl_wrs.ID_wrs = tbl_main.CHILD_ID', 'left');
+        $this->db->where('tbl_wrs.produto_deposito', '10');
+        $this->db->where('tbl_wrs.unidade_produto_deposito', '7');
+        $where = "tbl_doct.arrest_date BETWEEN '$inicio%' AND '$final%'";
+        $this->db->where($where);
+        $this->db->where('tbl_doct.status_doct','0');
+        $query = $this->db->get('tbl_doct');
+        return $query->result();
+
+    }
+
     function total_depositos($inicio, $final)
     {
         $this->db->select('*');
@@ -282,6 +316,20 @@ class Relatorios_model extends CI_Model {
         $where = "tbl_doct.arrest_date BETWEEN '$inicio%' AND '$final%'";
         $this->db->where($where);
         $this->db->where('tbl_doct.status_doct','0');
+        $query = $this->db->get('tbl_doct');
+        return $query->num_rows();
+    }
+
+    function total_detidos($inicio, $final)
+    {
+        $this->db->select('*');
+        $this->db->join('tbl_main','tbl_doct.ROW_ID = tbl_main.parent_id', 'left');
+        $this->db->where('tbl_main.CHILD_TBL', 'tbl_contact');
+        $this->db->join('tbl_contact','tbl_contact.ID_contact = tbl_main.CHILD_ID', 'left');
+        $where = "tbl_doct.arrest_date BETWEEN '$inicio%' AND '$final%'";
+        $this->db->where($where);
+        $this->db->where('tbl_doct.status_doct','0');
+        $this->db->where('tbl_contact.name !=',' ');
         $query = $this->db->get('tbl_doct');
         return $query->num_rows();
     }
@@ -299,4 +347,5 @@ class Relatorios_model extends CI_Model {
     }
 
 }
+
 ?>

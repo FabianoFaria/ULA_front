@@ -45,6 +45,16 @@ class Detalhes_documento_model extends CI_Model {
     	return $endereco->result();
     }
 
+    public function load_Addr_detalhes_doc($idRow)
+    {
+       $this->db->select('tbl_addr.ID_addr, tbl_addr.ROW_ID, tbl_addr.address, tbl_addr.nunber, tbl_addr.complement, tbl_addr.district, tbl_addr.city, tbl_addr.state, tbl_addr.zipcode, tbl_addr.country');
+       $this->db->join('tbl_main', 'tbl_main.CHILD_ID = tbl_addr.ID_addr');
+       $this->db->where('tbl_addr.ROW_ID', $idRow); 
+       $endereco = $this->db->get('tbl_addr');
+
+       return $endereco->result();
+    }
+
     public function load_wrs_Addr($idRow)
     {  
         $this->db->select('tbl_addr.ID_addr, tbl_addr.ROW_ID, tbl_addr.address, tbl_addr.nunber, tbl_addr.complement, tbl_addr.district, tbl_addr.city, tbl_addr.state, tbl_addr.zipcode, tbl_addr.country');
@@ -189,5 +199,6 @@ class Detalhes_documento_model extends CI_Model {
         $full_image = $this->db->get_where('tbl_image_doct', array('id_image' => $id_image));
         return $full_image->result();
     }
+
 
 }

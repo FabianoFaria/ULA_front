@@ -231,7 +231,4 @@ $().ready(function() {
 
 ?>
 
-	       
-
-
 </div>

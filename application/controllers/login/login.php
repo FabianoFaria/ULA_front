@@ -75,6 +75,7 @@ class Login extends CI_Controller {
         $user_name = $this->session->userdata('username');
 
         $data['usuario'] = $this->user->perfil_usr($user_name);
+        $data['usuario_atualizador'] = null;
 
         $this->load->helper('url');
         $this->load->view('templates/header');

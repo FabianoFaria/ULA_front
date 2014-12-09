@@ -54,7 +54,7 @@ class Continuando_documento extends CI_Controller {
         $data['cidadeAdr'] = null;
         $data['cidadesSingle'] = null;
 
-        $data['endereco'] = $this->Cont_doct->load_endereco($idRow);
+        $data['endereco'] = $this->Cont_doct->load_endereco_doct($idRow);
         //Estrutura para tornar o endereço optativo
         if($data['endereco'] != null)
         {
@@ -89,6 +89,32 @@ class Continuando_documento extends CI_Controller {
         $this->load->view('cadastro/dados_endereco_view', $data);
         $this->load->view('templates/footer');
     }
+
+     public function CadEndereco($idRow)
+    {
+        $data['id_Row'] = $idRow;
+        $data['ROW_id'] = $idRow;
+
+        $data['paises'] = $this->documentoModel->load_paises();
+        $data['estados'] = $this->documentoModel->load_estados(); 
+        $data['cidades'] = $this->documentoModel->load_cidades();
+        $data['estadoAdr'] = null;
+        $data['cidadeAdr'] = null;
+        $data['cidadesSingle'] = null;
+
+        $data['endereco'] = null;
+
+        $data['documento'] = $this->Cont_doct->load_doct($idRow);
+
+        $this->load->helper('form');
+        $this->load->helper('url');
+
+        $this->load->helper('url');
+        $this->load->view('templates/header');
+        $this->load->view('cadastro/dados_endereco_view', $data);
+        $this->load->view('templates/footer');
+    }
+
 
     public function Mercadorias($idRow)
     {   

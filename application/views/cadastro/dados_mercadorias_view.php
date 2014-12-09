@@ -279,8 +279,4 @@ $().ready(function() {
 	                       
 	</div>
 	                       
-
-
-
-
 </div>

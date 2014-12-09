@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <html>
 <head>
     <title>Sistema de registro de apreensão</title>
@@ -289,6 +290,16 @@
                     <h3>Foram detidos : </h3>
                     <?php
                        for($i = 0; $i < count($conteudoPassado['envolvidos']) ; $i++ ){
+
+                          if($conteudoPassado['envolvidos'][$i]->profession != '')
+                          {
+                            $profissao = $conteudoPassado['envolvidos'][$i]->profession;
+                          }
+                          else
+                          {
+                            $profissao = "";
+                          }
+
                           if($conteudoPassado['envolvidos'][$i]->father != '')
                               {
                                 $filho = "filho de ";
@@ -443,7 +454,7 @@
                               }
 
                           ?>
-                          <p><?php echo strtoupper($conteudoPassado['envolvidos'][$i]->name).', nascido no '.$conteudoPassado['envolvidos'][$i]->nome_pais.' '.$filho.' '.$paiEnvolvido.' '.$maeEnvolvido.' '.$dataNascDet. ' '.
+                          <p><?php echo strtoupper($conteudoPassado['envolvidos'][$i]->name).', '.$profissao.', nascido no '.$conteudoPassado['envolvidos'][$i]->nome_pais.' '.$filho.' '.$paiEnvolvido.' '.$maeEnvolvido.' '.$dataNascDet. ' '.
                   $cidadeNasc."".$estadoNasc." ,". $cpfEnvolvido. " ".$rgEnvolvido." ,".$enderecoResidencia." ".$cidadeEnd."".$estadoEnd.
                   "".$telefoneDetido; ?></p>
 
@@ -664,7 +675,15 @@
                                   </th>
                               </tr>
                           </thead>    
-                          <tbody>         
+                          <tbody>
+                              <tr>
+                                  <td>Detidos  </td>
+                                  <td><?php echo $totalDetidos; ?></td>             
+                              </tr>
+                              <tr>
+                                  <td>Caixas de cigarro  </td>
+                                  <td><?php echo $totalCxCigarros; ?></td>            
+                              </tr>
                               <tr>
                                   <td>Veiculos  </td>
                                   <td><?php echo $totalVeiculos; ?></td>            

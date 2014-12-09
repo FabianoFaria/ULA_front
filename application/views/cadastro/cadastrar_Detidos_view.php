@@ -229,6 +229,7 @@ function mostraCidadesB(str) {
 				$CPF = $cont->CPF;
 				$rg = $cont->rg;
 				$passport = $cont->passport;
+				$profession = $cont->profession;
 				$father = $cont->father;
 				$mother = $cont->mother;
 				//
@@ -288,6 +289,7 @@ function mostraCidadesB(str) {
 			$CPF = Null;
 			$rg = "";
 			$passport = "";
+			$profession = "";
 			$father = "";
 			$mother = "";
 			$birth_dt = "";
@@ -405,6 +407,10 @@ function mostraCidadesB(str) {
 		<label for="passaporte">Passaporte :</label><br/>
 		<input type="text" name="passaporte" value="<?php echo $passport; ?>"/>
 		<div class="error"><?php echo form_error('passaporte'); ?></div>
+
+		<label for="profissaoInst">Profissão e instrução :</label><br/>
+		<input type="text" name="profissaoInst" value="<?php echo $profession; ?>"/>
+		<div class="error"></div>
 
 		<label for="nome_pai">Nome do pai :</label><br/>
 		<input type="text" name="nome_pai" value="<?php echo $father; ?>"/>
@@ -726,5 +732,3 @@ function mostraCidadesB(str) {
 	<?php
 
 ?>
-
-</div>

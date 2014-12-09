@@ -419,9 +419,4 @@ function mostraModelos2(str) {
 		</div>
 
 	</div>
-	<?php
-
-			
-	
-
-		
+	<?php ?>

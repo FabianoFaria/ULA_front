@@ -364,6 +364,7 @@ class Novo_documento extends CI_Controller {
              $dataEnvolvido['CPF'] = $this->input->post('CPF');
              $dataEnvolvido['rg'] = $this->input->post('rg');
              $dataEnvolvido['passport'] = $this->input->post('passaporte');
+             $dataEnvolvido['profession'] = strtoupper(strtr($this->input->post('profissaoInst') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
              $dataEnvolvido['father'] = strtoupper(strtr($this->input->post('nome_pai') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
              $dataEnvolvido['mother'] = strtoupper(strtr($this->input->post('nome_mae') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
              $dataEnvolvido['birth_dt'] = $finalDate;
@@ -850,6 +851,5 @@ class Novo_documento extends CI_Controller {
                 }
 
     }// Fim da funcão...
-
 
 }

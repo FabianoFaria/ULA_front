@@ -150,13 +150,19 @@ class Relatorios_gen extends CI_Controller {
             array_push($dadosArray , $dataDocumento);
         }
 
-         $dados['totalOcorrencias'] = $this->relatorio->total_ocorrencias($dataDateI ,$dataDateF);
+        $dados['totalOcorrencias'] = $this->relatorio->total_ocorrencias($dataDateI ,$dataDateF);
 
         $dados['totalVeiculos'] = $this->relatorio->total_veiculos_relatorio($dataDateI ,$dataDateF);
         $dados['totalDepositos'] = $this->relatorio->total_depositos($dataDateI ,$dataDateF);
         $dados['totalCaminhao'] = $this->relatorio->total_veiculos_caminhao_relatorio($dataDateI ,$dataDateF);
-        $dados['totalOnibus'] = $this->relatorio->total_veiculos_onibus_relatorio($dataDateI ,$dataDateF);   
+        $dados['totalOnibus'] = $this->relatorio->total_veiculos_onibus_relatorio($dataDateI ,$dataDateF);
 
+        $dados['totalDetidos'] = $this->relatorio->total_detidos($dataDateI ,$dataDateF); 
+
+        $caixasCigarros = $this->relatorio->total_caixa_cigarros($dataDateI ,$dataDateF);
+        $cigarrosWsr = $this->relatorio->total_caixa_cigarros_wrs($dataDateI ,$dataDateF);
+
+        $dados['totalCxCigarros'] = $caixasCigarros[0]->qty + $cigarrosWsr[0]->quantidade_deposito;
 
         $dados['relatorioIni'] = $dataDateI; 
         $dados['relatorioFim'] = $dataDateF;
@@ -1603,6 +1609,5 @@ class IOFactory
 
         return !$reflection->isAbstract() && !$reflection->isInterface();
     }
-
 
 }

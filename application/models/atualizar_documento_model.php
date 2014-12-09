@@ -216,6 +216,7 @@ class Atualizar_documento_model extends CI_Model {
             'passport' => $data['passport'],
             'father' => $data['father'],
             'mother' => $data['mother'],
+            'profession' => $data['profession'],
             'birth_dt' => $data['birth_dt'],
             //'endereco_contato' => $data['endereco_contato'],
             'birth_city' => $data['birth_city'],
