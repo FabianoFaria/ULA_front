@@ -10,7 +10,8 @@ $().ready(function() {
 		rules: {
 			Ipl_manual: {
 				required: true,
-				minlength: 3
+				minlength: 3,
+				remote: 'login/novo_documento/iplExist'
 			},
 			unidade_seguranca: {
 				required: true
@@ -22,7 +23,8 @@ $().ready(function() {
 		messages: {
 			Ipl_manual: {
 				required: "Nome da IPL é obrigatorio!",
-				minlength: "Nome da IPL deve ter no minimo 3 caracteres..."
+				minlength: "Nome da IPL deve ter no minimo 3 caracteres...",
+				remote: 'Já existe uma ipl com esse titulo'
 			},
 			unidade_seguranca: {
 				required: "Selecione uma unidade de segurança..."

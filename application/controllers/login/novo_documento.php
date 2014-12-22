@@ -48,9 +48,20 @@ class Novo_documento extends CI_Controller {
         return $stringDate;
     }
 
-    public function echou()
+    public function iplExist()
     {
-        echo "nanana";
+        //$testeIpl = $this->input->get_post('Ipl_manual', TRUE);
+
+        $testeIpl = $_GET['Ipl_manual'];
+
+       // $testeIpl = strtoupper(strtr($this->input->get('ipl') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
+
+        $result = $this->documentoModel->iplExistente($testeIpl);
+
+        if($result != null){
+            echo 'false';
+        }else
+            echo 'true';
     }
 
     public function cadastrarProtocolo() {

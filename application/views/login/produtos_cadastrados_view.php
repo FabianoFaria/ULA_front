@@ -3,9 +3,34 @@
 
                         <br>
 
-                          <a class="btn" href="#">Cadastrar novo produto</a>
+                          <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">Cadastrar novo produto</button>
 
                         <br>
+
+                          <!-- Modal -->
+                            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                                  </div>
+                                  <div class="modal-body">
+                                     <form action="ajax" method="POST" >
+                                        <label for="novo_prod">Nome do produto :</label><br/> 
+                                          <input type="text" name="novo_prod" id="novo_prod" value=""/>
+                                          <input type="submit" name="Cadastrar" value="Cadastrar produto" />
+                                          <input type="hidden" name="id_addr" value="" />
+                                     </form>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          <br>
+
                         <hr>
 
                         <table class="table table-striped">

@@ -182,6 +182,32 @@ class Detalhes_documento extends CI_Controller {
         $this->load->view('templates/footer');
     }
 
+    public function buscarContatoCPF()
+    {
+
+        $cpfBuscar = $_POST['search_keyword'];
+
+        $contatoEncontrado = $this->DetalhesModel->carregarContatoCpf($cpfBuscar);
+
+        //echo $cpfBuscar;
+       if(!empty($contatoEncontrado))
+       {
+
+        foreach ($contatoEncontrado as $contato ) {
+            $singleContato = $contato;
+        }
+
+        exit(json_encode(array('status' => 'encontrado', 'contato' => $singleContato)));
+       }else
+       {
+        exit(json_encode(array('status' => 'vazio', 'contato' => 'vazio' )));
+       }
+
+        
+
+
+    }
+
     public function atualizar_contato($row_id, $row_contact)
     {
         $data['row_contact'] = $row_contact;

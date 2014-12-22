@@ -105,6 +105,13 @@ class Novo_documento_model extends CI_Model {
 
     /* carregar dados */
 
+    function iplExistente($iplInformado){
+
+        $this->db->where("IPL",$iplInformado);
+        $rowsAff = $this->db->get('tbl_doct');
+        return $rowsAff->result();
+    }
+
     function load_paises()
     {
         $query = $this->db->get('tbl_pais');

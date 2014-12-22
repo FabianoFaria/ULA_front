@@ -48,6 +48,8 @@ $( "#form-new-contact-ipl" ).submit(function( event ) {
 	event.preventDefault();
 	});
 
+
+
 $().ready(function() {
 	// validate signup form on keyup and submit
 	$("#form-new-contact-ipl").validate({
@@ -144,6 +146,64 @@ $().ready(function() {
      //   min: jQuery.validator.format("Por favor informe um valor maior ou igual a  {0}.")
     });
 	
+});
+
+$(function () {
+  $('[data-toggle="popover"]').popover()
+})
+
+$(function () {
+
+	 pathArray = window.location.href.split( '/' );
+     protocol = pathArray[0];
+     host = pathArray[2];
+     urlP = protocol + '//' + host;
+
+
+    var minlength = 3;
+
+    $("#CPF").keyup(function (e) {
+    	 e.preventDefault();
+        var that = this,
+        value = $(this).val();
+
+        	$.ajax({
+             url: urlP+"/ULA_front2/index.php/login/detalhes_documento/buscarContatoCPF",
+             secureuri: false,
+             type : "POST",
+             dataType  :'json',
+             data      : {
+              'search_keyword' : value
+              },
+                   success : function(datra)
+                    {
+                       //tempTest = JSON(datra);
+
+                       if(datra.status != 'vazio')
+                       {
+                       		var contato = datra.contato;
+
+                       	  $('#contatoCad').html("Detidos cadastrados no sistema <a href='javascript:void(0);'>"+contato.name+"</a>");
+                       }
+                       else
+                       {
+                       	 $('#contatoCad').html("");
+                       }	
+
+                    },
+                   error: function(jqXHR, textStatus, errorThrown)
+                    {
+                    // Handle errors here
+                    console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+                    // STOP LOADING SPINNER
+                    }
+
+        });
+        return false;
+
+    });
+    
+
 });
 
 function mostraCidades(str) {
@@ -397,8 +457,8 @@ function mostraCidadesB(str) {
 		<div class="error"><?php echo form_error('nomeD'); ?></div>
 
 		<label for="CPF">CPF :</label><br/>
-		<input type="text" name="CPF" id="CPF" value="<?php echo $CPF; ?>"/>
-		<div class="error"><?php echo form_error('CPF'); ?></div>
+		<input type="text" name="CPF" id="CPF" value="<?php echo $CPF; ?>"/> <span id="contatoCad"></span>
+		<div class="error"></div>
 
 		<label for="rg">RG :</label><br/>
 		<input type="text" name="rg" value="<?php echo $rg; ?>"/>

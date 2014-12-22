@@ -22,6 +22,15 @@ class Detalhes_documento_model extends CI_Model {
     	return $lastDoct->result();
     }
 
+    public function load_pessoa_cpf_in_cad($cpfAlvo)
+    {
+        $this->db->select('*');
+        $this->db->from('tbl_contact');
+        $this->db->where('CPF', $cpfAlvo);
+        $resultado = $this->db->get();
+        return $resultado->result();
+    }
+
     public function load_unidade_seg($row_id)
     {
         $this->db->select('forca_seguranca');
@@ -111,6 +120,16 @@ class Detalhes_documento_model extends CI_Model {
         $this->db->join('tbl_unidade_medidas','tbl_unidade_medidas.id_unidade_medida = tbl_haul.unit', 'left');
     	$mercadorias = $this->db->get_where('tbl_haul', array('ROW_ID' => $idRow));
     	return $mercadorias->result();
+    }
+
+    public function carregarContatoCpf($cpfBuscar)
+    {
+        $this->db->select('*');
+        $this->db->from('tbl_contact');
+        $this->db->where('CPF', $cpfBuscar);
+        $contato = $this->db->get();
+        return $contato->result();
+
     }
 
     public function load_Contato($idRow)

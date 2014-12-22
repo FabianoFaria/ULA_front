@@ -161,6 +161,22 @@ class Continuando_documento extends CI_Controller {
         $this->load->view('templates/footer');
     }
 
+    public function recuperaDetidoCpf()
+    {
+        $CpfProcurar = $_POST['cpfDetidoP'];
+
+        $detido = $this->load_pessoa_cpf_in_cad($CpfProcurar);
+
+        var_dump($detido);
+
+         echo json_encode(array('status' => 'status', 'msg' => 'msg', 'file_new_name' => 'file_new_name', 'id_frame' => 'id_frame' ));
+    }
+
+    public function recuperaDetidoRG()
+    {
+        
+    }
+
     public function Veiculos($idRow)
     {   
         $data['row_Auto'] = null; //Dado settado em null pois essa função é para cadastrar novo carro
