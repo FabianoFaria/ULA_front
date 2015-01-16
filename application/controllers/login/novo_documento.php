@@ -70,7 +70,7 @@ class Novo_documento extends CI_Controller {
     $dataAtualizacao = date('y-m-d H:i:s');
 
 
-        var_dump($this->input->post('dataOps'));
+        //var_dump($this->input->post('dataOps'));
        // die;
 
         $finalDate = "";
@@ -330,18 +330,6 @@ class Novo_documento extends CI_Controller {
         $user_name = $this->session->userdata('username');
         $dataAtualizacao = date('y-m-d H:i:s');
 
-        
-           //  $row->ROW_ID;
-           // $dataEx = explode("/", $this->input->post('nascimento'));
-           // $month = $dataEx[0];
-           // $day = $dataEx[1];
-           // $year = $dataEx[2];
-           // $finalDate = $year."-".$month."-".$day;
-
-
-            // var_dump($this->input->post('dataOps'));
-           // die;
-
             $finalDate = "";
             
 
@@ -424,6 +412,28 @@ class Novo_documento extends CI_Controller {
                 $dataEnvolvido['LAST_UPDATE'] = $dataAtualizacao;
 
                 $Row_Deti = $this->atualizarDoct->atualiza_contact($dataEnvolvido);
+
+                //Caso o contato já exista no banco de dados e seja necessario cadastra-lo em mais de uma
+                // IPL
+                //Verifica se o contato já foi salvo na IPL atual, se nâo existir
+                //salva o contato na IPL atual sem criar um novo registro de contato
+
+                $rowIdCad = $this->input->post('row_id');
+                $contact_id = $this->input->post('contact_id');
+
+                $contemContato = $this->atualizarDoct->verificaContatoIpl($rowIdCad, $contact_id);
+
+                if(empty($contemContato))
+                {
+                    $row_main['ROW_ID'] = $this->input->post('row_id');
+                    $row_main['parent_TBL'] = 'tbl_doct';
+                    $row_main['parent_id'] = $this->input->post('row_id');
+                    $row_main['CHILD_ID'] = $contact_id;
+                    $row_main['CHILD_TBL'] = 'tbl_contact';
+
+                    $Novo_main = $this->documentoModel->cadastrar_main($row_main);
+                }
+
             } 
                 else
             {

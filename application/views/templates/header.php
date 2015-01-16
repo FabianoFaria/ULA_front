@@ -59,7 +59,7 @@
                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
 
                               <li role="presentation">
-                                  <a href="<?php echo base_url("/index.php/login/login/usuariosCadastrados"); ?>"><i class="fa fa-cubes"></i> Usuarios cadastrados </a>
+                                  <a href="<?php echo base_url("/index.php/login/login/usuariosCadastrados"); ?>"><i class="fa fa-list"></i> Usuarios cadastrados </a>
                               </li>
                            </ul>
                         </li>
@@ -78,8 +78,14 @@
                                 <li role="presentation">
                                   <a href="<?php echo base_url("/index.php/login/login/cadastrarUsuario"); ?>"><i class="fa fa-user"></i> Usuario </a>
                                 </li>
+                                 <li role="presentation">
+                                  <a href="<?php echo base_url("/index.php/login/cadastro_conteudo/tabacaleras_cadastradas"); ?>"><i class="fa fa-clipboard"></i> Tabacalera </a>
+                                </li>
                                 <li role="presentation">
                                   <a href="<?php echo base_url("/index.php/login/cadastro_conteudo/produtos_cadastrados"); ?>"><i class="fa fa-cubes"></i> Produtos </a>
+                                </li>
+                                <li role="presentation">
+                                  <a href="<?php echo base_url("/index.php/login/cadastro_conteudo/unidade_seguranca_cadastrados"); ?>"><i class="fa fa-unlock"></i> Unidades Segurança </a>
                                 </li>
                                 <!-- <li role="presentation">
                                   <a href="#"><i class="fa fa-cubes"></i> Veiculos</a>

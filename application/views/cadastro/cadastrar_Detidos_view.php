@@ -148,9 +148,6 @@ $().ready(function() {
 	
 });
 
-$(function () {
-  $('[data-toggle="popover"]').popover()
-})
 
 $(function () {
 
@@ -183,7 +180,7 @@ $(function () {
                        {
                        		var contato = datra.contato;
 
-                       	  $('#contatoCad').html("Detidos cadastrados no sistema <a href='javascript:void(0);'>"+contato.name+"</a>");
+                       	  $('#contatoCad').html("Detidos cadastrados no sistema <a href='javascript:void(0);' onClick='completarContato("+contato.ID_contact+")'>"+contato.name+"</a>");
                        }
                        else
                        {
@@ -205,6 +202,131 @@ $(function () {
     
 
 });
+
+
+
+function completarContato(IDContato)
+{
+	pathArray = window.location.href.split( '/' );
+     protocol = pathArray[0];
+     host = pathArray[2];
+     urlP = protocol + '//' + host;
+
+	$.ajax({
+      url: urlP+"/ULA_front2/index.php/login/detalhes_documento/completarContatoForm",
+      secureuri: false,
+      type : "POST",
+      dataType  :'json',
+      data      : {
+        'id_contato' : IDContato
+       },
+    success : function(dataContato){
+	       //tempTest = JSON(datra);
+
+	       if(dataContato.status != 'vazio') 
+	       {
+	         var contato = dataContato.contato;
+	         $('#contatoCad').html(""); 
+	         $('#nomeD').val(contato.name);
+	         $('#rg').val(contato.rg);
+	         $('#passaporte').val(contato.passport);
+	         $('#profissaoInst').val(contato.profession);
+	         $('#nome_pai').val(contato.father);
+	         $('#nome_mae').val(contato.mother);
+
+	         var genero = contato.genre;
+	         if(genero === 'F')
+	         {
+	         	$('#genF').attr('checked', true);
+	         }else
+	         {
+	         	$('#genM').attr('checked', true);
+	         }
+
+	         var retorno = contato.birth_dt.split("-");
+
+	         $('#datepicker').val(retorno[2]+'/'+retorno[1]+'/'+retorno[0]);  
+
+	         $('#estado_nascimento').val(contato.birth_state);
+	         //$('#cidade_nascimento').html('<option value="'+contato.birth_city+'">'+contato.nome+'</option>');
+
+	         //carregaCidadeNasci(contato.birth_city);
+
+	         $('#Addr_id').val(contato.ID_addr);
+	         $('#endereco_contato').val(contato.address);
+	         $('#numero_addr_contato').val(contato.nunber); 
+	         $('#complemento').val(contato.complement);
+	         $('#bairro').val(contato.district);
+	         $('#CEP').val(contato.zipcode);
+
+	         $('#estado_apr').val(contato.state);
+	         $('#cidade_apr').html('<option value="'+contato.city+'">'+contato.nome+'</option>'); 
+
+	         $('#telefone').val(contato.telefone);
+	         $('#marca_telefone').val(contato.marca_telefone);
+	         $('#modelo_telefone').val(contato.modelo_telefone); 
+	         $('#IMEI').val(contato.IMEI);
+	         $('#operadora').val(contato.operadora);
+
+	         $('#comentariosDet').val(contato.comentarios_detidos);
+
+	         $('#contact_id').val(contato.ID_contact);
+
+
+	         //inicio do espaço par recuperar cidade de nascimento
+
+	         $.ajax({
+             url: urlP+"/ULA_front2/index.php/login/detalhes_documento/buscarCidadeNasc",
+             secureuri: false,
+             type : "POST",
+             dataType  :'json',
+             data      : {
+              'city_id' : contato.birth_city
+              },
+                   success : function(city)
+                    {
+
+                       if(city.status != 'vazio')
+                       {
+                       		var cidade = city.cidade;
+
+                       	  $('#cidade_nascimento').html('<option value="'+cidade.id+'">'+cidade.nome+'</option>');
+                       }
+                       else
+                       {
+                       	 $('#cidade_nascimento').html("");
+                       }	
+
+                    },
+                   error: function(jqXHR, textStatus, errorThrown)
+                    {
+                    // Handle errors here
+                    console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+                    // STOP LOADING SPINNER
+                    }
+
+
+				});
+
+	         //fim do espaço para recuperar cidade 
+	     
+	       }
+	        else
+	       {
+	        $('#contatoCad').html("");
+	       }
+   	},
+    error: function(jqXHR, textStatus, errorThrown)
+    {
+    // Handle errors here
+      console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+    // STOP LOADING SPINNER
+    }
+
+}); return false;
+
+}
+
 
 function mostraCidades(str) {
 	if (str=="") {
@@ -359,7 +481,7 @@ function mostraCidadesB(str) {
 			$endereco_detido = "";
 			//$country_id = null;
 			//$country_name = "";
-			//$id_estado = null;
+			$id_estado = null;
 			//$estado = null;
 
 			$telefone = null;
@@ -452,8 +574,8 @@ function mostraCidadesB(str) {
 		<div class="error"><?php echo form_error('nomeD'); ?></div>
 
 		<label for="genero">Nome do detido:</label><br/>
-		<input type="radio" name="genero" value="F" <?php if($gernre == "F"){echo "checked='true'";} ?> /> Feminino<br />
-		<input type="radio" name="genero" value="M" <?php if($gernre == "M"){echo "checked='true'";} ?> /> Masculino<br />
+		<input id="genF" type="radio" name="genero" value="F" <?php if($gernre == "F"){echo "checked='true'";} ?> /> Feminino<br />
+		<input id="genM" type="radio" name="genero" value="M" <?php if($gernre == "M"){echo "checked='true'";} ?> /> Masculino<br />
 		<div class="error"><?php echo form_error('nomeD'); ?></div>
 
 		<label for="CPF">CPF :</label><br/>
@@ -461,23 +583,23 @@ function mostraCidadesB(str) {
 		<div class="error"></div>
 
 		<label for="rg">RG :</label><br/>
-		<input type="text" name="rg" value="<?php echo $rg; ?>"/>
+		<input type="text" id="rg" name="rg" value="<?php echo $rg; ?>"/>
 		<div class="error"><?php echo form_error('rg'); ?></div>
 
 		<label for="passaporte">Passaporte :</label><br/>
-		<input type="text" name="passaporte" value="<?php echo $passport; ?>"/>
+		<input type="text" id="passaporte" name="passaporte" value="<?php echo $passport; ?>"/>
 		<div class="error"><?php echo form_error('passaporte'); ?></div>
 
 		<label for="profissaoInst">Profissão e instrução :</label><br/>
-		<input type="text" name="profissaoInst" value="<?php echo $profession; ?>"/>
+		<input type="text" id="profissaoInst" name="profissaoInst" value="<?php echo $profession; ?>"/>
 		<div class="error"></div>
 
 		<label for="nome_pai">Nome do pai :</label><br/>
-		<input type="text" name="nome_pai" value="<?php echo $father; ?>"/>
+		<input type="text" id="nome_pai" name="nome_pai" value="<?php echo $father; ?>"/>
 		<div class="error"><?php echo form_error('nome_pai'); ?></div>
 
 		<label for="nome_mae">Nome do mâe :</label><br/>
-		<input type="text" name="nome_mae" value="<?php echo $mother; ?>"/>
+		<input type="text" id="nome_mae" name="nome_mae" value="<?php echo $mother; ?>"/>
 		<div class="error"><?php echo form_error('nome_mae'); ?></div>
 
 		<label for="nascimento">Data de nascimento :</label><br/>
@@ -597,19 +719,19 @@ function mostraCidadesB(str) {
 		<div class="error"></div>
 
 		<label for="numero_addr_contato">Numero:</label><br/>
-		<input type="text" name="numero_addr_contato" value="<?php  echo $numero_det; ?>"/>
+		<input type="text" id="numero_addr_contato" name="numero_addr_contato" value="<?php  echo $numero_det; ?>"/>
 		<div class="error"></div>
 
 		<label for="complemento_contato">Complemento:</label><br/>
-		<input type="text" name="complemento" value="<?php echo $complemento_det; ?>"/>
+		<input type="text" id="complemento" name="complemento" value="<?php echo $complemento_det; ?>"/>
 		<div class="error"></div>
 
 		<label for="bairro">Bairro:</label><br/>
-		<input type="text" name="bairro" value="<?php echo $distrito_det; ?>"/>
+		<input type="text" id="bairro" name="bairro" value="<?php echo $distrito_det; ?>"/>
 		<div class="error"></div>
 
 		<label for="CEP">CEP:</label><br/>
-		<input type="text" name="CEP" value="<?php echo $cep_det; ?>"/>
+		<input type="text" id="CEP" name="CEP" value="<?php echo $cep_det; ?>"/>
 		<div class="error"></div>
 
 		<label for="pais_detido">Pais de nascimento :</label><br/>
@@ -717,7 +839,7 @@ function mostraCidadesB(str) {
 					<option value=" "> </option>						
 				</select>
 		<div class="error"></div> 
-		<input type="hidden" name="Addr_id" value="<?php echo $id_addr; ?>" />
+		<input type="hidden" id="Addr_id" name="Addr_id" value="<?php echo $id_addr; ?>" />
 
 
 
@@ -780,8 +902,8 @@ function mostraCidadesB(str) {
 		<br>
 		<br>
 
-		<input type="hidden" name="row_id" value="<?php echo $id_Row; ?>" />
-		<input type="hidden" name="contact_id" value="<?php echo $id_contact; ?>" />
+		<input type="hidden" id="row_id" name="row_id" value="<?php echo $id_Row; ?>" />
+		<input type="hidden" id="contact_id" name="contact_id" value="<?php echo $id_contact; ?>" />
 
 		<input type="submit" name="Cadastrar" value="<?php echo $btnLabel; ?> dados do detido" />
 		<br>

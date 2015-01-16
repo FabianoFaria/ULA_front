@@ -203,9 +203,45 @@ class Detalhes_documento extends CI_Controller {
         exit(json_encode(array('status' => 'vazio', 'contato' => 'vazio' )));
        }
 
-        
+    }
 
 
+
+    public function completarContatoForm()
+    {
+        $idContato = $_POST['id_contato'];
+
+        $contatoCompleto = $this->DetalhesModel->carregarContatoCompleto($idContato);
+
+        if(!empty($contatoCompleto))
+        {
+            foreach ($contatoCompleto as $contato ) {
+                $singleContato = $contato;
+            }
+            exit(json_encode(array('status' => 'Contato encontrado', 'contato' => $singleContato)));
+        }else
+        {
+            exit(json_encode(array('status' => 'vazio', 'contato' => 'vazio' )));
+        }
+
+    }
+
+    public function buscarCidadeNasc()
+    {
+      $idCidade = $_POST['city_id'];
+      
+      $cidadeNasci = $this->DetalhesModel->cidadeNasci($idCidade);
+
+      if(!empty($cidadeNasci))
+        {
+            foreach ($cidadeNasci as $cidade ) {
+                $singleCidade = $cidade;
+            }
+            exit(json_encode(array('status' => 'cidade encontrada', 'cidade' => $singleCidade)));
+        }else
+        {
+            exit(json_encode(array('status' => 'vazio', 'cidade' => 'vazio' )));
+        }
     }
 
     public function atualizar_contato($row_id, $row_contact)

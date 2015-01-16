@@ -243,6 +243,20 @@ class Atualizar_documento_model extends CI_Model {
         return true;
     }
 
+    public function verificaContatoIpl($rowId, $contactId)
+    {
+
+        $this->db->select('*');
+        $this->db->from('tbl_main');
+        $this->db->where('tbl_main.CHILD_TBL', 'tbl_contact');
+        $this->db->where('tbl_main.parent_id', $rowId);
+        $this->db->where('tbl_main.CHILD_ID', $contactId);
+        $contatoIPL = $this->db->get();
+
+        return $contatoIPL->result();
+
+    }
+
 
     public function atualiza_wrs($data)
     {

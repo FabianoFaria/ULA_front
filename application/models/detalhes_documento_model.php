@@ -132,11 +132,53 @@ class Detalhes_documento_model extends CI_Model {
 
     }
 
+    public function carregarContatoCompleto($id_Contato)
+    {
+       // $this->db->select('tbl_contact.ID_contact, tbl_contact.name, tbl_contact.genre, tbl_contact.CPF, tbl_contact.rg, tbl_contact.passport,
+       //     tbl_contact.passport, tbl_contact.profession, tbl_contact.father, tbl_contact.mother, tbl_contact.mother, tbl_contact.birth_dt,
+       //     tbl_contact.birth_city, tbl_contact.birth_state, tbl_contact.birth_country, tbl_contact.telefone, tbl_contact.marca_telefone, 
+      //      tbl_contact.modelo_telefone, tbl_contact.IMEI, tbl_contact.operadora, tbl_contact.comentarios_detidos, tbl_addr.nome_estado AS ');
+        $this->db->select('*');
+        $this->db->from('tbl_contact');
+        $this->db->join('tbl_con_addr', 'tbl_con_addr.id_con = tbl_contact.ID_contact');
+        $this->db->join('tbl_addr', 'tbl_addr.ID_addr = tbl_con_addr.id_addr');
+        $this->db->join('tbl_estados', 'tbl_estados.id_estado = tbl_addr.state', 'left');
+        $this->db->join('tbl_cidades', 'tbl_cidades.id = tbl_addr.city', 'left');
+        //$this->db->join('tbl_estados', 'tbl_estados.id_estado = tbl_contact.birth_state', 'left');
+        //$this->db->join('tbl_cidades', 'tbl_cidades.id = tbl_contact.birth_city', 'left');
+        $this->db->where('ID_contact', $id_Contato);
+        $contatoCompleto = $this->db->get();
+        
+        //var_dump($contatoCompleto->result());
+
+        return $contatoCompleto->result();
+    }
+
+    public function cidadeNasci($id)
+    {
+      $this->db->select('*');
+      $this->db->from('tbl_cidades');
+      $this->db->where('id', $id);
+      $cidadeNas = $this->db->get();
+      return $cidadeNas->result();
+    }
+
     public function load_Contato($idRow)
     {
-        $this->db->where('deletado', 0);
-    	$envolvidos = $this->db->get_where('tbl_contact', array('ROW_ID' => $idRow));
-    	return $envolvidos->result();
+        //$this->db->where('deletado', 0);
+    	//$envolvidos = $this->db->get_where('tbl_contact', array('ROW_ID' => $idRow));
+    	//return $envolvidos->result();
+
+        $this->db->select('*');
+        $this->db->from('tbl_contact');
+        $this->db->join('tbl_main','tbl_main.CHILD_ID = tbl_contact.ID_contact');
+        $this->db->where('tbl_main.parent_id', $idRow);
+        $this->db->where('tbl_main.CHILD_TBL','tbl_contact');
+        $envolvidos = $this->db->get();
+        return $envolvidos->result();
+
+
+
     }
 
     public function load_Armazem($idRow)
