@@ -163,6 +163,7 @@ class Atualizar_documento_model extends CI_Model {
             'category' => $data['category'],
             'model' => $data['model'],
             'brand' => $data['brand'],
+            'cor_veiculo' => $data['cor_veiculo'],
             'chassi' => $data['chassi'],
             'renavan' => $data['renavan'],
             'placa' => $data['placa'],

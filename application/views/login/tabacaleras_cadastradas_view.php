@@ -16,7 +16,8 @@ $(function () {
         value = $("#novo_taba").val();
 
           $.ajax({
-             url: urlP+"/ULA_front2/index.php/login/cadastro_conteudo/cadTabacalera",
+             ContentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+             url: urlP+"/sis/index.php/login/cadastro_conteudo/cadTabacalera", ///ULA_front2/index.php/login/cadastro_conteudo/cadTabacalera",
              secureuri: false,
              type : "POST",
              dataType  :'json',
@@ -75,7 +76,8 @@ function atualizarTaba(IDTab,statusTaba)
      }
 
      $.ajax({
-      url: urlP+"/ULA_front2/index.php/login/cadastro_conteudo/atualizar_tabacalera",
+      ContentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+      url: urlP+"/sis/index.php/login/cadastro_conteudo/atualizar_tabacalera", ///ULA_front2/index.php/login/cadastro_conteudo/atualizar_tabacalera",
       secureuri: false,
       type : "POST",
       dataType  :'json',

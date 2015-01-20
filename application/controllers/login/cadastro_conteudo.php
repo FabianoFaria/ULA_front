@@ -175,10 +175,14 @@ class Cadastro_conteudo extends CI_Controller {
          if(!empty($Row_tabaca))
        {
 
-        exit(json_encode(array('status' => 'cadastrado', 'tabacalera' => 'OK')));
+        //exit(json_encode(array('status' => 'cadastrado', 'tabacalera' => 'OK')));
+        header('Content-Type: application/json');
+        echo json_encode(array('status' => 'cadastrado', 'tabacalera' => 'OK'));
        }else
        {
-        exit(json_encode(array('status' => 'erro', 'tabacalera' => 'vazio' )));
+        //exit(json_encode(array('status' => 'erro', 'tabacalera' => 'vazio' )));
+         header('Content-Type: application/json');
+        echo json_encode(array('status' => 'erro', 'tabacalera' => 'vazio' ));
        }
     }
 

@@ -216,6 +216,7 @@ class Novo_documento extends CI_Controller {
          $dataAuto['category'] = $this->input->post('cat_veiculo');          
          $dataAuto['model'] = $this->input->post('mod_veiculo');
          $dataAuto['brand'] = $this->input->post('mark_veiculo');
+         $dataAuto['cor_veiculo'] = $this->input->post('cor_veiculo');
          $dataAuto['chassi'] = strtoupper(strtr($this->input->post('chassi') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
          $dataAuto['renavan'] = strtoupper(strtr($this->input->post('renavan') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
          $dataAuto['placa'] = strtoupper(strtr($this->input->post('placa_n') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));

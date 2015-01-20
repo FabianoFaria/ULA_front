@@ -16,7 +16,7 @@ $(function () {
         value = $("#novo_prod").val();
 
           $.ajax({
-             url: urlP+"/ULA_front2/index.php/login/cadastro_conteudo/cadProduto",
+             url: urlP+"/sis/index.php/login/cadastro_conteudo/cadProduto",
              secureuri: false,
              type : "POST",
              dataType  :'json',
@@ -75,7 +75,7 @@ function atualizarProd(IDProd,statusProd)
      }
 
      $.ajax({
-      url: urlP+"/ULA_front2/index.php/login/cadastro_conteudo/atualizar_produto",
+      url: urlP+"/sis/index.php/login/cadastro_conteudo/atualizar_produto",
       secureuri: false,
       type : "POST",
       dataType  :'json',

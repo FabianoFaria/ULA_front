@@ -15,7 +15,7 @@ $(function () {
         sigla_unit = $("#sigla_unidade").val();
 
           $.ajax({
-             url: urlP+"/ULA_front2/index.php/login/cadastro_conteudo/cadUnidade",
+             url: urlP+"/sis/index.php/login/cadastro_conteudo/cadUnidade",
              secureuri: false,
              type : "POST",
              dataType  :'json',
@@ -72,7 +72,7 @@ function atualizarProd(IDProd,statusProd)
      }
 
      $.ajax({
-      url: urlP+"/ULA_front2/index.php/login/cadastro_conteudo/atualizar_produto",
+      url: urlP+"/sis/index.php/login/cadastro_conteudo/atualizar_produto",
       secureuri: false,
       type : "POST",
       dataType  :'json',

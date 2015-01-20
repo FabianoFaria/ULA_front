@@ -321,7 +321,7 @@
 
                               if($conteudoPassado['envolvidos'][$i]->father != '')
                               {
-                                $paiEnvolvido = $conteudoPassado['envolvidos'][$i]->father;
+                                $paiEnvolvido = ucwords( strtolower($conteudoPassado['envolvidos'][$i]->father));
                               }
                               else
                               {
@@ -332,10 +332,10 @@
                               {
                                 if($paiEnvolvido != '')
                                 {
-                                  $maeEnvolvido = " e ".$conteudoPassado['envolvidos'][$i]->mother;
-                                }
+                                  $maeEnvolvido = " e ".ucwords(strtolower( $conteudoPassado['envolvidos'][$i]->mother));
+                                } 
                                 else{
-                                  $maeEnvolvido = $conteudoPassado['envolvidos'][$i]->mother;
+                                  $maeEnvolvido = ucwords(strtolower( $conteudoPassado['envolvidos'][$i]->mother));
                                 }
                               }
                               else
@@ -413,7 +413,7 @@
 
                               if($conteudoPassado['envolvidos'][$i]->address != '' )
                               {
-                                $enderecoResidencia = "residente em ".$conteudoPassado['envolvidos'][$i]->address;
+                                $enderecoResidencia = "residente em ".strtolower($conteudoPassado['envolvidos'][$i]->address);
                               }else
                               {
                                 $enderecoResidencia = "";
@@ -454,7 +454,7 @@
                               }
 
                           ?>
-                          <p><?php echo strtoupper($conteudoPassado['envolvidos'][$i]->name).', '.$profissao.', nascido no '.$conteudoPassado['envolvidos'][$i]->nome_pais.' '.$filho.' '.$paiEnvolvido.' '.$maeEnvolvido.' '.$dataNascDet. ' '.
+                          <p><?php echo ucwords(strtolower($conteudoPassado['envolvidos'][$i]->name)).', '.$profissao.', nascido no '.$conteudoPassado['envolvidos'][$i]->nome_pais.' '.$filho.' '.$paiEnvolvido.' '.$maeEnvolvido.' '.$dataNascDet. ' '.
                   $cidadeNasc."".$estadoNasc." ,". $cpfEnvolvido. " ".$rgEnvolvido." ,".$enderecoResidencia." ".$cidadeEnd."".$estadoEnd.
                   "".$telefoneDetido; ?></p>
 

@@ -155,14 +155,15 @@ function mostraModelos2(str) {
 		
 			foreach ($automoveis as $auto) {
 				 $ID_auto = $auto->ID_vehicle;
+				 $cor_veio = $auto->cor_veiculo;
 				 $Chassi = $auto->chassi;
 				 $Renavan = $auto->renavan;
 				 $placa = $auto->placa;
 
-				 //$id_cidade = $auto->id;
+				// $id_cidade = $auto->id;
 				// $nome_cidade = $auto->nome;
 				// $id_estado = $auto->id_estado;
-				 //$nome_estado = $auto->nome_estado;
+				// $nome_estado = $auto->nome_estado;
 
 				$id_tipo_veiculo = $auto->category;
 				$tipo_veiculo = $auto->tpve_nome;
@@ -181,6 +182,7 @@ function mostraModelos2(str) {
 		}else
 		{
 			$ID_auto = null;
+			$cor_veio = null;
 			$Chassi = null;
 			$Renavan = null;
 			$placa = null;
@@ -325,6 +327,54 @@ function mostraModelos2(str) {
 						<option value=" "> </option>
 					</select>
 				<div class="error"></div>
+
+				<label for="cor_veiculo">Cor do veiculo: </label><br/>
+					<select name="cor_veiculo" id="cor_veiculo" >
+						
+						<?php
+
+							$cores = array();
+							$cores[0] = 'Branco';
+							$cores[1] = 'Cinza';
+							$cores[2] = 'Prata';
+							$cores[3] = 'Preto';
+							$cores[4] = 'verde';
+							$cores[5] = 'Vermelho';
+							$cores[6] = 'Amarelo';
+							$cores[7] = 'Bege';
+							$cores[8] = 'Marrom';
+							$cores[9] = 'Laranja';
+
+							if($cor_veio != null)
+							{
+
+						?>
+							<option selected="true" value="<?php echo $cor_veio; ?>"><?php echo $cor_veio ?></option>
+
+						<?php
+							}
+						else{ //fim do if do id cidade != null
+						?>
+							<option value="">Selecione uma cor:</option>
+						<?php
+							}
+
+							foreach ($cores as $cor) {
+
+								if($cor_veio != $cor){
+						?>
+								<option value="<?php  echo $cor ?>"><?php  echo $cor ?></option>
+						<?php
+									}//fim do if para cidades iguais...
+								}//fim do foreach das cidades do estado carregado
+
+						?>
+
+
+	
+					</select>
+				<div class="error"></div>
+
 
 				<label for="chassi">Chassi:</label><br/>
 				<input type="text" name="chassi" value="<?php echo $Chassi; ?>"/>
