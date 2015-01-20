@@ -159,6 +159,8 @@ function mostraModelos2(str) {
 				 $Chassi = $auto->chassi;
 				 $Renavan = $auto->renavan;
 				 $placa = $auto->placa;
+				 $placa_extra1 = $auto->placa_extra;
+				 $placa_extra2 = $auto->placa_extra2;
 
 				// $id_cidade = $auto->id;
 				// $nome_cidade = $auto->nome;
@@ -186,6 +188,8 @@ function mostraModelos2(str) {
 			$Chassi = null;
 			$Renavan = null;
 			$placa = null;
+			$placa_extra1 = null;
+			$placa_extra2 = null;
 				 
 			//$id_cidade = null;
 			//$nome_cidade = null;
@@ -387,6 +391,14 @@ function mostraModelos2(str) {
 				<label for="placa_n">Placa :</label><br/>
 				<input type="text" name="placa_n" value="<?php echo $placa; ?>"/>
 				<div class="error"><?php echo form_error('placa_n'); ?></div>
+
+				<label for="placa_ex">Placa adicional:</label><br/>
+				<input type="text" name="placa_ex" value="<?php echo $placa_extra1; ?>"/>
+				<div class="error"><?php echo form_error('placa_ex'); ?></div>
+
+				<label for="placa_ex2">Placa adicional 2:</label><br/>
+				<input type="text" name="placa_ex2" value="<?php echo $placa_extra2; ?>"/> 
+				<div class="error"><?php echo form_error('placa_ex2'); ?></div>
 
 				<label for="estado">Estado :</label><br/>
 					<select name="estado_apr" onchange="mostraCidades(this.value)">

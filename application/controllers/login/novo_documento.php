@@ -218,8 +218,10 @@ class Novo_documento extends CI_Controller {
          $dataAuto['brand'] = $this->input->post('mark_veiculo');
          $dataAuto['cor_veiculo'] = $this->input->post('cor_veiculo');
          $dataAuto['chassi'] = strtoupper(strtr($this->input->post('chassi') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
-         $dataAuto['renavan'] = strtoupper(strtr($this->input->post('renavan') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
+         $dataAuto['renavan'] = strtoupper(strtr($this->input->post('renavan') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ")); 
          $dataAuto['placa'] = strtoupper(strtr($this->input->post('placa_n') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
+         $dataAuto['placa_extra'] = strtoupper(strtr($this->input->post('placa_ex') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
+         $dataAuto['placa_extra2'] = strtoupper(strtr($this->input->post('placa_ex2') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
          $dataAuto['city'] = $this->input->post('cidade_apr');
          $dataAuto['state'] = $this->input->post('estado_apr');
          $dataAuto['detalhes_veiculos'] = strtoupper(strtr($this->input->post('detalhes_veiculos') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));

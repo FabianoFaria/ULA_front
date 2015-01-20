@@ -165,7 +165,7 @@ $(function () {
         value = $(this).val();
 
         	$.ajax({
-             url: urlP+"/ULA_front2/index.php/login/detalhes_documento/buscarContatoCPF",
+             url: urlP+"/sis/index.php/login/detalhes_documento/buscarContatoCPF",
              secureuri: false,
              type : "POST",
              dataType  :'json',
@@ -213,7 +213,7 @@ function completarContato(IDContato)
      urlP = protocol + '//' + host;
 
 	$.ajax({
-      url: urlP+"/ULA_front2/index.php/login/detalhes_documento/completarContatoForm",
+      url: urlP+"/sis/index.php/login/detalhes_documento/completarContatoForm",
       secureuri: false,
       type : "POST",
       dataType  :'json',
@@ -276,7 +276,7 @@ function completarContato(IDContato)
 	         //inicio do espaço par recuperar cidade de nascimento
 
 	         $.ajax({
-             url: urlP+"/ULA_front2/index.php/login/detalhes_documento/buscarCidadeNasc",
+             url: urlP+"/sis/index.php/login/detalhes_documento/buscarCidadeNasc",
              secureuri: false,
              type : "POST",
              dataType  :'json',

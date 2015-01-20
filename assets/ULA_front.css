@@ -214,3 +214,8 @@ td {
 	color: #ffffff;
 	text-align: center;
 }
+
+.tabela_tabacalera table
+{
+	min-height: 800px;
+}

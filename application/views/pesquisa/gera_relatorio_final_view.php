@@ -202,12 +202,34 @@
                               else{
                                 $veiculoModelo = " ";
                               }
+                              /* Cor veiculo */
+                              if($conteudoPassado['veiculos'][$i]->cor_veiculo != '')
+                              {
+                                $veiculoCor = ", Cor : ".$conteudoPassado['veiculos'][$i]->cor_veiculo;
+                              }
+                              else{
+                                $veiculoCor = " ";
+                              }
                               /*`Placa */
                               if($conteudoPassado['veiculos'][$i]->placa != '')
                               {
                                 $veiculoPlaca = "Placa : ".$conteudoPassado['veiculos'][$i]->placa;
                               }else{
                                 $veiculoPlaca = " ";
+                              }
+                               /*`Placa extra */
+                              if($conteudoPassado['veiculos'][$i]->placa_extra != '')
+                              {
+                                $veiculoPlacaEx = ", Placa adicional: ".$conteudoPassado['veiculos'][$i]->placa_extra;
+                              }else{
+                                $veiculoPlacaEx = " ";
+                              }
+                               /*`Placa extra 2*/
+                              if($conteudoPassado['veiculos'][$i]->placa_extra2 != '')
+                              {
+                                $veiculoPlacaEx2 = ", Placa adicional : ".$conteudoPassado['veiculos'][$i]->placa_extra2;
+                              }else{
+                                $veiculoPlacaEx2 = " ";
                               }
                               /* Chassi */
                               if($conteudoPassado['veiculos'][$i]->chassi != '')
@@ -247,7 +269,7 @@
                               }
 
                         ?>
-                            <p>Veiculo  : <?php echo $veiculoNome.' '.$veiculoModelo.' '.$veiculoPlaca.' '.$veiculoChassi.' '.$veiculoCidade.''.$veiculoEstado; ?></p>
+                            <p>Veiculo  : <?php echo $veiculoNome.' '.$veiculoModelo.' '. $veiculoCor .' '.$veiculoPlaca.' '.$veiculoPlacaEx.' '.$veiculoPlacaEx2.' '.$veiculoChassi.' '.$veiculoCidade.''.$veiculoEstado; ?></p>
                         <?php
 
 

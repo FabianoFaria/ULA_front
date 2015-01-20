@@ -125,7 +125,7 @@ class Relatorios_model extends CI_Model {
     {
     	// public 'ROW_ID' => string '45' (length=2)
         $this->db->distinct('tbl_vehicle.ID_vehicle');
-    	$this->db->select('tbl_vehicle.ID_vehicle, tbl_vehicle.ROW_ID, tbl_vehicle.category, tbl_vehicle.model, tbl_vehicle.brand, tbl_vehicle.chassi, tbl_vehicle.renavan, tbl_vehicle.placa, tbl_estados.nome_estado as nome_estado, tbl_estados.uf as uf_estado, tbl_cidades.nome as cidade_nome, tbl_modelos.mode_nome, tbl_marcas.marc_nome, tbl_tipo_veiculo.tpve_nome');
+    	$this->db->select('tbl_vehicle.ID_vehicle, tbl_vehicle.ROW_ID, tbl_vehicle.category, tbl_vehicle.model, tbl_vehicle.brand, tbl_vehicle.cor_veiculo, tbl_vehicle.chassi, tbl_vehicle.renavan, tbl_vehicle.placa, tbl_vehicle.placa_extra, tbl_vehicle.placa_extra2, tbl_estados.nome_estado as nome_estado, tbl_estados.uf as uf_estado, tbl_cidades.nome as cidade_nome, tbl_modelos.mode_nome, tbl_marcas.marc_nome, tbl_tipo_veiculo.tpve_nome');
         $this->db->join('tbl_vehicle','tbl_vehicle.ROW_ID = tbl_main.parent_id', 'left');
         $this->db->join('tbl_estados', 'tbl_estados.id_estado = tbl_vehicle.state', 'left');
         $this->db->join('tbl_cidades', 'tbl_cidades.id = tbl_vehicle.city', 'left');
