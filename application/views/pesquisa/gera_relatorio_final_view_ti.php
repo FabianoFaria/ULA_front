@@ -162,8 +162,8 @@
                     if($conteudoPassado['documento'][0]->operation != null)
                     {
                     ?>
-                      <p>Nome da operaçâo :  <?php echo ucfirst( mb_strtolower($conteudoPassado['documento'][0]->operation)); ?> </p>
-                      <p>Resumo da operacao : <?php echo ucfirst( mb_strtolower($conteudoPassado['documento'][0]->summary)); ?> </p>
+                      <p>Nome da operaçâo : <?php echo $conteudoPassado['documento'][0]->operation; ?> </p>
+                      <p>Resumo da operacao : <?php echo $conteudoPassado['documento'][0]->summary; ?> </p>
                    <?php
                     }
 
@@ -343,9 +343,9 @@
 
                               if($conteudoPassado['envolvidos'][$i]->father != '')
                               {
-                                $paiEnvolvido = ucwords( mb_strtolower($conteudoPassado['envolvidos'][$i]->father));
+                                $paiEnvolvido = ucwords( strtolower($conteudoPassado['envolvidos'][$i]->father));
                               }
-                              else 
+                              else
                               {
                                 $paiEnvolvido = "";
                               }
@@ -354,10 +354,10 @@
                               {
                                 if($paiEnvolvido != '')
                                 {
-                                  $maeEnvolvido = " e ".ucwords(mb_strtolower( $conteudoPassado['envolvidos'][$i]->mother));
+                                  $maeEnvolvido = " e ".ucwords(strtolower( $conteudoPassado['envolvidos'][$i]->mother));
                                 } 
                                 else{
-                                  $maeEnvolvido = ucwords(mb_strtolower( $conteudoPassado['envolvidos'][$i]->mother));
+                                  $maeEnvolvido = ucwords(strtolower( $conteudoPassado['envolvidos'][$i]->mother));
                                 }
                               }
                               else
@@ -435,7 +435,7 @@
 
                               if($conteudoPassado['envolvidos'][$i]->address != '' )
                               {
-                                $enderecoResidencia = "residente em ".mb_strtolower($conteudoPassado['envolvidos'][$i]->address);
+                                $enderecoResidencia = "residente em ".strtolower($conteudoPassado['envolvidos'][$i]->address);
                               }else
                               {
                                 $enderecoResidencia = "";
@@ -476,7 +476,7 @@
                               }
 
                           ?>
-                          <p><?php echo ucwords(mb_strtolower($conteudoPassado['envolvidos'][$i]->name)).', '.$profissao.', nascido no '.$conteudoPassado['envolvidos'][$i]->nome_pais.' '.$filho.' '.$paiEnvolvido.' '.$maeEnvolvido.' '.$dataNascDet. ' '.
+                          <p><?php echo ucwords(strtolower($conteudoPassado['envolvidos'][$i]->name)).', '.$profissao.', nascido no '.$conteudoPassado['envolvidos'][$i]->nome_pais.' '.$filho.' '.$paiEnvolvido.' '.$maeEnvolvido.' '.$dataNascDet. ' '.
                   $cidadeNasc."".$estadoNasc." ,". $cpfEnvolvido. " ".$rgEnvolvido." ,".$enderecoResidencia." ".$cidadeEnd."".$estadoEnd.
                   "".$telefoneDetido; ?></p>
 
@@ -489,7 +489,7 @@
                       for($i = 0; $i < 1 ; $i++ ){ //count($conteudoPassado['endereco'])
                         if($conteudoPassado['endereco'][$i]->address != '')
                         {
-                          $logradouro = ucfirst( mb_strtolower($conteudoPassado['endereco'][$i]->address));
+                          $logradouro = $conteudoPassado['endereco'][$i]->address;
                         }
                         else {
                           $logradouro = " ";
@@ -511,14 +511,14 @@
 
                         if($conteudoPassado['endereco'][$i]->complement != '')
                         {
-                          $complementEnd = " com a referencia ".ucfirst( mb_strtolower($conteudoPassado['endereco'][$i]->complement));
+                          $complementEnd = " com a referencia ".$conteudoPassado['endereco'][$i]->complement;
                         }else{
                           $complementEnd = "";
                         }
 
                         if($conteudoPassado['endereco'][$i]->district != '')
                         {
-                          $bairroEnd = " no bairro ".ucfirst( mb_strtolower($conteudoPassado['endereco'][$i]->district));
+                          $bairroEnd = " no bairro ".$conteudoPassado['endereco'][$i]->district;
                         }else{
                           $bairroEnd = "";
                         }
@@ -568,21 +568,21 @@
 
                         if($conteudoPassado['endereco_deposito'][0]->complement != '')
                         {
-                          $complementDept = " com a referencia ".ucfirst( mb_strtolower($conteudoPassado['endereco_deposito'][0]->complement));
+                          $complementDept = " com a referencia ".$conteudoPassado['endereco_deposito'][0]->complement;
                         }else{
                           $complementDept = "";
                         }
 
                         if($conteudoPassado['endereco_deposito'][0]->district != '')
                         {
-                          $bairroDept = " no bairro ".ucfirst( mb_strtolower($conteudoPassado['endereco_deposito'][0]->district));
+                          $bairroDept = " no bairro ".$conteudoPassado['endereco_deposito'][0]->district;
                         }else{
                           $bairroDept = "";
                         }
 
                         if($conteudoPassado['endereco_deposito'][0]->nome != '')
                         {
-                          $cidadeDept = " na cidade de  ".ucfirst( mb_strtolower($conteudoPassado['endereco_deposito'][0]->nome));
+                          $cidadeDept = " na cidade de  ".$conteudoPassado['endereco_deposito'][0]->nome;
                         }else{
                           $cidadeDept = "";
                         }
