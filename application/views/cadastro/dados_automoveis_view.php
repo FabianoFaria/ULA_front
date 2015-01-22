@@ -333,50 +333,7 @@ function mostraModelos2(str) {
 				<div class="error"></div>
 
 				<label for="cor_veiculo">Cor do veiculo: </label><br/>
-					<select name="cor_veiculo" id="cor_veiculo" >
-						
-						<?php
-
-							$cores = array();
-							$cores[0] = 'Branco';
-							$cores[1] = 'Cinza';
-							$cores[2] = 'Prata';
-							$cores[3] = 'Preto';
-							$cores[4] = 'verde';
-							$cores[5] = 'Vermelho';
-							$cores[6] = 'Amarelo';
-							$cores[7] = 'Bege';
-							$cores[8] = 'Marrom';
-							$cores[9] = 'Laranja';
-
-							if($cor_veio != null)
-							{
-
-						?>
-							<option selected="true" value="<?php echo $cor_veio; ?>"><?php echo $cor_veio ?></option>
-
-						<?php
-							}
-						else{ //fim do if do id cidade != null
-						?>
-							<option value="">Selecione uma cor:</option>
-						<?php
-							}
-
-							foreach ($cores as $cor) {
-
-								if($cor_veio != $cor){
-						?>
-								<option value="<?php  echo $cor ?>"><?php  echo $cor ?></option>
-						<?php
-									}//fim do if para cidades iguais...
-								}//fim do foreach das cidades do estado carregado
-
-						?>
-
-
-	
-					</select>
+				<input type="text" name="cor_veiculo" value="<?php echo $cor_veio; ?>"/>		
 				<div class="error"></div>
 
 
