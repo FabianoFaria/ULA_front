@@ -171,8 +171,14 @@ function mostraModelos2(str) {
 				$tipo_veiculo = $auto->tpve_nome;
 				$id_marca = $auto->brand;
 				$nome_marca = $auto->marc_nome;
+				if(!is_numeric()){
+
+				}
 				$id_modelo = $auto->mode_cod;
 				$nome_modelo = $auto->mode_nome;
+
+
+
 				$detalhes_veic = $auto->detalhes_veiculos;
 			}
 
@@ -305,31 +311,33 @@ function mostraModelos2(str) {
 				<div class="error"></div>
 
 				<label for="mod_veiculo">Modelo veiculo:</label><br/>
-					<select name="mod_veiculo" id="mod_veiculo" >
+					<!-- <select name="mod_veiculo" id="mod_veiculo" > -->
 						<?php
-							if($id_modelo != null)
-							{
+						//	if($id_modelo != null)
+						//	{
 						?>
-							<option value="<?php echo $id_modelo ?>"><?php echo $nome_modelo ?></option>
+						<!--	<option value="<?php // echo $id_modelo ?>"><?php // echo $nome_modelo ?></option> -->
 						<?php
-								foreach ($modelosP as $model) {
-								if($model->mode_cod != $id_modelo){
+							//	foreach ($modelosP as $model) {
+							//	if($model->mode_cod != $id_modelo){
 						?>
-								<option value="<?php  echo $model->mode_cod ?>"><?php  echo $model->mode_nome ?></option>
+							<!--	<option value="<?php // echo $model->mode_cod ?>"><?php // echo $model->mode_nome ?></option> -->
 						<?php
-									}//fim do if para cidades iguais...
-								}//fim do foreach das cidades do estado carregado
+							//		}//fim do if para cidades iguais...
+							//	}//fim do foreach das cidades do estado carregado
 
-							} //fim do if id_modelo != null
-							else{
+							//} //fim do if id_modelo != null
+							//else{
 						?>
-							<option value="">selecione o modelo do veiculo</option>
+							<!-- <option value="">selecione o modelo do veiculo</option> --> 
 						<?php
 
-							}
+						 //	}
 						?>
-						<option value=" "> </option>
-					</select>
+					<!--	<option value=" "> </option>
+					</select> --> 
+				<!-- input para o modelo do veiculo-->
+				<input type="text" name="mod_veiculo" value="<?php echo $nome_modelo; ?>"/>
 				<div class="error"></div>
 
 				<label for="cor_veiculo">Cor do veiculo: </label><br/>

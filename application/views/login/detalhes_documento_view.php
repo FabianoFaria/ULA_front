@@ -54,7 +54,7 @@
 	<h2>Detalhes da apreensão</h2>
 
 	<div class="col-md-12 col-sm-12 col-xs-12">
-		<h3>IPL : <?php echo $IPL; ?></h3>
+		<h3><?php echo $qualificação; ?> : <?php echo $IPL; ?></h3>
 		<br>
 
 
