@@ -132,7 +132,8 @@ $().ready(function() {
 	 		<label for="qualificacao">Qualificação:</label><br/>
 				<input type="radio" name="qualificacao" value="Ipl" <?php if($doc->qualification == "Ipl"){echo "checked='true'";} ?> /> IPL<br />
 				<input type="radio" name="qualificacao" value="Reportagem" <?php if($doc->qualification == "Reportagem"){echo "checked='true'";} ?> /> Reportagem<br />
-				<input type="radio" name="qualificacao" value="Operacao" <?php if($doc->qualification == "Operacao"){echo "checked='true'";} ?> /> Operação
+				<input type="radio" name="qualificacao" value="Operacao" <?php if($doc->qualification == "Operacao"){echo "checked='true'";} ?> /> Operação <br />
+				<input type="radio" name="qualificacao" value="Outro" <?php if($doc->qualification == "Outro"){echo "checked='true'";} ?> /> Outro
 			<div class="error"><?php echo form_error('qualificacao'); ?></div>
 
 			<label for="unidade_seguranca">Unidade de segurança:</label><br/>

@@ -171,11 +171,15 @@ function mostraModelos2(str) {
 				$tipo_veiculo = $auto->tpve_nome;
 				$id_marca = $auto->brand;
 				$nome_marca = $auto->marc_nome;
-				if(!is_numeric()){
 
-				}
+
 				$id_modelo = $auto->mode_cod;
 				$nome_modelo = $auto->mode_nome;
+
+				if(!is_numeric($auto->model)){
+					$nome_modelo = $auto->model;
+				}
+				
 
 
 

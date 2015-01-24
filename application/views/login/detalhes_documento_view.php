@@ -54,7 +54,8 @@
 	<h2>Detalhes da apreensão</h2>
 
 	<div class="col-md-12 col-sm-12 col-xs-12">
-		<h3><?php echo $qualificação; ?> : <?php echo $IPL; ?></h3>
+		<h3>Qualificação : <?php echo $qualificação; ?></h3>
+		<h3>Registro :<?php echo $IPL; ?></h3>
 		<br>
 
 
@@ -307,7 +308,7 @@
 
 		<table class="table automoveis_list table-striped">
 			<tr>
-				<th>Ações</th><th>Veículo</th><th>Modelo</th><th>Marca</th><th>Chassi</th><th>Renavam</th><th>Placa</th><th>Cidade PLaca</th><th>UF Placa</th>
+				<th>Ações</th><th>Veículo</th><th>Marca</th><th>Modelo</th><th>Chassi</th><th>Renavam</th><th>Placa</th><th>Cidade PLaca</th><th>UF Placa</th>
 			</tr>
 		<?php 
 
@@ -323,6 +324,11 @@
 			$placa = $carro->placa;
 			$cidade = $carro->cidade_nome;
 			$estado = $carro->nome_estado;
+
+
+			if(!is_numeric($carro->model)){
+					$modelo = $carro->model;
+				}
 
 
 			//tbl_modelos.mode_nome, tbl_marcas.marc_nome

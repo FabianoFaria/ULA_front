@@ -733,14 +733,21 @@ class Novo_documento extends CI_Controller {
 
         $dataCidades = array();
 
-
+        echo "<option value=' '>Informe a cidade</option>";
+        echo "<option value=' '> </option>";
         foreach ($list_cidades as $cidades) {
             $dataCidades = $cidades;
 
             echo "<option value='".$cidades->id."'>".$cidades->nome."</option>";
         }
+
+        //var_dump($dataCidades);
+
+       // $arrayCidades[] = $dataCidades;
+
+        //$arrayCidades[] = "<option value=' '> </option>";
         
-        return $dataCidades;       
+        return $arrayCidades;       
 
     }
 

@@ -117,7 +117,8 @@ $().ready(function() {
 							    <br>
 							    	<input type="radio" name="qualificacao" value="Ipl"  checked="true"/> IPL<br />
 									<input type="radio" name="qualificacao" value="Reportagem" /> Reportagem<br />
-									<input type="radio" name="qualificacao" value="Operacao" /> Operação
+									<input type="radio" name="qualificacao" value="Operacao" /> Operação<br />
+									<input type="radio" name="qualificacao" value="Outro" /> Outro
 								<div class="error"></div>
 							    
 							    <label for="unidade_seguranca">Unidade de segurança:</label><br/>
