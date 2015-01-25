@@ -50,7 +50,7 @@ $().ready(function() {
 	
 });
 </script>
-<div class="row sem_margin">
+<div class="row sem_margin lista-ipls">
 	
 	<?php
 

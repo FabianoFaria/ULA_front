@@ -54,8 +54,8 @@
 	<h2>Detalhes da apreensão</h2>
 
 	<div class="col-md-12 col-sm-12 col-xs-12">
-		<h3>Qualificação : <?php echo $qualificação; ?></h3>
-		<h3>Registro :<?php echo $IPL; ?></h3>
+		<h3>Documento :<?php echo $IPL; ?></h3>
+		<h3>Qualificação :<?php echo $qualificação; ?></h3>
 		<br>
 
 
