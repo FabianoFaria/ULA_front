@@ -80,17 +80,17 @@
                     <br>
                     <br>
                     <br>
-                    <br>
+                    <br> 
                     <br>
                     <br>
                     <br>
                     <br>
                     <br>
                   <h2 class="centro-relatorio">Relatorio de <?php echo $dataFinal1 ?> á <?php echo $dataFinal2 ?> </h2>
+                  <h2 class="centro-relatorio"><?php echo $estadoDestino;  ?></h2>
                   <br>
                   <br>
                   <br>
-                  <br>
                     <br>
                     <br>
                     <br>
@@ -115,8 +115,7 @@
                     <br>
                     <br>
                     <br>
-                    <br>
-                    <br>
+                    
             </div>
 
           

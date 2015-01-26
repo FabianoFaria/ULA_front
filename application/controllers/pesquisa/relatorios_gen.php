@@ -8,6 +8,7 @@ class Relatorios_gen extends CI_Controller {
         parent::__construct();
 
         $this->load->model('Relatorios_model','relatorio');
+        $this->load->model('Novo_documento_model', 'documentoModel');
         $this->load->model('User_model', 'user');
         $this->user->logged();
 
@@ -18,8 +19,10 @@ class Relatorios_gen extends CI_Controller {
     
     public function index() {
 
+        $data['estados'] = $this->documentoModel->load_estados(); 
+
         $this->load->view('templates/header');
-        $this->load->view('pesquisa/gera_relatorio_view');
+        $this->load->view('pesquisa/gera_relatorio_view', $data);
         $this->load->view('templates/footer');
         
     }
@@ -57,8 +60,10 @@ class Relatorios_gen extends CI_Controller {
 
         $dataGeracao = date("d/m/Y H:i:s ");
 
-        $dataDateI = $this->input->post('dataI');
-        $dataDateF =  $this->input->post('dataF');
+        $dataDateI = $this->input->post('dataI'); 
+        $dataDateF =  $this->input->post('dataF'); 
+        $estadoDest = $this->input->post('estadoDestino');
+        $id_estado_dest = $this->input->post('idEstadoDestino');
 
 
         ////Codigo contendo os dados a serem impressos no documento word...
@@ -80,7 +85,7 @@ class Relatorios_gen extends CI_Controller {
         $dataIni = $dataFinal1;
         $dataFim = $dataFinal2; 
 
-        $dataRelatorio = $this->relatorio->load_documentos($dataDateI ,$dataDateF);
+        $dataRelatorio = $this->relatorio->load_documentos($dataDateI ,$dataDateF, $id_estado_dest);
 
         $dadosArray = array( );
 
@@ -150,20 +155,24 @@ class Relatorios_gen extends CI_Controller {
             array_push($dadosArray , $dataDocumento);
         }
 
-        $dados['totalOcorrencias'] = $this->relatorio->total_ocorrencias($dataDateI ,$dataDateF);
+        $dados['totalOcorrencias'] = $this->relatorio->total_ocorrencias($dataDateI ,$dataDateF, $id_estado_dest);
 
-        $dados['totalVeiculos'] = $this->relatorio->total_veiculos_relatorio($dataDateI ,$dataDateF);
-        $dados['totalDepositos'] = $this->relatorio->total_depositos($dataDateI ,$dataDateF);
-        $dados['totalCaminhao'] = $this->relatorio->total_veiculos_caminhao_relatorio($dataDateI ,$dataDateF);
-        $dados['totalOnibus'] = $this->relatorio->total_veiculos_onibus_relatorio($dataDateI ,$dataDateF);
+        $dados['totalVeiculos'] = $this->relatorio->total_veiculos_relatorio($dataDateI ,$dataDateF, $id_estado_dest);
+        
+        $dados['totalDepositos'] = $this->relatorio->total_depositos($dataDateI ,$dataDateF ,$id_estado_dest);
+        
+        $dados['totalCaminhao'] = $this->relatorio->total_veiculos_caminhao_relatorio($dataDateI ,$dataDateF, $id_estado_dest);
+        
+        $dados['totalOnibus'] = $this->relatorio->total_veiculos_onibus_relatorio($dataDateI ,$dataDateF ,$id_estado_dest);
 
-        $dados['totalDetidos'] = $this->relatorio->total_detidos($dataDateI ,$dataDateF); 
+        $dados['totalDetidos'] = $this->relatorio->total_detidos($dataDateI ,$dataDateF ,$id_estado_dest); 
 
-        $caixasCigarros = $this->relatorio->total_caixa_cigarros($dataDateI ,$dataDateF);
-        $cigarrosWsr = $this->relatorio->total_caixa_cigarros_wrs($dataDateI ,$dataDateF);
+        $caixasCigarros = $this->relatorio->total_caixa_cigarros($dataDateI ,$dataDateF ,$id_estado_dest);
+        $cigarrosWsr = $this->relatorio->total_caixa_cigarros_wrs($dataDateI ,$dataDateF ,$id_estado_dest);
 
         $dados['totalCxCigarros'] = $caixasCigarros[0]->qty + $cigarrosWsr[0]->quantidade_deposito;
 
+        $dados['estadoDestino'] = $estadoDest;
         $dados['relatorioIni'] = $dataDateI; 
         $dados['relatorioFim'] = $dataDateF;
         $dados['conteudo'] = $dadosArray;
@@ -181,6 +190,8 @@ class Relatorios_gen extends CI_Controller {
     {
         $dataIni = $this->input->post('dataInicial');
         $dataFim = $this->input->post('dataFinal');
+
+        $estadoDestino = $this->input->post('destinoCarga');
 
         //Data inicial...
         $dataTemp1 = explode("/", $dataIni);
@@ -216,7 +227,7 @@ string '24/09/2014' (length=10)
        // echo $dataFim;
        //die;
 
-        $dataRelatorio = $this->relatorio->load_documentos($dataIni ,$dataFim);
+        $dataRelatorio = $this->relatorio->load_documentos($dataIni ,$dataFim, $estadoDestino);
 
          //$caixasCigarros = $this->relatorio->total_veiculos_relatorio($dataIni ,$dataFim);
 
@@ -382,6 +393,20 @@ string '24/09/2014' (length=10)
 
             array_push($dadosArray , $dataDocumento);
         }
+
+        $destino = "";
+
+        if($estadoDestino != "")
+        {
+          $destino = $this->relatorio->load_nome_estado_destino($estadoDestino);
+        }
+        else
+        {
+          $destino = "Todos os estados";
+        }
+
+
+        $dados['estadoDestino'] = $destino;
         $dados['dataRI'] = $dataIni;
         $dados['dataRF'] = $dataFim; 
 
@@ -457,7 +482,7 @@ string '24/09/2014' (length=10)
 
         ////Codigo contendo os dados a serem impressos no documento word...
 
-        $dataRelatorio = $this->relatorio->load_documentos($dataDateI ,$dataDateF);
+        $dataRelatorio = $this->relatorio->load_documentos($dataDateI ,$dataDateF, $estadoDestino);
 
         $dadosArray = array( );
 

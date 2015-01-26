@@ -105,12 +105,34 @@ $().ready(function() {
                                 <input id="dataInicial" type="text" name="dataInicial" value=""/>
                                 <div class="error"></div>
 
-
+                                <br>
                                <label for="dataFinal">Data final :</label><br/>
                                 <input id="dataFinal" type="text" name="dataFinal" value=""/>
                                 <div class="error"></div>
+                                <br>
+                                <label for="destinoCarga">Informe o estado destino da apreensão :</label><br/>
+                                    <select name="destinoCarga" id="destinoCarga" onchange="">
+                                        <option value="">Todos</option>
+                                        <?php
+
+                                            foreach ($estados as $estado): {
+                                                                        
+                                                // $arrayE[] = $estado->nome;
+                                        ?>
+
+                                            <option value="<?php echo $estado->id_estado; ?>"><?php echo $estado->nome_estado; ?></option>
+
+                                        <?php
+
+                                            }endforeach;
+
+                                        ?>
+                                    </select>
 
 
+                                <br>
+                                <br>
+                                
                                <input type="submit" name="Visualizar" value="Vizualizar Relatorio" />
                         </form>
 

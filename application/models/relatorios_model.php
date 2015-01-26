@@ -9,13 +9,17 @@ class Relatorios_model extends CI_Model {
 
     /* carregar dados para o relatorio */
 
-    function load_documentos($data1 , $data2)
+    function load_documentos($data1 , $data2, $estado)
     {	
     	//$data1 ="2014-08-01";
     	//$data2 ="2014-08-30";
 
     	$this->db->select('ROW_ID');
     	$where = "tbl_doct.arrest_date BETWEEN '$data1%' AND '$data2%'";
+        if($estado != "")
+        {
+            $this->db->where('tbl_doct.arrest_destination', $estado);
+        }
 		$this->db->where($where);
 		$this->db->where('tbl_doct.status_doct','0');
 		$query = $this->db->get('tbl_doct');
@@ -36,6 +40,14 @@ class Relatorios_model extends CI_Model {
     	//$this->db->where('','');
         //$query = $this->db->get('tbl_doct');
         //return $query->result();
+    }
+
+    function load_nome_estado_destino($estadoDestino)
+    {
+        $this->db->select('*');
+        $this->db->where('tbl_estados.id_estado', $estadoDestino);
+        $query = $this->db->get('tbl_estados');
+        return $query->result();  
     }
 
 
@@ -219,7 +231,7 @@ class Relatorios_model extends CI_Model {
         return $queryDoct->result();
     }
 
-    function total_veiculos_relatorio($inicio, $final)
+    function total_veiculos_relatorio($inicio, $final, $id_estado)
     {
 
         /*
@@ -238,13 +250,17 @@ class Relatorios_model extends CI_Model {
         $this->db->where('tbl_main.CHILD_TBL', 'tbl_vehicle');
         $where = "tbl_doct.arrest_date BETWEEN '$inicio%' AND '$final%'";
         $this->db->where($where);
+        if($id_estado != "")
+            {
+                $this->db->where('tbl_doct.arrest_destination', $id_estado);
+            }
         $this->db->where('tbl_doct.status_doct','0');
         $query = $this->db->get('tbl_doct');
         return $query->num_rows();  
 
     }
 
-    function total_veiculos_caminhao_relatorio($inicio, $final)
+    function total_veiculos_caminhao_relatorio($inicio, $final, $id_estado)
     {
         $this->db->select('*');
         $this->db->join('tbl_main','tbl_doct.ROW_ID = tbl_main.parent_id', 'left');
@@ -253,13 +269,17 @@ class Relatorios_model extends CI_Model {
         $this->db->where('tbl_vehicle.category', '2');
         $where = "tbl_doct.arrest_date BETWEEN '$inicio%' AND '$final%'";
         $this->db->where($where);
+        if($id_estado != "")
+        {
+            $this->db->where('tbl_doct.arrest_destination', $id_estado);
+        }
         $this->db->where('tbl_doct.status_doct','0');
         $query = $this->db->get('tbl_doct');
         return $query->num_rows();  
 
     }
 
-    function total_veiculos_onibus_relatorio($inicio, $final)
+    function total_veiculos_onibus_relatorio($inicio, $final, $id_estado)
     {
         $this->db->select('*');
         $this->db->join('tbl_main','tbl_doct.ROW_ID = tbl_main.parent_id', 'left');
@@ -268,13 +288,17 @@ class Relatorios_model extends CI_Model {
         $this->db->where('tbl_vehicle.category', '5');
         $where = "tbl_doct.arrest_date BETWEEN '$inicio%' AND '$final%'";
         $this->db->where($where);
+        if($id_estado != "")
+        {
+            $this->db->where('tbl_doct.arrest_destination', $id_estado);
+        }
         $this->db->where('tbl_doct.status_doct','0');
         $query = $this->db->get('tbl_doct');
         return $query->num_rows();  
 
     }
 
-    function total_caixa_cigarros($inicio, $final)
+    function total_caixa_cigarros($inicio, $final, $id_estado)
     {
         //$this->db->select('*');
         $this->db->select_sum('tbl_haul.qty');
@@ -285,13 +309,17 @@ class Relatorios_model extends CI_Model {
         $this->db->where('tbl_haul.unit', '7');
         $where = "tbl_doct.arrest_date BETWEEN '$inicio%' AND '$final%'";
         $this->db->where($where);
+        if($id_estado != "")
+        {
+            $this->db->where('tbl_doct.arrest_destination', $id_estado);
+        }
         $this->db->where('tbl_doct.status_doct','0');
         $query = $this->db->get('tbl_doct');
         return $query->result();
 
     }
 
-    function total_caixa_cigarros_wrs($inicio, $final)
+    function total_caixa_cigarros_wrs($inicio, $final, $id_estado)
     {
         //$this->db->select('*');
         $this->db->select_sum('tbl_wrs.quantidade_deposito');
@@ -302,25 +330,33 @@ class Relatorios_model extends CI_Model {
         $this->db->where('tbl_wrs.unidade_produto_deposito', '7');
         $where = "tbl_doct.arrest_date BETWEEN '$inicio%' AND '$final%'";
         $this->db->where($where);
+        if($id_estado != "")
+        {
+            $this->db->where('tbl_doct.arrest_destination', $id_estado);
+        }
         $this->db->where('tbl_doct.status_doct','0');
         $query = $this->db->get('tbl_doct');
         return $query->result();
 
     }
 
-    function total_depositos($inicio, $final)
+    function total_depositos($inicio, $final, $id_estado)
     {
         $this->db->select('*');
         $this->db->join('tbl_main','tbl_doct.ROW_ID = tbl_main.parent_id', 'left');
         $this->db->where('tbl_main.CHILD_TBL', 'tbl_wrs');
         $where = "tbl_doct.arrest_date BETWEEN '$inicio%' AND '$final%'";
         $this->db->where($where);
+        if($id_estado != "")
+        {
+            $this->db->where('tbl_doct.arrest_destination', $id_estado);
+        }
         $this->db->where('tbl_doct.status_doct','0');
         $query = $this->db->get('tbl_doct');
         return $query->num_rows();
     }
 
-    function total_detidos($inicio, $final)
+    function total_detidos($inicio, $final, $id_estado)
     {
         $this->db->select('*');
         $this->db->join('tbl_main','tbl_doct.ROW_ID = tbl_main.parent_id', 'left');
@@ -328,19 +364,27 @@ class Relatorios_model extends CI_Model {
         $this->db->join('tbl_contact','tbl_contact.ID_contact = tbl_main.CHILD_ID', 'left');
         $where = "tbl_doct.arrest_date BETWEEN '$inicio%' AND '$final%'";
         $this->db->where($where);
+        if($id_estado != "")
+        {
+            $this->db->where('tbl_doct.arrest_destination', $id_estado);
+        }
         $this->db->where('tbl_doct.status_doct','0');
         $this->db->where('tbl_contact.name !=',' ');
         $query = $this->db->get('tbl_doct');
         return $query->num_rows();
     }
 
-    function total_ocorrencias($inicio, $final)
+    function total_ocorrencias($inicio, $final, $id_estado)
     {
         $this->db->select('*');
         $this->db->join('tbl_main','tbl_doct.ROW_ID = tbl_main.parent_id', 'left');
         $this->db->where('tbl_main.CHILD_TBL', null);
         $where = "tbl_doct.arrest_date BETWEEN '$inicio%' AND '$final%'";
         $this->db->where($where);
+        if($id_estado != "")
+        {
+            $this->db->where('tbl_doct.arrest_destination', $id_estado);
+        }
         $this->db->where('tbl_doct.status_doct','0');
         $query = $this->db->get('tbl_doct');
         return $query->num_rows();

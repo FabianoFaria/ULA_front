@@ -1,0 +1,41 @@
+CREATE TABLE CLIENTE (
+
+codClie 	int NOT NULL AUTO_INCREMENT,
+nomeClie 	varchar(255),
+mãe 		varchar(255),
+enderecoClie 	varchar(255),
+salario		float,
+cpfClie		varchar(11),
+CHECK (salario >600),
+UNIQUE (rg),
+UNIQUE (cpfClie),
+PRIMARY KEY (codClie)
+);
+
+CREATE TABLE TIPO (
+
+codTipo 	int NOT NULL AUTO_INCREMENT,
+nomeTipo	varchar(255),
+PRIMARY KEY (codTipo)
+);
+
+CREATE TABLE PRODUTO (
+
+codProd 	int NOT NULL AUTO_INCREMENT,
+codTipo		int,
+nomeProd	varchar(255),
+valorProd	float,
+PRIMARY KEY (codProd),
+FOREIGN KEY (codTipo) REFERENCES TIPO (codTipo)
+);
+
+CREATE TABLE COMPRA (
+
+codCliente	int,
+codProduto	int,
+dataCompra	date NOT NULL,
+qtdeCompra	int,
+PRIMARY KEY (dataCompra),
+FOREIGN KEY (codCliente) REFERENCES CLIENTE(codClie),
+FOREIGN KEY (codProduto) REFERENCES PRODUTO(codProd)
+);

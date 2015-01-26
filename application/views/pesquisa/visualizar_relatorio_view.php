@@ -239,11 +239,32 @@
     } //Fim do foreach conteudo as ocorrencia....
 
 
+
 ?>
+                <?php
+
+
+                      //$dataDocumento['imagens'] 
+                                
+                    //var_dump($imagens);
+
+
+                 if(is_string ($estadoDestino)){
+                        $destino = $estadoDestino;
+                        $idDestino = "";
+                    }else{
+                        $destino = $estadoDestino[0]->nome_estado;
+                        $idDestino = $estadoDestino[0]->id_estado;
+                    }
+
+                   //var_dump($estadoDestino);
+                ?>
 
                 <form id="gerar_doc" action="<?php echo base_url() ?>index.php/pesquisa/relatorios_gen/gera_word2" method="post">
                     <input type="hidden" name="dataI" value="<?php echo $dataRI; ?>">
                     <input type="hidden" name="dataF" value="<?php echo $dataRF; ?>">
+                    <input type="hidden" name="idEstadoDestino" value="<?php echo $idDestino; ?>">
+                    <input type="hidden" name="estadoDestino" value="<?php echo $destino; ?>">
                     <input type="submit" value="gerar . DOC">
                 </form>
 

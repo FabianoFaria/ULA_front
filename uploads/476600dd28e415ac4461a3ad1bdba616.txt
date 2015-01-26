@@ -1,0 +1,36 @@
+v18a:
+- Fixed a bug with liquid surfaces not working at all.
+- Added descriptions to the new dificulty levels.
+
+
+v18:
+- New dificulty balance that makes things easier on hard megawads such as Scytche 2 or Speed of Doom. A balance similiar to the one on older versions is avaliable with new dificulty levels.
+- Improved fire deaths for zombies.
+- Fixed a bug with zombies and imps geting stuck when kicked over a solid object.
+- Many new fatalities.
+- New Plasma deaths.
+- The volume of many sounds have been reduced.
+- Now you can kick crawling zombies in the face. You get cruelty bonuses for every kick.
+- The only way to curbstomp a crawling zombie now is to kick them with berserk pack.
+- Greatly improved enemy AI. Now many enemies can try to evade some of the players attacks.
+- New and improved blood decals.
+- Added an alt attack for imps.
+- Fixed a bug allowing players to fire weapons or move while performing a fatality or a curbstomp.
+- Added missing beheaded heads for many enemies.
+- Lost Soul AI completely remade.
+- Fixed some bugs with some terrain surfaces.
+- Fixed a bug causing deaths to don't be counted when a player stealth killed a zombie or imp with a necksnap.
+- Fixed lack of sounds on Chainsaw pickup, also fixed its idle sound.
+- Fixed a bug causing the player to be imune to Demon's attacks when standing on a corner.
+- Restored Player's speed to Vanilla Doom's standard.
+- Fixed bodies floating in the air when killed over a water surface.
+- Greatly improved the Assault Rifle sprites, and now the ADS mode can use autofire if the fire button is pressed, or can fired faster it the player press the fire button as fast as he can.
+- Barons and Hell Knights can be kicked in the nuts.
+- Edited a line in the Railgun's code which I suspect that was causing the bug of unable to cycle weapons when it gets out of ammo.
+- Improved rifle's reload animation.
+- Reduced and improved the trails of some projectiles.
+- Mancubus Cannon's fireballs will light the area on fire, damaging any nearby targets over some time.
+- Reverted the Nazis's AI back to v016 until I manage to fix it's bugs.
+- Removed bullet splash damage.
+- Many minor fixes and new stuff that I forgot to mention.
+- Now it's only one file for both sourceports. Still there is a crash after leaving the game on GZDoom, but it's not important.

@@ -649,18 +649,20 @@ class Novo_documento extends CI_Controller {
 
                 $file_to_upload = $this->input->post('file_send');
 
+                var_dump($file_to_upload);
+
                // 'upload_path'     => dirname($_SERVER["SCRIPT_FILENAME"])."/files/",
                //           'upload_url'      => base_url()."files/",
 
-                $config['upload_path'] = dirname($_SERVER["SCRIPT_FILENAME"])."/uploads";
+                $config['upload_path'] = dirname($_SERVER["SCRIPT_FILENAME"])."/uploads"; 
                 $config['upload_url'] = base_url()."/uploads";
-                $config['allowed_types'] = 'gif|jpg|png|pdf|doc|docx|txt|zip|tar|';
-                $config['max_size'] = '100000';
+                //$config['allowed_types'] = 'txt|pdf|xls|xlsl|doc|docx|'; 
+                $config['allowed_types'] = '*'; 
                 $config['encrypt_name'] = true;
 
                 $this->upload->initialize($config);
 
-                $this->load->library('upload', $this->config);
+                //$this->load->library('upload', $config);
                 if($this->upload->do_upload('file_send'))
                 {
                     echo "file upload success";
@@ -707,7 +709,7 @@ class Novo_documento extends CI_Controller {
 
                     if($Row_File != 0)
                     {
-                        redirect('/detalhes_documento/getTheRow/'.$this->input->post('row_id').'');
+                        redirect('/detalhes_documento/getTheRow/'.$row_id .'');
                     }
 
 
@@ -716,9 +718,13 @@ class Novo_documento extends CI_Controller {
                 {
                     echo "file upload failed";
 
-                    redirect( base_url("/index.php/continuar_documento/NotasAnexos/".$row_id.""));
+                    $error = array('error' => $this->upload->display_errors());
 
-                     echo display_errors();
+                    var_dump($error);
+
+                  //  redirect( base_url("/index.php/continuar_documento/NotasAnexos/".$row_id.""));
+
+                    // echo display_errors();
                 }
 
 
