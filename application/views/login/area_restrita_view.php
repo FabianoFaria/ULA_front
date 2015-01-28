@@ -16,7 +16,7 @@
                                 
                                 <li><a href="<?php echo base_url(); ?>index.php/pesquisar_documento">Pesquisar cadastrados</a></li>
                                 <li><a href="<?php echo base_url(); ?>index.php/pesquisa_avancada">Efetuar pesquisa de documentos</a></li>
-                                <li><a href="<?php echo base_url(); ?>index.php/gerarRelatorios">Gerar relatorios</a></li>
+                                <li><a href="<?php echo base_url(); ?>index.php/gerarRelatorios">Gerar relatório</a></li>
                                 <!-- conforme for avançando eu adiciono novos itens -->
 
                                 <br>
@@ -31,12 +31,12 @@
                        
                     </div> <!-- fim da classe lista-menu -->
                     <div class="col-md-10 col-sm-10 col-xs-10 lista-ipls table-responsive">
-                        <h3>Ultimos documentos cadastrados</h3>
+                        <h3>Últimos documentos cadastrados</h3>
                         <table class="table table-striped">
                           <thead>
                             <tr>
                               <th>Ação</th>
-                              <th>Nome/numero IPL</th>
+                              <th>Nome/número documento</th>
                               <th>Origem</th>
                               <th>Data</th>
                               

@@ -59,7 +59,7 @@
                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
 
                               <li role="presentation">
-                                  <a href="<?php echo base_url("/index.php/login/login/usuariosCadastrados"); ?>"><i class="fa fa-list"></i> Usuarios cadastrados </a>
+                                  <a href="<?php echo base_url("/index.php/login/login/usuariosCadastrados"); ?>"><i class="fa fa-list"></i> Usuário cadastrados </a>
                               </li>
                            </ul>
                         </li>
@@ -76,7 +76,7 @@
 
 
                                 <li role="presentation">
-                                  <a href="<?php echo base_url("/index.php/login/login/cadastrarUsuario"); ?>"><i class="fa fa-user"></i> Usuario </a>
+                                  <a href="<?php echo base_url("/index.php/login/login/cadastrarUsuario"); ?>"><i class="fa fa-user"></i> Usuário </a>
                                 </li>
                                  <li role="presentation">
                                   <a href="<?php echo base_url("/index.php/login/cadastro_conteudo/tabacaleras_cadastradas"); ?>"><i class="fa fa-clipboard"></i> Tabacalera </a>

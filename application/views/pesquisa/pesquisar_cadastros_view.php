@@ -71,7 +71,7 @@
 
                 	<h3></h3>
 
-                	<p>Pesquisa de pessoas/CPF/rg/passaporte/mâe/pai</p>
+                	<p>Pesquisa de pessoas / CPF / rg / passaporte / mãe / pai</p>
                 	<form>
                 		<input id="palavra_chave" type="text"/> 
                 		<input type="button" value="buscar" name="efetuar_busca" onclick="mostraBuscaPessoas(palavra_chave.value)">

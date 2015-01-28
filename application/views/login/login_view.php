@@ -23,10 +23,10 @@
             <?php
             echo form_open();
 
-            echo form_label('Nome de usuario', 'username');
+            echo form_label('Nome de usuário', 'username');
             echo form_input('username', '');
 
-            echo form_label('Senha de usuario', 'password');
+            echo form_label('Senha de usuário', 'password');
             echo form_password('password', '');
 
             echo form_submit('submit', 'Entrar no sistema');

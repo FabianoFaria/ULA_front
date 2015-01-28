@@ -294,7 +294,7 @@ $().ready(function() {
 				<input type="text" name="endereco" id="endereco" value="<?php echo $logradouro; ?>"/>
 			<div class="error"><?php echo form_error('endereco'); ?></div>
 
-			<label for="numero_addr">Numero:</label><br/>
+			<label for="numero_addr">Número:</label><br/>
 			<input type="text" name="numero_addr" value="<?php echo $numero; ?>"/>
 			<div class="error"><?php echo form_error('numero_addr'); ?></div>
 

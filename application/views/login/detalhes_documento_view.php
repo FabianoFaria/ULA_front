@@ -77,7 +77,7 @@
 					<td><?php echo $qualificação ?></td><td><?php echo $unidade_de_segurança ?></td><td><?php echo $nome_operacao ?></td><td><?php echo $dataF ?></td><td><?php echo $linkOp; ?></td>
 				</tr>
 				<tr>
-					<th>Resumo :</th><th>Destino da carga:</th><th>Criado por :</th><th>Ultima modificação</th><th>Modificado por</th>
+					<th>Resumo :</th><th>Destino da carga:</th><th>Criado por :</th><th>Última modificação</th><th>Modificado por</th>
 				</tr>
 				<tr>
 					<td><?php echo $resumo; ?></td><td><?php echo $destino; ?></td><td><?php echo $created_by; ?></td><td><?php echo $last_update; ?></td><td><?php echo $Update_by; ?></td>
@@ -151,7 +151,7 @@
 
 			<table class="table endereco_Doct">
 				<tr>
-					<th>Endereço :</th><th>Numero :</th><th>Complemento:</th><th>Bairro:</th><th>Cidade:</th><th>Estado :</th><th>CEP :</th>
+					<th>Endereço :</th><th>Número :</th><th>Complemento:</th><th>Bairro:</th><th>Cidade:</th><th>Estado :</th><th>CEP :</th>
 				</tr>
 				<tr>
 					<td><?php echo $logradouro; ?></td><td><?php echo $numero; ?></td><td><?php echo $complemento; ?></td><td><?php echo $bairro; ?></td><td><?php echo $cidade; ?></td><td><?php echo $estado; ?></td><td><?php echo $CEP; ?></td>
@@ -293,7 +293,7 @@
 
 
 	<div class="col-md-12 col-sm-12 col-xs-12">
-		<h3>Automoveis envolvidos</h3>
+		<h3>Automóveis envolvidos</h3>
 
 		<?php
 			//trecho para habilitar ou não a edição de conteudo
@@ -367,7 +367,7 @@
 
 	
 	<div class="col-md-12 col-sm-12 col-xs-12">
-		<h3>Armazem/Casa/Locais da aprensão</h3>
+		<h3>Armazéns/Casas/Locais da aprensão</h3>
 
 
 		<?php

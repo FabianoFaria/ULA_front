@@ -176,7 +176,7 @@ $().ready(function() {
 
 
 	?>
-	<h2>Cadastro de locais/armazens/casas : <a href="<?php echo base_url("/index.php/detalhes_documento/getTheRow/".$id_Row.""); ?>"><?php echo $Ipl; ?></a></h2>
+	<h2>Cadastro de locais/armazéns/casas : <a href="<?php echo base_url("/index.php/detalhes_documento/getTheRow/".$id_Row.""); ?>"><?php echo $Ipl; ?></a></h2>
 
 	<a href="<?php echo base_url("/index.php/detalhes_documento/getTheRow/".$id_Row.""); ?>">Cancelar</a>
 	 <div class="col-md-12 col-sm-12 col-xs-12 lista-menu well">
@@ -185,7 +185,7 @@ $().ready(function() {
 	   	<?php echo form_open('login/novo_documento/cadastrar_deposito', 'id="form-new_wrs-ipl"'); ?>
 
 
-	   	<label for="produto_wrs">Produto do deposito :</label><br/> 
+	   	<label for="produto_wrs">Produto do depósito :</label><br/> 
 			<select name="produto_wrs" id="produto_wrs" >
 				<?php
 					if($id_produto != null)
@@ -308,11 +308,11 @@ $().ready(function() {
 
 	   	<hr>
 
-		<label for="endereco">Endereço do deposito :</label><br/> 
+		<label for="endereco">Endereço do depósito :</label><br/> 
 			<input type="text" name="endereco" id="endereco" value="<?php echo $logradouro; ?>"/>
 		<div class="error"></div>
 
-		<label for="numero_wrs">Numero :</label><br/>
+		<label for="numero_wrs">Número :</label><br/>
 			<input type="text" id="numero_wrs" name="numero_wrs" value="<?php echo $numero; ?>"/>
 		<div class="error"></div>
 
@@ -358,7 +358,7 @@ $().ready(function() {
 			</select>
 			<div class="error"><?php echo form_error('estado_apr'); ?></div>
 
-			<label for="cidade_apr">Cidade da ocorrencia:</label><br/>
+			<label for="cidade_apr">Cidade da ocorrência:</label><br/>
 				<select id="cidade_apr" name="cidade_apr">
 					<?php
 						if($id_cidade != null)

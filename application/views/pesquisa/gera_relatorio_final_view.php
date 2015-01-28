@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <html>
 <head>
     <title>Sistema de registro de apreensão</title>
@@ -86,7 +85,7 @@
                     <br>
                     <br>
                     <br>
-                  <h2 class="centro-relatorio">Relatorio de <?php echo $dataFinal1 ?> á <?php echo $dataFinal2 ?> </h2>
+                  <h2 class="centro-relatorio">Relatório de <?php echo $dataFinal1 ?> á <?php echo $dataFinal2 ?> </h2>
                   <h2 class="centro-relatorio"><?php echo $estadoDestino;  ?></h2>
                   <br>
                   <br>
@@ -148,8 +147,9 @@
                     <br>
 
                     <p>Em <?php echo strftime( '%d de %B de %Y', strtotime( $dataOcorrencia ) ); ?></p>
-                    <p>Auto de Apresentação e Apreensão <?php echo $conteudoPassado['documento'][0]->IPL; ?></p>
-                    <p>IPL - <?php echo $conteudoPassado['documento'][0]->IPL.' - '. $conteudoPassado['documento'][0]->forca_seguranca; ?></p>
+                    <p>Auto de apresentação e apreensão <?php echo $conteudoPassado['documento'][0]->IPL; ?></p>
+                    <p>Unidade de segurança - <?php echo  $conteudoPassado['documento'][0]->forca_seguranca; ?></p>
+                    <p>Qualificação - <?php echo $conteudoPassado['documento'][0]->qualification; ?></p>
                 <?php
                    
                     if($conteudoPassado['documento'][0]->link_arrest != null)
@@ -162,7 +162,7 @@
                     {
                     ?>
                       <p>Nome da operaçâo :  <?php echo ucfirst( mb_strtolower($conteudoPassado['documento'][0]->operation)); ?> </p>
-                      <p>Resumo da operacao : <?php echo ucfirst( mb_strtolower($conteudoPassado['documento'][0]->summary)); ?> </p>
+                      <p>Resumo da operação : <?php echo ucfirst( mb_strtolower($conteudoPassado['documento'][0]->summary)); ?> </p>
                    <?php
                     }
 

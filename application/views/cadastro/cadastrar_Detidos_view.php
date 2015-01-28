@@ -573,7 +573,8 @@ function mostraCidadesB(str) {
 		<input type="text" name="nomeD" id="nomeD" value="<?php echo $name; ?>"/>
 		<div class="error"><?php echo form_error('nomeD'); ?></div>
 
-		<label for="genero">Nome do detido:</label><br/>
+		<br/>
+		<label for="genero">Género:</label><br/>
 		<input id="genF" type="radio" name="genero" value="F" <?php if($gernre == "F"){echo "checked='true'";} ?> /> Feminino<br />
 		<input id="genM" type="radio" name="genero" value="M" <?php if($gernre == "M"){echo "checked='true'";} ?> /> Masculino<br />
 		<div class="error"><?php echo form_error('nomeD'); ?></div>
@@ -598,7 +599,7 @@ function mostraCidadesB(str) {
 		<input type="text" id="nome_pai" name="nome_pai" value="<?php echo $father; ?>"/>
 		<div class="error"><?php echo form_error('nome_pai'); ?></div>
 
-		<label for="nome_mae">Nome do mâe :</label><br/>
+		<label for="nome_mae">Nome do mãe :</label><br/>
 		<input type="text" id="nome_mae" name="nome_mae" value="<?php echo $mother; ?>"/>
 		<div class="error"><?php echo form_error('nome_mae'); ?></div>
 
@@ -718,7 +719,7 @@ function mostraCidadesB(str) {
 		<input type="text" name="endereco_contato" id="endereco_contato" value="<?php echo $endereco_det; ?>"/>
 		<div class="error"></div>
 
-		<label for="numero_addr_contato">Numero:</label><br/>
+		<label for="numero_addr_contato">Número:</label><br/>
 		<input type="text" id="numero_addr_contato" name="numero_addr_contato" value="<?php  echo $numero_det; ?>"/>
 		<div class="error"></div>
 

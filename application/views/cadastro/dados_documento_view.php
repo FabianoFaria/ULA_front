@@ -136,6 +136,7 @@ $().ready(function() {
 				<input type="radio" name="qualificacao" value="Outro" <?php if($doc->qualification == "Outro"){echo "checked='true'";} ?> /> Outro
 			<div class="error"><?php echo form_error('qualificacao'); ?></div>
 
+			<br/>
 			<label for="unidade_seguranca">Unidade de segurança:</label><br/>
 				<select name="unidade_seguranca" id="listMarcas" onchange="mostraModelos2(this.value)">
 					<?php
@@ -161,6 +162,7 @@ $().ready(function() {
 				</select>
 			<div class="error"><?php echo form_error('unidade_seguranca'); ?></div>
 
+			<br/>
 			<label for="dataOps">Data da apreensão:</label><br/>
 			<input id="datepicker" type="text" name="dataOps" value="<?php echo  $dataF;  ?> "/>
 			<div class="error"><?php echo form_error('dataOps'); ?></div>

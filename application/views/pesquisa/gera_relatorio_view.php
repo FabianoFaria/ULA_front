@@ -90,7 +90,7 @@ $().ready(function() {
         </script>
         <div class="col-md-12 col-sm-12 col-xs-12 main-menu">
         	<div class="row altMin">
-                <h2> Gerar relatorios </h2>
+                <h2> Gerar relatórios </h2>
 
                 
                 <div class="col-md-4 col-sm-4 col-xs-4 formulario_pesquisa">

@@ -240,7 +240,7 @@ function mostraModelos2(str) {
 								}
 							</script>
 
-			<h2>Cadastro de automoveis :<a href="<?php echo base_url("/index.php/detalhes_documento/getTheRow/".$id_Row.""); ?>"><?php echo $Ipl; ?></a> </h2>
+			<h2>Cadastro de automóveis :<a href="<?php echo base_url("/index.php/detalhes_documento/getTheRow/".$id_Row.""); ?>"><?php echo $Ipl; ?></a> </h2>
 
 			<a href="<?php echo base_url("/index.php/detalhes_documento/getTheRow/".$id_Row.""); ?>">Cancelar</a>
 			<br>
@@ -252,7 +252,7 @@ function mostraModelos2(str) {
 			 	  <!-- abre o formulário de cadastro -->
 			   <?php echo form_open('login/novo_documento/cadatrar_veiculo', 'id="form-new-ipl"'); ?>
 
-				<label for="cat_veiculo">Categoria do veiculo :</label><br/>
+				<label for="cat_veiculo">Categoria do veículo :</label><br/>
 					<select name="cat_veiculo" onchange="mostraMarcas2(this.value)">
 
 						<?php
@@ -266,7 +266,7 @@ function mostraModelos2(str) {
 
 							}else{
 						?>
-							<option value="" selected="true">Selecione o tipo de veiculo</option>
+							<option value="" selected="true">Selecione o tipo de veículo</option>
 						<?php
 							}
 						?>
@@ -286,7 +286,7 @@ function mostraModelos2(str) {
 					</select>
 				<div class="error"><?php echo form_error('cat_veiculo'); ?></div>
 
-				<label for="mark_veiculo">Marca do veiculo:</label><br/>
+				<label for="mark_veiculo">Marca do veículo:</label><br/>
 					<select name="mark_veiculo" id="mark_veiculo" onchange="mostraModelos2(this.value)">
 						<?php
 							if($id_marca != null)
@@ -306,7 +306,7 @@ function mostraModelos2(str) {
 							}//fim do if id_marca != null
 							else{
 						?>
-							<option value="">selecione a marca do veiculo</option>
+							<option value="">selecione a marca do veículo</option>
 						<?php
 							}
 						?>
@@ -314,7 +314,7 @@ function mostraModelos2(str) {
 					</select>
 				<div class="error"></div>
 
-				<label for="mod_veiculo">Modelo veiculo:</label><br/>
+				<label for="mod_veiculo">Modelo veículo:</label><br/>
 					<!-- <select name="mod_veiculo" id="mod_veiculo" > -->
 						<?php
 						//	if($id_modelo != null)
@@ -344,7 +344,7 @@ function mostraModelos2(str) {
 				<input type="text" name="mod_veiculo" value="<?php echo $nome_modelo; ?>"/>
 				<div class="error"></div>
 
-				<label for="cor_veiculo">Cor do veiculo: </label><br/>
+				<label for="cor_veiculo">Cor do veículo: </label><br/>
 				<input type="text" name="cor_veiculo" value="<?php echo $cor_veio; ?>"/>		
 				<div class="error"></div>
 

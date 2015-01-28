@@ -109,7 +109,7 @@ $().ready(function() {
 	                	  <!-- abre o formulário de cadastro -->
 							<form id="form-new-ipl" action="novo_documento/cadastrarProtocolo" method="post">
 
-							    <label for="Ipl_manual">IPL:</label><br/>
+							    <label for="Ipl_manual">Nome do documento:</label><br/>
 							    <input type="text" name="Ipl_manual" id="Ipl_manual" value=" "/>
 							    <div class="error"></div>
 
@@ -121,6 +121,8 @@ $().ready(function() {
 									<input type="radio" name="qualificacao" value="Outro" /> Outro
 								<div class="error"></div>
 							    
+							    <br/>
+
 							    <label for="unidade_seguranca">Unidade de segurança:</label><br/>
 							    	<select name="unidade_seguranca" id="unidade_seguranca" onchange="">
 										<option value="" selected="true">selecione uma unidade de segurança</option>
