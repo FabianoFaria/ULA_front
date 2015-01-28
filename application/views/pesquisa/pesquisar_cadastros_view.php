@@ -71,13 +71,13 @@
 
                 	<h3></h3>
 
-                	<p>Pesquisa de pessoas / CPF / rg / passaporte / mãe / pai</p>
+                	<p>Pesquisa de pessoas por nome / CPF / rg / passaporte / mãe / pai</p>
                 	<form>
                 		<input id="palavra_chave" type="text"/> 
                 		<input type="button" value="buscar" name="efetuar_busca" onclick="mostraBuscaPessoas(palavra_chave.value)">
                 	</form>
 
-                	<p>Pesquisa de veiculos/placa/chassi/renavan</p>
+                	<p>Pesquisa de veiculos por placa/chassi/renavan</p>
                 	<form>
                 		<input id="palavra_chave" type="text"/> 
                 		<input type="button" value="buscar" name="efetuar_busca" onclick="mostraBuscaVeiculos(palavra_chave.value)">

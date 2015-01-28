@@ -69,7 +69,7 @@ class Pesquisa_avancada extends CI_Controller {
 
         $dataCidades = array();
 
-        echo "<tr> <th> Nome do detido </th><th>RG</th><th>CPF</th><th>Data nascimento</th>  </tr>  <tbody id='listResultadosRow'>";
+        echo "<tr> <th> Nome do detido </th><th>RG</th><th>CPF</th><th>Data nascimento</th> <th>Documentos</th>  </tr>  <tbody id='listResultadosRow'>";
 
         foreach ($list_pessoas as $documentos) {
             //$dataCidades = $cidades;
@@ -82,7 +82,7 @@ class Pesquisa_avancada extends CI_Controller {
             $dataF = $day."/".$month."/".$year;
 
 
-            echo "<tr> <td>  ".$documentos->name." </td><td>  ".$documentos->rg." </td><td> ".$documentos->CPF."  </td><td> ".$dataF." </td>   </tr>";
+            echo "<tr> <td>  ".$documentos->name." </td><td>  ".$documentos->rg." </td><td> ".$documentos->CPF."  </td><td> ".$dataF." </td> <td> ".$documentos->ID_contact."  </td>   </tr>";
         }
 
         echo "</tbody>";
@@ -98,12 +98,12 @@ class Pesquisa_avancada extends CI_Controller {
 
         $dataCidades = array();
 
-        echo "<tr> <th>Marca </th><th>modelo</th><th>placa</th><th> UF </th>  </tr>  <tbody id='listResultadosRow'>";
+        echo "<tr> <th>Marca </th><th>modelo</th><th>placa</th><th> UF </th> <th> Documento </th> </tr>  <tbody id='listResultadosRow'>";
 
         foreach ($list_veiculos as $veiculos) {
             //$dataCidades = $cidades;
 
-            echo "<tr> <td> ".$veiculos->marc_nome."</td><td> ".$veiculos->mode_nome."</td><td> ".$veiculos->placa."</td><td> ".$veiculos->uf."</td>   </tr>";
+            echo "<tr> <td> ".$veiculos->marc_nome."</td><td> ".$veiculos->mode_nome."</td><td> ".$veiculos->placa."</td><td> ".$veiculos->uf."</td> <td> ".$veiculos->uf."</td> ".$veiculos->ID_vehicle."</tr>";
         }
 
         echo "</tbody>";
@@ -119,7 +119,7 @@ class Pesquisa_avancada extends CI_Controller {
 
         $dataCidades = array();
 
-        echo "<tr> <th>Logradouro </th><th>Cidade</th><th>UF</th><th> CEP </th>  </tr>  <tbody id='listResultadosRow'>";
+        echo "<tr> <th>Logradouro </th><th>Cidade</th><th>UF</th><th> CEP </th> <th> Documentos </th>  </tr>  <tbody id='listResultadosRow'>";
 
         foreach ($list_enderecos as $enderecos) {
             //$dataCidades = $cidades;
@@ -132,7 +132,7 @@ class Pesquisa_avancada extends CI_Controller {
             //$dataF = $day."/".$month."/".$year;
 
 
-            echo "<tr> <td>".$enderecos->address."</td><td>".$enderecos->nome."</td><td>".$enderecos->uf."</td><td>".$enderecos->zipcode."</td>   </tr>";
+            echo "<tr> <td>".$enderecos->address."</td><td>".$enderecos->nome."</td><td>".$enderecos->uf."</td><td>".$enderecos->zipcode."</td> <td>".$enderecos->ID_addr."</td>   </tr>";
         }
 
         echo "</tbody>";

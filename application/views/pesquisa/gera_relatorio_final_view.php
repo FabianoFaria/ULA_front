@@ -146,6 +146,8 @@
                     <hr>
                     <br>
 
+                    <h3></h3>
+
                     <p>Em <?php echo strftime( '%d de %B de %Y', strtotime( $dataOcorrencia ) ); ?></p>
                     <p>Auto de apresentação e apreensão <?php echo $conteudoPassado['documento'][0]->IPL; ?></p>
                     <p>Unidade de segurança - <?php echo  $conteudoPassado['documento'][0]->forca_seguranca; ?></p>
@@ -176,14 +178,16 @@
                     ///////***  Fim dos dados do documento /////////////
 
                     ?>
-                    <h3>Nesta data foram aprendidos :</h3>
+                    
+
+                    ////////////////////////////////////////////////////
 
                     <?php
 
                     ////*** Dados dos veiculos apreendidos ///////
                     if(count($conteudoPassado['veiculos']) > 0){
                       ?>
-                      <h3>Os seguintes veiculos : </h3>
+                      <h3>Os seguintes veículos foram apreendidos : </h3>
                       <?php
                         for($i = 0; $i < count($conteudoPassado['veiculos']) ; $i++ ){
 
@@ -268,7 +272,7 @@
                               }
 
                         ?>
-                            <p>Veiculo  : <?php echo $veiculoNome.' '.$veiculoModelo.' '. $veiculoCor .' '.$veiculoPlaca.' '.$veiculoPlacaEx.' '.$veiculoPlacaEx2.' '.$veiculoChassi.' '.$veiculoCidade.''.$veiculoEstado; ?></p>
+                            <p>Veículo  : <?php echo $veiculoNome.' '.$veiculoModelo.' '. $veiculoCor .' '.$veiculoPlaca.' '.$veiculoPlacaEx.' '.$veiculoPlacaEx2.' '.$veiculoChassi.' '.$veiculoCidade.''.$veiculoEstado; ?></p>
                         <?php
 
 
@@ -510,7 +514,7 @@
 
                         if($conteudoPassado['endereco'][$i]->complement != '')
                         {
-                          $complementEnd = " com a referencia ".ucfirst( mb_strtolower($conteudoPassado['endereco'][$i]->complement));
+                          $complementEnd = " com a referência ".ucfirst( mb_strtolower($conteudoPassado['endereco'][$i]->complement));
                         }else{
                           $complementEnd = "";
                         }
@@ -560,14 +564,14 @@
 
                         if($conteudoPassado['endereco_deposito'][0]->nunber != '')
                         {
-                          $numeroDept = "numero ".$conteudoPassado['endereco_deposito'][0]->nunber;
+                          $numeroDept = "número ".$conteudoPassado['endereco_deposito'][0]->nunber;
                         }else{
                           $numeroDept = "";
                         }
 
                         if($conteudoPassado['endereco_deposito'][0]->complement != '')
                         {
-                          $complementDept = " com a referencia ".ucfirst( mb_strtolower($conteudoPassado['endereco_deposito'][0]->complement));
+                          $complementDept = " com a referência ".ucfirst( mb_strtolower($conteudoPassado['endereco_deposito'][0]->complement));
                         }else{
                           $complementDept = "";
                         }
@@ -602,7 +606,7 @@
                       ?>
                         <p><?php echo 'Nesta apreensâo foi localizado um deposito no seguinte endereço : '.$logradouroDept.' '.$numeroDept.' '.$complementDept.' '.$bairroDept.' '.$cidadeDept.' '.$estadoDept; ?></p>
                         
-                        <p>Neste deposito foram encontrado os seguintes produtos :</p> 
+                        <p>Neste depósito foram encontrado os seguintes produtos :</p> 
                       <?php 
                         if($conteudoPassado['produto_armazens'][0] != null){
                             for($i = 0; $i < count($conteudoPassado['produto_armazens']) ; $i++ ){
@@ -686,12 +690,12 @@
             <hr>
             <br>
             <br>
-            <p>Total de apreensões neste relatorio : <?php echo $totalOcorrencias; ?></p>
+            <p>Total de apreensões neste relatório : <?php echo $totalOcorrencias; ?></p>
 
                       <table>
                           <thead>
                               <tr style='background-color: #EEE'>
-                                  <th> Total de apreensôes do periodo</th>
+                                  <th> Total de apreensões do período</th>
                                   <th>
                                   </th>
                               </tr>
@@ -706,11 +710,11 @@
                                   <td><?php echo $totalCxCigarros; ?></td>            
                               </tr>
                               <tr>
-                                  <td>Veiculos  </td>
+                                  <td>Veículos  </td>
                                   <td><?php echo $totalVeiculos; ?></td>            
                               </tr>
                               <tr>
-                                  <td>Depositos descobertos </td>
+                                  <td>Depósitos descobertos </td>
                                   <td><?php echo $totalDepositos; ?></td>            
                               </tr>
                               <tr>
@@ -718,7 +722,7 @@
                                   <td><?php echo $totalCaminhao; ?></td>            
                               </tr>
                                <tr>
-                                  <td>Onibus</td>
+                                  <td>Ônibus</td>
                                   <td><?php echo $totalOnibus; ?></td>            
                               </tr>
                           </tbody>
