@@ -69,7 +69,7 @@ class Pesquisa_avancada extends CI_Controller {
 
         $dataCidades = array();
 
-        echo "<tr> <th> Nome do detido </th><th>RG</th><th>CPF</th><th>Data nascimento</th> <th>Documentos</th>  </tr>  <tbody id='listResultadosRow'>";
+        echo "<tr> <th> Nome do detido </th><th>RG</th><th>CPF</th> <th>Documentos</th>  </tr>  <tbody id='listResultadosRow'>";
 
         foreach ($list_pessoas as $documentos) {
             //$dataCidades = $cidades;
@@ -82,7 +82,7 @@ class Pesquisa_avancada extends CI_Controller {
             $dataF = $day."/".$month."/".$year;
 
 
-            echo "<tr> <td>  ".$documentos->name." </td><td>  ".$documentos->rg." </td><td> ".$documentos->CPF."  </td><td> ".$dataF." </td> <td> ".$documentos->ID_contact."  </td>   </tr>";
+            echo "<tr> <td>  ".$documentos->name." </td><td>  ".$documentos->rg." </td><td> ".$documentos->CPF."  </td> <td><a href='".base_url()."index.php/pesquisa/pesquisa_avancada/envolvimentoPessoas/".$documentos->ID_contact."'>listar documentos</a> </td>  </tr>";
         }
 
         echo "</tbody>";
@@ -98,12 +98,12 @@ class Pesquisa_avancada extends CI_Controller {
 
         $dataCidades = array();
 
-        echo "<tr> <th>Marca </th><th>modelo</th><th>placa</th><th> UF </th> <th> Documento </th> </tr>  <tbody id='listResultadosRow'>";
+        echo "<tr> <th>Marca </th><th>modelo</th><th>placa</th> <th> Ação </th> </tr>  <tbody id='listResultadosRow'>";
 
         foreach ($list_veiculos as $veiculos) {
             //$dataCidades = $cidades;
 
-            echo "<tr> <td> ".$veiculos->marc_nome."</td><td> ".$veiculos->mode_nome."</td><td> ".$veiculos->placa."</td><td> ".$veiculos->uf."</td> <td> ".$veiculos->uf."</td> ".$veiculos->ID_vehicle."</tr>";
+            echo "<tr> <td> ".$veiculos->marc_nome."</td><td> ".$veiculos->mode_nome."</td><td> ".$veiculos->placa."</td><td> <a href='".base_url()."index.php/pesquisa/pesquisa_avancada/envolvimentoVeiculo/".$veiculos->ID_vehicle."'>listar documentos</a> </td> </tr>";
         }
 
         echo "</tbody>";
@@ -119,7 +119,7 @@ class Pesquisa_avancada extends CI_Controller {
 
         $dataCidades = array();
 
-        echo "<tr> <th>Logradouro </th><th>Cidade</th><th>UF</th><th> CEP </th> <th> Documentos </th>  </tr>  <tbody id='listResultadosRow'>";
+        echo "<tr> <th>Logradouro </th><th>Cidade</th><th> CEP </th> <th> Ação </th>  </tr>  <tbody id='listResultadosRow'>";
 
         foreach ($list_enderecos as $enderecos) {
             //$dataCidades = $cidades;
@@ -132,7 +132,7 @@ class Pesquisa_avancada extends CI_Controller {
             //$dataF = $day."/".$month."/".$year;
 
 
-            echo "<tr> <td>".$enderecos->address."</td><td>".$enderecos->nome."</td><td>".$enderecos->uf."</td><td>".$enderecos->zipcode."</td> <td>".$enderecos->ID_addr."</td>   </tr>";
+            echo "<tr> <td>".$enderecos->address."</td><td>".$enderecos->nome."</td><td>".$enderecos->zipcode."</td> <td><a href='".base_url()."index.php/pesquisa/pesquisa_avancada/envolvimentoEndereco/".$enderecos->ID_addr."'>listar documentos</a> </td>   </tr>";
         }
 
         echo "</tbody>";
@@ -141,5 +141,33 @@ class Pesquisa_avancada extends CI_Controller {
         
     }
 
+    public function envolvimentoPessoas($id_pessoa)
+    {
+
+        $data['documentos'] = $this->pesquisaAVD->envolvidoPessoas($id_pessoa); 
+
+        $this->load->view('templates/header');
+        $this->load->view('pesquisa/documentos_pesquisa_view', $data);
+        $this->load->view('templates/footer');
+
+    }
+
+    public function envolvimentoVeiculo($id_veiculo)
+    {
+        $data['documentos'] = $this->pesquisaAVD->envolvidoVeiculo($id_veiculo); 
+
+        $this->load->view('templates/header');
+        $this->load->view('pesquisa/documentos_pesquisa_view', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function envolvimentoEndereco($id_endereco)
+    {
+        $data['documentos'] = $this->pesquisaAVD->envolvidoEndereco($id_endereco); 
+
+        $this->load->view('templates/header');
+        $this->load->view('pesquisa/documentos_pesquisa_view', $data);
+        $this->load->view('templates/footer');
+    }
 
 } //Fim do controller

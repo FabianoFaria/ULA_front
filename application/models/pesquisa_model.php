@@ -60,6 +60,36 @@ class Pesquisa_model extends CI_Model {
         return $query->result();
     }
 
+    function envolvidoPessoas($idPessoas)
+    {
+        $this->db->select('*');
+        $this->db->join('tbl_main', 'tbl_main.parent_id = tbl_addr.city', 'left');
+        $this->db->where();
+        $query = $this->db->get('tbl_doct');
+        return $query->result();
+
+    }
+
+    function envolvidoVeiculo($idVeiculos)
+    {
+        $this->db->select('*');
+        $this->db->join('tbl_main', 'tbl_main.parent_id = tbl_doct.ROW_ID');
+        $this->db->join('tbl_vehicle','tbl_vehicle.ID_vehicle = tbl_main.CHILD_ID');
+        $this->db->where('tbl_main.CHILD_TBL', 'tbl_contact');
+        $this->db->where('tbl_vehicle.ID_vehicle', $idVeiculos);
+        $query = $this->db->get('tbl_doct');
+        return $query->result();
+    }
+
+    function envolvimentoEndereco($idAddr)
+    {
+        $this->db->select('*');
+        $this->db->join();
+        $this->db->where();
+        $query = $this->db->get('tbl_doct');
+        return $query->result();
+    }
+
 
  }
 
