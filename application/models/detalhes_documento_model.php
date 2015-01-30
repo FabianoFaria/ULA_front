@@ -238,6 +238,11 @@ class Detalhes_documento_model extends CI_Model {
         return $haul->result();
     }
 
+    public function load_single_addr()
+    {
+        
+    }
+
     public function load_single_wrs($id_wrs)
     {
         $this->db->select('*');

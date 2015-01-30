@@ -1,7 +1,4 @@
-
 <?php
-
-   // var_dump($conteudo);
 
     setlocale( LC_ALL, 'pt_BR', 'pt_BR.iso-8859-1', 'pt_BR.utf-8', 'portuguese' );
 
@@ -10,43 +7,28 @@
   //  echo strftime( '%A, %d de %B de %Y', strtotime( date( 'Y-m-d' ) ) );
 
 
-?>
+    //echo $extra[0]->ID_vehicle;
 
-<!-- -->
-<?php
+     //var_dump($extra);
+    //var_dump($conteudo);
 
-        //$dataDocumento['imagens']           
-        //var_dump($imagens);
-
-/*
-    if(is_string ($estadoDestino)){
-        $destino = $estadoDestino;
-         $idDestino = "";
-    }else{
-        $destino = $estadoDestino[0]->nome_estado;
-        $idDestino = $estadoDestino[0]->id_estado;
+    if(!empty($extra[0]->ID_vehicle))
+    {
+        $idObjeto = $extra[0]->ID_vehicle;
+        $tipoDado = "auto";
+    }
+    if(!empty($extra[0]->ID_contact))
+    {
+        $idObjeto = $extra[0]->ID_contact;
+        $tipoDado = "Pessoa";
+    }
+    if(!empty($extra[0]->ID_))
+    {
+        $idObjeto = $extra[0]->ID_addr;
+        $tipoDado = "Endereço";
     }
 
-    //var_dump($estadoDestino);
-
-     $dataTemp1 = explode("/", $dataRI);
-        $dia1 = $dataTemp1[0];
-        $mes1 = $dataTemp1[1];
-        $ano1 = $dataTemp1[2];
-        $dataFinal1 = $ano1."/".$mes1."/".$dia1;
-
-        //Data final...
-        $dataTemp2 = explode("/", $dataRF);
-        $dia2 = $dataTemp2[0];
-        $mes2 = $dataTemp2[1];
-        $ano2 = $dataTemp2[2];
-        $dataFinal2 = $ano2."/".$mes2."/".$dia2;
-
-<!-- -->
-
-*/
-
-var_dump($documentos);
+    
 
 
 ?>
@@ -57,17 +39,13 @@ var_dump($documentos);
 
         <h2>Exibição do relatório</h2>
 
-        <p>De : <?php echo $dataFinal1; ?> até : <?php echo $dataFinal2; ?></p>
-
-        <p>Estado(s): <?php echo $destino; ?></p>
-
         <div class="row">
     
                     
         <?php
 
 
-            foreach ($documentos as $ocorrencia) {
+            foreach ($conteudo as $ocorrencia) {
                                     
                // var_dump($ocorrencia['veiculos']);
 
@@ -278,11 +256,9 @@ var_dump($documentos);
             ?>
 
 
-            <form id="gerar_doc" action="<?php echo base_url() ?>index.php/pesquisa/relatorios_gen/gera_word2" method="post">
-                <input type="hidden" name="dataI" value="<?php echo $dataRI; ?>">
-                <input type="hidden" name="dataF" value="<?php echo $dataRF; ?>">
-                <input type="hidden" name="idEstadoDestino" value="<?php echo $idDestino; ?>">
-                <input type="hidden" name="estadoDestino" value="<?php echo $destino; ?>">
+            <form id="gerar_doc" action="<?php echo base_url() ?>index.php/pesquisa/pesquisa_avancada/gera_relatorio_individual" method="post">
+                <input type="hidden" name="idObjeto" value="<?php echo $idObjeto; ?>">
+                <input type="hidden" name="tipoDado" value="<?php echo $tipoDado; ?>">
                 <input type="submit" value="gerar . DOC">
             </form>
 
@@ -292,43 +268,7 @@ var_dump($documentos);
     </div><!-- Fim do col-md-12 do inicio do relatorio -->
 
 </div> <!-- fim do row row sem_margin lista-ipls -->
-     
-
-<?php
-
-            /*
-                 public 'ID_main' => string '294' (length=3)
-      public 'ROW_ID' => string '131' (length=3)
-      public 'parent_id' => string '131' (length=3)
-      public 'parent_TBL' => string 'tbl_doct' (length=8)
-      public 'CHILD_ID' => string '11' (length=2)
-      public 'CHILD_TBL' => string 'tbl_image_doct' (length=14)
-      public 'UPDATED_BY' => string 'Niguem' (length=6)
-      public 'LAST_UPDATE' => string '0000-00-00 00:00:00' (length=19)
-      public 'CREATED_BY' => string 'qwe' (length=3)
-      public 'CREATED' => string '2014-09-25 03:07:44' (length=19)
-      public 'id_image' => string '11' (length=2)
-      public 'id_row' => string '131' (length=3)
-      public 'title_image' => string 'Foto A' (length=6)
-      public 'nome_image_doct' => string '13d6d38b47e0d6a9b714618e37751984.jpg' (length=36)
-      public 'UPDATE_BY' => string 'Ninguem' (length=7)
-
-            */
-    
-
-
-        //$dados['dataI'] = $dataIni;
-        //$dados['dataF'] = $dataFim;
-
-
-    //} //Fim do foreach conteudo as ocorrencia....
-
-
-
-?>
-                
-
-                
+                  
 
 
             

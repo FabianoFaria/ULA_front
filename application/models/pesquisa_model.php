@@ -60,11 +60,13 @@ class Pesquisa_model extends CI_Model {
         return $query->result();
     }
 
-    function envolvidoPessoas($idPessoas)
+    function envolvidoPessoas($idPessoas) 
     {
         $this->db->select('*');
-        $this->db->join('tbl_main', 'tbl_main.parent_id = tbl_addr.city', 'left');
-        $this->db->where();
+        $this->db->join('tbl_main', 'tbl_main.parent_id = tbl_doct.ROW_ID');
+        $this->db->join('tbl_contact','tbl_contact.ID_contact = tbl_main.CHILD_ID');
+        $this->db->where('tbl_main.CHILD_TBL', 'tbl_contact');
+        $this->db->where('tbl_contact.ID_contact', $idPessoas);
         $query = $this->db->get('tbl_doct');
         return $query->result();
 
@@ -75,7 +77,7 @@ class Pesquisa_model extends CI_Model {
         $this->db->select('*');
         $this->db->join('tbl_main', 'tbl_main.parent_id = tbl_doct.ROW_ID');
         $this->db->join('tbl_vehicle','tbl_vehicle.ID_vehicle = tbl_main.CHILD_ID');
-        $this->db->where('tbl_main.CHILD_TBL', 'tbl_contact');
+        $this->db->where('tbl_main.CHILD_TBL', 'tbl_vehicle');
         $this->db->where('tbl_vehicle.ID_vehicle', $idVeiculos);
         $query = $this->db->get('tbl_doct');
         return $query->result();

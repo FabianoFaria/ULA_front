@@ -13,6 +13,8 @@ class Pesquisa_avancada extends CI_Controller {
         $this->load->model('User_model', 'user');
         $this->load->model('Novo_documento_model', 'documentoModel');
         $this->load->model('pesquisa_model', 'pesquisaAVD');
+        $this->load->model('Detalhes_documento_model','DetalhesModel');
+        $this->load->model('Relatorios_model','relatorio');
         $this->user->logged();
     }
 
@@ -144,30 +146,299 @@ class Pesquisa_avancada extends CI_Controller {
     public function envolvimentoPessoas($id_pessoa)
     {
 
-        $data['documentos'] = $this->pesquisaAVD->envolvidoPessoas($id_pessoa); 
+        $data[0] =  $this->DetalhesModel->load_single_contato($id_pessoa);
+        $data['documentos'] = $this->pesquisaAVD->envolvidoPessoas($id_pessoa);  
 
-        $this->load->view('templates/header');
-        $this->load->view('pesquisa/documentos_pesquisa_view', $data);
-        $this->load->view('templates/footer');
+        $this->imprimirRelatorioIndividual($data);
 
     }
 
     public function envolvimentoVeiculo($id_veiculo)
     {
-        $data['documentos'] = $this->pesquisaAVD->envolvidoVeiculo($id_veiculo); 
+        $data[0] =  $this->DetalhesModel->load_single_auto($id_veiculo);
+        $data['documentos'] = $this->pesquisaAVD->envolvidoVeiculo($id_veiculo);
 
-        $this->load->view('templates/header');
-        $this->load->view('pesquisa/documentos_pesquisa_view', $data);
-        $this->load->view('templates/footer');
+        $this->imprimirRelatorioIndividual($data);
+
     }
 
     public function envolvimentoEndereco($id_endereco)
     {
-        $data['documentos'] = $this->pesquisaAVD->envolvidoEndereco($id_endereco); 
+        $data[0] = $this->DetalhesModel->load_single_addr($id_endereco); // Implementar a busca do endereço...
+        $data['documentos'] = $this->pesquisaAVD->envolvidoEndereco($id_endereco);
+
+        $this->imprimirRelatorioIndividual($data);
+    }
+
+
+    /// Gera a tela de exibição do relatorio 
+
+    public function imprimirRelatorioIndividual($dadosRelatorio)
+    {
+      
+
+        //var_dump($dadosRelatorio);
+
+        $dados['extra'] = $dadosRelatorio[0];
+
+        $dadosArray = array( );
+
+        foreach ($dadosRelatorio['documentos'] as $data) 
+        {
+           //echo $data->ROW_ID;
+           //die;
+           //echo "<br>";
+
+           $dataDocumento['data'] = $data;
+
+            $documento = $this->relatorio->load_documento_completo($data->ROW_ID);
+
+            //var_dump($documento);
+
+           $dataDocumento['documento'] = $documento;
+
+           //Endereços....
+           $endereço = $this->relatorio->load_documento_endereco($data->ROW_ID);
+            //var_dump($endereço);
+           if($endereço != null) {
+                $dataDocumento['endereco'] = $endereço;   
+            }else
+            {
+                $dataDocumento['endereco'][0] = "";
+            }
+
+
+            //Endereços deposito....
+           $endereçoDeposito = $this->relatorio->load_endereco_wrs_relatorio($data->ROW_ID);
+            //var_dump($endereçoDeposito);
+           if($endereçoDeposito != null) {
+                $dataDocumento['endereco_deposito'] = $endereçoDeposito;   
+            }else
+            {
+                $dataDocumento['endereco_deposito'][0] = "";
+            }
+            //var_dump($dataDocumento['endereco_deposito']);
+
+
+            //Mercadorias....
+            $mercadorias = $this->relatorio->load_mercadoria_relatorio($data->ROW_ID);
+             if($mercadorias != null) {
+                $dataDocumento['mercadorias'] = $mercadorias;   
+            }else
+            {
+                $dataDocumento['mercadorias'][0] = "";
+            }
+
+            //var_dump($mercadorias);
+
+            //Pessoas envolvidas...
+            //$envolvidos = $this->relatorio->load_documento_envolvidos($data->ROW_ID);
+            $envolvidos = $this->relatorio->load_documento_envolvidos($data->ROW_ID);
+             if($envolvidos != null) {
+
+                //var_dump($envolvidos);
+
+                $dataDocumento['envolvidos'] = $envolvidos;     
+            }else
+            {
+                $dataDocumento['envolvidos'][0] = "";
+            }
+
+            //var_dump($dataDocumento['envolvidos']);
+
+            //Veiculos....
+            $veiculos = $this->relatorio->load_documento_auto($data->ROW_ID);
+            //var_dump($veiculos);
+
+            $dataDocumento['veiculos'] = $veiculos;
+
+
+            //Produtos aprendidos por depositos....
+
+            $produtos_armazens = $this->relatorio->load_armazem_relatorio($data->ROW_ID);
+             if($produtos_armazens != null) {
+
+                //var_dump($produtos_armazens);
+
+                $dataDocumento['produto_armazens'] = $produtos_armazens;   
+            }else
+            {
+                $dataDocumento['produto_armazens'][0] = "";
+            }
+
+
+
+            //Imagens da operação...
+
+            $imagens = $this->relatorio->load_documento_imagens($data->ROW_ID);
+             if($imagens != null) {
+                $dataDocumento['imagens'] = $imagens;   
+            }else
+            {
+                $dataDocumento['imagens'][0] = "";
+            }
+
+        
+
+            array_push($dadosArray , $dataDocumento);
+        }
+
+
+
+        $dados['conteudo'] = $dadosArray;
+
 
         $this->load->view('templates/header');
-        $this->load->view('pesquisa/documentos_pesquisa_view', $data);
+        $this->load->view('pesquisa/documentos_pesquisa_view', $dados);
         $this->load->view('templates/footer');
     }
+
+
+    ////gera o ralatorio e .Doc do relatorio individual 
+
+    public function gera_relatorio_individual()
+    {
+
+        $idObj = $this->input->post('idObjeto');
+        $typeData = $this->input->post('tipoDado');
+
+
+
+
+        $this->load->library('word');
+
+       setlocale( LC_ALL, 'pt_BR', 'pt_BR.iso-8859-1', 'pt_BR.utf-8', 'portuguese' );
+
+        date_default_timezone_set( 'America/Sao_Paulo' );  
+
+
+        $dataGeracao = date("d/m/Y H:i:s ");
+
+        $dataDateI = $this->input->post('dataI'); 
+        $dataDateF =  $this->input->post('dataF'); 
+        $estadoDest = $this->input->post('estadoDestino');
+        $id_estado_dest = $this->input->post('idEstadoDestino');
+
+
+        ////Codigo contendo os dados a serem impressos no documento word...
+
+        //Data inicial...
+        $dataTemp1 = explode("/", $dataDateI);
+        $dia1 = $dataTemp1[0];
+        $mes1 = $dataTemp1[1];
+        $ano1 = $dataTemp1[2];
+        $dataFinal1 = $ano1."/".$mes1."/".$dia1;
+
+        //Data final...
+        $dataTemp2 = explode("/", $dataDateF);
+        $dia2 = $dataTemp2[0];
+        $mes2 = $dataTemp2[1];
+        $ano2 = $dataTemp2[2];
+        $dataFinal2 = $ano2."/".$mes2."/".$dia2;
+
+        $dataIni = $dataFinal1;
+        $dataFim = $dataFinal2; 
+
+        $dataRelatorio = $this->relatorio->load_documentos($dataDateI ,$dataDateF, $id_estado_dest);
+
+        $dadosArray = array( );
+
+        foreach ($dataRelatorio as $data) 
+        {
+
+           $dataDocumento['data'] = $data;
+
+            $documento = $this->relatorio->load_documento_completo($data->ROW_ID);
+
+           $dataDocumento['documento'] = $documento;
+           $endereço = $this->relatorio->load_documento_endereco($data->ROW_ID);
+            //var_dump($endereço);
+           if($endereço != null) {
+                $dataDocumento['endereco'] = $endereço;   
+            }else
+            {
+                $dataDocumento['endereco'][0] = "";
+            }
+           $endereçoDeposito = $this->relatorio->load_endereco_wrs_relatorio($data->ROW_ID);
+            //var_dump($endereçoDeposito);
+           if($endereçoDeposito != null) {
+                $dataDocumento['endereco_deposito'] = $endereçoDeposito;   
+            }else
+            {
+                $dataDocumento['endereco_deposito'][0] = "";
+            }
+            $mercadorias = $this->relatorio->load_mercadoria_relatorio($data->ROW_ID);
+             if($mercadorias != null) {
+                $dataDocumento['mercadorias'] = $mercadorias;   
+            }else
+            {
+                $dataDocumento['mercadorias'][0] = "";
+            }
+
+            $envolvidos = $this->relatorio->load_documento_envolvidos($data->ROW_ID);
+             if($envolvidos != null) {
+                $dataDocumento['envolvidos'] = $envolvidos;     
+            }else
+            {
+                $dataDocumento['envolvidos'][0] = "";
+            }
+
+            //Veiculos....
+            $veiculos = $this->relatorio->load_documento_auto($data->ROW_ID);
+            //var_dump($veiculos);
+
+            $dataDocumento['veiculos'] = $veiculos;
+
+            $produtos_armazens = $this->relatorio->load_armazem_relatorio($data->ROW_ID);
+             if($produtos_armazens != null) {
+
+                $dataDocumento['produto_armazens'] = $produtos_armazens;   
+            }else
+            {
+                $dataDocumento['produto_armazens'][0] = "";
+            }
+
+            $imagens = $this->relatorio->load_documento_imagens($data->ROW_ID);
+             if($imagens != null) {
+                $dataDocumento['imagens'] = $imagens;   
+            }else
+            {
+                $dataDocumento['imagens'][0] = "";
+            }
+
+            array_push($dadosArray , $dataDocumento);
+        }
+
+        $dados['totalOcorrencias'] = $this->relatorio->total_ocorrencias($dataDateI ,$dataDateF, $id_estado_dest);
+
+        $dados['totalVeiculos'] = $this->relatorio->total_veiculos_relatorio($dataDateI ,$dataDateF, $id_estado_dest);
+        
+        $dados['totalDepositos'] = $this->relatorio->total_depositos($dataDateI ,$dataDateF ,$id_estado_dest);
+        
+        $dados['totalCaminhao'] = $this->relatorio->total_veiculos_caminhao_relatorio($dataDateI ,$dataDateF, $id_estado_dest);
+        
+        $dados['totalOnibus'] = $this->relatorio->total_veiculos_onibus_relatorio($dataDateI ,$dataDateF ,$id_estado_dest);
+
+        $dados['totalDetidos'] = $this->relatorio->total_detidos($dataDateI ,$dataDateF ,$id_estado_dest); 
+
+        $caixasCigarros = $this->relatorio->total_caixa_cigarros($dataDateI ,$dataDateF ,$id_estado_dest);
+        $cigarrosWsr = $this->relatorio->total_caixa_cigarros_wrs($dataDateI ,$dataDateF ,$id_estado_dest);
+
+        $dados['totalCxCigarros'] = $caixasCigarros[0]->qty + $cigarrosWsr[0]->quantidade_deposito;
+
+        $dados['estadoDestino'] = $estadoDest;
+        $dados['relatorioIni'] = $dataDateI; 
+        $dados['relatorioFim'] = $dataDateF;
+        $dados['conteudo'] = $dadosArray;
+       // $this->load->view('pesquisa/gera_relatorio_final_view', $dadosArray);
+
+        ////////////////// Manda os dados gerados para serem tranformardos em .doc ///////////////////////
+
+       $htmlRelatorio =  $this->load->view('pesquisa/gera_relatorio_final_view', $dados);
+      
+
+      new Word($htmlRelatorio);
+    }
+
 
 } //Fim do controller
