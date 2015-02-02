@@ -271,15 +271,18 @@
                  } //Fim do foreach conteudo as ocorrencia....
             ?>
 
-
+            <br>
+            
             <form id="gerar_doc" action="<?php echo base_url() ?>index.php/pesquisa/relatorios_gen/gera_word2" method="post">
                 <input type="hidden" name="dataI" value="<?php echo $dataRI; ?>">
                 <input type="hidden" name="dataF" value="<?php echo $dataRF; ?>">
                 <input type="hidden" name="idEstadoDestino" value="<?php echo $idDestino; ?>">
                 <input type="hidden" name="estadoDestino" value="<?php echo $destino; ?>">
-                <input type="submit" value="gerar . DOC">
+                <input class="btn" type="submit" value="gerar . DOC">
             </form>
 
+            <br>
+            <br>
 
         </div> <!-- Fim do row do inicio do relatorio -->
 

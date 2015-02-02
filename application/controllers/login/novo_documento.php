@@ -157,6 +157,8 @@ class Novo_documento extends CI_Controller {
         $user_name = $this->session->userdata('username');
         $dataAtualizacao = date('y-m-d H:i:s');
 
+
+            $dataAdr['ID_addr'] = $this->input->post('Addr_id'); 
             $dataAdr['ROW_ID'] = $this->input->post('Row_id');
             $dataAdr['address'] = strtoupper(strtr($this->input->post('endereco') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
             $dataAdr['nunber'] = strtoupper(strtr($this->input->post('numero_addr') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
@@ -169,12 +171,43 @@ class Novo_documento extends CI_Controller {
             $dataAdr['CREATED_BY'] = $user_name;
             $dataAdr['CREATED'] = $dataAtualizacao;
 
-
             $Row_adr = null;
-            $Row_adr = $this->documentoModel->cadastrar_endereco($dataAdr);
 
-            $AdrOBJ = $Row_adr[0]; //Objeto para recuperar o id do endereço...
+            if(!empty($dataAdr['ID_addr']))
+            {
+                $Row_adr = $this->atualizarDoct->atualiza_addr($dataAdr);
 
+                if($Row_adr != false)
+                {
+
+                    $rowIdCad = $this->input->post('Row_id');
+                    $endereco_id = $this->input->post('Addr_id');
+                    $contemEndereco = $this->atualizarDoct->verificaVeiculoIpl($rowIdCad, $endereco_id);
+
+                    if(empty($contemEndereco))
+                        {
+                            $row_main['ROW_ID'] = $this->input->post('Row_id');
+                            $row_main['parent_TBL'] = 'tbl_doct';
+                            $row_main['parent_id'] = $this->input->post('Row_id');
+                            $row_main['CHILD_ID'] = $endereco_id;
+                            $row_main['CHILD_TBL'] = 'tbl_addr';
+                            $row_main['CREATED_BY'] = $user_name;
+                            $row_main['CREATED'] = $dataAtualizacao;
+
+                            $Novo_main = $this->documentoModel->cadastrar_main($row_main);
+
+                            redirect(base_url().'index.php/detalhes_documento/getTheRow/'.$this->input->post('Row_id').'');
+                        } 
+
+                }
+            }
+            else{
+
+                $Row_adr = $this->documentoModel->cadastrar_endereco($dataAdr);
+
+                $AdrOBJ = $Row_adr[0]; //Objeto para recuperar o id do endereço...
+
+            }         
            
             //var_dump($this->input->post('Row_id'));
 
@@ -233,6 +266,24 @@ class Novo_documento extends CI_Controller {
             $dataAuto['LAST_UPDATE'] = $dataAtualizacao;
 
             $Row_auto = $this->atualizarDoct->atualiza_auto($dataAuto);
+
+            //Verificar se o veiculo já está cadastrado neste documento
+
+            $rowIdCad = $this->input->post('row_id');
+            $veiculo_id = $this->input->post('id_auto');
+            $contemVeiculo = $this->atualizarDoct->verificaVeiculoIpl($rowIdCad, $veiculo_id);
+
+            if(empty($contemVeiculo))
+                {
+                    $row_main['ROW_ID'] = $this->input->post('row_id');
+                    $row_main['parent_TBL'] = 'tbl_doct';
+                    $row_main['parent_id'] = $this->input->post('row_id');
+                    $row_main['CHILD_ID'] = $veiculo_id;
+                    $row_main['CHILD_TBL'] = 'tbl_vehicle';
+
+                    $Novo_main = $this->documentoModel->cadastrar_main($row_main);
+                }
+
         } else
         {
             $dataAuto['CREATED_BY'] = $user_name;
@@ -473,11 +524,38 @@ class Novo_documento extends CI_Controller {
 
                 $wrs_addr = $dataAdr['ID_addr'];
                 $id_temp_addr = $wrs_addr;
+
+
+                $rowIdCad = $this->input->post('row_id');
+                $addr_id = $this->input->post('ID_addr');
+
+                $contemEndereco = $this->atualizarDoct->verificaAddrIpl($rowIdCad, $addr_id);
+
+                if(empty($contemEndereco))
+                {
+                    $row_main['ROW_ID'] = $this->input->post('row_id');
+                    $row_main['parent_TBL'] = 'tbl_doct';
+                    $row_main['parent_id'] = $this->input->post('row_id');
+                    $row_main['CHILD_ID'] = $addr_id;
+                    $row_main['CHILD_TBL'] = 'tbl_addr';
+
+                    $Novo_main = $this->documentoModel->cadastrar_main($row_main);
+                }
+
             }else{
                 $wrs_addr = $this->documentoModel->cadastrar_endereco_wrs($dataAdr);
 
                 $rowOBJAddr = $wrs_addr[0];
                 $id_temp_addr = $rowOBJAddr->ID_addr;
+
+                //Cadastrar o endereço no main 
+                $row_main['ROW_ID'] = $this->input->post('row_id');
+                $row_main['parent_TBL'] = 'tbl_doct';
+                $row_main['parent_id'] = $this->input->post('row_id');
+                $row_main['CHILD_ID'] = $addr_id;
+                $row_main['CHILD_TBL'] = 'tbl_addr';
+
+                $Novo_main = $this->documentoModel->cadastrar_main($row_main);
             }
 
 

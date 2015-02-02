@@ -260,6 +260,34 @@ class Atualizar_documento_model extends CI_Model {
 
     }
 
+    public function verificaVeiculoIpl($rowId, $veiculoId) 
+    {
+
+        $this->db->select('*');
+        $this->db->from('tbl_main');
+        $this->db->where('tbl_main.CHILD_TBL', 'tbl_vehicle');
+        $this->db->where('tbl_main.parent_id', $rowId);
+        $this->db->where('tbl_main.CHILD_ID', $veiculoId);
+        $contatoIPL = $this->db->get();
+
+        return $contatoIPL->result();
+
+    }
+
+    public function verificaAddrIpl($rowId, $addrId)  
+    {
+
+        $this->db->select('*');
+        $this->db->from('tbl_main');
+        $this->db->where('tbl_main.CHILD_TBL', 'tbl_addr');
+        $this->db->where('tbl_main.parent_id', $rowId);
+        $this->db->where('tbl_main.CHILD_ID', $addrId);
+        $contatoIPL = $this->db->get();
+
+        return $contatoIPL->result();
+
+    }
+
 
     public function atualiza_wrs($data)
     {

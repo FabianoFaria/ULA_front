@@ -53,6 +53,7 @@ class Pesquisa_model extends CI_Model {
         $this->db->like('tbl_addr.address', $termo);
         $this->db->or_like('tbl_addr.district', $termo);
         $this->db->or_like('tbl_addr.zipcode', $termo);
+        $this->db->or_like('tbl_addr.complement', $termo);
         $this->db->join('tbl_cidades','tbl_cidades.id = tbl_addr.city', 'left');
         $this->db->join('tbl_estados','tbl_estados.id_estado = tbl_addr.state', 'left');
         $this->db->order_by("tbl_addr.state", "asc"); 
@@ -62,7 +63,7 @@ class Pesquisa_model extends CI_Model {
 
     function envolvidoPessoas($idPessoas) 
     {
-        $this->db->select('*');
+        $this->db->select('tbl_doct.ROW_ID');
         $this->db->join('tbl_main', 'tbl_main.parent_id = tbl_doct.ROW_ID');
         $this->db->join('tbl_contact','tbl_contact.ID_contact = tbl_main.CHILD_ID');
         $this->db->where('tbl_main.CHILD_TBL', 'tbl_contact');
@@ -74,20 +75,28 @@ class Pesquisa_model extends CI_Model {
 
     function envolvidoVeiculo($idVeiculos)
     {
-        $this->db->select('*');
+        $this->db->select('tbl_doct.ROW_ID');
         $this->db->join('tbl_main', 'tbl_main.parent_id = tbl_doct.ROW_ID');
         $this->db->join('tbl_vehicle','tbl_vehicle.ID_vehicle = tbl_main.CHILD_ID');
+        $this->db->join('tbl_marcas','tbl_marcas.marc_cod = tbl_vehicle.brand' , 'left');
+        $this->db->join('tbl_modelos','tbl_modelos.mode_cod = tbl_vehicle.model', 'left');
+        $this->db->join('tbl_cidades','tbl_cidades.id = tbl_vehicle.city', 'left');
+        $this->db->join('tbl_estados','tbl_estados.id_estado = tbl_vehicle.state', 'left');
         $this->db->where('tbl_main.CHILD_TBL', 'tbl_vehicle');
         $this->db->where('tbl_vehicle.ID_vehicle', $idVeiculos);
         $query = $this->db->get('tbl_doct');
         return $query->result();
     }
 
-    function envolvimentoEndereco($idAddr)
+    function envolvidoEndereco($idAddr) 
     {
-        $this->db->select('*');
-        $this->db->join();
-        $this->db->where();
+        $this->db->select('tbl_doct.ROW_ID');
+        $this->db->join('tbl_main', 'tbl_main.parent_id = tbl_doct.ROW_ID');
+        $this->db->join('tbl_addr','tbl_addr.ID_addr = tbl_main.CHILD_ID');
+        $this->db->join('tbl_cidades','tbl_cidades.id = tbl_addr.city', 'left');
+        $this->db->join('tbl_estados','tbl_estados.id_estado = tbl_addr.state', 'left');
+        $this->db->where('tbl_main.CHILD_TBL', 'tbl_addr');
+        $this->db->where('tbl_addr.ID_addr', $idAddr);
         $query = $this->db->get('tbl_doct');
         return $query->result();
     }

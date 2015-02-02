@@ -180,6 +180,29 @@ class Detalhes_documento extends CI_Controller {
         $this->load->view('templates/header');
         $this->load->view('cadastro/dados_mercadorias_view', $data);
         $this->load->view('templates/footer');
+    } 
+
+    public function buscarContatoNome()
+    {
+
+        $nomeBuscar = $_POST['search_keyword'];
+
+        $contatoEncontrado = $this->DetalhesModel->carregarContatoNome($nomeBuscar);
+
+        //echo $cpfBuscar;
+       if(!empty($contatoEncontrado))
+       {
+
+        foreach ($contatoEncontrado as $contato ) {
+            $singleContato = $contato;
+        }
+
+        exit(json_encode(array('status' => 'encontrado', 'contato' => $singleContato)));
+       }else
+       {
+        exit(json_encode(array('status' => 'vazio', 'contato' => 'vazio' )));
+       }
+
     }
 
     public function buscarContatoCPF()
@@ -205,9 +228,256 @@ class Detalhes_documento extends CI_Controller {
 
     }
 
+    public function buscarContatoPass()
+    {
 
+        $cpfBuscar = $_POST['search_keyword'];
 
-    public function completarContatoForm()
+        $contatoEncontrado = $this->DetalhesModel->carregarContatoPass($cpfBuscar);
+
+        //echo $cpfBuscar;
+       if(!empty($contatoEncontrado))
+       {
+
+        foreach ($contatoEncontrado as $contato ) {
+            $singleContato = $contato;
+        }
+
+        exit(json_encode(array('status' => 'encontrado', 'contato' => $singleContato)));
+       }else
+       {
+        exit(json_encode(array('status' => 'vazio', 'contato' => 'vazio' )));
+       }
+
+    }
+
+    public function buscarContatoRg() 
+    {
+
+        $rgBuscar = $_POST['search_keyword'];
+
+        $contatoEncontrado = $this->DetalhesModel->carregarContatoRg($rgBuscar);
+
+        //echo $cpfBuscar;
+       if(!empty($contatoEncontrado))
+       {
+
+        foreach ($contatoEncontrado as $contato ) {
+            $singleContato = $contato;
+        }
+
+        exit(json_encode(array('status' => 'encontrado', 'contato' => $singleContato)));
+       }else
+       {
+        exit(json_encode(array('status' => 'vazio', 'contato' => 'vazio' )));
+       }
+
+    }
+
+    public function buscarContatoPai()
+    {
+
+        $paiBuscar = $_POST['search_keyword'];
+
+        $contatoEncontrado = $this->DetalhesModel->carregarContatoPai($paiBuscar);
+
+        //echo $cpfBuscar;
+       if(!empty($contatoEncontrado))
+       {
+
+        foreach ($contatoEncontrado as $contato ) {
+            $singleContato = $contato;
+        }
+
+        exit(json_encode(array('status' => 'encontrado', 'contato' => $singleContato)));
+       }else
+       {
+        exit(json_encode(array('status' => 'vazio', 'contato' => 'vazio' )));
+       }
+
+    }
+
+    public function buscarContatoMae()
+    {
+
+        $maeBuscar = $_POST['search_keyword'];
+
+        $contatoEncontrado = $this->DetalhesModel->carregarContatoMae($maeBuscar);
+
+        //echo $cpfBuscar;
+       if(!empty($contatoEncontrado))
+       {
+
+        foreach ($contatoEncontrado as $contato ) {
+            $singleContato = $contato;
+        }
+
+        exit(json_encode(array('status' => 'encontrado', 'contato' => $singleContato)));
+       }else
+       {
+        exit(json_encode(array('status' => 'vazio', 'contato' => 'vazio' )));
+       }
+
+    }
+
+    public function buscarVeiculoChassi()
+    {
+
+        $chassi = $_POST['search_keyword'];
+
+        $veiculoChassi = $this->DetalhesModel->carregarVeiculoChassi($chassi);
+
+        //echo $cpfBuscar;
+       if(!empty($veiculoChassi))
+       {
+
+        foreach ($veiculoChassi as $veiculo ) {
+            $singleVeiculo = $veiculo;
+        }
+
+        exit(json_encode(array('status' => 'encontrado', 'contato' => $singleVeiculo)));
+       }else
+       {
+        exit(json_encode(array('status' => 'vazio', 'contato' => 'vazio' )));
+       }
+
+    }
+
+    public function buscarVeiculoRenavan()
+    {
+
+        $renavan = $_POST['search_keyword'];
+
+        $veiculoRenavan = $this->DetalhesModel->carregarVeiculoRenavan($renavan);
+
+        //echo $cpfBuscar;
+       if(!empty($veiculoRenavan))
+       {
+
+        foreach ($veiculoRenavan as $veiculo ) {
+            $singleVeiculo = $veiculo;
+        }
+
+        exit(json_encode(array('status' => 'encontrado', 'contato' => $singleVeiculo)));
+       }else
+       {
+        exit(json_encode(array('status' => 'vazio', 'contato' => 'vazio' )));
+       }
+
+    }
+
+    public function buscarVeiculoPlaca()
+    {
+
+        $placa = $_POST['search_keyword'];
+
+        $veiculoPlaca = $this->DetalhesModel->carregarVeiculoPlaca($placa);
+
+        //echo $cpfBuscar;
+       if(!empty($veiculoPlaca))
+       {
+
+        foreach ($veiculoPlaca as $veiculo ) {
+            $singleVeiculo = $veiculo;
+        }
+
+        exit(json_encode(array('status' => 'encontrado', 'contato' => $singleVeiculo)));
+       }else
+       {
+        exit(json_encode(array('status' => 'vazio', 'contato' => 'vazio' )));
+       }
+
+    }
+
+    public function buscarVeiculoPlacaEx() 
+    {
+
+        $placa = $_POST['search_keyword'];
+
+        $veiculoPlaca = $this->DetalhesModel->carregarVeiculoPlacaEx($placa);
+
+        //echo $cpfBuscar;
+       if(!empty($veiculoPlaca))
+       {
+
+        foreach ($veiculoPlaca as $veiculo ) {
+            $singleVeiculo = $veiculo;
+        }
+
+        exit(json_encode(array('status' => 'encontrado', 'contato' => $singleVeiculo)));
+       }else
+       {
+        exit(json_encode(array('status' => 'vazio', 'contato' => 'vazio' )));
+       }
+
+    }
+
+    public function buscarVeiculoPlacaEx2()
+    {
+
+        $placa = $_POST['search_keyword'];
+
+        $veiculoPlaca = $this->DetalhesModel->carregarVeiculoPlacaEx2($placa);
+
+        //echo $cpfBuscar;
+       if(!empty($veiculoPlaca))
+       {
+
+        foreach ($veiculoPlaca as $veiculo ) {
+            $singleVeiculo = $veiculo;
+        }
+
+        exit(json_encode(array('status' => 'encontrado', 'contato' => $singleVeiculo)));
+       }else
+       {
+        exit(json_encode(array('status' => 'vazio', 'contato' => 'vazio' )));
+       }
+
+    }
+
+    public function buscarEnderecoLogradouro()
+    {
+        $logradouro = $_POST['search_keyword'];
+
+        $enderecoLogradouro = $this->DetalhesModel->carregarEnderecoLogradouro($logradouro);
+
+        //echo $cpfBuscar;
+       if(!empty($enderecoLogradouro))
+       {
+
+        foreach ($enderecoLogradouro as $endereco ) {
+            $singleEndereco = $endereco;
+        }
+
+        exit(json_encode(array('status' => 'encontrado', 'endereco' => $singleEndereco)));
+       }else
+       {
+        exit(json_encode(array('status' => 'vazio', 'endereco' => 'vazio' )));
+       }
+    }
+
+    public function buscarEnderecoCep()
+    {
+        $cep = $_POST['search_keyword'];
+
+        $enderecoLogradouro = $this->DetalhesModel->carregarEnderecoCep($cep);
+
+        //echo $cpfBuscar;
+       if(!empty($enderecoLogradouro))
+       {
+
+        foreach ($enderecoLogradouro as $endereco ) {
+            $singleEndereco = $endereco;
+        }
+
+        exit(json_encode(array('status' => 'encontrado', 'endereco' => $singleEndereco)));
+       }else
+       {
+        exit(json_encode(array('status' => 'vazio', 'endereco' => 'vazio' )));
+       }
+    }
+
+    public function completarContatoForm()  
     {
         $idContato = $_POST['id_contato'];
 
@@ -222,6 +492,44 @@ class Detalhes_documento extends CI_Controller {
         }else
         {
             exit(json_encode(array('status' => 'vazio', 'contato' => 'vazio' )));
+        }
+
+    }
+
+    public function completarVeiculoForm()  
+    {
+        $idContato = $_POST['ID_vehicle'];
+
+        $veiculoCompleto = $this->DetalhesModel->carregarVeiculoCompleto($idContato);
+
+        if(!empty($veiculoCompleto))
+        {
+            foreach ($veiculoCompleto as $veiculo ) {
+                $singleVeiculo = $veiculo;
+            }
+            exit(json_encode(array('status' => 'Veículo encontrado', 'veiculo' => $singleVeiculo)));
+        }else
+        {
+            exit(json_encode(array('status' => 'vazio', 'veiculo' => 'vazio' )));
+        }
+
+    }
+
+    public function completarEnderecoForm()  
+    {
+        $idEndereco = $_POST['ID_addr'];
+
+        $enderecoCompleto = $this->DetalhesModel->completarEnderecoForm($idEndereco);
+
+        if(!empty($enderecoCompleto))
+        {
+            foreach ($enderecoCompleto as $endereco ) {
+                $singleEndereco = $endereco;
+            }
+            exit(json_encode(array('status' => 'Endereco encontrado', 'endereco' => $singleEndereco)));
+        }else
+        {
+            exit(json_encode(array('status' => 'vazio', 'endereco' => 'vazio' )));
         }
 
     }

@@ -147,7 +147,7 @@ class Pesquisa_avancada extends CI_Controller {
     {
 
         $data[0] =  $this->DetalhesModel->load_single_contato($id_pessoa);
-        $data['documentos'] = $this->pesquisaAVD->envolvidoPessoas($id_pessoa);  
+        $data['registros'] = $this->pesquisaAVD->envolvidoPessoas($id_pessoa);
 
         $this->imprimirRelatorioIndividual($data);
 
@@ -156,7 +156,7 @@ class Pesquisa_avancada extends CI_Controller {
     public function envolvimentoVeiculo($id_veiculo)
     {
         $data[0] =  $this->DetalhesModel->load_single_auto($id_veiculo);
-        $data['documentos'] = $this->pesquisaAVD->envolvidoVeiculo($id_veiculo);
+        $data['registros'] = $this->pesquisaAVD->envolvidoVeiculo($id_veiculo);
 
         $this->imprimirRelatorioIndividual($data);
 
@@ -164,8 +164,8 @@ class Pesquisa_avancada extends CI_Controller {
 
     public function envolvimentoEndereco($id_endereco)
     {
-        $data[0] = $this->DetalhesModel->load_single_addr($id_endereco); // Implementar a busca do endereço...
-        $data['documentos'] = $this->pesquisaAVD->envolvidoEndereco($id_endereco);
+        $data[0] = $this->DetalhesModel->load_single_addr($id_endereco);
+        $data['registros'] = $this->pesquisaAVD->envolvidoEndereco($id_endereco);
 
         $this->imprimirRelatorioIndividual($data);
     }
@@ -183,13 +183,13 @@ class Pesquisa_avancada extends CI_Controller {
 
         $dadosArray = array( );
 
-        foreach ($dadosRelatorio['documentos'] as $data) 
+        foreach ($dadosRelatorio['registros'] as $data) 
         {
            //echo $data->ROW_ID;
            //die;
            //echo "<br>";
 
-           $dataDocumento['data'] = $data;
+           //$dataDocumento['data'] = $data;
 
             $documento = $this->relatorio->load_documento_completo($data->ROW_ID);
 
@@ -298,18 +298,32 @@ class Pesquisa_avancada extends CI_Controller {
 
     public function gera_relatorio_individual()
     {
+        $this->load->library('word');
 
         $idObj = $this->input->post('idObjeto');
         $typeData = $this->input->post('tipoDado');
 
+        if($typeData == 'auto')
+        {
+            $dataf[0] =  $this->DetalhesModel->load_single_auto($idObj);
+            $dataF['registros'] = $this->pesquisaAVD->envolvidoVeiculo($idObj);
+        }else
+        if($typeData == 'Pessoa'){
+            $dataF[0] =  $this->DetalhesModel->load_single_contato($idObj);
+            $dataF['registros'] = $this->pesquisaAVD->envolvidoPessoas($idObj);
+        }else
+        if($typeData == 'addr'){
+            $dataF[0] =  $this->DetalhesModel->load_single_addr($idObj);
+            $dataF['registros'] = $this->pesquisaAVD->envolvidoEndereco($idObj);
+        }
+
+         //var_dump($dataF[0]);
 
 
-
-        $this->load->library('word');
-
-       setlocale( LC_ALL, 'pt_BR', 'pt_BR.iso-8859-1', 'pt_BR.utf-8', 'portuguese' );
+        setlocale( LC_ALL, 'pt_BR', 'pt_BR.iso-8859-1', 'pt_BR.utf-8', 'portuguese' );
 
         date_default_timezone_set( 'America/Sao_Paulo' );  
+
 
 
         $dataGeracao = date("d/m/Y H:i:s ");
@@ -322,24 +336,8 @@ class Pesquisa_avancada extends CI_Controller {
 
         ////Codigo contendo os dados a serem impressos no documento word...
 
-        //Data inicial...
-        $dataTemp1 = explode("/", $dataDateI);
-        $dia1 = $dataTemp1[0];
-        $mes1 = $dataTemp1[1];
-        $ano1 = $dataTemp1[2];
-        $dataFinal1 = $ano1."/".$mes1."/".$dia1;
 
-        //Data final...
-        $dataTemp2 = explode("/", $dataDateF);
-        $dia2 = $dataTemp2[0];
-        $mes2 = $dataTemp2[1];
-        $ano2 = $dataTemp2[2];
-        $dataFinal2 = $ano2."/".$mes2."/".$dia2;
-
-        $dataIni = $dataFinal1;
-        $dataFim = $dataFinal2; 
-
-        $dataRelatorio = $this->relatorio->load_documentos($dataDateI ,$dataDateF, $id_estado_dest);
+        $dataRelatorio = $dataF['registros'];
 
         $dadosArray = array( );
 
@@ -409,32 +407,17 @@ class Pesquisa_avancada extends CI_Controller {
             array_push($dadosArray , $dataDocumento);
         }
 
-        $dados['totalOcorrencias'] = $this->relatorio->total_ocorrencias($dataDateI ,$dataDateF, $id_estado_dest);
-
-        $dados['totalVeiculos'] = $this->relatorio->total_veiculos_relatorio($dataDateI ,$dataDateF, $id_estado_dest);
-        
-        $dados['totalDepositos'] = $this->relatorio->total_depositos($dataDateI ,$dataDateF ,$id_estado_dest);
-        
-        $dados['totalCaminhao'] = $this->relatorio->total_veiculos_caminhao_relatorio($dataDateI ,$dataDateF, $id_estado_dest);
-        
-        $dados['totalOnibus'] = $this->relatorio->total_veiculos_onibus_relatorio($dataDateI ,$dataDateF ,$id_estado_dest);
-
-        $dados['totalDetidos'] = $this->relatorio->total_detidos($dataDateI ,$dataDateF ,$id_estado_dest); 
-
-        $caixasCigarros = $this->relatorio->total_caixa_cigarros($dataDateI ,$dataDateF ,$id_estado_dest);
-        $cigarrosWsr = $this->relatorio->total_caixa_cigarros_wrs($dataDateI ,$dataDateF ,$id_estado_dest);
-
-        $dados['totalCxCigarros'] = $caixasCigarros[0]->qty + $cigarrosWsr[0]->quantidade_deposito;
-
-        $dados['estadoDestino'] = $estadoDest;
-        $dados['relatorioIni'] = $dataDateI; 
-        $dados['relatorioFim'] = $dataDateF;
+        $dados['tipoObj'] = $typeData;
+        $dados['extra'] = $dataF[0];
         $dados['conteudo'] = $dadosArray;
+
+       // var_dump($dados['extra']);
+
        // $this->load->view('pesquisa/gera_relatorio_final_view', $dadosArray);
 
         ////////////////// Manda os dados gerados para serem tranformardos em .doc ///////////////////////
 
-       $htmlRelatorio =  $this->load->view('pesquisa/gera_relatorio_final_view', $dados);
+       $htmlRelatorio =  $this->load->view('pesquisa/gera_relatorio_individual_view', $dados);
       
 
       new Word($htmlRelatorio);

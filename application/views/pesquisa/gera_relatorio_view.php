@@ -133,7 +133,7 @@ $().ready(function() {
                                 <br>
                                 <br>
                                 
-                               <input type="submit" name="Visualizar" value="Vizualizar Relatorio" />
+                               <input class="btn" type="submit" name="Visualizar" value="Vizualizar Relatorio" />
                         </form>
 
                 </div>

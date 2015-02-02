@@ -74,19 +74,19 @@
                 	<p>Pesquisa de pessoas por nome / CPF / rg / passaporte / mãe / pai</p>
                 	<form>
                 		<input id="palavra_chave" type="text"/> 
-                		<input type="button" value="buscar" name="efetuar_busca" onclick="mostraBuscaPessoas(palavra_chave.value)">
+                		<input class="btn" type="button" value="buscar" name="efetuar_busca" onclick="mostraBuscaPessoas(palavra_chave.value)">
                 	</form>
 
                 	<p>Pesquisa de veiculos por placa/chassi/renavan</p>
                 	<form>
                 		<input id="palavra_chave" type="text"/> 
-                		<input type="button" value="buscar" name="efetuar_busca" onclick="mostraBuscaVeiculos(palavra_chave.value)">
+                		<input class="btn" type="button" value="buscar" name="efetuar_busca" onclick="mostraBuscaVeiculos(palavra_chave.value)">
                 	</form>
 
                 	<p>Pesquisa de endereços/Bairro/Cep</p>
                 	<form>
                 		<input id="palavra_chave" type="text"/> 
-                		<input type="button" value="buscar" name="efetuar_busca" onclick="mostraBuscaEnderecos(palavra_chave.value)">
+                		<input class="btn" type="button" value="buscar" name="efetuar_busca" onclick="mostraBuscaEnderecos(palavra_chave.value)">
                 	</form>
 
                 	<br>

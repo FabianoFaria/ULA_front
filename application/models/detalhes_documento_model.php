@@ -48,7 +48,9 @@ class Detalhes_documento_model extends CI_Model {
        // $this->db->join('tbl_wrs_addr', 'tbl_addr.ID_addr ='.$idRow);
         //$this->db->join('tbl_wrs_addr', 'tbl_wrs_addr.id_addr != tbl_addr.ID_addr');
         //$this->db->where('tbl_addr.ID_addr !=','tbl_wrs_addr.id_addr');
-        $this->db->where('ROW_ID', $idRow); 
+        $this->db->join('tbl_main', 'tbl_main.CHILD_ID = tbl_addr.ID_addr');
+        $this->db->where('tbl_main.parent_id', $idRow);
+        //$this->db->where('ROW_ID', $idRow); 
     	$endereco =	$this->db->get('tbl_addr');
 
     	return $endereco->result();
@@ -58,7 +60,9 @@ class Detalhes_documento_model extends CI_Model {
     {
        $this->db->select('tbl_addr.ID_addr, tbl_addr.ROW_ID, tbl_addr.address, tbl_addr.nunber, tbl_addr.complement, tbl_addr.district, tbl_addr.city, tbl_addr.state, tbl_addr.zipcode, tbl_addr.country');
        $this->db->join('tbl_main', 'tbl_main.CHILD_ID = tbl_addr.ID_addr');
-       $this->db->where('tbl_addr.ROW_ID', $idRow); 
+       //$this->db->where('tbl_addr.ROW_ID', $idRow);
+       $this->db->where('tbl_main.CHILD_TBL', 'tbl_addr'); 
+       $this->db->where('tbl_main.parent_id', $idRow); 
        $endereco = $this->db->get('tbl_addr');
 
        return $endereco->result();
@@ -103,7 +107,11 @@ class Detalhes_documento_model extends CI_Model {
         $this->db->join('tbl_tipo_veiculo','tbl_tipo_veiculo.tpve_cod = tbl_vehicle.category', 'left');
         $this->db->join('tbl_marcas','tbl_marcas.marc_cod = tbl_vehicle.brand', 'left');
         $this->db->join('tbl_modelos','tbl_modelos.mode_cod = tbl_vehicle.model', 'left');
-    	$this->db->where('tbl_vehicle.ROW_ID', $idRow);
+        $this->db->join('tbl_main','tbl_main.CHILD_ID = tbl_vehicle.ID_vehicle');
+        $this->db->where('tbl_main.parent_id', $idRow);
+        $this->db->where('tbl_main.CHILD_TBL','tbl_vehicle');
+
+        //$this->db->where('tbl_vehicle.ROW_ID', $idRow);
         $automoveis = $this->db->get('tbl_vehicle');
 
         //var_dump($automoveis);
@@ -120,19 +128,153 @@ class Detalhes_documento_model extends CI_Model {
         $this->db->join('tbl_unidade_medidas','tbl_unidade_medidas.id_unidade_medida = tbl_haul.unit', 'left');
     	$mercadorias = $this->db->get_where('tbl_haul', array('ROW_ID' => $idRow));
     	return $mercadorias->result();
+    } 
+
+    public function carregarContatoNome($nomeBuscar)
+    {
+        $this->db->select('*');
+        $this->db->from('tbl_contact');
+        $this->db->like('name', $nomeBuscar);
+        $contato = $this->db->get();
+        return $contato->result();
+
     }
 
     public function carregarContatoCpf($cpfBuscar)
     {
         $this->db->select('*');
         $this->db->from('tbl_contact');
-        $this->db->where('CPF', $cpfBuscar);
+        $this->db->where('CPF', $cpfBuscar); 
         $contato = $this->db->get();
         return $contato->result();
 
     }
 
-    public function carregarContatoCompleto($id_Contato)
+    public function carregarContatoRg($rgBuscar)
+    {
+        $this->db->select('*');
+        $this->db->from('tbl_contact');
+        $this->db->where('rg', $rgBuscar); 
+        $contato = $this->db->get();
+        return $contato->result();
+
+    }
+
+    public function carregarContatoPass($passBuscar)
+    {
+        $this->db->select('*');
+        $this->db->from('tbl_contact');
+        $this->db->where('passport', $passBuscar); 
+        $contato = $this->db->get();
+        return $contato->result();
+    }
+
+    public function carregarContatoPai($paiBuscar)
+    {
+        $this->db->select('*');
+        $this->db->from('tbl_contact');
+        $this->db->like('father', $paiBuscar);
+        $contato = $this->db->get();
+        return $contato->result();
+    }
+
+    public function carregarContatoMae($maeBuscar)
+    {
+        $this->db->select('*');
+        $this->db->from('tbl_contact');
+        $this->db->like('mother', $maeBuscar);
+        $contato = $this->db->get();
+        return $contato->result();
+    }
+
+    public function carregarVeiculoChassi($chassi) 
+    {
+        $this->db->select('*');
+        $this->db->from('tbl_vehicle');
+        $this->db->join('tbl_marcas','tbl_marcas.marc_cod = tbl_vehicle.brand' , 'left');
+        $this->db->join('tbl_modelos','tbl_modelos.mode_cod = tbl_vehicle.model', 'left');
+        $this->db->join('tbl_cidades','tbl_cidades.id = tbl_vehicle.city', 'left');
+        $this->db->join('tbl_estados','tbl_estados.id_estado = tbl_vehicle.state', 'left');
+        $this->db->where('chassi', $chassi);
+        $contato = $this->db->get();
+        return $contato->result();
+    }
+
+    public function carregarVeiculoRenavan($renavan)
+    {
+        $this->db->select('*');
+        $this->db->from('tbl_vehicle');
+        $this->db->join('tbl_marcas','tbl_marcas.marc_cod = tbl_vehicle.brand' , 'left');
+        $this->db->join('tbl_modelos','tbl_modelos.mode_cod = tbl_vehicle.model', 'left');
+        $this->db->join('tbl_cidades','tbl_cidades.id = tbl_vehicle.city', 'left');
+        $this->db->join('tbl_estados','tbl_estados.id_estado = tbl_vehicle.state', 'left');
+        $this->db->where('renavan', $renavan);
+        $contato = $this->db->get();
+        return $contato->result();
+    }
+
+    public function carregarVeiculoPlaca($placa)
+    {
+        $this->db->select('*');
+        $this->db->from('tbl_vehicle');
+        $this->db->join('tbl_marcas','tbl_marcas.marc_cod = tbl_vehicle.brand' , 'left');
+        $this->db->join('tbl_modelos','tbl_modelos.mode_cod = tbl_vehicle.model', 'left');
+        $this->db->join('tbl_cidades','tbl_cidades.id = tbl_vehicle.city', 'left');
+        $this->db->join('tbl_estados','tbl_estados.id_estado = tbl_vehicle.state', 'left');
+        $this->db->where('placa', $placa);
+        $contato = $this->db->get();
+        return $contato->result();
+    }
+
+    public function carregarVeiculoPlacaEx($placa)
+    {
+        $this->db->select('*');
+        $this->db->from('tbl_vehicle');
+        $this->db->join('tbl_marcas','tbl_marcas.marc_cod = tbl_vehicle.brand' , 'left');
+        $this->db->join('tbl_modelos','tbl_modelos.mode_cod = tbl_vehicle.model', 'left');
+        $this->db->join('tbl_cidades','tbl_cidades.id = tbl_vehicle.city', 'left');
+        $this->db->join('tbl_estados','tbl_estados.id_estado = tbl_vehicle.state', 'left');
+        $this->db->where('placa_extra', $placa);
+        $contato = $this->db->get();
+        return $contato->result();
+    }
+
+    public function carregarVeiculoPlacaEx2($placa)
+    {
+        $this->db->select('*');
+        $this->db->from('tbl_vehicle');
+        $this->db->join('tbl_marcas','tbl_marcas.marc_cod = tbl_vehicle.brand' , 'left');
+        $this->db->join('tbl_modelos','tbl_modelos.mode_cod = tbl_vehicle.model', 'left');
+        $this->db->join('tbl_cidades','tbl_cidades.id = tbl_vehicle.city', 'left');
+        $this->db->join('tbl_estados','tbl_estados.id_estado = tbl_vehicle.state', 'left');
+        $this->db->where('placa_extra2', $placa);
+        $contato = $this->db->get();
+        return $contato->result();
+    }
+
+    public function carregarEnderecoLogradouro($logradouro)
+    {
+        $this->db->select('*');
+        $this->db->from('tbl_addr');
+        $this->db->join('tbl_cidades','tbl_cidades.id = tbl_addr.city', 'left');
+        $this->db->join('tbl_estados','tbl_estados.id_estado = tbl_addr.state', 'left');
+        $this->db->like('address', $logradouro);
+        $contato = $this->db->get();
+        return $contato->result();
+    }
+
+    public function carregarEnderecoCep($cep)
+    {
+        $this->db->select('*');
+        $this->db->from('tbl_addr');
+        $this->db->join('tbl_cidades','tbl_cidades.id = tbl_addr.city', 'left');
+        $this->db->join('tbl_estados','tbl_estados.id_estado = tbl_addr.state', 'left');
+        $this->db->like('zipcode', $cep);
+        $contato = $this->db->get();
+        return $contato->result();
+    }
+
+    public function carregarContatoCompleto($id_Contato) 
     {
        // $this->db->select('tbl_contact.ID_contact, tbl_contact.name, tbl_contact.genre, tbl_contact.CPF, tbl_contact.rg, tbl_contact.passport,
        //     tbl_contact.passport, tbl_contact.profession, tbl_contact.father, tbl_contact.mother, tbl_contact.mother, tbl_contact.birth_dt,
@@ -152,6 +294,32 @@ class Detalhes_documento_model extends CI_Model {
         //var_dump($contatoCompleto->result());
 
         return $contatoCompleto->result();
+    }
+
+    public function carregarVeiculoCompleto($id_veiculo) 
+    {
+       $this->db->select('*');
+       $this->db->from('tbl_vehicle');
+       $this->db->join('tbl_tipo_veiculo','tbl_tipo_veiculo.tpve_cod = tbl_vehicle.category', 'left');
+       $this->db->join('tbl_marcas','tbl_marcas.marc_cod = tbl_vehicle.brand' , 'left');
+       $this->db->join('tbl_modelos','tbl_modelos.mode_cod = tbl_vehicle.model', 'left');
+       $this->db->join('tbl_estados', 'tbl_estados.id_estado = tbl_vehicle.state', 'left');
+       $this->db->join('tbl_cidades', 'tbl_cidades.id = tbl_vehicle.city', 'left');
+       $this->db->where('ID_vehicle', $id_veiculo);
+       $veiculoCompleto = $this->db->get();
+
+        return $veiculoCompleto->result();
+    }
+
+    public function completarEnderecoForm($id_endereco)
+    {
+       $this->db->select('*');
+       $this->db->from('tbl_addr');
+       $this->db->join('tbl_estados', 'tbl_estados.id_estado = tbl_addr.state', 'left');
+       $this->db->join('tbl_cidades', 'tbl_cidades.id = tbl_addr.city', 'left');
+       $this->db->where('ID_addr', $id_endereco);
+       $enderecoCompleto = $this->db->get();
+       return $enderecoCompleto->result();
     }
 
     public function cidadeNasci($id)
@@ -176,9 +344,6 @@ class Detalhes_documento_model extends CI_Model {
         $this->db->where('tbl_main.CHILD_TBL','tbl_contact');
         $envolvidos = $this->db->get();
         return $envolvidos->result();
-
-
-
     }
 
     public function load_Armazem($idRow)
@@ -238,9 +403,14 @@ class Detalhes_documento_model extends CI_Model {
         return $haul->result();
     }
 
-    public function load_single_addr()
+    public function load_single_addr($id_addr)
     {
-        
+        $this->db->select('*');
+        $this->db->join('tbl_cidades','tbl_cidades.id = tbl_addr.city', 'left');
+        $this->db->join('tbl_estados','tbl_estados.id_estado = tbl_addr.state', 'left');
+        $this->db->where('tbl_addr.ID_addr', $id_addr);
+        $addr = $this->db->get('tbl_addr');
+        return $addr->result();
     }
 
     public function load_single_wrs($id_wrs)

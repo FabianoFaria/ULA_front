@@ -22,14 +22,14 @@
         $idObjeto = $extra[0]->ID_contact;
         $tipoDado = "Pessoa";
     }
-    if(!empty($extra[0]->ID_))
+    if(!empty($extra[0]->ID_addr))
     {
         $idObjeto = $extra[0]->ID_addr;
-        $tipoDado = "Endereço";
+        $tipoDado = "addr";
     }
 
-    
-
+    //var_dump($extra);
+    //var_dump($conteudo);
 
 ?>
 
@@ -37,12 +37,93 @@
 <div class="row sem_margin lista-ipls">
     <div class="col-md-12 col-sm-12 col-xs-12 main-menu">
 
-        <h2>Exibição do relatório</h2>
+
+        <?php
+
+         if(!empty($extra[0]->ID_vehicle))
+        {
+            
+        ?>
+        <h2>Dados do veículo</h2>
+
+        <p>Tipo do veículo :<?php echo $extra[0]->tpve_nome;  ?></p>
+        <p>Marca do veículo : <?php echo $extra[0]->marc_nome;  ?></p>
+        <p>Modelo do veículo : <?php echo $extra[0]->model;  ?></p>
+        <p>Placa :<?php echo $extra[0]->placa;  ?></p>
+        <p>Placa adicional:<?php echo $extra[0]->placa_extra;  ?></p>
+        <p>Placa adicional:<?php echo $extra[0]->placa_extra2;  ?></p>
+        <p>Chassi :<?php echo $extra[0]->chassi;  ?></p>
+        <p>Renavan :<?php echo $extra[0]->renavan;  ?></p>
+        <p>Estado da placa :<?php echo $extra[0]->nome_estado;  ?></p>
+        <p>Cidade da placa :<?php echo $extra[0]->nome;  ?></p>
+        <?php
+
+        }
+        if(!empty($extra[0]->ID_contact))
+        {
+           
+            //Data final...
+            $dataTemp2 = explode("-", $extra[0]->birth_dt);
+            $dia2 = $dataTemp2[0];
+            $mes2 = $dataTemp2[1];
+            $ano2 = $dataTemp2[2];
+            $dataFinal2 = $ano2."/".$mes2."/".$dia2;
+
+
+        ?>
+        <h2>Dados do indivíduo</h2>    
+
+        <p>Nome do indivíduo :<?php echo $extra[0]->name;  ?></p>
+        <p>Data de nascimento : <?php echo $dataFinal2; ?></p>
+        <p>Gênero : <?php if($extra[0]->genre = 'F'){echo "Feminino";} else{echo "Masculino";} ?></p>
+        <p>None do pai :<?php echo $extra[0]->father;  ?></p>
+        <p>Nome da mâe :<?php echo $extra[0]->mother;  ?></p>
+        <p>Rg :<?php echo $extra[0]->rg;  ?></p>
+        <p>CPF :<?php echo $extra[0]->CPF;  ?></p>
+
+
+        <?php
+
+        }
+        if(!empty($extra[0]->ID_addr))
+        {
+           
+
+        ?>
+        <h2>Dados do endereço</h2>    
+
+        <p>Endereço :<?php echo $extra[0]->address;  ?></p>
+        <p>Número : <?php echo $extra[0]->nunber;  ?></p>
+        <p>Complemento : <?php echo $extra[0]->complement;  ?></p>
+        <p>Bairro :<?php echo $extra[0]->district;  ?></p>
+        <p>CEP :<?php echo $extra[0]->zipcode;  ?></p>
+        <p>Cidade :<?php echo $extra[0]->nome;  ?></p>
+        <p>UF :<?php echo $extra[0]->nome_estado;  ?></p>
+
+        <?php
+        }
+
+
+        ?>
+
+
+        <h3><a class="btn btn-primary btn-lg" href="<?php echo base_url("/index.php/pesquisar_documento"); ?>">Nova pesquisa</a></h3>
+
+        <hr>
+
+
+        <h2>Relação de ocorrências</h2>
 
         <div class="row">
     
                     
         <?php
+
+            foreach ($conteudo as $key ) {
+               //var_dump($key);
+               //$indec++;
+            }
+
 
 
             foreach ($conteudo as $ocorrencia) {
@@ -259,9 +340,10 @@
             <form id="gerar_doc" action="<?php echo base_url() ?>index.php/pesquisa/pesquisa_avancada/gera_relatorio_individual" method="post">
                 <input type="hidden" name="idObjeto" value="<?php echo $idObjeto; ?>">
                 <input type="hidden" name="tipoDado" value="<?php echo $tipoDado; ?>">
-                <input type="submit" value="gerar . DOC">
+                <input class="btn" type="submit" value="Gerar .Doc">
             </form>
-
+            <br>
+            <br>
 
         </div> <!-- Fim do row do inicio do relatorio -->
 

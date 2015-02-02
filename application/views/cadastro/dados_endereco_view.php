@@ -54,6 +54,168 @@ $().ready(function() {
     });
 	
 });
+
+
+	//Funções para recuperar endereço
+
+	$(function () {
+
+	 pathArray = window.location.href.split( '/' );
+     protocol = pathArray[0];
+     host = pathArray[2];
+     urlP = protocol + '//' + host;
+
+
+     // Função para carregar contato por nome 
+    	$("#endereco").keyup(function (e) {
+    	 e.preventDefault();
+        var that = this,
+        value = $(this).val();
+
+        	$.ajax({
+             url: urlP+"/ULA_front2/index.php/login/detalhes_documento/buscarEnderecoLogradouro",
+             secureuri: false,
+             type : "POST",
+             dataType  :'json',
+             data      : {
+              'search_keyword' : value
+              },
+                   success : function(datra)
+                    {
+                       //tempTest = JSON(datra);
+
+                       if(datra.status != 'vazio')
+                       {
+                       		var endereco = datra.endereco;
+
+                       	  $('#cadastroEndereco').html("Endereço cadastrado no sistema <a href='javascript:void(0);' onClick='completarEndereco("+endereco.ID_addr+")'>"+endereco.address+"</a>");
+                       }
+                       else
+                       {
+                       	 $('#cadastroEndereco').html("");
+                       }	
+
+                    },
+                   error: function(jqXHR, textStatus, errorThrown)
+                    {
+                    // Handle errors here
+                    console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+                    // STOP LOADING SPINNER
+                    }
+
+        });
+        return false;
+
+    });
+    //Fim da função para carregar por nome 
+
+    //Inicio da função de busca por CEP
+
+    	// Função para carregar contato por nome 
+    	$("#cep").keyup(function (e) {
+    	 e.preventDefault();
+        var that = this,
+        value = $(this).val();
+
+        	$.ajax({
+             url: urlP+"/ULA_front2/index.php/login/detalhes_documento/buscarEnderecoCep",
+             secureuri: false,
+             type : "POST",
+             dataType  :'json',
+             data      : {
+              'search_keyword' : value
+              },
+                   success : function(datra)
+                    {
+                       //tempTest = JSON(datra);
+
+                       if(datra.status != 'vazio')
+                       {
+                       		var endereco = datra.endereco;
+
+                       	  $('#cepEndereco').html("Endereço cadastrado no sistema <a href='javascript:void(0);' onClick='completarEndereco("+endereco.ID_addr+")'>"+endereco.address+"</a>");
+                       }
+                       else
+                       {
+                       	 $('#cepEndereco').html("");
+                       }	
+
+                    },
+                   error: function(jqXHR, textStatus, errorThrown)
+                    {
+                    // Handle errors here
+                    console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+                    // STOP LOADING SPINNER
+                    }
+
+        });
+        return false;
+
+    });
+    //Fim da função para carregar por nome 
+
+    //Fim da função de busca por cep 
+
+ 	});
+
+	//Fim das funções de busca 
+
+// Inicio da função de completar o endereço 
+
+function completarEndereco(IDaddr)
+{
+	pathArray = window.location.href.split( '/' );
+     protocol = pathArray[0];
+     host = pathArray[2];
+     urlP = protocol + '//' + host;
+
+	$.ajax({
+      url: urlP+"/ULA_front2/index.php/login/detalhes_documento/completarEnderecoForm",
+      secureuri: false,
+      type : "POST",
+      dataType  :'json',
+      data      : {
+        'ID_addr' : IDaddr
+       },
+    success : function(dataAddr){
+	       //tempTest = JSON(datra);
+
+	       if(dataAddr.status != 'vazio') 
+	       {
+	         var enderecoFull = dataAddr.endereco;
+
+	         $('#addr_id').val(enderecoFull.ID_addr);
+
+	         $('#estado_apr').val(enderecoFull.state);
+	         $('#cidade_apr').html('<option value="'+enderecoFull.city+'">'+enderecoFull.nome+'</option>');
+
+	         $('#endereco').val(enderecoFull.address);
+	         $('#numero_addr').val(enderecoFull.nunber); 
+	         $('#complemento').val(enderecoFull.complement);
+	         $('#bairro').val(enderecoFull.district);
+	         $('#cep').val(enderecoFull.zipcode);
+
+	       }
+	        else
+	       {
+	        $('#contatoCad').html("");
+	       }
+   	},
+    error: function(jqXHR, textStatus, errorThrown)
+    {
+    // Handle errors here
+      console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+    // STOP LOADING SPINNER
+    }
+
+}); return false;
+
+}
+
+// Fim da função de completar o endereço 
+
+
+
 </script>
 <div class="row sem_margin">
 
@@ -291,27 +453,27 @@ $().ready(function() {
 			<div class="error"><?php echo form_error('cidade_apr'); ?></div>
 
 			<label for="endereco">Endereço da ocorrencia:</label><br/>
-				<input type="text" name="endereco" id="endereco" value="<?php echo $logradouro; ?>"/>
+				<input type="text" name="endereco" id="endereco" value="<?php echo $logradouro; ?>"/> <span id="cadastroEndereco"></span>
 			<div class="error"><?php echo form_error('endereco'); ?></div>
 
 			<label for="numero_addr">Número:</label><br/>
-			<input type="text" name="numero_addr" value="<?php echo $numero; ?>"/>
+			<input id="numero_addr" type="text" name="numero_addr" value="<?php echo $numero; ?>"/>
 			<div class="error"><?php echo form_error('numero_addr'); ?></div>
 
 			<label for="complemento">Complemento:</label><br/>
-			<input type="text" name="complemento" value="<?php echo $complemento; ?>"/>
+			<input id="complemento" type="text" name="complemento" value="<?php echo $complemento; ?>"/>
 			<div class="error"><?php echo form_error('complemento'); ?></div>
 
 			<label for="bairro">Bairro:</label><br/>
-			<input type="text" name="bairro" value="<?php echo $bairro; ?>"/>
+			<input id="bairro" type="text" name="bairro" value="<?php echo $bairro; ?>"/>
 			<div class="error"><?php echo form_error('bairro'); ?></div>
 
 			<label for="CEP">CEP:</label><br/>
-			<input type="text" name="CEP" value="<?php echo $CEP; ?>"/>
+			<input id="cep" type="text" name="CEP" value="<?php echo $CEP; ?>"/><span id="cepEndereco"></span>
 			<div class="error"><?php echo form_error('CEP'); ?></div>
 
-			<input type="hidden" name="Row_id" value="<?php echo  $ROW_id;  ?>"/>
-			<input type="hidden" name="Addr_id" value="<?php echo  $ID_addr;  ?>"/>
+			<input id="row-id" type="hidden" name="Row_id" value="<?php echo  $ROW_id;  ?>"/>
+			<input id="addr_id" type="hidden" name="Addr_id" value="<?php echo  $ID_addr;  ?>"/>
 
 
 			<input type="submit" name="Cadastrar" value="Atualizar endereço da ocorrencia" />

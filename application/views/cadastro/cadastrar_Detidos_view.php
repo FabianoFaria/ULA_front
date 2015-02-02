@@ -159,13 +159,58 @@ $(function () {
 
     var minlength = 3;
 
+    // Função para carregar contato por nome 
+    	$("#nomeD").keyup(function (e) {
+    	 e.preventDefault();
+        var that = this,
+        value = $(this).val();
+
+        	$.ajax({
+             url: urlP+"/ULA_front2/index.php/login/detalhes_documento/buscarContatoNome",
+             secureuri: false,
+             type : "POST",
+             dataType  :'json',
+             data      : {
+              'search_keyword' : value
+              },
+                   success : function(datra)
+                    {
+                       //tempTest = JSON(datra);
+
+                       if(datra.status != 'vazio')
+                       {
+                       		var contato = datra.contato;
+
+                       	  $('#contatoCadNome').html("Detidos cadastrados no sistema <a href='javascript:void(0);' onClick='completarContato("+contato.ID_contact+")'>"+contato.name+"</a>");
+                       }
+                       else
+                       {
+                       	 $('#contatoCadNome').html("");
+                       }	
+
+                    },
+                   error: function(jqXHR, textStatus, errorThrown)
+                    {
+                    // Handle errors here
+                    console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+                    // STOP LOADING SPINNER
+                    }
+
+        });
+        return false;
+
+    });
+    //Fim da função para carregar por nome 
+
+    // Função para carragar contato por CPF
+
     $("#CPF").keyup(function (e) {
     	 e.preventDefault();
         var that = this,
         value = $(this).val();
 
         	$.ajax({
-             url: urlP+"/sis/index.php/login/detalhes_documento/buscarContatoCPF",
+             url: urlP+"/ULA_front2/index.php/login/detalhes_documento/buscarContatoCPF",
              secureuri: false,
              type : "POST",
              dataType  :'json',
@@ -199,8 +244,187 @@ $(function () {
         return false;
 
     });
+	// Fim função para carragar contato por CPF
     
+    // Inicio da função de busca por rg
 
+    $("#rg").keyup(function (e) {
+    	 e.preventDefault();
+        var that = this,
+        value = $(this).val();
+
+        	$.ajax({
+             url: urlP+"/ULA_front2/index.php/login/detalhes_documento/buscarContatoRg",
+             secureuri: false,
+             type : "POST",
+             dataType  :'json',
+             data      : {
+              'search_keyword' : value
+              },
+                   success : function(datra)
+                    {
+                       //tempTest = JSON(datra);
+
+                       if(datra.status != 'vazio')
+                       {
+                       		var contato = datra.contato;
+
+                       	  $('#contatoCadRg').html("Detidos cadastrados no sistema <a href='javascript:void(0);' onClick='completarContato("+contato.ID_contact+")'>"+contato.name+"</a>");
+                       }
+                       else
+                       {
+                       	 $('#contatoCadRg').html("");
+                       }	
+
+                    },
+                   error: function(jqXHR, textStatus, errorThrown)
+                    {
+                    // Handle errors here
+                    console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+                    // STOP LOADING SPINNER
+                    }
+
+        });
+        return false;
+
+    });	
+
+    // Fim da função de busca por rg... contatoCadPass
+
+    //Função de busca ppor passaporte
+    $("#passaporte").keyup(function (e) {
+    	 e.preventDefault();
+        var that = this,
+        value = $(this).val();
+
+        	$.ajax({
+             url: urlP+"/ULA_front2/index.php/login/detalhes_documento/buscarContatoPass",
+             secureuri: false,
+             type : "POST",
+             dataType  :'json',
+             data      : {
+              'search_keyword' : value
+              },
+                   success : function(datra)
+                    {
+                       //tempTest = JSON(datra);
+
+                       if(datra.status != 'vazio')
+                       {
+                       		var contato = datra.contato;
+
+                       	  $('#contatoCadPass').html("Detidos cadastrados no sistema <a href='javascript:void(0);' onClick='completarContato("+contato.ID_contact+")'>"+contato.name+"</a>");
+                       }
+                       else
+                       {
+                       	 $('#contatoCadPass').html("");
+                       }	
+
+                    },
+                   error: function(jqXHR, textStatus, errorThrown)
+                    {
+                    // Handle errors here
+                    console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+                    // STOP LOADING SPINNER
+                    }
+
+        });
+        return false;
+
+    });	
+
+    //Fim da função por passaporte
+
+    //Inicio funcao busca por pai
+
+    	$("#nome_pai").keyup(function (e) {
+    	 e.preventDefault();
+        var that = this,
+        value = $(this).val();
+
+        	$.ajax({
+             url: urlP+"/ULA_front2/index.php/login/detalhes_documento/buscarContatoPai",
+             secureuri: false,
+             type : "POST",
+             dataType  :'json',
+             data      : {
+              'search_keyword' : value
+              },
+                   success : function(datra)
+                    {
+                       //tempTest = JSON(datra);
+
+                       if(datra.status != 'vazio')
+                       {
+                       		var contato = datra.contato;
+
+                       	  $('#contatoCadPai').html("Detidos cadastrados no sistema <a href='javascript:void(0);' onClick='completarContato("+contato.ID_contact+")'>"+contato.name+"</a>");
+                       }
+                       else
+                       {
+                       	 $('#contatoCadPai').html("");
+                       }	
+
+                    },
+                   error: function(jqXHR, textStatus, errorThrown)
+                    {
+                    // Handle errors here
+                    console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+                    // STOP LOADING SPINNER
+                    }
+
+        });
+        return false;
+
+    });	
+
+    //Fim função busca por pai 
+
+    //Inicio funcao busca por mae 
+
+    	$("#nome_mae").keyup(function (e) {
+    	 e.preventDefault();
+        var that = this,
+        value = $(this).val();
+
+        	$.ajax({
+             url: urlP+"/ULA_front2/index.php/login/detalhes_documento/buscarContatoMae",
+             secureuri: false,
+             type : "POST",
+             dataType  :'json',
+             data      : {
+              'search_keyword' : value
+              },
+                   success : function(datra)
+                    {
+                       //tempTest = JSON(datra);
+
+                       if(datra.status != 'vazio')
+                       {
+                       		var contato = datra.contato;
+
+                       	  $('#contatoCadMae').html("Detidos cadastrados no sistema <a href='javascript:void(0);' onClick='completarContato("+contato.ID_contact+")'>"+contato.name+"</a>");
+                       }
+                       else
+                       {
+                       	 $('#contatoCadMae').html("");
+                       }	
+
+                    },
+                   error: function(jqXHR, textStatus, errorThrown)
+                    {
+                    // Handle errors here
+                    console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+                    // STOP LOADING SPINNER
+                    }
+
+        });
+        return false;
+
+    });	
+
+
+    //Fim função busca por mae
 });
 
 
@@ -213,7 +437,7 @@ function completarContato(IDContato)
      urlP = protocol + '//' + host;
 
 	$.ajax({
-      url: urlP+"/sis/index.php/login/detalhes_documento/completarContatoForm",
+      url: urlP+"/ULA_front2/index.php/login/detalhes_documento/completarContatoForm",
       secureuri: false,
       type : "POST",
       dataType  :'json',
@@ -276,7 +500,7 @@ function completarContato(IDContato)
 	         //inicio do espaço par recuperar cidade de nascimento
 
 	         $.ajax({
-             url: urlP+"/sis/index.php/login/detalhes_documento/buscarCidadeNasc",
+             url: urlP+"/ULA_front2/index.php/login/detalhes_documento/buscarCidadeNasc",
              secureuri: false,
              type : "POST",
              dataType  :'json',
@@ -344,7 +568,7 @@ function mostraCidades(str) {
 			document.getElementById("cidade_nascimento").innerHTML=xmlhttp.responseText;
 		}
 	}
-	xmlhttp.open("GET","<?php echo base_url(); ?>index.php/login/novo_documento/chamaCidade/"+str,true);
+	xmlhttp.open("GET","/ULA_front2/index.php/login/novo_documento/chamaCidade/"+str,true);
 	xmlhttp.send();
 	}
 
@@ -365,7 +589,7 @@ function mostraCidadesB(str) {
 			document.getElementById("cidade_apr").innerHTML=xmlhttp.responseText;
 		}
 	}
-	xmlhttp.open("GET","<?php echo base_url(); ?>index.php/login/novo_documento/chamaCidade/"+str,true);
+	xmlhttp.open("GET","/ULA_front2/index.php/login/novo_documento/chamaCidade/"+str,true);
 	xmlhttp.send();
 	}
 
@@ -570,7 +794,7 @@ function mostraCidadesB(str) {
 	   <?php echo form_open('login/novo_documento/cadastrar_envolvido', 'id="form-new-contact-ipl"'); ?>
 
 	   	<label for="nomeD">Nome do detido:</label><br/>
-		<input type="text" name="nomeD" id="nomeD" value="<?php echo $name; ?>"/>
+		<input type="text" name="nomeD" id="nomeD" value="<?php echo $name; ?>"/> <span id="contatoCadNome"></span>
 		<div class="error"><?php echo form_error('nomeD'); ?></div>
 
 		<br/>
@@ -583,12 +807,12 @@ function mostraCidadesB(str) {
 		<input type="text" name="CPF" id="CPF" value="<?php echo $CPF; ?>"/> <span id="contatoCad"></span>
 		<div class="error"></div>
 
-		<label for="rg">RG :</label><br/>
-		<input type="text" id="rg" name="rg" value="<?php echo $rg; ?>"/>
+		<label for="rg">RG :</label><br/> 
+		<input type="text" id="rg" name="rg" value="<?php echo $rg; ?>"/> <span id="contatoCadRg"></span>
 		<div class="error"><?php echo form_error('rg'); ?></div>
 
 		<label for="passaporte">Passaporte :</label><br/>
-		<input type="text" id="passaporte" name="passaporte" value="<?php echo $passport; ?>"/>
+		<input type="text" id="passaporte" name="passaporte" value="<?php echo $passport; ?>"/> <span id="contatoCadPass"></span>
 		<div class="error"><?php echo form_error('passaporte'); ?></div>
 
 		<label for="profissaoInst">Profissão e instrução :</label><br/>
@@ -596,11 +820,11 @@ function mostraCidadesB(str) {
 		<div class="error"></div>
 
 		<label for="nome_pai">Nome do pai :</label><br/>
-		<input type="text" id="nome_pai" name="nome_pai" value="<?php echo $father; ?>"/>
+		<input type="text" id="nome_pai" name="nome_pai" value="<?php echo $father; ?>"/> <span id="contatoCadPai"></span>
 		<div class="error"><?php echo form_error('nome_pai'); ?></div>
 
 		<label for="nome_mae">Nome do mãe :</label><br/>
-		<input type="text" id="nome_mae" name="nome_mae" value="<?php echo $mother; ?>"/>
+		<input type="text" id="nome_mae" name="nome_mae" value="<?php echo $mother; ?>"/> <span id="contatoCadMae"></span>
 		<div class="error"><?php echo form_error('nome_mae'); ?></div>
 
 		<label for="nascimento">Data de nascimento :</label><br/>

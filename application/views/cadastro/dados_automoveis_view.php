@@ -117,6 +117,314 @@ function mostraModelos2(str) {
 		xmlhttp.send();
 		}
 
+
+//Inicio das funçoes de busca 
+
+$(function () {
+
+	 pathArray = window.location.href.split( '/' );
+     protocol = pathArray[0];
+     host = pathArray[2];
+     urlP = protocol + '//' + host;
+
+
+    var minlength = 3;
+
+    // Função para carragar veículo por chassi
+
+    $("#chassi").keyup(function (e) {
+    	 e.preventDefault();
+        var that = this,
+        value = $(this).val();
+
+        	$.ajax({
+             url: urlP+"/ULA_front2/index.php/login/detalhes_documento/buscarVeiculoChassi",
+             secureuri: false,
+             type : "POST",
+             dataType  :'json',
+             data      : {
+              'search_keyword' : value
+              },
+                   success : function(datra)
+                    {
+                       //tempTest = JSON(datra);
+
+                       if(datra.status != 'vazio')
+                       {
+                       		var contato = datra.contato;
+
+                       	  $('#veiculoChassi').html("Veículo cadastrado no sistema <a href='javascript:void(0);' onClick='completarVeiculo("+contato.ID_vehicle+")'>Marca :"+contato.brand+", modelo :"+contato.model+", pLaca :"+contato.placa+"</a>");
+                       }
+                       else
+                       {
+                       	 $('#veiculoChassi').html("");
+                       }	
+
+                    },
+                   error: function(jqXHR, textStatus, errorThrown)
+                    {
+                    // Handle errors here
+                    console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+                    // STOP LOADING SPINNER
+                    }
+
+        });
+        return false;
+
+    });
+	// Fim função para carragar contato por chassi
+
+	// Função para carragar veículo por Renavan
+
+	$("#renavan").keyup(function (e) {
+    	 e.preventDefault();
+        var that = this,
+        value = $(this).val();
+
+        	$.ajax({
+             url: urlP+"/ULA_front2/index.php/login/detalhes_documento/buscarVeiculoRenavan",
+             secureuri: false,
+             type : "POST",
+             dataType  :'json',
+             data      : {
+              'search_keyword' : value
+              },
+                   success : function(datra)
+                    {
+                       //tempTest = JSON(datra);
+
+                       if(datra.status != 'vazio')
+                       {
+                       		var contato = datra.contato;
+
+                       	 $('#veiculoRenavan').html("Veículo cadastrado no sistema <a href='javascript:void(0);' onClick='completarVeiculo("+contato.ID_vehicle+")'>Marca :"+contato.brand+", modelo :"+contato.model+", pLaca :"+contato.placa+"</a>");
+                       }
+                       else
+                       {
+                       	 $('#veiculoRenavan').html("");
+                       }	
+
+                    },
+                   error: function(jqXHR, textStatus, errorThrown)
+                    {
+                    // Handle errors here
+                    console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+                    // STOP LOADING SPINNER
+                    }
+
+        });
+        return false;
+
+    });
+
+	// Fim função para carragar contato por Renavan
+
+	// Inicio função para carragar contato por placa
+
+	$("#placa_n").keyup(function (e) {
+    	 e.preventDefault();
+        var that = this,
+        value = $(this).val();
+
+        	$.ajax({
+             url: urlP+"/ULA_front2/index.php/login/detalhes_documento/buscarVeiculoPlaca",
+             secureuri: false,
+             type : "POST",
+             dataType  :'json',
+             data      : {
+              'search_keyword' : value
+              },
+                   success : function(datra)
+                    {
+                       //tempTest = JSON(datra);
+
+                       if(datra.status != 'vazio')
+                       {
+                       		var contato = datra.contato;
+
+                       	 $('#veiculoPlaca').html("Veículo cadastrado no sistema <a href='javascript:void(0);' onClick='completarVeiculo("+contato.ID_vehicle+")'>Marca :"+contato.brand+", modelo :"+contato.model+", pLaca :"+contato.placa+"</a>");
+                       }
+                       else
+                       {
+                       	 $('#veiculoPlaca').html(""); 
+                       }	
+
+                    },
+                   error: function(jqXHR, textStatus, errorThrown)
+                    {
+                    // Handle errors here
+                    console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+                    // STOP LOADING SPINNER
+                    }
+
+        });
+        return false;
+
+    });
+
+
+	// Fim função para carragar contato por placa  veiculoPlacaExtra2
+    
+    // Inicio função para carragar contato por placa extra
+
+    $("#placa_ex").keyup(function (e) { 
+    	 e.preventDefault();
+        var that = this,
+        value = $(this).val();
+
+        	$.ajax({
+             url: urlP+"/ULA_front2/index.php/login/detalhes_documento/buscarVeiculoPlacaEx",
+             secureuri: false,
+             type : "POST",
+             dataType  :'json',
+             data      : {
+              'search_keyword' : value
+              },
+                   success : function(datra)
+                    {
+                       //tempTest = JSON(datra);
+
+                       if(datra.status != 'vazio')
+                       {
+                       		var contato = datra.contato;
+
+                       	 $('#veiculoPlacaExtra').html("Veículo cadastrado no sistema <a href='javascript:void(0);' onClick='completarVeiculo("+contato.ID_vehicle+")'>Marca :"+contato.brand+", modelo :"+contato.model+", pLaca :"+contato.placa+"</a>");
+                       }
+                       else
+                       {
+                       	 $('#veiculoPlacaExtra').html(""); 
+                       }	
+
+                    },
+                   error: function(jqXHR, textStatus, errorThrown)
+                    {
+                    // Handle errors here
+                    console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+                    // STOP LOADING SPINNER
+                    }
+
+        });
+        return false;
+
+    });
+
+    // Fim função para carragar contato por placa extra
+
+    // Inicio função para carragar contato por placa extra 2
+
+    $("#placa_ex2").keyup(function (e) {
+    	 e.preventDefault();
+        var that = this,
+        value = $(this).val();
+
+        	$.ajax({
+             url: urlP+"/ULA_front2/index.php/login/detalhes_documento/buscarVeiculoPlacaEx2",
+             secureuri: false,
+             type : "POST",
+             dataType  :'json',
+             data      : {
+              'search_keyword' : value
+              },
+                   success : function(datra)
+                    {
+                       //tempTest = JSON(datra);
+
+                       if(datra.status != 'vazio')
+                       {
+                       		var contato = datra.contato;
+
+                       	 $('#veiculoPlacaExtra2').html("Veículo cadastrado no sistema <a href='javascript:void(0);' onClick='completarVeiculo("+contato.ID_vehicle+")'>Marca :"+contato.brand+", modelo :"+contato.model+", pLaca :"+contato.placa+"</a>");
+                       }
+                       else
+                       {
+                       	 $('#veiculoPlacaExtra2').html(""); 
+                       }	
+
+                    },
+                   error: function(jqXHR, textStatus, errorThrown)
+                    {
+                    // Handle errors here
+                    console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+                    // STOP LOADING SPINNER
+                    }
+
+        });
+        return false;
+
+    });
+
+
+    // Fim função para carragar contato por placa extra 2
+
+});
+
+// Fim da funções de busca...
+
+// Função para completar o cadastro 
+
+function completarVeiculo(IDVehicle)
+{
+	pathArray = window.location.href.split( '/' );
+     protocol = pathArray[0];
+     host = pathArray[2];
+     urlP = protocol + '//' + host;
+
+	$.ajax({
+      url: urlP+"/ULA_front2/index.php/login/detalhes_documento/completarVeiculoForm",
+      secureuri: false,
+      type : "POST",
+      dataType  :'json',
+      data      : {
+        'ID_vehicle' : IDVehicle
+       },
+    success : function(dataVeiculo){
+	       //tempTest = JSON(datra);
+
+	       if(dataVeiculo.status != 'vazio') 
+	       {
+	         var veiculo = dataVeiculo.veiculo;
+
+	         $('#id_auto').val(veiculo.ID_vehicle);
+
+	         $('#cat_veiculo').val(veiculo.category);
+	         $('#mark_veiculo').html('<option value="'+veiculo.brand+'">'+veiculo.marc_nome+'</option>');
+
+	         $('#modeloVei').val(veiculo.model);
+	         $('#cor_veiculo').val(veiculo.cor_veiculo); 
+	         $('#chassi').val(veiculo.chassi);
+	         $('#renavan').val(veiculo.renavan);
+	         $('#placa_n').val(veiculo.placa);
+	         $('#placa_ex').val(veiculo.placa_extra);
+	         $('#placa_ex2').val(veiculo.placa_extra2);
+
+	         $('#detalhes_veiculos').val(veiculo.detalhes_veiculos);
+
+	         $('#estado_veiculo').val(veiculo.state);
+	         //$('#cidade_nascimento').html('<option value="'+contato.birth_city+'">'+contato.nome+'</option>');
+
+	         //carregaCidadeNasci(contato.birth_city); 
+
+	         $('#listCidades').html('<option value="'+veiculo.city+'">'+veiculo.nome+'</option>'); 
+
+	         //inicio do espaço par recuperar cidade de nascimento
+
+	       }
+	        else
+	       {
+	        $('#contatoCad').html("");
+	       }
+   	},
+    error: function(jqXHR, textStatus, errorThrown)
+    {
+    // Handle errors here
+      console.log('ERRORS: ' + textStatus +" "+errorThrown+" "+jqXHR);
+    // STOP LOADING SPINNER
+    }
+
+}); return false;
+
+}
+
 </script>
 
 <div class="row sem_margin">
@@ -253,7 +561,7 @@ function mostraModelos2(str) {
 			   <?php echo form_open('login/novo_documento/cadatrar_veiculo', 'id="form-new-ipl"'); ?>
 
 				<label for="cat_veiculo">Categoria do veículo :</label><br/>
-					<select name="cat_veiculo" onchange="mostraMarcas2(this.value)">
+					<select id="cat_veiculo" name="cat_veiculo" onchange="mostraMarcas2(this.value)">
 
 						<?php
 
@@ -341,36 +649,36 @@ function mostraModelos2(str) {
 					<!--	<option value=" "> </option>
 					</select> --> 
 				<!-- input para o modelo do veiculo-->
-				<input type="text" name="mod_veiculo" value="<?php echo $nome_modelo; ?>"/>
+				<input id="modeloVei" type="text" name="mod_veiculo" value="<?php echo $nome_modelo; ?>"/>
 				<div class="error"></div>
 
 				<label for="cor_veiculo">Cor do veículo: </label><br/>
-				<input type="text" name="cor_veiculo" value="<?php echo $cor_veio; ?>"/>		
+				<input id="cor_veiculo" type="text" name="cor_veiculo" value="<?php echo $cor_veio; ?>"/>		
 				<div class="error"></div>
 
 
 				<label for="chassi">Chassi:</label><br/>
-				<input type="text" name="chassi" value="<?php echo $Chassi; ?>"/>
+				<input id="chassi" type="text" name="chassi" value="<?php echo $Chassi; ?>"/><span id="veiculoChassi"></span>
 				<div class="error"><?php echo form_error('chassi'); ?></div>
 
 				<label for="renavan">Renavan :</label><br/>
-				<input type="text" name="renavan" value="<?php echo $Renavan; ?>"/>
+				<input id="renavan" type="text" name="renavan" value="<?php echo $Renavan; ?>"/><span id="veiculoRenavan"></span>
 				<div class="error"><?php echo form_error('renavan'); ?></div>
 
 				<label for="placa_n">Placa :</label><br/>
-				<input type="text" name="placa_n" value="<?php echo $placa; ?>"/>
+				<input id="placa_n" type="text" name="placa_n" value="<?php echo $placa; ?>"/><span id="veiculoPlaca"></span>
 				<div class="error"><?php echo form_error('placa_n'); ?></div>
 
 				<label for="placa_ex">Placa adicional:</label><br/>
-				<input type="text" name="placa_ex" value="<?php echo $placa_extra1; ?>"/>
+				<input id="placa_ex" type="text" name="placa_ex" value="<?php echo $placa_extra1; ?>"/><span id="veiculoPlacaExtra"></span>
 				<div class="error"><?php echo form_error('placa_ex'); ?></div>
 
 				<label for="placa_ex2">Placa adicional 2:</label><br/>
-				<input type="text" name="placa_ex2" value="<?php echo $placa_extra2; ?>"/> 
+				<input id="placa_ex2" type="text" name="placa_ex2" value="<?php echo $placa_extra2; ?>"/><span id="veiculoPlacaExtra2"></span>
 				<div class="error"><?php echo form_error('placa_ex2'); ?></div>
 
 				<label for="estado">Estado :</label><br/>
-					<select name="estado_apr" onchange="mostraCidades(this.value)">
+					<select id="estado_veiculo" name="estado_apr" onchange="mostraCidades(this.value)">
 						<?php
 							if( $id_estado != null)
 							{
@@ -439,8 +747,8 @@ function mostraModelos2(str) {
 
 				<br>
 
-				<input type="hidden" name="row_id" value="<?php echo $id_Row; ?>" />
-				<input type="hidden" name="id_auto" value="<?php echo $ID_auto ?>" />
+				<input id="row_id" type="hidden" name="row_id" value="<?php echo $id_Row; ?>" />
+				<input id="id_auto" type="hidden" name="id_auto" value="<?php echo $ID_auto ?>" />
 
 				<input type="submit" name="Cadastrar" value="Atualizar dados do automovel" />
 				<br>
