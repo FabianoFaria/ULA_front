@@ -68,6 +68,7 @@ class Pesquisa_model extends CI_Model {
         $this->db->join('tbl_contact','tbl_contact.ID_contact = tbl_main.CHILD_ID');
         $this->db->where('tbl_main.CHILD_TBL', 'tbl_contact');
         $this->db->where('tbl_contact.ID_contact', $idPessoas);
+        $this->db->order_by("tbl_doct.arrest_date", "asc"); 
         $query = $this->db->get('tbl_doct');
         return $query->result();
 
@@ -84,6 +85,7 @@ class Pesquisa_model extends CI_Model {
         $this->db->join('tbl_estados','tbl_estados.id_estado = tbl_vehicle.state', 'left');
         $this->db->where('tbl_main.CHILD_TBL', 'tbl_vehicle');
         $this->db->where('tbl_vehicle.ID_vehicle', $idVeiculos);
+        $this->db->order_by("tbl_doct.arrest_date", "asc"); 
         $query = $this->db->get('tbl_doct');
         return $query->result();
     }
@@ -97,6 +99,7 @@ class Pesquisa_model extends CI_Model {
         $this->db->join('tbl_estados','tbl_estados.id_estado = tbl_addr.state', 'left');
         $this->db->where('tbl_main.CHILD_TBL', 'tbl_addr');
         $this->db->where('tbl_addr.ID_addr', $idAddr);
+        $this->db->order_by("tbl_doct.arrest_date", "asc"); 
         $query = $this->db->get('tbl_doct');
         return $query->result();
     }

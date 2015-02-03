@@ -191,6 +191,13 @@
                       <?php
                         for($i = 0; $i < count($conteudoPassado['veiculos']) ; $i++ ){
 
+                              if($conteudoPassado['veiculos'][$i]->category != '')
+                              {
+                                $veiculoTipo = $conteudoPassado['veiculos'][$i]->tpve_nome;
+                              }else{
+                                $veiculoTipo = " ";
+                              }
+
                              if($conteudoPassado['veiculos'][$i]->marc_nome != '')
                               {
                                 $veiculoNome = $conteudoPassado['veiculos'][$i]->marc_nome;
@@ -271,8 +278,16 @@
                                 $veiculoEstado = " ";
                               }
 
+                              if($conteudoPassado['veiculos'][$i]->detalhes_veiculos != '')
+                              {
+                                $veiculoObs = "Obs : ".$conteudoPassado['veiculos'][$i]->detalhes_veiculos;
+                              }else{
+                                $veiculoObs = "";
+                              }
+
                         ?>
-                            <p>Veículo  : <?php echo $veiculoNome.' '.$veiculoModelo.' '. $veiculoCor .' '.$veiculoPlaca.' '.$veiculoPlacaEx.' '.$veiculoPlacaEx2.' '.$veiculoChassi.' '.$veiculoCidade.''.$veiculoEstado; ?></p>
+                            <p>Veículo  : <?php echo $veiculoTipo.' '.$veiculoNome.' '.$veiculoModelo.' '. $veiculoCor .' '.$veiculoPlaca.' '.$veiculoPlacaEx.' '.$veiculoPlacaEx2.' '.$veiculoChassi.' '.$veiculoCidade.''.$veiculoEstado; ?></p>
+                            <p><?php echo $veiculoObs; ?></p>
                         <?php
 
 
@@ -478,10 +493,18 @@
                                 $telefoneDetido = "";
                               }
 
+                              if($conteudoPassado['envolvidos'][$i]->comentarios_detidos != '')
+                              {
+                                $comentarios = "Obs: ".$conteudoPassado['envolvidos'][$i]->comentarios_detidos;
+                              }else{
+                                $comentarios = " ";
+                              }
+
                           ?>
                           <p><?php echo ucwords(mb_strtolower($conteudoPassado['envolvidos'][$i]->name)).', '.$profissao.', nascido no '.$conteudoPassado['envolvidos'][$i]->nome_pais.' '.$filho.' '.$paiEnvolvido.' '.$maeEnvolvido.' '.$dataNascDet. ' '.
                   $cidadeNasc."".$estadoNasc." ,". $cpfEnvolvido. " ".$rgEnvolvido." ,".$enderecoResidencia." ".$cidadeEnd."".$estadoEnd.
                   "".$telefoneDetido; ?></p>
+                          <p><?php echo $comentarios; ?></p>
 
                           <?php
                         }
@@ -705,8 +728,16 @@
                                   <td>Detidos  </td>
                                   <td><?php echo $totalDetidos; ?></td>             
                               </tr>
-                              <tr>
+                               <tr>
                                   <td>Caixas de cigarro  </td>
+                                  <td><?php echo $caixasCigarros[0]->qty; ?></td>            
+                              </tr>
+                               <tr>
+                                  <td>Caixas de cigarro em depósitos  </td>
+                                  <td><?php echo $caixasCigarrosWrs[0]->quantidade_deposito; ?></td>            
+                              </tr>
+                              <tr>
+                                  <td>Total de caixas de cigarro  </td>
                                   <td><?php echo $totalCxCigarros; ?></td>            
                               </tr>
                               <tr>

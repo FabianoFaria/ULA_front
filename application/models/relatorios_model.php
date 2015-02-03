@@ -22,6 +22,7 @@ class Relatorios_model extends CI_Model {
         }
 		$this->db->where($where);
 		$this->db->where('tbl_doct.status_doct','0');
+        $this->db->order_by('tbl_doct.arrest_date', 'asc');
 		$query = $this->db->get('tbl_doct');
         return $query->result();  
 
@@ -137,7 +138,7 @@ class Relatorios_model extends CI_Model {
     {
     	// public 'ROW_ID' => string '45' (length=2)
         $this->db->distinct('tbl_vehicle.ID_vehicle');
-    	$this->db->select('tbl_vehicle.ID_vehicle, tbl_vehicle.ROW_ID, tbl_vehicle.category, tbl_vehicle.model, tbl_vehicle.brand, tbl_vehicle.cor_veiculo, tbl_vehicle.chassi, tbl_vehicle.renavan, tbl_vehicle.placa, tbl_vehicle.placa_extra, tbl_vehicle.placa_extra2, tbl_estados.nome_estado as nome_estado, tbl_estados.uf as uf_estado, tbl_cidades.nome as cidade_nome, tbl_modelos.mode_nome, tbl_marcas.marc_nome, tbl_tipo_veiculo.tpve_nome');
+    	$this->db->select('tbl_vehicle.ID_vehicle, tbl_vehicle.ROW_ID, tbl_vehicle.category, tbl_vehicle.model, tbl_vehicle.brand, tbl_vehicle.cor_veiculo, tbl_vehicle.chassi, tbl_vehicle.renavan, tbl_vehicle.placa, tbl_vehicle.placa_extra, tbl_vehicle.placa_extra2,tbl_vehicle.detalhes_veiculos, tbl_estados.nome_estado as nome_estado, tbl_estados.uf as uf_estado, tbl_cidades.nome as cidade_nome, tbl_modelos.mode_nome, tbl_marcas.marc_nome, tbl_tipo_veiculo.tpve_nome');
         $this->db->join('tbl_vehicle','tbl_vehicle.ROW_ID = tbl_main.parent_id', 'left');
         $this->db->join('tbl_estados', 'tbl_estados.id_estado = tbl_vehicle.state', 'left');
         $this->db->join('tbl_cidades', 'tbl_cidades.id = tbl_vehicle.city', 'left');
@@ -170,7 +171,7 @@ class Relatorios_model extends CI_Model {
         $this->db->select('tbl_contact.ID_contact, tbl_contact.name, tbl_contact.CPF, tbl_contact.rg, tbl_contact.profession, tbl_contact.passport, tbl_contact.father, tbl_contact.mother,
          tbl_contact.birth_dt, tbl_pais.nome_pais, tbl_estados.nome_estado, tbl_estados.uf, tbl_cidades.nome,tbl_addr.ID_addr, tbl_addr.address, tbl_addr.nunber, 
          tbl_addr.complement, tbl_addr.district, paisL.nome_pais as end_pais, estadoL.nome_estado as end_est, estadoL.uf as end_uf, cidadeL.nome as end_Cid,
-         tbl_contact.telefone ,tbl_contact.marca_telefone ,tbl_contact.IMEI ,tbl_contact.operadora, tbl_operadora.nome_operadora');
+         tbl_contact.telefone , tbl_contact.comentarios_detidos,tbl_contact.marca_telefone ,tbl_contact.IMEI ,tbl_contact.operadora, tbl_operadora.nome_operadora');
         $this->db->join('tbl_contact','tbl_contact.ID_contact = tbl_main.CHILD_ID');
         $this->db->join('tbl_pais', 'tbl_pais.Id_pais = tbl_contact.birth_country', 'left');
         $this->db->join('tbl_estados', 'tbl_estados.id_estado = tbl_contact.birth_state', 'left');

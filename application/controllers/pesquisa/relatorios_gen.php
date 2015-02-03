@@ -170,6 +170,9 @@ class Relatorios_gen extends CI_Controller {
         $caixasCigarros = $this->relatorio->total_caixa_cigarros($dataDateI ,$dataDateF ,$id_estado_dest);
         $cigarrosWsr = $this->relatorio->total_caixa_cigarros_wrs($dataDateI ,$dataDateF ,$id_estado_dest);
 
+        $dados['caixasCigarros'] = $caixasCigarros;
+        $dados['caixasCigarrosWrs'] = $cigarrosWsr;
+ 
         $dados['totalCxCigarros'] = $caixasCigarros[0]->qty + $cigarrosWsr[0]->quantidade_deposito;
 
         $dados['estadoDestino'] = $estadoDest;
