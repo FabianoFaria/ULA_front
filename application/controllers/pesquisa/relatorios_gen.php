@@ -175,6 +175,11 @@ class Relatorios_gen extends CI_Controller {
  
         $dados['totalCxCigarros'] = $caixasCigarros[0]->qty + $cigarrosWsr[0]->quantidade_deposito;
 
+        $dados['pacotesCigarros'] = $caixasCigarros[0]->qty;
+        $dados['pacotesCigarrosWrs'] = $cigarrosWsr[0]->quantidade_deposito;
+
+        $dados['totalPacotes'] = $caixasCigarros[0]->qty + $cigarrosWsr[0]->quantidade_deposito;
+
         $dados['estadoDestino'] = $estadoDest;
         $dados['relatorioIni'] = $dataDateI; 
         $dados['relatorioFim'] = $dataDateF;

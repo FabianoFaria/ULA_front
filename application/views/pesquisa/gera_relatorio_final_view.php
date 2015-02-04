@@ -200,82 +200,89 @@
 
                              if($conteudoPassado['veiculos'][$i]->marc_nome != '')
                               {
-                                $veiculoNome = $conteudoPassado['veiculos'][$i]->marc_nome;
-                              }else{
-                                $veiculoNome = " ";
+                                $veiculoNome = ", marca ".$conteudoPassado['veiculos'][$i]->marc_nome;
+                              }
+                              else{
+                                $veiculoNome = "";
                               }
 
                               if($conteudoPassado['veiculos'][$i]->mode_nome != '')
                               {
-                                $veiculoModelo = $conteudoPassado['veiculos'][$i]->mode_nome;
+                                $veiculoModelo = ", modelo ".$conteudoPassado['veiculos'][$i]->mode_nome;
                               }
                               else{
-                                $veiculoModelo = " ";
+                                $veiculoModelo = "";
                               }
+
+                              if(!is_numeric($conteudoPassado['veiculos'][$i]->model)){
+
+                                $veiculoModelo = ", modelo ".$conteudoPassado['veiculos'][$i]->model;
+                              }
+
                               /* Cor veiculo */
                               if($conteudoPassado['veiculos'][$i]->cor_veiculo != '')
                               {
-                                $veiculoCor = ", Cor : ".$conteudoPassado['veiculos'][$i]->cor_veiculo;
+                                $veiculoCor = ", cor ".$conteudoPassado['veiculos'][$i]->cor_veiculo;
                               }
                               else{
-                                $veiculoCor = " ";
+                                $veiculoCor = "";
                               }
                               /*`Placa */
                               if($conteudoPassado['veiculos'][$i]->placa != '')
                               {
-                                $veiculoPlaca = "Placa : ".$conteudoPassado['veiculos'][$i]->placa;
+                                $veiculoPlaca = ", placa ".$conteudoPassado['veiculos'][$i]->placa;
                               }else{
-                                $veiculoPlaca = " ";
+                                $veiculoPlaca = "";
                               }
                                /*`Placa extra */
                               if($conteudoPassado['veiculos'][$i]->placa_extra != '')
                               {
-                                $veiculoPlacaEx = ", Placa adicional: ".$conteudoPassado['veiculos'][$i]->placa_extra;
+                                $veiculoPlacaEx = ", placa adicional ".$conteudoPassado['veiculos'][$i]->placa_extra;
                               }else{
-                                $veiculoPlacaEx = " ";
+                                $veiculoPlacaEx = "";
                               }
                                /*`Placa extra 2*/
                               if($conteudoPassado['veiculos'][$i]->placa_extra2 != '')
                               {
-                                $veiculoPlacaEx2 = ", Placa adicional : ".$conteudoPassado['veiculos'][$i]->placa_extra2;
+                                $veiculoPlacaEx2 = ", placa adicional ".$conteudoPassado['veiculos'][$i]->placa_extra2;
                               }else{
-                                $veiculoPlacaEx2 = " ";
+                                $veiculoPlacaEx2 = "";
                               }
                               /* Chassi */
                               if($conteudoPassado['veiculos'][$i]->chassi != '')
                               {
-                                $veiculoChassi = "Chassi : ".$conteudoPassado['veiculos'][$i]->chassi;
+                                $veiculoChassi = ", chassi ".$conteudoPassado['veiculos'][$i]->chassi;
                               }else{
-                                $veiculoChassi = " ";
+                                $veiculoChassi = "";
                               }
 
                               /* Renavam */  
                               if($conteudoPassado['veiculos'][$i]->renavan != '')
                               {
-                                $veiculoRenavam = "Chassi : ".$conteudoPassado['veiculos'][$i]->renavan;
+                                $veiculoRenavam = ", renavan ".$conteudoPassado['veiculos'][$i]->renavan;
                               }else{
-                                $veiculoRenavam = " ";
+                                $veiculoRenavam = "";
                               }
 
                               /* cidade e estado */
                               if($conteudoPassado['veiculos'][$i]->cidade_nome != '')
                               {
-                                $veiculoCidade = "Proveniente de  : ".$conteudoPassado['veiculos'][$i]->cidade_nome;
+                                $veiculoCidade = ", proveniente de ".$conteudoPassado['veiculos'][$i]->cidade_nome;
                               }else{
-                                $veiculoCidade = " ";
+                                $veiculoCidade = "";
                               }
 
 
                                if($conteudoPassado['veiculos'][$i]->uf_estado != '')
                               {
-                                if($veiculoCidade != " ")
+                                if($veiculoCidade != "")
                                 {
                                   $veiculoEstado = "/".$conteudoPassado['veiculos'][$i]->uf_estado;
                                 }else{
-                                  $veiculoEstado = "Proveniente de : ".$conteudoPassado['veiculos'][$i]->uf_estado;
+                                  $veiculoEstado = " proveniente de ".$conteudoPassado['veiculos'][$i]->uf_estado;
                                 }
                               }else{
-                                $veiculoEstado = " ";
+                                $veiculoEstado = "";
                               }
 
                               if($conteudoPassado['veiculos'][$i]->detalhes_veiculos != '')
@@ -396,6 +403,10 @@
                                 $dataNascDet = "";
                               }
 
+                              if($conteudoPassado['envolvidos'][$i]->birth_dt == "00-00-0000"){
+                                $dataNascDet = "";
+                              }
+
                               if($conteudoPassado['envolvidos'][$i]->birth_dt != '')
                               {
 
@@ -410,7 +421,7 @@
 
                               if($conteudoPassado['envolvidos'][$i]->nome_estado != '')
                               {
-                                if($cidadeNasc != '')
+                                if($cidadeNasc != ' ')
                                 {
                                   $estadoNasc =  "/".$conteudoPassado['envolvidos'][$i]->uf;
                                 }
@@ -427,7 +438,7 @@
 
                               if($conteudoPassado['envolvidos'][$i]->CPF != '' )
                               {
-                                $cpfEnvolvido = "Portador do CPF ".$conteudoPassado['envolvidos'][$i]->CPF;
+                                $cpfEnvolvido = ", portador do CPF ".$conteudoPassado['envolvidos'][$i]->CPF;
                               }else
                               {
                                 $cpfEnvolvido = "";
@@ -439,10 +450,10 @@
                               {
                                 if($cpfEnvolvido != '')
                                 {
-                                  $rgEnvolvido =  "Portador do RG ".$conteudoPassado['envolvidos'][$i]->rg;
+                                  $rgEnvolvido =  " e do RG ".$conteudoPassado['envolvidos'][$i]->rg;
                                 }
                                 else{
-                                  $rgEnvolvido =  "e do RG ".$conteudoPassado['envolvidos'][$i]->rg;
+                                  $rgEnvolvido =  " portador do RG ".$conteudoPassado['envolvidos'][$i]->rg;
                                 }
                               }else
                               {
@@ -503,14 +514,14 @@
                           ?>
                           <p><?php echo ucwords(mb_strtolower($conteudoPassado['envolvidos'][$i]->name)).', '.$profissao.', nascido no '.$conteudoPassado['envolvidos'][$i]->nome_pais.' '.$filho.' '.$paiEnvolvido.' '.$maeEnvolvido.' '.$dataNascDet. ' '.
                   $cidadeNasc."".$estadoNasc." ,". $cpfEnvolvido. " ".$rgEnvolvido." ,".$enderecoResidencia." ".$cidadeEnd."".$estadoEnd.
-                  "".$telefoneDetido; ?></p>
+                  "  ".$telefoneDetido; ?></p>
                           <p><?php echo $comentarios; ?></p>
 
                           <?php
                         }
                     if($conteudoPassado['endereco'][0] != null){
                     ?>
-                      <h3>A referida apreensâo ocorreu nas proximidade do endereço :</h3>
+                      <h3>A referida apreensão ocorreu em:</h3>
                     <?php
                       for($i = 0; $i < 1 ; $i++ ){ //count($conteudoPassado['endereco'])
                         if($conteudoPassado['endereco'][$i]->address != '')
@@ -523,21 +534,21 @@
 
                         if($conteudoPassado['endereco'][$i]->nunber != '')
                         {
-                          $numeroEnd = "numero ".$conteudoPassado['endereco'][$i]->nunber;
+                          $numeroEnd = "número ".$conteudoPassado['endereco'][$i]->nunber;
                         }else{
                           $numeroEnd = "";
                         }
 
                         if($conteudoPassado['endereco'][$i]->nunber != '')
                         {
-                          $numeroEnd = "numero ".$conteudoPassado['endereco'][$i]->nunber;
+                          $numeroEnd = "número ".$conteudoPassado['endereco'][$i]->nunber;
                         }else{
                           $numeroEnd = "";
                         }
 
                         if($conteudoPassado['endereco'][$i]->complement != '')
                         {
-                          $complementEnd = " com a referência ".ucfirst( mb_strtolower($conteudoPassado['endereco'][$i]->complement));
+                          $complementEnd = ", ponto de referência ".ucfirst( mb_strtolower($conteudoPassado['endereco'][$i]->complement));
                         }else{
                           $complementEnd = "";
                         }
@@ -739,6 +750,10 @@
                               <tr>
                                   <td>Total de caixas de cigarro  </td>
                                   <td><?php echo $totalCxCigarros; ?></td>            
+                              </tr>
+                              <tr>
+                                  <td>Total de pacotes de cigarro  </td>
+                                  <td><?php echo $totalPacotes; ?></td>            
                               </tr>
                               <tr>
                                   <td>Veículos  </td>

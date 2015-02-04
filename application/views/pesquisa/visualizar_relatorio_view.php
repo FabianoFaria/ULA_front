@@ -206,7 +206,19 @@
                      <div class="col-md-6 col-sm-6 col-xs-6">
                         <p>Tipo do veículo : <?php echo $veiculos->tpve_nome ?></p>
                         <p>Marca do veículo : <?php echo $veiculos->marc_nome ?></p>
-                        <p>Modelo do veículo : <?php echo $veiculos->mode_nome ?></p>
+                        <?php 
+                            if(!is_numeric($veiculos->model)){
+                            ?>
+                                <p>Modelo do veículo : <?php echo $veiculos->model ?></p>
+                            <?php   
+                              }else{
+                                ?>
+                                <p>Modelo do veículo : <?php echo $veiculos->mode_nome ?></p>
+                                <?php
+                              }
+
+                        ?>
+                        
                         <p>Placa : <?php echo $veiculos->placa ?></p>
                         <p>Chassi : <?php echo $veiculos->chassi ?></p>
                         <p>Estado : <?php echo $veiculos->nome_estado ?></p>

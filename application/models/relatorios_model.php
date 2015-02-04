@@ -341,6 +341,48 @@ class Relatorios_model extends CI_Model {
 
     }
 
+     function total_pacotes_cigarros($inicio, $final, $id_estado)
+    {
+        //$this->db->select('*');
+        $this->db->select_sum('tbl_haul.qty');
+        $this->db->join('tbl_main','tbl_doct.ROW_ID = tbl_main.parent_id', 'left');
+        $this->db->where('tbl_main.CHILD_TBL', 'tbl_haul');
+        $this->db->join('tbl_haul','tbl_haul.ID_HAUL = tbl_main.CHILD_ID', 'left');
+        $this->db->where('tbl_haul.product', '10');
+        $this->db->where('tbl_haul.unit', '5');
+        $where = "tbl_doct.arrest_date BETWEEN '$inicio%' AND '$final%'";
+        $this->db->where($where);
+        if($id_estado != "")
+        {
+            $this->db->where('tbl_doct.arrest_destination', $id_estado);
+        }
+        $this->db->where('tbl_doct.status_doct','0');
+        $query = $this->db->get('tbl_doct');
+        return $query->result();
+
+    }
+
+    function total_pacotes_cigarros_wrs($inicio, $final, $id_estado)
+    {
+        //$this->db->select('*');
+        $this->db->select_sum('tbl_wrs.quantidade_deposito');
+        $this->db->join('tbl_main','tbl_doct.ROW_ID = tbl_main.parent_id', 'left');
+        $this->db->where('tbl_main.CHILD_TBL', 'tbl_wrs');
+        $this->db->join('tbl_wrs','tbl_wrs.ID_wrs = tbl_main.CHILD_ID', 'left');
+        $this->db->where('tbl_wrs.produto_deposito', '10');
+        $this->db->where('tbl_wrs.unidade_produto_deposito', '5');
+        $where = "tbl_doct.arrest_date BETWEEN '$inicio%' AND '$final%'";
+        $this->db->where($where);
+        if($id_estado != "")
+        {
+            $this->db->where('tbl_doct.arrest_destination', $id_estado);
+        }
+        $this->db->where('tbl_doct.status_doct','0');
+        $query = $this->db->get('tbl_doct');
+        return $query->result();
+
+    }
+
     function total_depositos($inicio, $final, $id_estado)
     {
         $this->db->select('*');
