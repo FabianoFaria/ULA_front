@@ -38,6 +38,7 @@ class Pesquisa_model extends CI_Model {
         $this->db->like('tbl_vehicle.placa', $termo);
         $this->db->or_like('tbl_vehicle.chassi', $termo);
         $this->db->or_like('tbl_vehicle.renavan', $termo);
+        $this->db->or_like('tbl_vehicle.model', $termo);
         $this->db->join('tbl_estados', 'tbl_estados.id_estado = tbl_vehicle.state', 'left');
         $this->db->join('tbl_cidades', 'tbl_cidades.id = tbl_vehicle.city', 'left');
         $this->db->join('tbl_tipo_veiculo','tbl_tipo_veiculo.tpve_cod = tbl_vehicle.category', 'left');

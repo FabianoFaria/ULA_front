@@ -739,22 +739,22 @@
                                   <td>Detidos  </td>
                                   <td><?php echo $totalDetidos; ?></td>             
                               </tr>
-                               <tr>
+                               <!--  <tr>
                                   <td>Caixas de cigarro  </td>
-                                  <td><?php echo $caixasCigarros[0]->qty; ?></td>            
+                                  <td><?php echo// $caixasCigarros[0]->qty; ?></td>            
                               </tr>
-                               <tr>
+                              <tr>
                                   <td>Caixas de cigarro em depósitos  </td>
-                                  <td><?php echo $caixasCigarrosWrs[0]->quantidade_deposito; ?></td>            
-                              </tr>
+                                  <td><?php //echo $caixasCigarrosWrs[0]->quantidade_deposito; ?></td>            
+                              </tr> -->
                               <tr>
                                   <td>Total de caixas de cigarro  </td>
                                   <td><?php echo $totalCxCigarros; ?></td>            
                               </tr>
-                              <tr>
+                              <!-- <tr>
                                   <td>Total de pacotes de cigarro  </td>
-                                  <td><?php echo $totalPacotes; ?></td>            
-                              </tr>
+                                  <td><?php //echo $totalPacotes; ?></td>            
+                              </tr> -->
                               <tr>
                                   <td>Veículos  </td>
                                   <td><?php echo $totalVeiculos; ?></td>            

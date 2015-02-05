@@ -155,13 +155,32 @@ class Relatorios_model extends CI_Model {
     {
     	// public 'ROW_ID' => string '45' (length=2) nome_image_doct  title_image
 
+        /* query bruta
+        
+            SELECT * 
+            FROM tbl_doct 
+            JOIN tbl_main ON tbl_main.parent_id = tbl_doct.ROW_ID 
+            JOIN tbl_image_doct ON tbl_main.CHILD_ID = tbl_image_doct.id_image 
+            where tbl_doct.ROW_ID = 194 and tbl_main.CHILD_TBL = 'tbl_image_doct'      
+        
+        */
+        $this->db->select('*');
+        $this->db->join('tbl_main','tbl_main.parent_id = tbl_doct.ROW_ID');
+        $this->db->join('tbl_image_doct','tbl_main.CHILD_ID = tbl_image_doct.id_image');
+        $this->db->where('tbl_doct.ROW_ID',$idDoct);
+        $this->db->where('tbl_main.CHILD_TBL', 'tbl_image_doct');
+        $query = $this->db->get('tbl_doct');
+        return $query->result();    
+    
+        /* Query antiga
     	$this->db->select('tbl_image_doct.nome_image_doct, tbl_image_doct.title_image');
     	$this->db->distinct('tbl_main.ID_main');
         $this->db->join('tbl_image_doct','tbl_image_doct.id_row = tbl_main.parent_id');
     	$this->db->where('tbl_main.parent_id', $idDoct);
     	$this->db->where('tbl_main.CHILD_TBL', 'tbl_image_doct');
     	$query = $this->db->get('tbl_main');
-        return $query->result();  
+        return $query->result(); 
+        */ 
     }
 
     function load_documento_envolvidos($idDoct)

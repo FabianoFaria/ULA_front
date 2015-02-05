@@ -104,8 +104,11 @@ class Pesquisa_avancada extends CI_Controller {
 
         foreach ($list_veiculos as $veiculos) {
             //$dataCidades = $cidades;
+            if(!is_numeric($veiculos->model))
+            {$model = $veiculos->model;}
+            else{$model = $veiculos->mode_nome;}
 
-            echo "<tr> <td> ".$veiculos->marc_nome."</td><td> ".$veiculos->mode_nome."</td><td> ".$veiculos->placa."</td><td> <a href='".base_url()."index.php/pesquisa/pesquisa_avancada/envolvimentoVeiculo/".$veiculos->ID_vehicle."'>listar documentos</a> </td> </tr>";
+            echo "<tr> <td> ".$veiculos->marc_nome."</td><td> ".$model."</td><td> ".$veiculos->placa."</td><td> <a href='".base_url()."index.php/pesquisa/pesquisa_avancada/envolvimentoVeiculo/".$veiculos->ID_vehicle."'>listar documentos</a> </td> </tr>";
         }
 
         echo "</tbody>";
