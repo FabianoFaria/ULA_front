@@ -39,6 +39,26 @@
 	xmlhttp.send();
 	}
 
+	function mostraBuscaTipo(str) {      //////////////////////////////////////////BUSCA TIPO DE VEICULOS
+	if (str=="") {
+	document.getElementById("listResultados").innerHTML="<p>Nenhum resultado</p>";
+	return;
+	 }
+	if (window.XMLHttpRequest) {
+	 // code for IE7+, Firefox, Chrome, Opera, Safari
+	xmlhttp=new XMLHttpRequest();
+	 } else { // code for IE6, IE5
+	xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp.onreadystatechange=function() {
+	 if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+	document.getElementById("listResultados").innerHTML=xmlhttp.responseText;
+	}
+	}
+	xmlhttp.open("GET","<?php echo base_url(); ?>index.php/pesquisa/pesquisa_avancada/chamaVeiculoTipo/"+str,true);
+	xmlhttp.send();
+	}
+
 	function mostraBuscaEnderecos(str) {   //////////////////////////////////////////BUSCA DE ENDEREÇO
 	if (str=="") {
 	document.getElementById("listResultados").innerHTML="<p>Nenhum resultado</p>";
@@ -56,6 +76,26 @@
 	}
 	}
 	xmlhttp.open("GET","<?php echo base_url(); ?>index.php/pesquisa/pesquisa_avancada/chamaEnd/"+str,true);
+	xmlhttp.send();
+	}
+
+	function mostraBuscaEnderecosCidades(str) {   //////////////////////////////////////////BUSCA DE ENDEREÇO
+	if (str=="") {
+	document.getElementById("listResultados").innerHTML="<p>Nenhum resultado</p>";
+	return;
+	 }
+	if (window.XMLHttpRequest) {
+	 // code for IE7+, Firefox, Chrome, Opera, Safari
+	xmlhttp=new XMLHttpRequest();
+	 } else { // code for IE6, IE5
+	xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp.onreadystatechange=function() {
+	 if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+	document.getElementById("listResultados").innerHTML=xmlhttp.responseText;
+	}
+	}
+	xmlhttp.open("GET","<?php echo base_url(); ?>index.php/pesquisa/pesquisa_avancada/chamaEndCidades/"+str,true);
 	xmlhttp.send();
 	}
 
@@ -85,7 +125,7 @@
 
 	function mostraCidades(str) {
 	if (str=="") {
-		document.getElementById("cidade_nascimento").innerHTML="";
+		document.getElementById("cidade_pesquisa").innerHTML="";
 		return;
 				}
 	if (window.XMLHttpRequest) {
@@ -96,7 +136,7 @@
 			}
 	xmlhttp.onreadystatechange=function() {
 		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-			document.getElementById("cidade_nascimento").innerHTML=xmlhttp.responseText;
+			document.getElementById("cidade_pesquisa").innerHTML=xmlhttp.responseText;
 		}
 	}
 	xmlhttp.open("GET","/ULA_front2/index.php/login/novo_documento/chamaCidade/"+str,true);
@@ -118,63 +158,16 @@
                 	<form>
                 		<input id="palavra_chave" type="text"/> 
                 		<input class="btn" type="button" value="buscar" name="efetuar_busca" onclick="mostraBuscaPessoas(palavra_chave.value)">
-                	</form>
-
-                	<p>Pesquisa de veiculos por modelo / placa / chassi / renavan</p>
-                	<form>
-                		<input id="palavra_chave" type="text"/> 
-                		<input class="btn" type="button" value="buscar" name="efetuar_busca" onclick="mostraBuscaVeiculos(palavra_chave.value)">
-                	</form>
-
-                	<p>Pesquisa por CEP / endereços /Bairro</p>
-                	<form>
-                		<input id="palavra_chave" type="text"/> 
-                		<input class="btn" type="button" value="buscar" name="efetuar_busca" onclick="mostraBuscaEnderecos(palavra_chave.value)">
-                	</form>
+                	</form>	
 
                 	<br>
+	                <p>Pesquisa por CEP / endereços /Bairro</p>
+	                <form>
+	                	<input id="palavra_chave" type="text"/> 
+	                	<input class="btn" type="button" value="buscar" name="efetuar_busca" onclick="mostraBuscaEnderecos(palavra_chave.value)">
+	                </form>
 
-                	<p>Pesquisa de veículos por tipo</p>
-                	<form>
-                		<!-- combos para seleção de veículos -->
-						<select id="cat_veiculo" name="cat_veiculo" >
-
-							<?php
-								if($tipo_veiculo != null)
-								{
-							?>
-								<option value="<?php echo $id_tipo_veiculo ?>"><?php echo $tipo_veiculo ?></option>
-							<?php
-
-								}else{
-							?>
-								<option value="" selected="true">Selecione o tipo de veículo</option>
-							<?php
-								}
-							?>
-							
-							<?php
-								foreach($tipo_veiculos as $tipo_veiculo):
-								{
-									if($id_tipo_veiculo != $tipo_veiculo->tpve_cod)
-									{
-							?>
-								<option value="<?php echo $tipo_veiculo->tpve_cod; ?>"><?php echo $tipo_veiculo->tpve_nome; ?></option>
-							<?php
-									}
-								}endforeach;
-							?>
-						
-						</select>
-
-						<input class="btn" type="button" value="buscar" name="efetuar_busca" onclick="mostraBuscaTipo(palavra_chave.value)">
-
-                	<!-- fim do côdigo para seleção-->
-                	</form>
-
-                	<br>
-
-
+	                <br>
 					<p>Pesquisa por cidade</p>
 					<form>
 	                	<select name="estado_nascimento" id="estado_nascimento" onchange="mostraCidades(this.value)">
@@ -213,16 +206,62 @@
 							<option value=" "> </option>
 						</select>
 					</form>
-				<div class="error"></div>
 
-				<label for="cidade_nascimento">Cidade :</label><br/>
-					<select id="cidade_nascimento" name="cidade_nascimento">
+					<select id="cidade_pesquisa" name="cidade_nascimento">
 						<option value=" "> </option>						
 					</select>
 
-				<input class="btn" type="button" value="buscar" name="efetuar_busca" onclick="mostraBuscaCidades(palavra_chave.value)">
+				<input class="btn" type="button" value="buscar" name="efetuar_busca" onclick="mostraBuscaEnderecosCidades(cidade_pesquisa.value)">
 
 				<div class="error"></div>
+
+				<br>
+                	<p>Pesquisa de veiculos por modelo / placa / chassi / renavan</p>
+                	<form>
+                		<input id="palavra_chave" type="text"/> 
+                		<input class="btn" type="button" value="buscar" name="efetuar_busca" onclick="mostraBuscaVeiculos(palavra_chave.value)">
+                	</form>
+
+                	<br>
+
+                	<p>Pesquisa de veículos por tipo</p>
+                	<form>
+                		<!-- combos para seleção de veículos -->
+						<select id="cat_veiculo" name="cat_veiculo" >
+
+							<?php
+								if($tipo_veiculo != null)
+								{
+							?>
+								<option value="<?php echo $id_tipo_veiculo ?>"><?php echo $tipo_veiculo ?></option>
+							<?php
+
+								}else{
+							?>
+								<option value="" selected="true">Selecione o tipo de veículo</option>
+							<?php
+								}
+							?>
+							
+							<?php
+								foreach($tipo_veiculos as $tipo_veiculo):
+								{
+									if($id_tipo_veiculo != $tipo_veiculo->tpve_cod)
+									{
+							?>
+								<option value="<?php echo $tipo_veiculo->tpve_cod; ?>"><?php echo $tipo_veiculo->tpve_nome; ?></option>
+							<?php
+									}
+								}endforeach;
+							?>
+						
+						</select>
+
+						<input class="btn" type="button" value="buscar" name="efetuar_busca" onclick="mostraBuscaTipo(cat_veiculo.value)">
+
+                	<!-- fim do côdigo para seleção-->
+                	</form>
+
 
 
 				<br>

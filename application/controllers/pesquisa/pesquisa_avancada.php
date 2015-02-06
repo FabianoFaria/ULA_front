@@ -116,6 +116,28 @@ class Pesquisa_avancada extends CI_Controller {
        // return $dataCidades;       
     }
 
+    public function chamaVeiculoTipo($tipoVeiculo)
+    {
+        $list_veiculos = $this->pesquisaAVD->load_tipo_veiculos_ajx($tipoVeiculo);
+
+        $dataCidades = array();
+
+        echo "<tr><th>Tipo </th><th>modelo</th><th>placa</th> <th> Ação </th> </tr>  <tbody id='listResultadosRow'>";
+
+        foreach ($list_veiculos as $veiculos) {
+            //$dataCidades = $cidades;
+            if(!is_numeric($veiculos->model))
+            {$model = $veiculos->model;}
+            else{$model = $veiculos->mode_nome;}
+
+            echo "<tr><td> ".$veiculos->tpve_nome."</td><td> ".$model."</td><td> ".$veiculos->placa."</td><td> <a href='".base_url()."index.php/pesquisa/pesquisa_avancada/envolvimentoVeiculo/".$veiculos->ID_vehicle."'>listar documentos</a> </td> </tr>";
+        }
+
+        echo "</tbody>";
+        
+       // return $dataCidades;   
+    }
+
     public function chamaEnd($value)
     {
         $type = $this->input->post('type');
@@ -146,7 +168,35 @@ class Pesquisa_avancada extends CI_Controller {
         
     }
 
-    public function envolvimentoPessoas($id_pessoa)
+    public function chamaEndCidades($value)
+    {
+        $list_enderecos = $this->pesquisaAVD->load_enderecos_cidades_ajx($value); 
+
+        $dataCidades = array();
+
+        echo "<tr> <th>Cidade</th><th>Logradouro</th><th> CEP </th> <th> Ação </th>  </tr>  <tbody id='listResultadosRow'>";
+
+        foreach ($list_enderecos as $enderecos) {
+            //$dataCidades = $cidades;
+
+            //$dataEx = explode("-", $enderecos->arrest_date);
+            //$month = $dataEx[1];
+            //$day = $dataEx[2];
+            //$year = $dataEx[0];
+
+            //$dataF = $day."/".$month."/".$year;
+
+
+            echo "<tr> <td>".$enderecos->nome."</td><td>".$enderecos->address."</td><td>".$enderecos->zipcode."</td> <td><a href='".base_url()."index.php/pesquisa/pesquisa_avancada/envolvimentoEndereco/".$enderecos->ID_addr."'>listar documentos</a> </td>   </tr>";
+        }
+
+        echo "</tbody>";
+        
+       // return $dataCidades;       
+        
+    }
+
+    public function envolvimentoPessoas($id_pessoa) 
     {
 
         $data[0] =  $this->DetalhesModel->load_single_contato($id_pessoa);
