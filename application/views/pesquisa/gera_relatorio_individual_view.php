@@ -260,7 +260,7 @@
                               /* Cor veiculo */
                               if($conteudoPassado['veiculos'][$i]->cor_veiculo != '')
                               {
-                                $veiculoCor = ", Cor : ".$conteudoPassado['veiculos'][$i]->cor_veiculo;
+                                $veiculoCor = ", cor ".$conteudoPassado['veiculos'][$i]->cor_veiculo;
                               }
                               else{
                                 $veiculoCor = " ";
@@ -268,28 +268,28 @@
                               /*`Placa */
                               if($conteudoPassado['veiculos'][$i]->placa != '')
                               {
-                                $veiculoPlaca = "Placa : ".$conteudoPassado['veiculos'][$i]->placa;
+                                $veiculoPlaca = ", placa ".$conteudoPassado['veiculos'][$i]->placa;
                               }else{
                                 $veiculoPlaca = " ";
                               }
                                /*`Placa extra */
                               if($conteudoPassado['veiculos'][$i]->placa_extra != '')
                               {
-                                $veiculoPlacaEx = ", Placa adicional: ".$conteudoPassado['veiculos'][$i]->placa_extra;
+                                $veiculoPlacaEx = ", placa adicional ".$conteudoPassado['veiculos'][$i]->placa_extra;
                               }else{
                                 $veiculoPlacaEx = " ";
                               }
                                /*`Placa extra 2*/
                               if($conteudoPassado['veiculos'][$i]->placa_extra2 != '')
                               {
-                                $veiculoPlacaEx2 = ", Placa adicional : ".$conteudoPassado['veiculos'][$i]->placa_extra2;
+                                $veiculoPlacaEx2 = ", placa adicional ".$conteudoPassado['veiculos'][$i]->placa_extra2;
                               }else{
                                 $veiculoPlacaEx2 = " ";
                               }
                               /* Chassi */
                               if($conteudoPassado['veiculos'][$i]->chassi != '')
                               {
-                                $veiculoChassi = "Chassi : ".$conteudoPassado['veiculos'][$i]->chassi;
+                                $veiculoChassi = ", chassi ".$conteudoPassado['veiculos'][$i]->chassi;
                               }else{
                                 $veiculoChassi = " ";
                               }
@@ -297,7 +297,7 @@
                               /* Renavam */  
                               if($conteudoPassado['veiculos'][$i]->renavan != '')
                               {
-                                $veiculoRenavam = "Chassi : ".$conteudoPassado['veiculos'][$i]->renavan;
+                                $veiculoRenavam = ", renavan ".$conteudoPassado['veiculos'][$i]->renavan;
                               }else{
                                 $veiculoRenavam = " ";
                               }
@@ -305,7 +305,7 @@
                               /* cidade e estado */
                               if($conteudoPassado['veiculos'][$i]->cidade_nome != '')
                               {
-                                $veiculoCidade = "Proveniente de  : ".$conteudoPassado['veiculos'][$i]->cidade_nome;
+                                $veiculoCidade = ", proveniente de ".$conteudoPassado['veiculos'][$i]->cidade_nome;
                               }else{
                                 $veiculoCidade = " ";
                               }
@@ -317,7 +317,7 @@
                                 {
                                   $veiculoEstado = "/".$conteudoPassado['veiculos'][$i]->uf_estado;
                                 }else{
-                                  $veiculoEstado = "Proveniente de : ".$conteudoPassado['veiculos'][$i]->uf_estado;
+                                  $veiculoEstado = ", proveniente de ".$conteudoPassado['veiculos'][$i]->uf_estado;
                                 }
                               }else{
                                 $veiculoEstado = " ";
@@ -334,7 +334,7 @@
                   // Dados das mercadorias.....
                     if($conteudoPassado['mercadorias'][0] != null){
                       ?>
-                      <h3>Foram apreendidos as seguintes mercadorias</h3>
+                      <h3>Foram apreendidos as seguintes mercadorias :</h3>
                       <?php
                       //var_dump($conteudoPassado['mercadorias']);
 
@@ -476,10 +476,10 @@
                               {
                                 if($cpfEnvolvido != '')
                                 {
-                                  $rgEnvolvido =  "Portador do RG ".$conteudoPassado['envolvidos'][$i]->rg;
+                                  $rgEnvolvido =  "e do RG ".$conteudoPassado['envolvidos'][$i]->rg;
                                 }
                                 else{
-                                  $rgEnvolvido =  "e do RG ".$conteudoPassado['envolvidos'][$i]->rg;
+                                  $rgEnvolvido =  "Portador do RG ".$conteudoPassado['envolvidos'][$i]->rg;
                                 }
                               }else
                               {
@@ -490,7 +490,7 @@
 
                               if($conteudoPassado['envolvidos'][$i]->address != '' )
                               {
-                                $enderecoResidencia = "residente em ".mb_strtolower($conteudoPassado['envolvidos'][$i]->address);
+                                $enderecoResidencia = " residente em ".mb_strtolower($conteudoPassado['envolvidos'][$i]->address);
                               }else
                               {
                                 $enderecoResidencia = "";
@@ -499,7 +499,7 @@
                               /* estado e cidade do individuo */
                                if($conteudoPassado['envolvidos'][$i]->end_Cid != '')
                               {
-                                $cidadeEnd = "em ".$conteudoPassado['envolvidos'][$i]->end_Cid;
+                                $cidadeEnd = " em ".$conteudoPassado['envolvidos'][$i]->end_Cid;
                               }
                               else{
                                 $cidadeEnd = "";
@@ -507,12 +507,12 @@
 
                               if($conteudoPassado['envolvidos'][$i]->end_uf != '')
                               {
-                                if($cidadeEnd != ' ')
+                                if($cidadeEnd != '')
                                 {
                                   $estadoEnd =  "/".$conteudoPassado['envolvidos'][$i]->end_uf;
                                 }
                                 else{
-                                  $estadoEnd =  "em ".$conteudoPassado['envolvidos'][$i]->end_uf;
+                                  $estadoEnd =  " em ".$conteudoPassado['envolvidos'][$i]->end_uf;
                                 }
                                 
                               }
@@ -524,7 +524,7 @@
 
                               if($conteudoPassado['envolvidos'][$i]->telefone != '' )
                               {
-                                $telefoneDetido = "Celular  ".$conteudoPassado['envolvidos'][$i]->telefone;
+                                $telefoneDetido = " Celular :".$conteudoPassado['envolvidos'][$i]->telefone;
                               }else
                               {
                                 $telefoneDetido = "";
@@ -656,7 +656,7 @@
 
 
                       ?>
-                        <p><?php echo 'Nesta apreensâo foi localizado um deposito no seguinte endereço : '.$logradouroDept.' '.$numeroDept.' '.$complementDept.' '.$bairroDept.' '.$cidadeDept.' '.$estadoDept; ?></p>
+                        <p><?php echo 'Nesta apreensâo foi localizado um depósito no seguinte endereço : '.$logradouroDept.' '.$numeroDept.' '.$complementDept.' '.$bairroDept.' '.$cidadeDept.' '.$estadoDept; ?></p>
                         
                         <p>Neste depósito foram encontrado os seguintes produtos :</p> 
                       <?php 
