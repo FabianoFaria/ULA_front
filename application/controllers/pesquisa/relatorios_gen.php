@@ -97,13 +97,15 @@ class Relatorios_gen extends CI_Controller {
             $documento = $this->relatorio->load_documento_completo($data->ROW_ID);
 
            $dataDocumento['documento'] = $documento;
+
            $endereço = $this->relatorio->load_documento_endereco($data->ROW_ID);
             //var_dump($endereço);
+
            if($endereço != null) {
                 $dataDocumento['endereco'] = $endereço;   
             }else
             {
-                $dataDocumento['endereco'][0] = "";
+                $dataDocumento['endereco'] = "";
             }
            $endereçoDeposito = $this->relatorio->load_endereco_wrs_relatorio($data->ROW_ID);
             //var_dump($endereçoDeposito);

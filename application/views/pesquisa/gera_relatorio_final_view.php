@@ -157,7 +157,7 @@
                     if($conteudoPassado['documento'][0]->link_arrest != null)
                     {
                     ?>
-                    <p>Link para a reportagem : <?php echo $conteudoPassado['documento'][0]->link_arrest; ?></p>
+                    
                     <?php
                     }
                     if($conteudoPassado['documento'][0]->operation != null)
@@ -267,7 +267,7 @@
                               /* cidade e estado */
                               if($conteudoPassado['veiculos'][$i]->cidade_nome != '')
                               {
-                                $veiculoCidade = ", proveniente de ".$conteudoPassado['veiculos'][$i]->cidade_nome;
+                                $veiculoCidade = ", placa ".$conteudoPassado['veiculos'][$i]->cidade_nome;
                               }else{
                                 $veiculoCidade = "";
                               }
@@ -279,7 +279,7 @@
                                 {
                                   $veiculoEstado = "/".$conteudoPassado['veiculos'][$i]->uf_estado;
                                 }else{
-                                  $veiculoEstado = " proveniente de ".$conteudoPassado['veiculos'][$i]->uf_estado;
+                                  $veiculoEstado = " placa ".$conteudoPassado['veiculos'][$i]->uf_estado;
                                 }
                               }else{
                                 $veiculoEstado = "";
@@ -403,7 +403,7 @@
                                 $dataNascDet = "";
                               }
 
-                              if($conteudoPassado['envolvidos'][$i]->birth_dt == "00-00-0000"){
+                              if($conteudoPassado['envolvidos'][$i]->birth_dt == "0000-00-00"){
                                 $dataNascDet = "";
                               }
 
@@ -519,12 +519,16 @@
 
                           <?php
                         }
+                      }//fim do if de envolvidos...
+
+
                     if($conteudoPassado['endereco'][0] != null){
                     ?>
                       <h3>A referida apreensão ocorreu em:</h3>
                     <?php
+
                       for($i = 0; $i < 1 ; $i++ ){ //count($conteudoPassado['endereco'])
-                        if($conteudoPassado['endereco'][$i]->address != '')
+                        if($conteudoPassado['endereco'][0]->address != '')
                         {
                           $logradouro = ucfirst( mb_strtolower($conteudoPassado['endereco'][$i]->address));
                         }
@@ -532,48 +536,48 @@
                           $logradouro = " ";
                         }
 
-                        if($conteudoPassado['endereco'][$i]->nunber != '')
+                        if($conteudoPassado['endereco'][0]->nunber != '')
                         {
-                          $numeroEnd = "número ".$conteudoPassado['endereco'][$i]->nunber;
+                          $numeroEnd = "número ".$conteudoPassado['endereco'][0]->nunber;
                         }else{
                           $numeroEnd = "";
                         }
 
-                        if($conteudoPassado['endereco'][$i]->nunber != '')
+                        if($conteudoPassado['endereco'][0]->nunber != '')
                         {
-                          $numeroEnd = "número ".$conteudoPassado['endereco'][$i]->nunber;
+                          $numeroEnd = "número ".$conteudoPassado['endereco'][0]->nunber;
                         }else{
                           $numeroEnd = "";
                         }
 
-                        if($conteudoPassado['endereco'][$i]->complement != '')
+                        if($conteudoPassado['endereco'][0]->complement != '')
                         {
                           $complementEnd = ", ponto de referência ".ucfirst( mb_strtolower($conteudoPassado['endereco'][$i]->complement));
                         }else{
                           $complementEnd = "";
                         }
 
-                        if($conteudoPassado['endereco'][$i]->district != '')
+                        if($conteudoPassado['endereco'][0]->district != '')
                         {
-                          $bairroEnd = " no bairro ".ucfirst( mb_strtolower($conteudoPassado['endereco'][$i]->district));
+                          $bairroEnd = " no bairro ".ucfirst( mb_strtolower($conteudoPassado['endereco'][0]->district));
                         }else{
                           $bairroEnd = "";
                         }
 
-                        if($conteudoPassado['endereco'][$i]->nome != '')
+                        if($conteudoPassado['endereco'][0]->nome != '')
                         {
-                          $cidadeEnd = " na cidade de  ".$conteudoPassado['endereco'][$i]->nome;
+                          $cidadeEnd = " na cidade de  ".$conteudoPassado['endereco'][0]->nome;
                         }else{
                           $cidadeEnd = "";
                         }
 
-                        if($conteudoPassado['endereco'][$i]->uf != '')
+                        if($conteudoPassado['endereco'][0]->uf != '')
                         {
-                          if($conteudoPassado['endereco'][$i]->nome != '')
+                          if($conteudoPassado['endereco'][0]->nome != '')
                           {
-                            $estadoEnd = "/".$conteudoPassado['endereco'][$i]->uf;
+                            $estadoEnd = "/".$conteudoPassado['endereco'][0]->uf;
                           }else{
-                            $estadoEnd = "no estado de ".$conteudoPassado['endereco'][$i]->uf;
+                            $estadoEnd = "no estado de ".$conteudoPassado['endereco'][0]->uf;
                           }
                         }else{
                           $estadoEnd = "";
@@ -582,7 +586,7 @@
                           <p><?php echo $logradouro.' '.$numeroEnd.' '.$complementEnd.' '.$bairroEnd.' '.$cidadeEnd.' '.$estadoEnd; ?></p>
                         <?php
                       }//fim do for de endereço
-                    }//fim do if de envolvidos...
+                   
 
                     ////////////*********** Dados do deposito da ocorrencia /////////////////
                     if($conteudoPassado['endereco_deposito'][0] != null){
@@ -739,22 +743,12 @@
                                   <td>Detidos  </td>
                                   <td><?php echo $totalDetidos; ?></td>             
                               </tr>
-                               <!--  <tr>
-                                  <td>Caixas de cigarro  </td>
-                                  <td><?php echo// $caixasCigarros[0]->qty; ?></td>            
-                              </tr>
-                              <tr>
-                                  <td>Caixas de cigarro em depósitos  </td>
-                                  <td><?php //echo $caixasCigarrosWrs[0]->quantidade_deposito; ?></td>            
-                              </tr> -->
+                              
                               <tr>
                                   <td>Total de caixas de cigarro  </td>
                                   <td><?php echo $totalCxCigarros; ?></td>            
                               </tr>
-                              <!-- <tr>
-                                  <td>Total de pacotes de cigarro  </td>
-                                  <td><?php //echo $totalPacotes; ?></td>            
-                              </tr> -->
+                              
                               <tr>
                                   <td>Veículos  </td>
                                   <td><?php echo $totalVeiculos; ?></td>            

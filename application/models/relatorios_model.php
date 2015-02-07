@@ -68,7 +68,7 @@ class Relatorios_model extends CI_Model {
         return $query->result();  
     }
 
-    function load_documento_endereco($idDoct)
+    function load_documento_endereco_old($idDoct)
     {
     	// public 'ROW_ID' => string '45' (length=2)
 
@@ -83,41 +83,23 @@ class Relatorios_model extends CI_Model {
         $this->db->where('tbl_addr.ROW_ID', $idDoct);
         $this->db->where('tbl_main.CHILD_TBL', 'tbl_addr');
     	$query = $this->db->get('tbl_main');
-        return $query->result();  
+        return $query->result(); 
+
+
     }
 
-    /*
-          object(stdClass)[56]
-      public 'ID_main' => string '300' (length=3)
-      public 'ROW_ID' => string '131' (length=3)
-      public 'parent_id' => string '131' (length=3)
-      public 'parent_TBL' => string 'tbl_doct' (length=8)
-      public 'CHILD_ID' => string '40' (length=2)
-      public 'CHILD_TBL' => string 'tbl_haul' (length=8)
-      public 'UPDATED_BY' => string 'qwe' (length=3)
-      public 'LAST_UPDATE' => string '2014-09-28 19:08:40' (length=19)
-      public 'CREATED_BY' => string 'qwe' (length=3)
-      public 'CREATED' => string '2014-09-28 19:08:40' (length=19)
-      public 'ID_HAUL' => string '40' (length=2)
-      public 'product' => string '3' (length=1)
-      public 'unit' => string '3' (length=1)
-      public 'qty' => string '23' (length=2)
-      public 'brand' => string '' (length=0)
-      public 'tabacalera' => string '' (length=0)
-      public 'id_unidade_medida' => string '3' (length=1)
-      public 'sigla_unidade' => string 'un' (length=2)
-      public 'unidade_medida' => string 'Unidades' (length=8)
-      public 'id_tabacalera' => null
-      public 'nome_tabacalera' => null
-      public 'descricao' => null
-      public 'deletado' => string '0' (length=1)
-      public 'id_marca' => null
-      public 'nome_marca' => null
-      public 'img_logo' => null
-      public 'id_produto' => string '3' (length=1)
-      public 'nome_produto' => string 'Cds' (length=3)
-    */
-
+    function load_documento_endereco($idDoct) 
+    {
+        $this->db->select('tbl_addr.ID_addr, tbl_addr.address, tbl_addr.nunber, tbl_addr.complement, tbl_addr.district, tbl_estados.nome_estado, tbl_estados.uf, tbl_cidades.nome');
+        $this->db->join('tbl_main','tbl_main.parent_id = tbl_doct.ROW_ID');
+        $this->db->join('tbl_addr','tbl_addr.ID_addr = tbl_main.CHILD_ID');
+        $this->db->join('tbl_estados', 'tbl_estados.id_estado = tbl_addr.state', 'left');
+        $this->db->join('tbl_cidades', 'tbl_addr.city = tbl_cidades.id', 'left');
+        $this->db->where('tbl_doct.ROW_ID', $idDoct);
+        $this->db->where('tbl_main.CHILD_TBL','tbl_addr');
+        $query = $this->db->get('tbl_doct');
+        return $query->result(); 
+    }
 
 
     function load_mercadoria_relatorio($idDoct)
