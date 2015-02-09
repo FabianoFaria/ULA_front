@@ -522,7 +522,7 @@
                       }//fim do if de envolvidos...
 
 
-                    if($conteudoPassado['endereco'][0] != null){
+                    if($conteudoPassado['endereco'] != null){
                     ?>
                       <h3>A referida apreensão ocorreu em:</h3>
                     <?php
@@ -587,9 +587,10 @@
                         <?php
                       }//fim do for de endereço
                    
+                    } //fim dos if do endereço de 
 
                     ////////////*********** Dados do deposito da ocorrencia /////////////////
-                    if($conteudoPassado['endereco_deposito'][0] != null){
+                    if($conteudoPassado['endereco_deposito'] != ''){
 
                       //var_dump($conteudoPassado['endereco_deposito']);
                         if($conteudoPassado['endereco_deposito'][0]->address != '')
@@ -656,6 +657,8 @@
                                 }
                                 /* quantidade */
 
+                                 $quantProdutoDept = 0;
+
                                  if($conteudoPassado['produto_armazens'][$i]->quantidade_deposito != '')
                                 {
                                   $quantProdutoDept = $conteudoPassado['produto_armazens'][$i]->quantidade_deposito;
@@ -692,15 +695,15 @@
 
                             } //Fim do for de pordutos do armazem
 
-                        }
-                        //Fim do if dos produtos do armazem
+                        }//Fim do if dos produtos do armazem
 
+                   // }///fim do if de endereço do deposito ...
 
-                      //fim dos dados do endereço de 
-                    }///fim do if de endereço do deposito ...
+                    ////////////*********** Dados para preencher a tabela /////////////////
+                   }
 
-                    ////////////////// Dados sobre imagens  /////////////////////
-                      if($conteudoPassado['imagens'][0] != null){
+                   ////////////////// Dados sobre imagens  /////////////////////
+                      if($conteudoPassado['imagens'][0] != ' '){
                         //var_dump($conteudoPassado['imagens'][0]);
 
                         ?>
@@ -719,8 +722,8 @@
 
                       } //fim do if de imagens 
 
-                    ////////////*********** Dados para preencher a tabela /////////////////
-                   }
+
+
                 }///Fim do for each geral....
 
 

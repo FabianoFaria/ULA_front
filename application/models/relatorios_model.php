@@ -222,14 +222,17 @@ class Relatorios_model extends CI_Model {
     function load_endereco_wrs_relatorio($idRow)
     {
         $this->db->select('*');
+        $this->db->join('tbl_main','tbl_main.parent_id = tbl_doct.ROW_ID');
+        $this->db->join('tbl_wrs','tbl_wrs.ID_wrs = tbl_main.CHILD_ID');
+        $this->db->join('tbl_wrs_addr','tbl_wrs_addr.id_wrs = tbl_wrs.ID_wrs');
+        $this->db->join('tbl_addr','tbl_addr.ID_addr = tbl_wrs_addr.id_addr');
         $this->db->join('tbl_cidades','tbl_cidades.id = tbl_addr.city', 'left');
         $this->db->join('tbl_estados','tbl_estados.id_estado = tbl_addr.state', 'left');
-        $this->db->join('tbl_main', 'tbl_main.parent_id = tbl_addr.ROW_ID');
-        $this->db->join('tbl_wrs_addr', 'tbl_wrs_addr.id_addr = tbl_addr.ID_addr');
-        $this->db->join('tbl_wrs','tbl_wrs.ID_wrs = tbl_wrs_addr.id_wrs');
+        $this->db->where('tbl_main.CHILD_TBL','tbl_wrs');
         $this->db->where('tbl_wrs.deletado', 0);
-        $this->db->where('tbl_addr.ROW_ID', $idRow);
-        $queryDoct = $this->db->get('tbl_addr');
+        $this->db->where('tbl_doct.ROW_ID', $idRow);
+
+        $queryDoct = $this->db->get('tbl_doct');
         return $queryDoct->result();
     }
 

@@ -497,7 +497,7 @@
                               }
 
                               /* estado e cidade do individuo */
-                               if($conteudoPassado['envolvidos'][$i]->end_Cid != '')
+                              if($conteudoPassado['envolvidos'][$i]->end_Cid != '')
                               {
                                 $cidadeEnd = " em ".$conteudoPassado['envolvidos'][$i]->end_Cid;
                               }
@@ -537,6 +537,8 @@
 
                           <?php
                         }
+                      } // Fim do if do contato
+
                     if($conteudoPassado['endereco'][0] != null){
                     ?>
                       <h3>A referida apreensâo ocorreu nas proximidade do endereço :</h3>
@@ -600,7 +602,7 @@
                           <p><?php echo $logradouro.' '.$numeroEnd.' '.$complementEnd.' '.$bairroEnd.' '.$cidadeEnd.' '.$estadoEnd; ?></p>
                         <?php
                       }//fim do for de endereço
-                    }//fim do if de envolvidos...
+                    //}//fim do if de envolvidos...
 
                     ////////////*********** Dados do deposito da ocorrencia /////////////////
                     if($conteudoPassado['endereco_deposito'][0] != null){
@@ -654,13 +656,16 @@
                           $estadoDept = "";
                         }
 
-
                       ?>
                         <p><?php echo 'Nesta apreensâo foi localizado um depósito no seguinte endereço : '.$logradouroDept.' '.$numeroDept.' '.$complementDept.' '.$bairroDept.' '.$cidadeDept.' '.$estadoDept; ?></p>
                         
-                        <p>Neste depósito foram encontrado os seguintes produtos :</p> 
                       <?php 
                         if($conteudoPassado['produto_armazens'][0] != null){
+
+                          ?>
+                          <p>Neste depósito foram encontrado os seguintes produtos :</p> 
+                          <?php
+
                             for($i = 0; $i < count($conteudoPassado['produto_armazens']) ; $i++ ){
                               if($conteudoPassado['produto_armazens'][$i]->nome_produto != '')
                                 {

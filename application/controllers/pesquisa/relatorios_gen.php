@@ -108,12 +108,14 @@ class Relatorios_gen extends CI_Controller {
                 $dataDocumento['endereco'] = "";
             }
            $endereçoDeposito = $this->relatorio->load_endereco_wrs_relatorio($data->ROW_ID);
+
             //var_dump($endereçoDeposito);
+
            if($endereçoDeposito != null) {
                 $dataDocumento['endereco_deposito'] = $endereçoDeposito;   
             }else
             {
-                $dataDocumento['endereco_deposito'][0] = "";
+                $dataDocumento['endereco_deposito'] = '';
             }
             $mercadorias = $this->relatorio->load_mercadoria_relatorio($data->ROW_ID);
              if($mercadorias != null) {
@@ -147,11 +149,14 @@ class Relatorios_gen extends CI_Controller {
             }
 
             $imagens = $this->relatorio->load_documento_imagens($data->ROW_ID);
+
+            //var_dump($imagens);
+
              if($imagens != null) {
                 $dataDocumento['imagens'] = $imagens;   
             }else
             {
-                $dataDocumento['imagens'][0] = "";
+                $dataDocumento['imagens'][0] = ' ';
             }
 
             array_push($dadosArray , $dataDocumento);

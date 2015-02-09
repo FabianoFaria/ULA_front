@@ -80,7 +80,8 @@
 	}
 
 	function mostraBuscaEnderecosCidades(str) {   //////////////////////////////////////////BUSCA DE ENDEREÇO
-	if (str=="") {
+	
+	if (str==" ") {
 	document.getElementById("listResultados").innerHTML="<p>Nenhum resultado</p>";
 	return;
 	 }
@@ -139,7 +140,7 @@
 			document.getElementById("cidade_pesquisa").innerHTML=xmlhttp.responseText;
 		}
 	}
-	xmlhttp.open("GET","/ULA_front2/index.php/login/novo_documento/chamaCidade/"+str,true);
+	xmlhttp.open("GET","/sis/index.php/login/novo_documento/chamaCidade/"+str,true);
 	xmlhttp.send();
 	}
 
