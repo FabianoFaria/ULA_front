@@ -342,6 +342,7 @@ class Detalhes_documento_model extends CI_Model {
         $this->db->join('tbl_main','tbl_main.CHILD_ID = tbl_contact.ID_contact');
         $this->db->where('tbl_main.parent_id', $idRow);
         $this->db->where('tbl_main.CHILD_TBL','tbl_contact');
+        $this->db->where('deletado', 0);
         $envolvidos = $this->db->get();
         return $envolvidos->result();
     }
