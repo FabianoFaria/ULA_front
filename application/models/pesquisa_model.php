@@ -25,7 +25,13 @@ class Pesquisa_model extends CI_Model {
         $this->db->or_like('tbl_contact.passport', $termo);
         $this->db->or_like('tbl_contact.father', $termo); 
         $this->db->or_like('tbl_contact.mother', $termo); 
-        $this->db->or_like('tbl_contact.telefone', $termo); 
+        $this->db->or_like('tbl_contact.telefone', $termo);
+
+        $this->db->join('tbl_main','tbl_main.CHILD_ID = tbl_contact.ID_contact');
+        $this->db->join('tbl_doct','tbl_doct.ROW_ID = tbl_main.parent_id');
+        $this->db->where('tbl_main.CHILD_TBL','tbl_contact');
+        $this->db->where('tbl_doct.status_doct', '0');
+
         $this->db->where('tbl_contact.deletado', 0);
         $this->db->order_by("tbl_contact.name", "asc"); 
         $query = $this->db->get('tbl_contact');
@@ -44,6 +50,13 @@ class Pesquisa_model extends CI_Model {
         $this->db->join('tbl_tipo_veiculo','tbl_tipo_veiculo.tpve_cod = tbl_vehicle.category', 'left');
         $this->db->join('tbl_marcas','tbl_marcas.marc_cod = tbl_vehicle.brand', 'left');
         $this->db->join('tbl_modelos','tbl_modelos.mode_cod = tbl_vehicle.model', 'left');
+
+        $this->db->join('tbl_main','tbl_main.CHILD_ID = tbl_vehicle.ID_vehicle');
+        $this->db->join('tbl_doct','tbl_doct.ROW_ID = tbl_main.parent_id');
+
+        $this->db->where('tbl_main.CHILD_TBL','tbl_vehicle');
+        $this->db->where('tbl_doct.status_doct', '0');
+
         $this->db->order_by("tbl_vehicle.placa", "asc"); 
         $query = $this->db->get('tbl_vehicle');
         return $query->result();
@@ -57,6 +70,12 @@ class Pesquisa_model extends CI_Model {
         $this->db->join('tbl_tipo_veiculo','tbl_tipo_veiculo.tpve_cod = tbl_vehicle.category', 'left');
         $this->db->join('tbl_marcas','tbl_marcas.marc_cod = tbl_vehicle.brand', 'left');
         $this->db->join('tbl_modelos','tbl_modelos.mode_cod = tbl_vehicle.model', 'left');
+
+        $this->db->join('tbl_main','tbl_main.CHILD_ID = tbl_vehicle.ID_vehicle');
+        $this->db->join('tbl_doct','tbl_doct.ROW_ID = tbl_main.parent_id');
+
+        $this->db->where('tbl_main.CHILD_TBL','tbl_vehicle');
+        $this->db->where('tbl_doct.status_doct', '0');
         $this->db->order_by("tbl_vehicle.placa", "asc"); 
         $query = $this->db->get('tbl_vehicle');
         return $query->result();
@@ -70,6 +89,12 @@ class Pesquisa_model extends CI_Model {
         $this->db->or_like('tbl_addr.complement', $termo);
         $this->db->join('tbl_cidades','tbl_cidades.id = tbl_addr.city', 'left');
         $this->db->join('tbl_estados','tbl_estados.id_estado = tbl_addr.state', 'left');
+
+        $this->db->join('tbl_main','tbl_main.CHILD_ID = tbl_addr.ID_addr');
+        $this->db->join('tbl_doct','tbl_doct.ROW_ID = tbl_main.parent_id');
+
+        $this->db->where('tbl_main.CHILD_TBL','tbl_addr');
+        $this->db->where('tbl_doct.status_doct', '0');
         $this->db->order_by("tbl_addr.state", "asc"); 
         $query = $this->db->get('tbl_addr');
         return $query->result();
@@ -80,6 +105,11 @@ class Pesquisa_model extends CI_Model {
         $this->db->where('tbl_addr.city', $termo);
         $this->db->join('tbl_cidades','tbl_cidades.id = tbl_addr.city', 'left');
         $this->db->join('tbl_estados','tbl_estados.id_estado = tbl_addr.state', 'left');
+        $this->db->join('tbl_main','tbl_main.CHILD_ID = tbl_addr.ID_addr');
+        $this->db->join('tbl_doct','tbl_doct.ROW_ID = tbl_main.parent_id');
+
+        $this->db->where('tbl_main.CHILD_TBL','tbl_addr');
+        $this->db->where('tbl_doct.status_doct', '0');
         $this->db->order_by("tbl_addr.state", "asc"); 
         $query = $this->db->get('tbl_addr');
         return $query->result();
