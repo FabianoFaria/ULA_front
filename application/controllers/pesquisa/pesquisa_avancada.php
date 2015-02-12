@@ -71,12 +71,12 @@ class Pesquisa_avancada extends CI_Controller {
 
         $dataCidades = array();
 
-        echo "<tr> <th> Nome do detido </th><th>RG</th><th>CPF</th> <th>Documentos</th>  </tr>  <tbody id='listResultadosRow'>";
+        echo "<tr> <th> Nome do detido </th><th>RG</th><th>CPF</th> <th>Documentos</th> <th>Data Doc.</th> </tr>  <tbody id='listResultadosRow'>";
 
         foreach ($list_pessoas as $documentos) {
             //$dataCidades = $cidades;
 
-            $dataEx = explode("-", $documentos->birth_dt);
+            $dataEx = explode("-", $documentos->arrest_date);
             $month = $dataEx[1];
             $day = $dataEx[2];
             $year = $dataEx[0];
@@ -84,7 +84,7 @@ class Pesquisa_avancada extends CI_Controller {
             $dataF = $day."/".$month."/".$year;
 
 
-            echo "<tr> <td>  ".$documentos->name." </td><td>  ".$documentos->rg." </td><td> ".$documentos->CPF."  </td> <td><a href='".base_url()."index.php/pesquisa/pesquisa_avancada/envolvimentoPessoas/".$documentos->ID_contact."'>listar documentos</a> </td>  </tr>";
+            echo "<tr> <td>  ".$documentos->name." </td><td>  ".$documentos->rg." </td><td> ".$documentos->CPF."  </td> <td><a href='".base_url()."index.php/pesquisa/pesquisa_avancada/envolvimentoPessoas/".$documentos->ID_contact."'>listar documentos</a> </td> <td> ".$dataF."  </td> </tr>";
         }
 
         echo "</tbody>";
@@ -100,15 +100,23 @@ class Pesquisa_avancada extends CI_Controller {
 
         $dataCidades = array();
 
-        echo "<tr> <th>Marca </th><th>modelo</th><th>placa</th> <th> Ação </th> </tr>  <tbody id='listResultadosRow'>";
+        echo "<tr> <th>Marca </th><th>modelo</th><th>placa</th> <th> Ação </th><th> Data Doc. </th> </tr>  <tbody id='listResultadosRow'>";
 
         foreach ($list_veiculos as $veiculos) {
+
+            //Data final...
+            $dataTemp2 = explode("-", $veiculos->arrest_date);
+            $dia2 = $dataTemp2[0];
+            $mes2 = $dataTemp2[1];
+            $ano2 = $dataTemp2[2];
+            $dataFinal3 = $ano2."/".$mes2."/".$dia2;
+
             //$dataCidades = $cidades;
             if(!is_numeric($veiculos->model))
             {$model = $veiculos->model;}
             else{$model = $veiculos->mode_nome;}
 
-            echo "<tr> <td> ".$veiculos->marc_nome."</td><td> ".$model."</td><td> ".$veiculos->placa."</td><td> <a href='".base_url()."index.php/pesquisa/pesquisa_avancada/envolvimentoVeiculo/".$veiculos->ID_vehicle."'>listar documentos</a> </td> </tr>";
+            echo "<tr> <td> ".$veiculos->marc_nome."</td><td> ".$model."</td><td> ".$veiculos->placa."</td><td> <a href='".base_url()."index.php/pesquisa/pesquisa_avancada/envolvimentoVeiculo/".$veiculos->ID_vehicle."'>listar documentos</a> </td><td> ".$dataFinal3."</td> </tr>";
         }
 
         echo "</tbody>";
@@ -122,15 +130,23 @@ class Pesquisa_avancada extends CI_Controller {
 
         $dataCidades = array();
 
-        echo "<tr><th>Tipo </th><th>modelo</th><th>placa</th> <th> Ação </th> </tr>  <tbody id='listResultadosRow'>";
+        echo "<tr><th>Tipo </th><th>modelo</th><th>placa</th> <th> Ação </th><th> Data doc. </th> </tr>  <tbody id='listResultadosRow'>";
 
         foreach ($list_veiculos as $veiculos) {
+
+            //Data final...
+            $dataTemp2 = explode("-", $veiculos->arrest_date);
+            $dia2 = $dataTemp2[0];
+            $mes2 = $dataTemp2[1];
+            $ano2 = $dataTemp2[2];
+            $dataFinal2 = $ano2."/".$mes2."/".$dia2;
+
             //$dataCidades = $cidades;
             if(!is_numeric($veiculos->model))
             {$model = $veiculos->model;}
             else{$model = $veiculos->mode_nome;}
 
-            echo "<tr><td> ".$veiculos->tpve_nome."</td><td> ".$model."</td><td> ".$veiculos->placa."</td><td> <a href='".base_url()."index.php/pesquisa/pesquisa_avancada/envolvimentoVeiculo/".$veiculos->ID_vehicle."'>listar documentos</a> </td> </tr>";
+            echo "<tr><td> ".$veiculos->tpve_nome."</td><td> ".$model."</td><td> ".$veiculos->placa."</td><td> <a href='".base_url()."index.php/pesquisa/pesquisa_avancada/envolvimentoVeiculo/".$veiculos->ID_vehicle."'>listar documentos</a> </td><td> ". $dataFinal2."</td> </tr>";
         }
 
         echo "</tbody>";
@@ -146,20 +162,20 @@ class Pesquisa_avancada extends CI_Controller {
 
         $dataCidades = array();
 
-        echo "<tr> <th>Logradouro </th><th>Cidade</th><th> CEP </th> <th> Ação </th>  </tr>  <tbody id='listResultadosRow'>";
+        echo "<tr> <th>Logradouro </th><th>Cidade</th><th> CEP </th> <th> Ação </th>  <th> Data Doc. </th></tr>  <tbody id='listResultadosRow'>";
 
         foreach ($list_enderecos as $enderecos) {
             //$dataCidades = $cidades;
 
-            //$dataEx = explode("-", $enderecos->arrest_date);
-            //$month = $dataEx[1];
-            //$day = $dataEx[2];
-            //$year = $dataEx[0];
+            $dataEx = explode("-", $enderecos->arrest_date);
+            $month = $dataEx[1];
+            $day = $dataEx[2];
+            $year = $dataEx[0];
 
-            //$dataF = $day."/".$month."/".$year;
+            $dataF = $day."/".$month."/".$year;
 
 
-            echo "<tr> <td>".$enderecos->address."</td><td>".$enderecos->nome."</td><td>".$enderecos->zipcode."</td> <td><a href='".base_url()."index.php/pesquisa/pesquisa_avancada/envolvimentoEndereco/".$enderecos->ID_addr."'>listar documentos</a> </td>   </tr>";
+            echo "<tr> <td>".$enderecos->address."</td><td>".$enderecos->nome."</td><td>".$enderecos->zipcode."</td> <td><a href='".base_url()."index.php/pesquisa/pesquisa_avancada/envolvimentoEndereco/".$enderecos->ID_addr."'>listar documentos</a> </td><td>".$dataF."</td>   </tr>";
         }
 
         echo "</tbody>";
@@ -174,20 +190,20 @@ class Pesquisa_avancada extends CI_Controller {
 
         $dataCidades = array();
 
-        echo "<tr> <th>Cidade</th><th>Logradouro</th><th> CEP </th> <th> Ação </th>  </tr>  <tbody id='listResultadosRow'>";
+        echo "<tr> <th>Cidade</th><th>Logradouro</th><th> CEP </th> <th> Ação </th> <th> Data Doc. </th> </tr>  <tbody id='listResultadosRow'>";
 
         foreach ($list_enderecos as $enderecos) {
             //$dataCidades = $cidades;
 
-            //$dataEx = explode("-", $enderecos->arrest_date);
-            //$month = $dataEx[1];
-            //$day = $dataEx[2];
-            //$year = $dataEx[0];
+            $dataEx = explode("-", $enderecos->arrest_date);
+            $month = $dataEx[1];
+            $day = $dataEx[2];
+            $year = $dataEx[0];
 
-            //$dataF = $day."/".$month."/".$year;
+            $dataT = $day."/".$month."/".$year;
 
 
-            echo "<tr> <td>".$enderecos->nome."</td><td>".$enderecos->address."</td><td>".$enderecos->zipcode."</td> <td><a href='".base_url()."index.php/pesquisa/pesquisa_avancada/envolvimentoEndereco/".$enderecos->ID_addr."'>listar documentos</a> </td>   </tr>";
+            echo "<tr> <td>".$enderecos->nome."</td><td>".$enderecos->address."</td><td>".$enderecos->zipcode."</td> <td><a href='".base_url()."index.php/pesquisa/pesquisa_avancada/envolvimentoEndereco/".$enderecos->ID_addr."'>listar documentos</a> </td> <td>".$dataT."</td>  </tr>";
         }
 
         echo "</tbody>";

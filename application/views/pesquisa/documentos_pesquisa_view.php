@@ -336,7 +336,6 @@
                  } //Fim do foreach conteudo as ocorrencia....
             ?>
 
-
             <form id="gerar_doc" action="<?php echo base_url() ?>index.php/pesquisa/pesquisa_avancada/gera_relatorio_individual" method="post">
                 <input type="hidden" name="idObjeto" value="<?php echo $idObjeto; ?>">
                 <input type="hidden" name="tipoDado" value="<?php echo $tipoDado; ?>">

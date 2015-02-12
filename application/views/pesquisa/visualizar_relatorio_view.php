@@ -282,6 +282,50 @@
             <?php
                  } //Fim do foreach conteudo as ocorrencia....
             ?>
+            
+            <br>
+
+            <div class="col-md-12 well">
+                <p>Total de apreensões neste relatório : <?php echo $totalOcorrencias; ?></p>
+
+                      <table>
+                          <thead>
+                              <tr style='background-color: #EEE'>
+                                  <th> Total de apreensões do período</th>
+                                  <th>
+                                  </th>
+                              </tr>
+                          </thead>    
+                          <tbody>
+                              <tr>
+                                  <td>Detidos  </td>
+                                  <td><?php echo $totalDetidos; ?></td>             
+                              </tr>
+                              
+                              <tr>
+                                  <td>Total de caixas de cigarro  </td>
+                                  <td><?php echo $totalCxCigarros; ?></td>            
+                              </tr>
+                              
+                              <tr>
+                                  <td>Veículos  </td>
+                                  <td><?php echo $totalVeiculos; ?></td>            
+                              </tr>
+                              <tr>
+                                  <td>Depósitos descobertos </td>
+                                  <td><?php echo $totalDepositos; ?></td>            
+                              </tr>
+                              <tr>
+                                  <td>Caminhões </td>
+                                  <td><?php echo $totalCaminhao; ?></td>            
+                              </tr>
+                               <tr>
+                                  <td>Ônibus</td>
+                                  <td><?php echo $totalOnibus; ?></td>            
+                              </tr>
+                          </tbody>
+                     </table> 
+            </div>  <!-- Fim do col-md-12 well -->
 
             <br>
             

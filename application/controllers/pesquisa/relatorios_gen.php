@@ -310,49 +310,6 @@ string '24/09/2014' (length=10)
                 $dataDocumento['envolvidos'][0] = "";
             }
 
-            /*
-                object(stdClass)[34]
-      public 'ID_main' => string '215' (length=3)
-      public 'ROW_ID' => string '123' (length=3)
-      public 'parent_id' => string '123' (length=3)
-      public 'parent_TBL' => string 'tbl_doct' (length=8)
-      public 'CHILD_ID' => string '16' (length=2)
-      public 'CHILD_TBL' => string 'tbl_contact' (length=11)
-      public 'UPDATED_BY' => string 'Niguem' (length=6)
-      public 'LAST_UPDATE' => string '2014-09-16 02:56:24' (length=19)
-      public 'CREATED_BY' => string 'qwe' (length=3)
-      public 'CREATED' => string '2014-09-13 20:31:18' (length=19)
-      public 'ID_contact' => string '16' (length=2)
-      public 'name' => string 'Individuo A' (length=11)
-      public 'CPF' => string '13609613726' (length=11)
-      public 'rg' => string '' (length=0)
-      public 'passport' => string '' (length=0)
-      public 'father' => string '' (length=0)
-      public 'mother' => string '' (length=0)
-      public 'birth_dt' => string '2014-09-09' (length=10)
-      public 'birth_city' => string '1743' (length=4)
-      public 'birth_state' => string '08' (length=2)
-      public 'birth_country' => string '33' (length=2)
-      public 'ADDR_PR_ID' => null
-      public 'phone_PR_ID' => null
-      public 'UPDATE_BY' => string 'qwe' (length=3)
-      public 'telefone' => string '' (length=0)
-      public 'marca_telefone' => string '' (length=0)
-      public 'modelo_telefone' => string '' (length=0)
-      public 'IMEI' => string '' (length=0)
-      public 'operadora' => string '' (length=0)
-      public 'deletado' => string '0' (length=1)
-      public 'Id_pais' => string '33' (length=2)
-      public 'nome_pais' => string 'Brasil' (length=6)
-      public 'country_name' => string 'BRAZIL' (length=6)
-      public 'id_estado' => string '08' (length=2)
-      public 'uf' => string 'ES' (length=2)
-      public 'nome_estado' => string 'EspÃ­rito Santo' (length=15)
-      public 'id' => string '1743' (length=4)
-      public 'estado' => string '08' (length=2)
-      public 'nome' => string 'Acioli' (length=6)
-            */
-
             //var_dump($dataDocumento['envolvidos']);
 
             //Veiculos....
@@ -387,24 +344,6 @@ string '24/09/2014' (length=10)
                 $dataDocumento['imagens'][0] = "";
             }
 
-            /*
-                 public 'ID_main' => string '294' (length=3)
-                  public 'ROW_ID' => string '131' (length=3)
-                  public 'parent_id' => string '131' (length=3)
-                  public 'parent_TBL' => string 'tbl_doct' (length=8)
-                  public 'CHILD_ID' => string '11' (length=2)
-                  public 'CHILD_TBL' => string 'tbl_image_doct' (length=14)
-                  public 'UPDATED_BY' => string 'Niguem' (length=6)
-                  public 'LAST_UPDATE' => string '0000-00-00 00:00:00' (length=19)
-                  public 'CREATED_BY' => string 'qwe' (length=3)
-                  public 'CREATED' => string '2014-09-25 03:07:44' (length=19)
-                  public 'id_image' => string '11' (length=2)
-                  public 'id_row' => string '131' (length=3)
-                  public 'title_image' => string 'Foto A' (length=6)
-                  public 'nome_image_doct' => string '13d6d38b47e0d6a9b714618e37751984.jpg' (length=36)
-                  public 'UPDATE_BY' => string 'Ninguem' (length=7)
-
-            */
 
             array_push($dadosArray , $dataDocumento);
         }
@@ -419,6 +358,33 @@ string '24/09/2014' (length=10)
         {
           $destino = "Todos os estados";
         }
+
+        //Totais deste relatório
+          $dados['totalOcorrencias'] = $this->relatorio->total_ocorrencias($dataIni ,$dataFim, $estadoDestino);
+
+        $dados['totalVeiculos'] = $this->relatorio->total_veiculos_relatorio($dataIni ,$dataFim, $estadoDestino);
+        
+        $dados['totalDepositos'] = $this->relatorio->total_depositos($dataIni ,$dataFim, $estadoDestino);
+        
+        $dados['totalCaminhao'] = $this->relatorio->total_veiculos_caminhao_relatorio($dataIni ,$dataFim, $estadoDestino);
+        
+        $dados['totalOnibus'] = $this->relatorio->total_veiculos_onibus_relatorio($dataIni ,$dataFim, $estadoDestino);
+
+        $dados['totalDetidos'] = $this->relatorio->total_detidos($dataIni ,$dataFim, $estadoDestino); 
+
+        $caixasCigarros = $this->relatorio->total_caixa_cigarros($dataIni ,$dataFim, $estadoDestino);
+        $cigarrosWsr = $this->relatorio->total_caixa_cigarros_wrs($dataIni ,$dataFim, $estadoDestino);
+
+        $dados['caixasCigarros'] = $caixasCigarros;
+        $dados['caixasCigarrosWrs'] = $cigarrosWsr;
+ 
+        $dados['totalCxCigarros'] = $caixasCigarros[0]->qty + $cigarrosWsr[0]->quantidade_deposito;
+
+        $dados['pacotesCigarros'] = $caixasCigarros[0]->qty;
+        $dados['pacotesCigarrosWrs'] = $cigarrosWsr[0]->quantidade_deposito;
+
+        $dados['totalPacotes'] = $caixasCigarros[0]->qty + $cigarrosWsr[0]->quantidade_deposito;
+        //Fim dos Totais...
 
 
         $dados['estadoDestino'] = $destino;

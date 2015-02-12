@@ -140,7 +140,7 @@
 			document.getElementById("cidade_pesquisa").innerHTML=xmlhttp.responseText;
 		}
 	}
-	xmlhttp.open("GET","/ULA_front2/index.php/login/novo_documento/chamaCidade/"+str,true);
+	xmlhttp.open("GET","/sis/index.php/login/novo_documento/chamaCidade/"+str,true);
 	xmlhttp.send();
 	}
 
@@ -151,7 +151,7 @@
                 <h2> Pesquisar elementos cadastrados</h2>
 
                 
-                <div class="col-md-5 col-sm-5 col-xs-5 formulario_pesquisa">
+                <div class="col-md-4 col-sm-5 col-xs-5 formulario_pesquisa">
 
                 	<h3></h3>
 
@@ -268,7 +268,7 @@
 				<br>
 
                 </div>
-                <div class="col-md-7 col-sm-7 col-xs-7 lista-menu">
+                <div class="col-md-8 col-sm-7 col-xs-7 lista-menu">
 
 
                 	<hr>
@@ -276,11 +276,11 @@
 
                 	<table id="listResultados">
 						<tr>
-							<th>- </th><th>-</th><th>-</th><th>-</th>
+							<th>- </th><th>-</th><th>-</th><th>-</th><th>-</th>
 						</tr>
 						<tbody id="listResultadosRow">
 							<tr>
-								<td></td><td></td><td></td><td></td>
+								<td></td><td></td><td></td><td></td><td></td>
 							</tr>
 						</tbody>
                 	</table>
