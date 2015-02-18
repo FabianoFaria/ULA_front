@@ -60,6 +60,8 @@
                     
         <?php
 
+            $totalCaixaCigarrosApreendidos = 0;
+
 
             foreach ($conteudo as $ocorrencia) {
                                     
@@ -155,6 +157,22 @@
 
                      <?php
 
+                     //Contagem das caixas de cigarro...
+
+                    if($ocorrencia['mercadorias'][0] != "")
+                    {
+                        foreach ($ocorrencia['mercadorias'] as $mercadoriasAp){
+
+                          if(($mercadoriasAp->product == 10) && ($mercadoriasAp->unit == 7)){
+                              
+                           echo $totalCaixaCigarrosApreendidos = $totalCaixaCigarrosApreendidos + $mercadoriasAp->qty;
+
+                            } //Fim do if...
+
+                        } //Fim do for each... 
+                    } //Fim do if
+
+
                     if($ocorrencia['produto_armazens'][0] != "")
                     {
                         //var_dump($ocorrencia['produto_armazens']);
@@ -183,6 +201,12 @@
                     <hr>
 
                     <?php
+                              if(($produtosDep->produto_deposito == 10) && ($produtosDep->unidade_produto_deposito == 7)){
+                              
+                                echo $totalCaixaCigarrosApreendidos = $totalCaixaCigarrosApreendidos + $produtosDep->quantidade_deposito;
+
+                              } //Fim do if...
+
 
                             }
                         }
@@ -302,9 +326,14 @@
                                   <td><?php echo $totalDetidos; ?></td>             
                               </tr>
                               
-                              <tr>
+                              <!-- <tr>
                                   <td>Total de caixas de cigarro  </td>
-                                  <td><?php echo $totalCxCigarros; ?></td>            
+                                  <td><?php //echo $totalCxCigarros; ?></td>            
+                              </tr> -->
+
+                               <tr>
+                                  <td>Total de caixas de cigarro  </td>
+                                  <td><?php echo $totalCaixaCigarrosApreendidos; ?></td>            
                               </tr>
                               
                               <tr>

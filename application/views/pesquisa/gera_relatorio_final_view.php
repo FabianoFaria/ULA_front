@@ -125,6 +125,7 @@
 
             //var_dump($conteudo);
 
+            $totalCaixaCigarros = 0;
 
             foreach ($conteudo as $conteudoPassado) {
 
@@ -313,6 +314,16 @@
                             <p>Aproximadamente <?php echo $conteudoPassado['mercadorias'][$i]->qty .' '.$conteudoPassado['mercadorias'][$i]->unidade_medida.' de '.$conteudoPassado['mercadorias'][$i]->nome_produto; ?></p>
                           <?php
                           
+
+                            //Efetuar soma das caixas de cigarro...
+
+                            if(($conteudoPassado['mercadorias'][$i]->product == 10) && ($conteudoPassado['mercadorias'][$i]->unit == 7)){
+                              
+                           echo $totalCaixaCigarros = $totalCaixaCigarros + $conteudoPassado['mercadorias'][$i]->qty;
+
+                            }
+
+
                             if($conteudoPassado['mercadorias'][$i]->nome_marca != '')
                             {
                               ?>
@@ -662,6 +673,7 @@
                                  if($conteudoPassado['produto_armazens'][$i]->quantidade_deposito != '')
                                 {
                                   $quantProdutoDept = $conteudoPassado['produto_armazens'][$i]->quantidade_deposito;
+
                                 }else{
                                   $quantProdutoDept = " ";
                                 }
@@ -689,6 +701,15 @@
                                 }else{
                                   $tabacaleraProd = "";
                                 }
+
+                                 //Efetuar soma das caixas de cigarro...
+
+                                  if($conteudoPassado['produto_armazens'][$i]->produto_deposito == 10 && $conteudoPassado['produto_armazens'][$i]->unidade_produto_deposito == 7){
+                                    
+                                    $totalCaixaCigarros = $totalCaixaCigarros + $conteudoPassado['produto_armazens'][$i]->quantidade_deposito;
+
+                                  }
+
                                 ?>
                                 <p><?php echo $quantProdutoDept.' '.$unidadeProdutoDept.' de '.$nomeProdutoDept.' '.$marcaProd.' '.$tabacaleraProd; ?></p>
                                 <?php
@@ -744,12 +765,17 @@
                           <tbody>
                               <tr>
                                   <td>Detidos  </td>
-                                  <td><?php echo $totalDetidos; ?></td>             
+                                  <td><?php echo $totalDetidos; ?></td>              
                               </tr>
                               
+                              <!-- <tr>
+                                  <td>Total de caixas de cigarro  </td>
+                                  <td><?php //echo $totalCxCigarros; ?></td>            
+                              </tr> -->
+
                               <tr>
                                   <td>Total de caixas de cigarro  </td>
-                                  <td><?php echo $totalCxCigarros; ?></td>            
+                                  <td><?php echo $totalCaixaCigarros; ?></td>            
                               </tr>
                               
                               <tr>

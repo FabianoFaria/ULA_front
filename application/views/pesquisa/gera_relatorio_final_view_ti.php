@@ -127,6 +127,8 @@
 
             //var_dump($conteudo);
 
+            $totalCaixasCigarro = 0;
+
 
             foreach ($conteudo as $conteudoPassado) {
 
@@ -287,6 +289,16 @@
                           ?>
                             <p>Aproximadamente <?php echo $conteudoPassado['mercadorias'][$i]->qty .' '.$conteudoPassado['mercadorias'][$i]->unidade_medida.' de '.$conteudoPassado['mercadorias'][$i]->nome_produto; ?></p>
                           <?php
+
+                            //Efetuar soma das caixas de cigarro...
+
+                          var_dump($conteudoPassado['mercadorias']);
+
+                          //if($conteudoPassado['mercadorias'][$i]->id_produto = 10 && $conteudoPassado['mercadorias'][$i]->id_unidade_medida = 7){
+                            ?>
+                            <p>Produto é cigarro e está embalo em caixas </p>
+                            <?php
+                          //}
                           
                             if($conteudoPassado['mercadorias'][$i]->nome_marca != '')
                             {

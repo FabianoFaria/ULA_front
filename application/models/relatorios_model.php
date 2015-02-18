@@ -104,7 +104,7 @@ class Relatorios_model extends CI_Model {
 
     function load_mercadoria_relatorio($idDoct)
     {
-        $this->db->select('tbl_haul.ID_HAUL, tbl_haul.qty, tbl_produtos.nome_produto, tbl_marcas_produtos.nome_marca, tbl_tabacalera.nome_tabacalera, tbl_unidade_medidas.unidade_medida');
+        $this->db->select('tbl_haul.ID_HAUL, tbl_haul.qty, tbl_haul.product, tbl_haul.unit, tbl_produtos.nome_produto, tbl_marcas_produtos.nome_marca, tbl_tabacalera.nome_tabacalera, tbl_unidade_medidas.unidade_medida');
         $this->db->join('tbl_haul','tbl_haul.ID_HAUL = tbl_main.CHILD_ID');
         $this->db->join('tbl_unidade_medidas','tbl_unidade_medidas.id_unidade_medida = tbl_haul.unit', 'left');
         $this->db->join('tbl_tabacalera','tbl_tabacalera.id_tabacalera = tbl_haul.tabacalera', 'left');
@@ -329,8 +329,8 @@ class Relatorios_model extends CI_Model {
         //$this->db->select('*');
         $this->db->select_sum('tbl_wrs.quantidade_deposito');
         $this->db->join('tbl_main','tbl_doct.ROW_ID = tbl_main.parent_id', 'left');
-        $this->db->where('tbl_main.CHILD_TBL', 'tbl_wrs');
         $this->db->join('tbl_wrs','tbl_wrs.ID_wrs = tbl_main.CHILD_ID', 'left');
+        $this->db->where('tbl_main.CHILD_TBL', 'tbl_wrs');
         $this->db->where('tbl_wrs.produto_deposito', '10');
         $this->db->where('tbl_wrs.unidade_produto_deposito', '7');
         $where = "tbl_doct.arrest_date BETWEEN '$inicio%' AND '$final%'";
