@@ -164,7 +164,7 @@
                     if($conteudoPassado['documento'][0]->operation != null)
                     {
                     ?>
-                      <p>Nome da operaçâo :  <?php echo ucfirst( mb_strtolower($conteudoPassado['documento'][0]->operation)); ?> </p>
+                      <p>Nome da operação :  <?php echo ucfirst( mb_strtolower($conteudoPassado['documento'][0]->operation)); ?> </p>
                       <p>Resumo da operação : <?php echo ucfirst( mb_strtolower($conteudoPassado['documento'][0]->summary)); ?> </p>
                    <?php
                     }
@@ -172,7 +172,7 @@
                     if($conteudoPassado['documento'][0]->nome_estado != null)
                     {
                     ?>
-                      <p>Destino da apreensâo : <?php echo $conteudoPassado['documento'][0]->nome_estado; ?> </p>
+                      <p>Destino da apreensão : <?php echo $conteudoPassado['documento'][0]->nome_estado; ?> </p>
                    <?php
                     }
 
@@ -305,7 +305,7 @@
                   // Dados das mercadorias.....
                     if($conteudoPassado['mercadorias'][0] != null){
                       ?>
-                      <h3>Foram apreendidos as seguintes mercadorias</h3>
+                      <h3>Foram apreendidas as seguintes mercadorias</h3>
                       <?php
                       //var_dump($conteudoPassado['mercadorias']);
 
@@ -319,7 +319,7 @@
 
                             if(($conteudoPassado['mercadorias'][$i]->product == 10) && ($conteudoPassado['mercadorias'][$i]->unit == 7)){
                               
-                           echo $totalCaixaCigarros = $totalCaixaCigarros + $conteudoPassado['mercadorias'][$i]->qty;
+                            $totalCaixaCigarros = $totalCaixaCigarros + $conteudoPassado['mercadorias'][$i]->qty;
 
                             }
 
@@ -654,9 +654,9 @@
 
 
                       ?>
-                        <p><?php echo 'Nesta apreensâo foi localizado um deposito no seguinte endereço : '.$logradouroDept.' '.$numeroDept.' '.$complementDept.' '.$bairroDept.' '.$cidadeDept.' '.$estadoDept; ?></p>
+                        <p><?php echo 'Nesta apreensão foi localizado um deposito no seguinte endereço : '.$logradouroDept.' '.$numeroDept.' '.$complementDept.' '.$bairroDept.' '.$cidadeDept.' '.$estadoDept; ?></p>
                         
-                        <p>Neste depósito foram encontrado os seguintes produtos :</p> 
+                        <p>Neste depósito foram encontrados os seguintes produtos :</p> 
                       <?php 
                         if($conteudoPassado['produto_armazens'][0] != null){
                             for($i = 0; $i < count($conteudoPassado['produto_armazens']) ; $i++ ){
@@ -706,7 +706,9 @@
 
                                   if($conteudoPassado['produto_armazens'][$i]->produto_deposito == 10 && $conteudoPassado['produto_armazens'][$i]->unidade_produto_deposito == 7){
                                     
-                                    $totalCaixaCigarros = $totalCaixaCigarros + $conteudoPassado['produto_armazens'][$i]->quantidade_deposito;
+                                    $tempMilhar = number_format($conteudoPassado['produto_armazens'][$i]->quantidade_deposito, 0,",","");
+
+                                    $totalCaixaCigarros = $totalCaixaCigarros + $tempMilhar;
 
                                   }
 

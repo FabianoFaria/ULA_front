@@ -1,0 +1,156 @@
+SELECT SUM(tbl_wrs.quantidade_deposito)
+FROM tbl_doct
+LEFT JOIN tbl_main ON tbl_main.parent_id = tbl_doct.ROW_ID
+LEFT JOIN tbl_wrs ON tbl_wrs.ID_wrs = tbl_main.CHILD_ID
+WHERE tbl_main.CHILD_TBL = 'tbl_wrs' and tbl_wrs.produto_deposito = 10 and tbl_wrs.unidade_produto_deposito = 7
+AND tbl_doct.arrest_date BETWEEN '2015-01-01' and '2015-01-31'
+AND tbl_doct.status_doct = 0
+AND tbl_doct.arrest_destination = 12
+
+= 1440
+
+= 3438
+
+SELECT SUM(tbl_wrs.quantidade_deposito) 
+FROM tbl_doct
+JOIN tbl_main ON tbl_main.parent_id = tbl_doct.ROW_ID
+JOIN tbl_wrs ON tbl_wrs.ID_wrs = tbl_main.CHILD_ID
+WHERE tbl_doct.arrest_date BETWEEN '2015-01-01' and '2015-01-31'
+AND tbl_main.CHILD_TBL = 'tbl_wrs'
+AND tbl_doct.status_doct = 0 
+AND tbl_doct.arrest_destination = 12 
+
+
+
+SELECT SUM(tbl_haul.qty)
+FROM tbl_doct
+LEFT JOIN tbl_main ON tbl_main.parent_id = tbl_doct.ROW_ID
+LEFT JOIN tbl_haul ON tbl_haul.ID_HAUL = tbl_main.CHILD_ID
+WHERE tbl_main.CHILD_TBL = 'tbl_haul'
+AND tbl_haul.product = 10
+AND tbl_haul.unit = 7
+AND tbl_doct.arrest_date BETWEEN '2015-01-01' and '2015-01-31'
+AND tbl_doct.status_doct = 0
+AND tbl_doct.arrest_destination = 12
+
+= 13495
+
+id 223 = + 10
+
+
+novo total 
+
+--- Ocorrencias 
+
+
+-0007
+
+-0602
+
+-0601
+
+-0007
+
+-0702
+
+-0701
+
+-0801
+
+-0802
+
+-0901
+
+-TG 00089/2015
+
+-1001
+
+-IPL 0019/2015 DPF/GRA/PR
+
+-1101
+
+- IPL 0020/2015 DPF/GRA/PR
+
+-01301
+
+-01302
+
+-1401
+
+-01401
+
+-1501
+
+-01501
+
+-01503
+
+-1502
+
+-IPL 0032/2015 DPF/GRA/PR
+
+-016
+
+-TGS IRF GIA
+
+-1602
+
+-1601
+
+-01706
+
+-01901
+
+-019
+
+-2001
+
+-02003
+
+-IPL 0046/2015 DPF/GRA/PR
+
+-02205
+
+-02206
+
+-TG 00427/2015
+
+-TG 00434/2015
+
+-IPL 0051/2015 DPF/GRA/PR
+
+-TG 00655/2015
+
+-02303
+
+-02402
+
+-2501
+
+-026
+
+-02701
+
+-02703
+
+-027
+
+-028
+
+-02802
+
+-02808
+
+-02803
+
+-02902
+
+-IPL 0056/2015 DPF/GRA/PR
+
+-029
+
+-02901
+
+-RF PONTA PORÃ
+
+-RF MUNDO NOVO

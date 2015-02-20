@@ -165,7 +165,7 @@
 
                           if(($mercadoriasAp->product == 10) && ($mercadoriasAp->unit == 7)){
                               
-                           echo $totalCaixaCigarrosApreendidos = $totalCaixaCigarrosApreendidos + $mercadoriasAp->qty;
+                            $totalCaixaCigarrosApreendidos = $totalCaixaCigarrosApreendidos + $mercadoriasAp->qty;
 
                             } //Fim do if...
 
@@ -203,7 +203,7 @@
                     <?php
                               if(($produtosDep->produto_deposito == 10) && ($produtosDep->unidade_produto_deposito == 7)){
                               
-                                echo $totalCaixaCigarrosApreendidos = $totalCaixaCigarrosApreendidos + $produtosDep->quantidade_deposito;
+                                 $totalCaixaCigarrosApreendidos = $totalCaixaCigarrosApreendidos + $produtosDep->quantidade_deposito;
 
                               } //Fim do if...
 
@@ -332,7 +332,7 @@
                               </tr> -->
 
                                <tr>
-                                  <td>Total de caixas de cigarro  </td>
+                                  <td>Total de caixas de cigarro . </td>
                                   <td><?php echo $totalCaixaCigarrosApreendidos; ?></td>            
                               </tr>
                               

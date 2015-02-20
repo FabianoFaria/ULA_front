@@ -36,6 +36,7 @@ $().ready(function() {
 			},
 			quantidade_wrs: {
 				required: true,
+				digits:true,
 				minlength: 1
 			}
 		},
@@ -48,6 +49,7 @@ $().ready(function() {
 			},
 			quantidade_wrs: {
 				required: "Quantidade é obrigatorio!",
+				digits: "Quantidade deve ser apenas numeros",
 				minlength: "Quantidade deve ter pelo menos 1 caracterer"
 			}
 		}
