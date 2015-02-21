@@ -63,6 +63,28 @@ class Pesquisa_avancada extends CI_Controller {
 
     }
 
+    public function chamaDoctData($value)
+    {
+        $type = $this->input->post('type');
+
+        $list_documentos = $this->pesquisaAVD->load_docs_date_ajx($value);
+
+        echo "<tr> <th> IPL </th><th> Operação </th><th>Unidade de segurança</th><th>Data da apreensão</th>  </tr>  <tbody id='listResultadosRow'>";
+
+         foreach ($list_documentos as $documentos) {
+            //$dataCidades = $cidades;
+
+            $dataEx = explode("-", $documentos->arrest_date);
+            $month = $dataEx[1];
+            $day = $dataEx[2];
+            $year = $dataEx[0];
+
+            $dataF = $day."/".$month."/".$year;
+
+        echo "<tr><td><a href=".base_url()."index.php/detalhes_documento/getTheRow/".$documentos->ROW_ID.">".$documentos->IPL."</a></td><td>".$documentos->operation."</td><td>".$documentos->forca_seguranca."</td><td>".$dataF."</td></tr>";
+        }
+    }
+
     public function chamaPessoas($value)
     {
         $type = $this->input->post('type');

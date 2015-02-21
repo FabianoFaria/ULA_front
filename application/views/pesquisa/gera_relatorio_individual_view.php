@@ -215,7 +215,7 @@
                     if($conteudoPassado['documento'][0]->operation != null)
                     {
                     ?>
-                      <p>Nome da operaçâo :  <?php echo ucfirst( mb_strtolower($conteudoPassado['documento'][0]->operation)); ?> </p>
+                      <p>Nome da operação :  <?php echo ucfirst( mb_strtolower($conteudoPassado['documento'][0]->operation)); ?> </p>
                       <p>Resumo da operação : <?php echo ucfirst( mb_strtolower($conteudoPassado['documento'][0]->summary)); ?> </p>
                    <?php
                     }
@@ -223,7 +223,7 @@
                     if($conteudoPassado['documento'][0]->nome_estado != null)
                     {
                     ?>
-                      <p>Destino da apreensâo : <?php echo $conteudoPassado['documento'][0]->nome_estado; ?> </p>
+                      <p>Destino da apreensão : <?php echo $conteudoPassado['documento'][0]->nome_estado; ?> </p>
                    <?php
                     }
 
@@ -334,7 +334,7 @@
                   // Dados das mercadorias.....
                     if($conteudoPassado['mercadorias'][0] != null){
                       ?>
-                      <h3>Foram apreendidos as seguintes mercadorias :</h3>
+                      <h3>Foram apreendidas as seguintes mercadorias :</h3>
                       <?php
                       //var_dump($conteudoPassado['mercadorias']);
 
@@ -531,8 +531,8 @@
                               }
 
                           ?>
-                          <p><?php echo ucwords(mb_strtolower($conteudoPassado['envolvidos'][$i]->name)).', '.$profissao.', nascido no '.$conteudoPassado['envolvidos'][$i]->nome_pais.' '.$filho.' '.$paiEnvolvido.' '.$maeEnvolvido.' '.$dataNascDet. ' '.
-                  $cidadeNasc."".$estadoNasc." ,". $cpfEnvolvido. " ".$rgEnvolvido." ,".$enderecoResidencia." ".$cidadeEnd."".$estadoEnd.
+                          <p><?php echo ucwords(mb_strtolower($conteudoPassado['envolvidos'][$i]->name)).'  '.$profissao.', nascido no'.$conteudoPassado['envolvidos'][$i]->nome_pais.' '.$filho.' '.$paiEnvolvido.' '.$maeEnvolvido.' '.$dataNascDet. ' '.
+                  $cidadeNasc."".$estadoNasc." ". $cpfEnvolvido. " ".$rgEnvolvido." ".$enderecoResidencia." ".$cidadeEnd."".$estadoEnd.
                   "".$telefoneDetido; ?></p>
 
                           <?php
@@ -541,7 +541,7 @@
 
                     if($conteudoPassado['endereco'][0] != null){
                     ?>
-                      <h3>A referida apreensâo ocorreu nas proximidade do endereço :</h3>
+                      <h3>A referida apreensão ocorreu nas proximidade do endereço :</h3>
                     <?php
                       for($i = 0; $i < 1 ; $i++ ){ //count($conteudoPassado['endereco'])
                         if($conteudoPassado['endereco'][$i]->address != '')
@@ -554,14 +554,14 @@
 
                         if($conteudoPassado['endereco'][$i]->nunber != '')
                         {
-                          $numeroEnd = "numero ".$conteudoPassado['endereco'][$i]->nunber;
+                          $numeroEnd = "número ".$conteudoPassado['endereco'][$i]->nunber;
                         }else{
                           $numeroEnd = "";
                         }
 
                         if($conteudoPassado['endereco'][$i]->nunber != '')
                         {
-                          $numeroEnd = "numero ".$conteudoPassado['endereco'][$i]->nunber;
+                          $numeroEnd = "número ".$conteudoPassado['endereco'][$i]->nunber;
                         }else{
                           $numeroEnd = "";
                         }
@@ -657,7 +657,7 @@
                         }
 
                       ?>
-                        <p><?php echo 'Nesta apreensâo foi localizado um depósito no seguinte endereço : '.$logradouroDept.' '.$numeroDept.' '.$complementDept.' '.$bairroDept.' '.$cidadeDept.' '.$estadoDept; ?></p>
+                        <p><?php echo 'Nesta apreensão foi localizado um depósito no seguinte endereço : '.$logradouroDept.' '.$numeroDept.' '.$complementDept.' '.$bairroDept.' '.$cidadeDept.' '.$estadoDept; ?></p>
                         
                       <?php 
                         if($conteudoPassado['produto_armazens'][0] != null){

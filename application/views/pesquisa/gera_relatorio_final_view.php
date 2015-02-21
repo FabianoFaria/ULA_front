@@ -524,7 +524,7 @@
 
                           ?>
                           <p><?php echo ucwords(mb_strtolower($conteudoPassado['envolvidos'][$i]->name)).', '.$profissao.', nascido no '.$conteudoPassado['envolvidos'][$i]->nome_pais.' '.$filho.' '.$paiEnvolvido.' '.$maeEnvolvido.' '.$dataNascDet. ' '.
-                  $cidadeNasc."".$estadoNasc." ,". $cpfEnvolvido. " ".$rgEnvolvido." ,".$enderecoResidencia." ".$cidadeEnd."".$estadoEnd.
+                  $cidadeNasc."".$estadoNasc." ". $cpfEnvolvido. " ".$rgEnvolvido." ".$enderecoResidencia." ".$cidadeEnd."".$estadoEnd.
                   "  ".$telefoneDetido; ?></p>
                           <p><?php echo $comentarios; ?></p>
 

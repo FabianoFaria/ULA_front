@@ -16,6 +16,26 @@ class Pesquisa_model extends CI_Model {
 		return $query->result();
     }
 
+     function load_docs_date_ajx($termo)
+    {
+        if($termo != ""){
+            $dataEx = explode("_", $termo);
+            $month = $dataEx[1];
+            $day = $dataEx[2];
+            $year = $dataEx[0];
+
+            $dataF = $year."-".$month."-".$day;
+        }
+
+        $this->db->select('*');
+        $this->db->join('tbl_unidade_seguranca', 'tbl_unidade_seguranca.id_unidade = tbl_doct.security_unit', 'left');
+        $this->db->where('tbl_doct.status_doct', 0);
+        $this->db->where('tbl_doct.arrest_date', $dataF);
+        $this->db->order_by("tbl_doct.IPL", "asc"); 
+        $query = $this->db->get('tbl_doct');
+        return $query->result();
+    }
+
 
      function load_pessoas_ajx($termo)
     {
