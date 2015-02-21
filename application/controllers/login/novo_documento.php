@@ -257,6 +257,10 @@ class Novo_documento extends CI_Controller {
          $dataAuto['placa_extra2'] = strtoupper(strtr($this->input->post('placa_ex2') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
          $dataAuto['city'] = $this->input->post('cidade_apr');
          $dataAuto['state'] = $this->input->post('estado_apr');
+         $dataAuto['city_adicional'] = $this->input->post('cidade_apr_add');
+         $dataAuto['state_adicional'] = $this->input->post('estado_apr_add');
+         $dataAuto['city_adicional2'] = $this->input->post('cidade_apr_add2');
+         $dataAuto['state_adicional2'] = $this->input->post('estado_apr_add2');
          $dataAuto['detalhes_veiculos'] = strtoupper(strtr($this->input->post('detalhes_veiculos') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
 
         $Row_auto = null;

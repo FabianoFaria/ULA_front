@@ -97,6 +97,11 @@ class Detalhes_documento extends CI_Controller {
 
         $data['cidadeAdr'] = null;
         $data['estadoAdr'] = null;
+        //Cidades e estado das placas adicionais...
+        $data['cidadeAdd'] = null;
+        $data['estadoAdd'] = null;
+        $data['cidadeAdd2'] = null;
+        $data['estadoAdd2'] = null;
 
         $data['marcasP'] = null;
         $data['modelosP'] = null;
@@ -150,6 +155,44 @@ class Detalhes_documento extends CI_Controller {
             }else
             {
                 $data['cidadeAdr'] = null;
+            }
+
+            //placa adicional 
+
+            if($data['automoveis'][0]->state_adicional != "")
+            {
+                $data['estadoAdd'] = $this->DetalhesModel->load_Addr_estado($data['automoveis'][0]->state_adicional);
+                $data['cidadesSingleAdd'] = $this->documentoModel->load_city_estado($data['automoveis'][0]->state_adicional);
+            }else
+            {
+                $data['estadoAdd'] = null;
+            }
+
+            if($data['automoveis'][0]->city_adicional != "")
+            {
+             $data['cidadeAdd'] = $this->DetalhesModel->load_Addr_city($data['automoveis'][0]->city_adicional);
+            }else
+            {
+                $data['cidadeAdd'] = null;
+            }
+
+            //placa adicional 2
+
+            if($data['automoveis'][0]->state_adicional != "")
+            {
+                $data['estadoAdd2'] = $this->DetalhesModel->load_Addr_estado($data['automoveis'][0]->state_adicional2);
+                $data['cidadesSingleAdd2'] = $this->documentoModel->load_city_estado($data['automoveis'][0]->state_adicional2);
+            }else
+            {
+                $data['estadoAdd2'] = null;
+            }
+
+            if($data['automoveis'][0]->city_adicional != "")
+            {
+             $data['cidadeAdd2'] = $this->DetalhesModel->load_Addr_city($data['automoveis'][0]->city_adicional2);
+            }else
+            {
+                $data['cidadeAdd2'] = null;
             }
         }
 

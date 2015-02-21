@@ -171,6 +171,10 @@ class Atualizar_documento_model extends CI_Model {
             'placa_extra2' => $data['placa_extra2'],
             'city' => $data['city'],
             'state' => $data['state'],
+             'city_adicional' => $data['city_adicional'],
+             'state_adicional' => $data['state_adicional'],
+             'city_adicional2' => $data['city_adicional2'],
+             'state_adicional2' => $data['state_adicional2'],
             'detalhes_veiculos' => $data['detalhes_veiculos'],
             'UPDATE_BY' => $data['UPDATED_BY'],
             'LAST_UPDATE' => $data['LAST_UPDATE']         

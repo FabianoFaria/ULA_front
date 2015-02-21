@@ -188,6 +188,11 @@ class Continuando_documento extends CI_Controller {
         $data['cidadeAdr'] = null;
         $data['estadoAdr'] = null;
 
+        $data['cidadeAdd'] = null;
+        $data['estadoAdd'] = null;
+        $data['cidadeAdd2'] = null;
+        $data['estadoAdd2'] = null;
+
 
         $this->load->helper('form');
         $this->load->helper('url');

@@ -457,6 +457,52 @@ function completarVeiculo(IDVehicle)
 			$id_estado = "";
 		}
 
+		//Os dados das placas adicionais tambem são cadastrados separadamente...
+
+		if($cidadeAdd != null)
+		{
+			$nome_cidade_add = $cidadeAdd[0]->nome;
+			$id_cidade_add = $cidadeAdd[0]->id;
+		}else
+		{
+			$nome_cidade_add = "";
+			$id_cidade_add = "";
+		}
+
+		if($estadoAdd != null)
+		{
+			$nome_estado_add = $estadoAdd[0]->nome_estado;
+			$id_estado_add = $estadoAdd[0]->id_estado;
+		}else
+		{
+			$nome_estado_add = "";
+			$id_estado_add = "";
+		}
+		//placa adicional 2
+
+		if($cidadeAdd2 != null)
+		{
+			$nome_cidade_add2 = $cidadeAdd2[0]->nome;
+			$id_cidade_add2 = $cidadeAdd2[0]->id;
+		}else
+		{
+			$nome_cidade_add2 = "";
+			$id_cidade_add2 = "";
+		}
+
+		if($estadoAdd2 != null)
+		{
+			$nome_estado_add2 = $estadoAdd2[0]->nome_estado;
+			$id_estado_add2 = $estadoAdd2[0]->id_estado;
+		}else
+		{
+			$nome_estado_add2 = "";
+			$id_estado_add2 = "";
+		}
+
+
+		//Fim das placas adicionais 
+		////////
 		if($row_Auto != null)
 		{
 
@@ -546,6 +592,46 @@ function completarVeiculo(IDVehicle)
 								  xmlhttp.open("GET","<?php echo base_url(); ?>index.php/login/novo_documento/chamaCidade/"+str,true);
 								  xmlhttp.send();
 								}
+
+								function mostraCidadesAdd(str) {
+								  if (str=="") {
+								    document.getElementById("cidade_apr").innerHTML="";
+								    return;
+								  }
+								  if (window.XMLHttpRequest) {
+								    // code for IE7+, Firefox, Chrome, Opera, Safari
+								    xmlhttp=new XMLHttpRequest();
+								  } else { // code for IE6, IE5
+								    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+								  }
+								  xmlhttp.onreadystatechange=function() {
+								    if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+								      document.getElementById("listCidadesAdd").innerHTML=xmlhttp.responseText;
+								    }
+								  }
+								  xmlhttp.open("GET","<?php echo base_url(); ?>index.php/login/novo_documento/chamaCidade/"+str,true);
+								  xmlhttp.send();
+								}
+
+								function mostraCidadesAdd2(str) {
+								  if (str=="") {
+								    document.getElementById("cidade_apr").innerHTML="";
+								    return;
+								  }
+								  if (window.XMLHttpRequest) {
+								    // code for IE7+, Firefox, Chrome, Opera, Safari
+								    xmlhttp=new XMLHttpRequest();
+								  } else { // code for IE6, IE5
+								    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+								  }
+								  xmlhttp.onreadystatechange=function() {
+								    if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+								      document.getElementById("listCidadesAdd2").innerHTML=xmlhttp.responseText;
+								    }
+								  }
+								  xmlhttp.open("GET","<?php echo base_url(); ?>index.php/login/novo_documento/chamaCidade/"+str,true);
+								  xmlhttp.send();
+								}
 							</script>
 
 			<h2>Cadastro de automóveis :<a href="<?php echo base_url("/index.php/detalhes_documento/getTheRow/".$id_Row.""); ?>"><?php echo $Ipl; ?></a> </h2>
@@ -623,32 +709,7 @@ function completarVeiculo(IDVehicle)
 				<div class="error"></div>
 
 				<label for="mod_veiculo">Modelo veículo:</label><br/>
-					<!-- <select name="mod_veiculo" id="mod_veiculo" > -->
-						<?php
-						//	if($id_modelo != null)
-						//	{
-						?>
-						<!--	<option value="<?php // echo $id_modelo ?>"><?php // echo $nome_modelo ?></option> -->
-						<?php
-							//	foreach ($modelosP as $model) {
-							//	if($model->mode_cod != $id_modelo){
-						?>
-							<!--	<option value="<?php // echo $model->mode_cod ?>"><?php // echo $model->mode_nome ?></option> -->
-						<?php
-							//		}//fim do if para cidades iguais...
-							//	}//fim do foreach das cidades do estado carregado
-
-							//} //fim do if id_modelo != null
-							//else{
-						?>
-							<!-- <option value="">selecione o modelo do veiculo</option> --> 
-						<?php
-
-						 //	}
-						?>
-					<!--	<option value=" "> </option>
-					</select> --> 
-				<!-- input para o modelo do veiculo-->
+					
 				<input id="modeloVei" type="text" name="mod_veiculo" value="<?php echo $nome_modelo; ?>"/>
 				<div class="error"></div>
 
@@ -665,19 +726,13 @@ function completarVeiculo(IDVehicle)
 				<input id="renavan" type="text" name="renavan" value="<?php echo $Renavan; ?>"/><span id="veiculoRenavan"></span>
 				<div class="error"><?php echo form_error('renavan'); ?></div>
 
-				<label for="placa_n">Placa :</label><br/>
-				<input id="placa_n" type="text" name="placa_n" value="<?php echo $placa; ?>"/><span id="veiculoPlaca"></span>
-				<div class="error"><?php echo form_error('placa_n'); ?></div>
 
-				<label for="placa_ex">Placa adicional:</label><br/>
-				<input id="placa_ex" type="text" name="placa_ex" value="<?php echo $placa_extra1; ?>"/><span id="veiculoPlacaExtra"></span>
-				<div class="error"><?php echo form_error('placa_ex'); ?></div>
 
-				<label for="placa_ex2">Placa adicional 2:</label><br/>
-				<input id="placa_ex2" type="text" name="placa_ex2" value="<?php echo $placa_extra2; ?>"/><span id="veiculoPlacaExtra2"></span>
-				<div class="error"><?php echo form_error('placa_ex2'); ?></div>
 
-				<label for="estado">Estado :</label><br/>
+				<label for="placa_n">Placa :</label>
+				<br/>
+				<input id="placa_n" type="text" name="placa_n" value="<?php echo $placa; ?>"/>
+					<label for="estado">Estado :</label>
 					<select id="estado_veiculo" name="estado_apr" onchange="mostraCidades(this.value)">
 						<?php
 							if( $id_estado != null)
@@ -713,9 +768,7 @@ function completarVeiculo(IDVehicle)
 						?>
 						<option value=" "> </option>
 					</select>
-				<br>
-
-				<label for="cidade">Cidade :</label><br/>
+					<label for="cidade">Cidade :</label>
 					<select id="listCidades" name="cidade_apr">
 						<?php
 							if($id_cidade != null)
@@ -742,6 +795,152 @@ function completarVeiculo(IDVehicle)
 						<option value=" "> </option>		
 					</select>
 				<br>
+				<span id="veiculoPlaca"></span>
+				<div class="error"></div>
+				<br>
+
+
+				<label for="placa_ex">Placa adicional:</label><br/>
+				<input id="placa_ex" type="text" name="placa_ex" value="<?php echo $placa_extra1; ?>"/>
+					<label for="estado">Estado :</label>
+					<select id="estado_veiculo_add" name="estado_apr_add" onchange="mostraCidadesAdd(this.value)">
+						<?php
+							if( $id_estado_add != null)
+							{
+						?>
+							<option value="<?php echo $id_estado_add; ?>"><?php echo $nome_estado_add ?></option>
+						<?php
+
+							}else{
+
+						?>
+							<option value="">Selecione um estado</option>
+						<?php	
+							}
+						?>
+
+						<?php
+
+							foreach ($estados as $estado): {
+											    		
+								// $arrayE[] = $estado->nome;
+							if($estado->id_estado != $id_estado_add)
+							{
+						?>
+
+							<option value="<?php echo $estado->id_estado; ?>"><?php echo $estado->nome_estado; ?></option>
+
+						<?php
+							}//fim do if...
+
+							}endforeach;
+
+						?>
+						<option value=" "> </option>
+					</select>
+					<label for="cidade">Cidade :</label>
+					<select id="listCidadesAdd" name="cidade_apr_add">
+						<?php
+							if($id_cidade_add != null)
+							{
+
+						?>
+							<option selected="true" value="<?php echo $id_cidade_add; ?>"><?php echo $nome_cidade_add ?></option>
+
+						<?php
+							foreach ($cidadesSingleAdd as $city) {
+								if($city->id != $id_cidade_add){
+						?>
+								<option value="<?php  echo $city->id ?>"><?php  echo $city->nome ?></option>
+						<?php
+								}//fim do if para cidades iguais...
+							}//fim do foreach das cidades do estado carregado
+
+							}else{ //fim do if do id cidade != null
+						?>
+							<option value="">Selecione uma cidade:</option>
+						<?php
+							}
+						?>
+						<option value=" "> </option>
+					</select>
+				<br>
+				<span id="veiculoPlacaExtra"></span>
+				<div class="error"></div>
+				<br>
+
+
+
+
+
+				<label for="placa_ex2">Placa adicional 2:</label><br/>
+				<input id="placa_ex2" type="text" name="placa_ex2" value="<?php echo $placa_extra2; ?>"/>
+					<label for="estado">Estado :</label>
+					<select id="estado_veiculo_add2" name="estado_apr_add2" onchange="mostraCidadesAdd2(this.value)">
+						<?php
+							if( $id_estado_add2 != null)
+							{
+						?>
+							<option value="<?php echo $id_estado_add2; ?>"><?php echo $nome_estado_add2 ?></option>
+						<?php
+
+							}else{
+
+						?>
+							<option value="">Selecione um estado</option>
+						<?php	
+							}
+						?>
+
+						<?php
+
+							foreach ($estados as $estado): {
+											    		
+								// $arrayE[] = $estado->nome;
+							if($estado->id_estado != $id_estado_add2)
+							{
+						?>
+
+							<option value="<?php echo $estado->id_estado; ?>"><?php echo $estado->nome_estado; ?></option>
+
+						<?php
+							}//fim do if...
+
+							}endforeach;
+
+						?>
+						<option value=" "> </option>
+					</select>
+					<label for="cidade">Cidade :</label>
+					<select id="listCidadesAdd2" name="cidade_apr_add2">
+						<?php
+							if($id_cidade_add2 != null)
+							{
+
+						?>
+							<option selected="true" value="<?php echo $id_cidade_add2; ?>"><?php echo $nome_cidade_add2 ?></option>
+
+						<?php
+							foreach ($cidadesSingleAdd as $city) {
+								if($city->id != $id_cidade_add2){
+						?>
+								<option value="<?php  echo $city->id ?>"><?php  echo $city->nome ?></option>
+						<?php
+								}//fim do if para cidades iguais...
+							}//fim do foreach das cidades do estado carregado
+
+							}else{ //fim do if do id cidade != null
+						?>
+							<option value="">Selecione uma cidade:</option>
+						<?php
+							}
+						?>
+					</select>
+				<br>
+				<span id="veiculoPlacaExtra2"></span>
+				<div class="error"></div>
+				<br>
+				
 				<label for="detalhes_veiculos">Comentarios sobre automóveis :</label><br/>
 				<textarea id="detalhes_veiculos" name="detalhes_veiculos"><?php echo $detalhes_veic; ?></textarea>
 
