@@ -124,7 +124,7 @@
                //$indec++;
             }
 
-
+            $totalCaixaCigarrosApreendidos = 0;
 
             foreach ($conteudo as $ocorrencia) {
                                     
@@ -248,6 +248,13 @@
                     <hr>
 
                     <?php
+                            //Contagem das caixas em um deposito
+
+                              if(($produtosDep->produto_deposito == 10) && ($produtosDep->unidade_produto_deposito == 7)){
+                              
+                                 $totalCaixaCigarrosApreendidos = $totalCaixaCigarrosApreendidos + $produtosDep->quantidade_deposito;
+
+                              } //Fim do if...
 
                             }
                         }
@@ -295,6 +302,24 @@
 
                 </div> <!-- Fim da div row  veiculos -->
 
+                <!-- Contagem de cigarros -->
+                <?php 
+                //Contagem das caixas de cigarro...
+
+                    if($ocorrencia['mercadorias'][0] != "")
+                    {
+                        foreach ($ocorrencia['mercadorias'] as $mercadoriasAp){
+
+                          if(($mercadoriasAp->product == 10) && ($mercadoriasAp->unit == 7)){
+                              
+                            $totalCaixaCigarrosApreendidos = $totalCaixaCigarrosApreendidos + $mercadoriasAp->qty;
+
+                            } //Fim do if...
+
+                        } //Fim do for each... 
+                    } //Fim do if
+
+                ?>
 
 
                 <div class="row">
@@ -335,6 +360,25 @@
             <?php
                  } //Fim do foreach conteudo as ocorrencia....
             ?>
+                 <table>
+                          <thead>
+                              <tr style='background-color: #EEE'>
+                                  <th> Total de apreensões da relação</th>
+                              </tr>
+                          </thead>    
+                          <tbody>
+
+                               <tr>
+                                  <td>Total de caixas de cigarro</td>
+                                  <td><?php echo $totalCaixaCigarrosApreendidos; ?></td>            
+                              </tr>
+                              
+                          </tbody>
+                     </table> 
+
+                    <br>
+                    <br>
+                    <br>
 
             <form id="gerar_doc" action="<?php echo base_url() ?>index.php/pesquisa/pesquisa_avancada/gera_relatorio_individual" method="post">
                 <input type="hidden" name="idObjeto" value="<?php echo $idObjeto; ?>">

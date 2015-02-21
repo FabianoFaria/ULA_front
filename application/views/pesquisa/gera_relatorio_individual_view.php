@@ -177,6 +177,8 @@
 
             //var_dump($conteudo);
 
+            $totalCaixaCigarros = 0;
+
 
             foreach ($conteudo as $conteudoPassado) {
 
@@ -354,6 +356,14 @@
                               ?>
                                <p>Tabacalera : <?php echo $conteudoPassado['mercadorias'][$i]->nome_tabacalera; ?></p>
                               <?php 
+                            }
+
+                            //Efetuar soma das caixas de cigarro...
+
+                            if(($conteudoPassado['mercadorias'][$i]->product == 10) && ($conteudoPassado['mercadorias'][$i]->unit == 7)){
+                              
+                            $totalCaixaCigarros = $totalCaixaCigarros + $conteudoPassado['mercadorias'][$i]->qty;
+
                             }
 
                         }//Fim do for para as mercadorias...
@@ -709,6 +719,16 @@
                                 <p><?php echo $quantProdutoDept.' '.$unidadeProdutoDept.' de '.$nomeProdutoDept.' '.$marcaProd.' '.$tabacaleraProd; ?></p>
                                 <?php
 
+                                 //Efetuar soma das caixas de cigarro...
+
+                                  if($conteudoPassado['produto_armazens'][$i]->produto_deposito == 10 && $conteudoPassado['produto_armazens'][$i]->unidade_produto_deposito == 7){
+                                    
+                                    $tempMilhar = number_format($conteudoPassado['produto_armazens'][$i]->quantidade_deposito, 0,",","");
+
+                                    $totalCaixaCigarros = $totalCaixaCigarros + $tempMilhar;
+
+                                  }
+
                             } //Fim do for de pordutos do armazem
 
                         }
@@ -744,7 +764,25 @@
 
 
             ?>
-            <hr>          
+             <hr>
+            <br>
+
+                      <table>
+                          <thead>
+                              <tr style='background-color: #EEE'>
+                                  <th> Total de apreensões do relatório</th>
+                                  <th>
+                                  </th>
+                              </tr>
+                          </thead>    
+                          <tbody>
+                              <tr>
+                                  <td>Total de caixas de cigarro  </td>
+                                  <td><?php echo $totalCaixaCigarros; ?></td>            
+                              </tr>
+                              
+                          </tbody>
+                     </table>           
           
             <!-- Fim dos dados do relatorio  -->
         </div> <!-- Fim da row do relatorio  -->
