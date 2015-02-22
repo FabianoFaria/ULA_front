@@ -498,6 +498,10 @@ class Pesquisa_avancada extends CI_Controller {
             array_push($dadosArray , $dataDocumento);
         }
 
+        $dados['estados'] = $this->documentoModel->load_estados();
+
+        $dados['cidades'] = $this->documentoModel->load_cidades();
+
         $dados['tipoObj'] = $typeData;
         $dados['extra'] = $dataF[0];
         $dados['conteudo'] = $dadosArray;

@@ -244,6 +244,12 @@
                       <h3>Os seguintes veículos foram apreendidos : </h3>
                       <?php
                         for($i = 0; $i < count($conteudoPassado['veiculos']) ; $i++ ){
+                             if($conteudoPassado['veiculos'][$i]->category != '')
+                              {
+                                $veiculoTipo = $conteudoPassado['veiculos'][$i]->tpve_nome;
+                              }else{
+                                $veiculoTipo = " ";
+                              }
 
                              if($conteudoPassado['veiculos'][$i]->marc_nome != '')
                               {
@@ -281,6 +287,35 @@
                               }else{
                                 $veiculoPlacaEx = " ";
                               }
+
+                              if($conteudoPassado['veiculos'][$i]->city_adicional != ''){
+                                 foreach ($cidades as $cidade): {
+                                    // $arrayE[] = $estado->nome;
+                                    if($cidade->id == $conteudoPassado['veiculos'][$i]->city_adicional)
+                                    { 
+                                      $procedenciaCityAdd = " de ".$cidade->nome;
+                                    }
+                                  }endforeach;
+                              }else{
+                                $procedenciaCityAdd = " ";
+                              }
+
+                              if($conteudoPassado['veiculos'][$i]->state_adicional != ''){
+                                  foreach ($estados as $estado): {
+                                    // $arrayE[] = $estado->nome;
+                                    if($estado->id_estado == $conteudoPassado['veiculos'][$i]->state_adicional)
+                                    { 
+                                      if($procedenciaCityAdd != " "){
+                                        $procedenciaEstAdd = "/".$estado->uf;
+                                      } else{
+                                        $procedenciaEstAdd = " de ".$estado->uf;
+                                      } //...else
+                                    } //fim do if procedencia cidade
+                                  }endforeach;
+                              }else{
+                                $procedenciaEstAdd = " ";
+                              }
+
                                /*`Placa extra 2*/
                               if($conteudoPassado['veiculos'][$i]->placa_extra2 != '')
                               {
@@ -288,6 +323,35 @@
                               }else{
                                 $veiculoPlacaEx2 = " ";
                               }
+
+                              if($conteudoPassado['veiculos'][$i]->city_adicional2 != ''){
+                                 foreach ($cidades as $cidade): {
+                                    // $arrayE[] = $estado->nome;
+                                    if($cidade->id == $conteudoPassado['veiculos'][$i]->city_adicional2)
+                                    { 
+                                      $procedenciaCityAdd2 = " de ".$cidade->nome;
+                                    }
+                                  }endforeach;
+                              }else{
+                                $procedenciaCityAdd2 = " ";
+                              }
+
+                              if($conteudoPassado['veiculos'][$i]->state_adicional2 != ''){
+                                  foreach ($estados as $estado): {
+                                    // $arrayE[] = $estado->nome;
+                                    if($estado->id_estado == $conteudoPassado['veiculos'][$i]->state_adicional2)
+                                    { 
+                                      if($procedenciaCityAdd2 != " "){
+                                        $procedenciaEstAdd2 = "/".$estado->uf;
+                                      } else{
+                                        $procedenciaEstAdd2 = " de ".$estado->uf;
+                                      } //...else
+                                    } //fim do if procedencia cidade
+                                  }endforeach;
+                              }else{
+                                $procedenciaEstAdd2 = " ";
+                              }
+
                               /* Chassi */
                               if($conteudoPassado['veiculos'][$i]->chassi != '')
                               {
@@ -325,8 +389,16 @@
                                 $veiculoEstado = " ";
                               }
 
+                              if($conteudoPassado['veiculos'][$i]->detalhes_veiculos != '')
+                              {
+                                $veiculoObs = "Obs : ".$conteudoPassado['veiculos'][$i]->detalhes_veiculos;
+                              }else{
+                                $veiculoObs = "";
+                              }
+
                         ?>
-                            <p>Veículo  : <?php echo $veiculoNome.' '.$veiculoModelo.' '. $veiculoCor .' '.$veiculoPlaca.' '.$veiculoPlacaEx.' '.$veiculoPlacaEx2.' '.$veiculoChassi.' '.$veiculoCidade.''.$veiculoEstado; ?></p>
+                            <p>Veículo  : <?php echo $veiculoTipo.' '.$veiculoNome.' '.$veiculoModelo.' '. $veiculoCor.' '.$veiculoChassi.' '.$veiculoRenavam.' '.$veiculoPlaca.' '.$veiculoCidade.''.$veiculoEstado.' '.$veiculoPlacaEx.' '.$procedenciaCityAdd.' '.$procedenciaEstAdd.' '.$veiculoPlacaEx2.' '.$procedenciaCityAdd2.' '.$procedenciaEstAdd2; ?></p>
+                            <p><?php echo $veiculoObs; ?></p>
                         <?php
 
 

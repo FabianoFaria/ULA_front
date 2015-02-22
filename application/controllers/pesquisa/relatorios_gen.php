@@ -162,6 +162,10 @@ class Relatorios_gen extends CI_Controller {
             array_push($dadosArray , $dataDocumento);
         }
 
+        $dados['estados'] = $this->documentoModel->load_estados();
+
+        $dados['cidades'] = $this->documentoModel->load_cidades();
+
         $dados['totalOcorrencias'] = $this->relatorio->total_ocorrencias($dataDateI ,$dataDateF, $id_estado_dest);
 
         $dados['totalVeiculos'] = $this->relatorio->total_veiculos_relatorio($dataDateI ,$dataDateF, $id_estado_dest);
@@ -358,6 +362,10 @@ string '24/09/2014' (length=10)
         {
           $destino = "Todos os estados";
         }
+
+        $dados['estados'] = $this->documentoModel->load_estados();
+         
+        $dados['cidades'] = $this->documentoModel->load_cidades();
 
         //Totais deste relatório
           $dados['totalOcorrencias'] = $this->relatorio->total_ocorrencias($dataIni ,$dataFim, $estadoDestino);
