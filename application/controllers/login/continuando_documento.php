@@ -54,7 +54,7 @@ class Continuando_documento extends CI_Controller {
         $data['cidadeAdr'] = null;
         $data['cidadesSingle'] = null;
 
-        $data['endereco'] = $this->Cont_doct->load_endereco_doct($idRow);
+        $data['endereco'] = $this->Cont_doct->load_endereco($idRow); //load_endereco_doct
         //Estrutura para tornar o endereço optativo
         if($data['endereco'] != null)
         {

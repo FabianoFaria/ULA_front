@@ -596,6 +596,8 @@ class Novo_documento extends CI_Controller {
     {
         $user_name = $this->session->userdata('username');
         $dataAtualizacao = date('y-m-d H:i:s');
+
+                $tipo_deposito = $this->input->post('tipo_depo');
       
                 $dataDeposito['ID_wrs'] = $this->input->post('id_local');
                 $dataDeposito['ROW_ID'] = $this->input->post('row_id');  
@@ -640,8 +642,24 @@ class Novo_documento extends CI_Controller {
                 $dataDeposito['UPDATED_BY'] = $user_name;
                 $dataDeposito['LAST_UPDATE'] = $dataAtualizacao;
 
-                $this->atualizarDoct->atualiza_wrs($dataDeposito);
+                $this->atualizarDoct->atualiza_wrs($dataDeposito); 
                 $Row_Depo = $this->input->post('id_local');
+
+                //Atualizar o tipo de depósito
+                if(($this->input->post('id_local') != 0) && ($this->input->post('id_addr') != 0))
+                {
+                    $id_temp_wrs = $this->input->post('id_local');
+                    $id_temp_addr = $this->input->post('id_addr');
+                    $wrs_adrr['id_wrs'] = $id_temp_wrs;
+                    $wrs_adrr['id_addr'] = $id_temp_addr;
+                    $wrs_adrr['tipo_deposito'] = $tipo_deposito;
+                    $wrs_adrr['CREATED_BY'] = $user_name;
+                    $wrs_adrr['CREATED'] = $dataAtualizacao;
+                    $wrs_adrr['UPDATED_BY'] =  $user_name;
+                    $wrs_adrr['LAST_UPDATE'] = $dataAtualizacao;
+                    //Atualizar o tipo de deposito no BD
+                    $wrs_addr = $this->atualizarDoct->atualiza_wrs_addr($id_temp_wrs, $id_temp_addr, $wrs_adrr);
+                }
             } 
                 else
             {
@@ -698,6 +716,7 @@ class Novo_documento extends CI_Controller {
             {
                 $wrs_adrr['id_wrs'] = $id_temp_wrs;
                 $wrs_adrr['id_addr'] = $id_temp_addr;
+                $wrs_adrr['tipo_deposito'] = $tipo_deposito;
                 $wrs_adrr['CREATED_BY'] = $user_name;
                 $wrs_adrr['CREATED'] = $dataAtualizacao;
                 $wrs_adrr['UPDATED_BY'] =  $user_name;

@@ -367,7 +367,7 @@
 
 	
 	<div class="col-md-12 col-sm-12 col-xs-12">
-		<h3>Armazéns/Casas/Locais da aprensão</h3>
+		<h3>Depôsitos</h3>
 
 
 		<?php

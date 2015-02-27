@@ -50,6 +50,7 @@ class Continuando_documento_model extends CI_Model {
         $this->db->join('tbl_estados','tbl_estados.id_estado = tbl_addr.state', 'left');
         $this->db->join('tbl_main','tbl_main.CHILD_ID = tbl_addr.ID_addr');
         $this->db->where('tbl_main.parent_id', $idRow);
+        $this->db->where('tbl_main.CHILD_TBL', 'tbl_addr');
         $queryDoct = $this->db->get('tbl_addr');
         //$queryDoct = $this->db->get_where('tbl_addr', array('ROW_ID' => $idRow));
         return $queryDoct->result();

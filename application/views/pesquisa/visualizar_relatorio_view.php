@@ -75,13 +75,14 @@
                     $dataF = $day."/".$month."/".$year;
 
         ?>
-            <div class="col-md-12 well">
+            <div class="col-md-12 well"> <!-- well original... -->
 
                 <div class="row header-ocorrencia">
+                    <div class="col-md-12">
+                      <h3>Detalhes da ocorrência</h3>
+                    </div>
 
-                    <div class="col-md-6">
-
-                        <h3>Detalhes da ocorrência</h3>
+                    <div class="col-md-6 well">
 
                         <h4>Documento : <?php echo $ocorrencia['documento'][0]->IPL?></h4>
 
@@ -99,7 +100,7 @@
                             //var_dump($ocorrencia['endereco'][0]);
                     ?>
 
-                    <div class="col-md-6 col-sm-6 col-xs-6">
+                    <div class="col-md-6 well">
                         <h3>Endereço da ocorrência</h3>
                         <p>Cidade da ocorrência : <?php echo $ocorrencia['endereco'][0]->nome_estado ?></p>
                         <p>Estado da ocorrência : <?php echo $ocorrencia['endereco'][0]->nome ?></p>
@@ -117,19 +118,18 @@
                         } 
                     ?>
 
-                </div> <!-- fim  header-ocorrencia -->
+                <!-- </div> --> <!-- fim  header-ocorrencia -->
                 
-                <div class="row">
-
                     <?php
                         if($ocorrencia['endereco_deposito'][0] != ""){
 
                             //var_dump($ocorrencia['endereco'][0]);
                     ?>
-
-
-                    <div class="col-md-6 col-sm-6 col-xs-6">
-                            <h3>Endereço do depósito</h3>
+                    <div class="col-md-12">
+                      <h3>Endereço do depósito</h3>
+                    </div>
+                    <div class="col-md-6 well">
+                            
                             <p>Cidade da ocorrência : <?php echo $ocorrencia['endereco_deposito'][0]->nome_estado ?></p>
                             <p>Estado da ocorrência : <?php echo $ocorrencia['endereco_deposito'][0]->nome ?></p>
                             <p>Endereço : <?php echo $ocorrencia['endereco_deposito'][0]->address ?></p>
@@ -139,19 +139,10 @@
                             
                     </div> 
 
-                    <div class="col-md-6 col-sm-6 col-xs-6">
-
-                    </div>
-
-
-
-
-
                      <?php
                         } 
                     ?> 
                 </div> <!-- Fim da div row  endereço deposito  -->
-
 
                 <div class="row">
 
@@ -161,7 +152,25 @@
 
                     if($ocorrencia['mercadorias'][0] != "")
                     {
+
+                    ?>
+                  <div class="col-md-12">
+                    <h3>Produtos aprendidos</h3>
+                  </div>
+                    <?php
                         foreach ($ocorrencia['mercadorias'] as $mercadoriasAp){
+
+                          //var_dump($mercadoriasAp);
+
+                    ?>
+                      <div class="col-md-6 well">
+                        <p>Produto : <?php echo $mercadoriasAp->nome_produto ?></p>
+                        <p>Únidade : <?php echo $mercadoriasAp->unidade_medida ?></p>
+                        <p>Quantidade : <?php echo $mercadoriasAp->qty ?></p>
+                        <p>Marca : <?php echo $mercadoriasAp->nome_marca ?></p>
+                        <p>Tabacalera : <?php echo $mercadoriasAp->nome_tabacalera ?></p>
+                      </div>
+                    <?php
 
                           if(($mercadoriasAp->product == 10) && ($mercadoriasAp->unit == 7)){
                               
@@ -172,20 +181,27 @@
                         } //Fim do for each... 
                     } //Fim do if
 
+                  ?>
+                </div>
+                <div class="row">
+
+
+                  <?php
 
                     if($ocorrencia['produto_armazens'][0] != "")
                     {
                         //var_dump($ocorrencia['produto_armazens']);
 
                     ?>
-                    <h3>Produtos aprendidos no depósitos</h3>
-
+                    <div class="col-md-12">
+                      <h3>Produtos aprendidos no depósito</h3>
+                    </div>
                     <?php
                     foreach ($ocorrencia['produto_armazens'] as $produtosDep) {
                                         
                             //var_dump($produtosDep);
                     ?>
-                    <div class= "col-md-6 col-sm-6 col-xs-6">
+                    <div class= "col-md-6 well">
 
                         <p>Produto : <?php echo $produtosDep->nome_produto ?></p>
                         <p>Únidade : <?php echo $produtosDep->unidade_medida ?></p>
@@ -193,9 +209,6 @@
                         <p>Marca : <?php echo $produtosDep->nome_marca ?></p>
                         <p>Tabacalera : <?php echo $produtosDep->nome_tabacalera ?></p>
 
-                    </div>
-
-                    <div class="col-md-6 col-sm-6 col-xs-6">
                     </div>
 
                     <hr>
@@ -215,19 +228,27 @@
 
                 </div> <!-- Fim da div row  endereço deposito  -->
 
+
                 <div class="row">
 
-                    <h3>Veículo envolvido</h3>
+                  <?php
 
-                     <?php
+                  if(!empty($ocorrencia['veiculos'])){ 
+                  
+                  ?>
+                    <div class="col-md-12">
+                      <h3>Veículo apreendido</h3>
+                    </div>
+                  <?php
+                      }
 
 
-                        foreach ($ocorrencia['veiculos'] as $veiculos) {
+                      foreach ($ocorrencia['veiculos'] as $veiculos) {
                                         
                             //var_dump($veiculos);
 
                     ?>
-                     <div class="col-md-6 col-sm-6 col-xs-6">
+                     <div class="col-md-6 col-sm-6 col-xs-6 well">
                         <p>Tipo do veículo : <?php echo $veiculos->tpve_nome ?></p>
                         <p>Marca do veículo : <?php echo $veiculos->marc_nome ?></p>
                         <?php 
@@ -241,11 +262,75 @@
                                 <?php
                               }
 
+                              if($veiculos->city_adicional != ''){
+                                 foreach ($cidades as $cidade): {
+                                    // $arrayE[] = $estado->nome;
+                                    if($cidade->id == $veiculos->city_adicional)
+                                    { 
+                                      $procedenciaCityAdd = " -".$cidade->nome;
+                                    }
+                                  }endforeach;
+                              }else{
+                                $procedenciaCityAdd = " ";
+                              }
+
+                              if($veiculos->state_adicional != ''){
+                                  foreach ($estados as $estado): {
+                                    // $arrayE[] = $estado->nome;
+                                    if($estado->id_estado == $veiculos->state_adicional)
+                                    { 
+                                      if($procedenciaCityAdd != " "){
+                                        $procedenciaEstAdd = "/".$estado->uf;
+                                      } else{
+                                        $procedenciaEstAdd = " -".$estado->uf;
+                                      } //...else
+                                    } //fim do if procedencia cidade
+                                  }endforeach;
+                              }else{
+                                $procedenciaEstAdd = " ";
+                              }
+
+                              //cidade estado da placa adicional 2
+                              if($veiculos->city_adicional2 != ''){
+                                 foreach ($cidades as $cidade): {
+                                    // $arrayE[] = $estado->nome;
+                                    if($cidade->id == $veiculos->city_adicional2)
+                                    { 
+                                      $procedenciaCityAdd2 = " -".$cidade->nome;
+                                    }
+                                  }endforeach;
+                              }else{
+                                $procedenciaCityAdd2 = " ";
+                              }
+
+                              if($veiculos->state_adicional2 != ''){
+                                  foreach ($estados as $estado): {
+                                    // $arrayE[] = $estado->nome;
+                                    if($estado->id_estado == $veiculos->state_adicional2)
+                                    { 
+                                      if($procedenciaCityAdd2 != " "){
+                                        $procedenciaEstAdd2 = "/".$estado->uf;
+                                      } else{
+                                        $procedenciaEstAdd2 = " -".$estado->uf;
+                                      } //...else
+                                    } //fim do if procedencia cidade
+                                  }endforeach;
+                              }else{
+                                $procedenciaEstAdd2 = " ";
+                              }
+
+
                         ?>
+
+
                         
-                        <p>Placa : <?php echo $veiculos->placa ?></p>
+                        <p>Placa : <?php echo $veiculos->placa ?> <?php echo $veiculos->cidade_nome ?> <?php echo $veiculos->uf_estado ?></p>
+                        
+                        <p>Placa Adicional : <?php echo $veiculos->placa_extra ?> <?php echo $procedenciaCityAdd; ?> <?php echo $procedenciaEstAdd; ?><p>
+                        <p>Placa Adicional : <?php echo $veiculos->placa_extra2 ?> <?php echo $procedenciaCityAdd2; ?> <?php echo $procedenciaEstAdd2; ?><p>
                         <p>Chassi : <?php echo $veiculos->chassi ?></p>
-                        <p>Estado : <?php echo $veiculos->nome_estado ?></p>
+                        <p>Renavan : <?php echo $veiculos->renavan ?></p>
+                    
                      </div>
 
                      <div class="col-md-6 col-sm-6 col-xs-6">
@@ -266,27 +351,82 @@
 
                 </div> <!-- Fim da div row  veiculos -->
 
+                <div class="row"> <!-- Inicio da visualização de pessoas -->
 
+                    <?php
+
+                    //var_dump($ocorrencia['envolvidos']);
+                    if($ocorrencia['envolvidos'][0] != ''){
+                    ?>
+                    <div class="col-md-12">
+                      <h3>Presos :</h3>
+                    </div>
+                    <?php
+                    }
+
+
+                    //var_dump($ocorrencia['envolvidos']);
+
+                      foreach ($ocorrencia['envolvidos'] as $preso) {   //$dataDocumento['imagens'] 
+                                        
+                            //var_dump($imagens);
+                            if($preso != null){
+
+                              $dataEx3 = explode("-", $preso->birth_dt);
+                              $month3 = $dataEx3[1];
+                              $day3 = $dataEx3[2];
+                              $year3 = $dataEx3[0];
+                              $dataFinal = $day3."/".$month3."/".$year3;
+
+                    ?>
+                        <div class="col-md-6 well">
+
+                            <p>Nome do preso : <?php echo $preso->name ?></p>
+                            <p>Rg : <?php echo $preso->rg ?></p>
+                            <p>CPF : <?php echo $preso->CPF ?></p>
+                            <p>Data nascimento : <?php echo $dataFinal; ?></p>
+                            <p>Pai : <?php echo $preso->father ?></p>
+                            <p>Mâe : <?php echo $preso->mother ?></p>
+                            <p>Cidade : <?php echo $preso->nome ?></p>
+                            <p>Estado : <?php echo $preso->uf ?></p>
+                            
+                            <hr>
+
+                        </div>
+                     <?php
+                            }//fim do if
+                        } //Fim do foreach...
+
+
+
+                    ?>
+
+                </div>
 
                 <div class="row">
 
-                    <h3>Imagens da ocorrência :</h3>
+                    
                     <?php
 
+                    //var_dump($ocorrencia['imagens']);
+                    if($ocorrencia['imagens'][0] != ''){
+                    ?>
+                    <div class="col-md-12">
+                      <h3>Imagens da ocorrência :</h3>
+                    </div>
+                    <?php
+                    }
 
                     foreach ($ocorrencia['imagens'] as $imagens) {   //$dataDocumento['imagens'] 
                                         
                             //var_dump($imagens);
                             if($imagens != null){
                     ?>
-                        <div class="col-md-6 col-sm-6 col-xs-6">
+                        <div class="col-md-6 well">
 
                             <p>Nome da foto : <?php echo $imagens->title_image ?></p>
                             <img class="list_img" src="<?php echo base_url()."/imagens_doct/".$imagens->nome_image_doct; ?>" /></img>
                             <hr>
-
-                        </div>
-                        <div class="col-md-6 col-sm-6 col-xs-6">
 
                         </div>
                      <?php
@@ -296,9 +436,10 @@
                     ?>
 
 
-
-
                 </div> <!-- Fim da div row imagens -->
+
+
+
 
 
             </div>  <!-- Fim do col-md-12 well -->
@@ -310,6 +451,7 @@
             <br>
 
             <div class="col-md-12 well">
+              <div class="col-md-6">
                 <p>Total de apreensões neste relatório : <?php echo $totalOcorrencias; ?></p>
 
                       <table>
@@ -322,38 +464,48 @@
                           </thead>    
                           <tbody>
                               <tr>
-                                  <td>Detidos  </td>
+                                  <td>Presos  </td>
                                   <td><?php echo $totalDetidos; ?></td>             
                               </tr>
-                              
-                              <!-- <tr>
-                                  <td>Total de caixas de cigarro  </td>
-                                  <td><?php //echo $totalCxCigarros; ?></td>            
-                              </tr> -->
 
                                <tr>
                                   <td>Total de caixas de cigarro . </td>
                                   <td><?php echo $totalCaixaCigarrosApreendidos; ?></td>            
                               </tr>
                               
-                              <tr>
-                                  <td>Veículos  </td>
-                                  <td><?php echo $totalVeiculos; ?></td>            
+                          </tbody>
+                     </table>
+                </div>  <!-- Fim do col-md-6 -->
+                     <br>
+                     <br>
+                <div class="col-md-6"> <!-- Inicio do col-md-6 lado Direito-->
+                     <!-- tabela separada com os totais de veiculos -->
+                     <table>
+                          <thead>
+                              <tr style='background-color: #EEE'>
+                                  <th> Total de apreensões de veículos</th>
+                                  <th>
+                                  </th>
                               </tr>
-                              <tr>
-                                  <td>Depósitos descobertos </td>
-                                  <td><?php echo $totalDepositos; ?></td>            
+                          </thead>    
+                          <tbody>
+                              <?php
+                                foreach ($totaisCategorias as $catVei) {
+                              ?>
+                                <tr>
+                                  <td><?php echo ucwords(mb_strtolower($catVei[1]))." :" ?></td>
+                                  <td><?php echo $catVei[0]; ?></td>            
                               </tr>
-                              <tr>
-                                  <td>Caminhões </td>
-                                  <td><?php echo $totalCaminhao; ?></td>            
-                              </tr>
+                              <?php
+                                }
+                              ?>
                                <tr>
-                                  <td>Ônibus</td>
-                                  <td><?php echo $totalOnibus; ?></td>            
+                                  <td>Total :</td>
+                                  <td><?php echo $totalVeiculos[0]->totalVei; ?></td>            
                               </tr>
                           </tbody>
-                     </table> 
+                     </table>
+                 </div> <!-- Fim do col-md-6 -->
             </div>  <!-- Fim do col-md-12 well -->
 
             <br>

@@ -315,6 +315,17 @@ class Atualizar_documento_model extends CI_Model {
         return true;
     }
 
+    public function atualiza_wrs_addr($id_temp_wrs, $id_temp_addr, $wrs_adrr)
+    {   
+        $anexo = array(
+            'tipo_deposito' => $wrs_adrr['tipo_deposito']
+            );
+
+        $this->db->where('id_wrs', $id_temp_wrs);
+        $this->db->where('id_addr', $id_temp_addr);
+        $this->db->update('tbl_wrs_addr', $anexo);
+    }
+
    
      public function atualiza_anexo($data)
     {

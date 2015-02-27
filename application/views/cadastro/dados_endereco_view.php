@@ -65,9 +65,10 @@ $().ready(function() {
      host = pathArray[2];
      urlP = protocol + '//' + host;
 
+     //Devido a problemas com edição de endereços será descontinuado esse recurso de auto-compleatar para endereço...
 
      // Função para carregar contato por nome 
-    	$("#endereco").keyup(function (e) {
+    	$("#disabledJavascript").keyup(function (e) {  
     	 e.preventDefault();
         var that = this,
         value = $(this).val();
@@ -112,7 +113,7 @@ $().ready(function() {
     //Inicio da função de busca por CEP
 
     	// Função para carregar contato por nome 
-    	$("#cep").keyup(function (e) {
+    	$("#disabledJavascript").keyup(function (e) {
     	 e.preventDefault();
         var that = this,
         value = $(this).val();
@@ -351,7 +352,7 @@ function completarEndereco(IDaddr)
 
 		<form id="form-new-addr-ipl" action="<?php echo base_url("/index.php/login/")."/".$action; ?>" method="post">
 
-			<label for="pais_apr">Pais da ocorrencia:</label><br/>
+			<label for="pais_apr">País da ocorrência:</label><br/>
 
 				<select name="pais_apr" id="pais_apr" onchange="mostraEstCID(this.value)">
 					

@@ -150,6 +150,7 @@ $().ready(function() {
 				$estado = $end->nome_estado;
 				//$id_pais = $end->Id_pais;
 				//$pais = $end->nome_pais;
+				$tipo_depo = $end->tipo_deposito; 
 				}
 		}else{
 
@@ -171,6 +172,7 @@ $().ready(function() {
 				$estado = null;
 				//$id_pais = null;
 				//$pais = null;
+				$tipo_depo = null;
 		}
 
 		//var_dump($endereco);
@@ -178,14 +180,13 @@ $().ready(function() {
 
 
 	?>
-	<h2>Cadastro de locais/armazéns/casas : <a href="<?php echo base_url("/index.php/detalhes_documento/getTheRow/".$id_Row.""); ?>"><?php echo $Ipl; ?></a></h2>
+	<h2>Cadastro de depósitos : <a href="<?php echo base_url("/index.php/detalhes_documento/getTheRow/".$id_Row.""); ?>"><?php echo $Ipl; ?></a></h2>
 
 	<a href="<?php echo base_url("/index.php/detalhes_documento/getTheRow/".$id_Row.""); ?>">Cancelar</a>
 	 <div class="col-md-12 col-sm-12 col-xs-12 lista-menu well">
 
 	 	<!-- abre o formulário de cadastro -->
 	   	<?php echo form_open('login/novo_documento/cadastrar_deposito', 'id="form-new_wrs-ipl"'); ?>
-
 
 	   	<label for="produto_wrs">Produto do depósito :</label><br/> 
 			<select name="produto_wrs" id="produto_wrs" >
@@ -307,6 +308,13 @@ $().ready(function() {
 				<option value=" "> </option>
 			</select>
 		<div class="error"></div>
+
+		<br>
+
+		<label for="tipo_depo">Tipo do depósito :</label><br/> 
+			<input type="text" name="tipo_depo" id="tipo_depo" value="<?php echo $tipo_depo; ?>"/>
+		<div class="error"></div>
+
 
 	   	<hr>
 

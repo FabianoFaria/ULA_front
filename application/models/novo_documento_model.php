@@ -180,4 +180,12 @@ class Novo_documento_model extends CI_Model {
         return $query->result();
     }
 
+    public function load_type_veiculo()
+    {
+       //$this->db->select('*');
+       $this->db->where('tbl_tipo_veiculo.tpve_status', '1');
+       $queryDoct = $this->db->get('tbl_tipo_veiculo');
+       return $queryDoct->result(); 
+    }
+
 }

@@ -363,14 +363,35 @@ string '24/09/2014' (length=10)
           $destino = "Todos os estados";
         }
 
+
+
+        //Implementar função para exibir o total de todos os tipos de veiculos do relatório
+
+        $tipoVeiculos = $this->documentoModel->load_type_veiculo(); //Implementar...
+
+        //var_dump($tipoVeiculos);
+        $totalTempArray= array();
+        $totaisArray = array( );
+        
+        //for para retornar o total de cada tipo de veiculo...
+        foreach ($tipoVeiculos as $veiculos) {
+           $totalTemp[0] = $this->relatorio->load_total_categoria_veiculos($veiculos->tpve_cod,$dataIni ,$dataFim, $estadoDestino);
+           $totalTemp[1] = $veiculos->tpve_nome;
+           array_push($totaisArray , $totalTemp);
+        }
+        //var_dump($totaisArray);
+        //die();
+
+        $dados['totaisCategorias'] = $totaisArray;
+        
+        $dados['totalVeiculos'] = $this->relatorio->total_veiculos_relatorio($dataIni ,$dataFim, $estadoDestino);
+
         $dados['estados'] = $this->documentoModel->load_estados();
          
         $dados['cidades'] = $this->documentoModel->load_cidades();
 
         //Totais deste relatório
-          $dados['totalOcorrencias'] = $this->relatorio->total_ocorrencias($dataIni ,$dataFim, $estadoDestino);
-
-        $dados['totalVeiculos'] = $this->relatorio->total_veiculos_relatorio($dataIni ,$dataFim, $estadoDestino);
+        $dados['totalOcorrencias'] = $this->relatorio->total_ocorrencias($dataIni ,$dataFim, $estadoDestino);
         
         $dados['totalDepositos'] = $this->relatorio->total_depositos($dataIni ,$dataFim, $estadoDestino);
         

@@ -160,7 +160,7 @@ $(function () {
     var minlength = 3;
 
     // Função para carregar contato por nome 
-    	$("#nomeD").keyup(function (e) {
+    	$("disabledJavascript").keyup(function (e) {  //ID foi trocada pois pode causar erros se for buscado um nome errado.
     	 e.preventDefault();
         var that = this,
         value = $(this).val();
@@ -780,7 +780,7 @@ function mostraCidadesB(str) {
 			});
 		</script>
 
-		<h2><?php echo $titulo; ?> Dados do detido :<a href="<?php echo base_url("/index.php/detalhes_documento/getTheRow/".$id_Row.""); ?>"><?php echo $Ipl; ?></a>
+		<h2><?php echo $titulo; ?> preso no documento :<a href="<?php echo base_url("/index.php/detalhes_documento/getTheRow/".$id_Row.""); ?>"><?php echo $Ipl; ?></a>
 </h2>
 	<hr>
 	
@@ -793,7 +793,7 @@ function mostraCidadesB(str) {
 	 	  <!-- abre o formulário de cadastro -->
 	   <?php echo form_open('login/novo_documento/cadastrar_envolvido', 'id="form-new-contact-ipl"'); ?>
 
-	   	<label for="nomeD">Nome do detido:</label><br/>
+	   	<label for="nomeD">Nome do preso:</label><br/>
 		<input type="text" name="nomeD" id="nomeD" value="<?php echo $name; ?>"/> <span id="contatoCadNome"></span>
 		<div class="error"><?php echo form_error('nomeD'); ?></div>
 
@@ -831,7 +831,7 @@ function mostraCidadesB(str) {
 		<input id="datepicker" type="text" name="nascimento" value="<?php echo $dataF; ?>"/>
 		<div class="error"><?php echo form_error('nascimento'); ?></div>
 
-		<label for="pais_nascimento">Pais de nascimento :</label><br/>
+		<label for="pais_nascimento">País de origem :</label><br/>
 			<select name="pais_nascimento" id="pais_nascimento" onchange="mostraEstCID(this.value)">
 					
 				<?php
@@ -936,7 +936,7 @@ function mostraCidadesB(str) {
 
 		<br>
 		<hr>
-		<h3>Dados do endereço do detido :</h3>
+		<h3>Dados do endereço do preso :</h3>
 		<br>
 
 		<label for="endereco_contato">Endereço :</label><br/>
@@ -959,7 +959,7 @@ function mostraCidadesB(str) {
 		<input type="text" id="CEP" name="CEP" value="<?php echo $cep_det; ?>"/>
 		<div class="error"></div>
 
-		<label for="pais_detido">Pais de nascimento :</label><br/>
+		<label for="pais_detido">País :</label><br/>
 			<select name="pais_detido" id="pais_detido" onchange="mostraEstCID(this.value)">
 					
 				<?php
@@ -1071,7 +1071,7 @@ function mostraCidadesB(str) {
 
 
 		<hr>
-		<h3>Dados de contato do detido :</h3>
+		<h3>Dados de contato do preso :</h3>
 		<br>
 
 		<label for="telefone">Telefone :</label><br/>

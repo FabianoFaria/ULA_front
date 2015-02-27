@@ -921,10 +921,10 @@ function completarVeiculo(IDVehicle)
 							<option selected="true" value="<?php echo $id_cidade_add2; ?>"><?php echo $nome_cidade_add2 ?></option>
 
 						<?php
-							foreach ($cidadesSingleAdd as $city) {
-								if($city->id != $id_cidade_add2){
+							foreach ($cidadesSingleAdd2 as $city2) {
+								if($city2->id != $id_cidade_add2){
 						?>
-								<option value="<?php  echo $city->id ?>"><?php  echo $city->nome ?></option>
+								<option value="<?php  echo $city2->id ?>"><?php  echo $city2->nome ?></option>
 						<?php
 								}//fim do if para cidades iguais...
 							}//fim do foreach das cidades do estado carregado
