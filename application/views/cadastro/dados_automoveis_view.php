@@ -390,6 +390,7 @@ function completarVeiculo(IDVehicle)
 	         $('#mark_veiculo').html('<option value="'+veiculo.brand+'">'+veiculo.marc_nome+'</option>');
 
 	         $('#modeloVei').val(veiculo.model);
+	         $('#tipo_do_veiculo').val(veiculo.type_vehicle);
 	         $('#cor_veiculo').val(veiculo.cor_veiculo); 
 	         $('#chassi').val(veiculo.chassi);
 	         $('#renavan').val(veiculo.renavan);
@@ -525,6 +526,7 @@ function completarVeiculo(IDVehicle)
 				$tipo_veiculo = $auto->tpve_nome;
 				$id_marca = $auto->brand;
 				$nome_marca = $auto->marc_nome;
+				$tipo_do_veiculo = $auto->type_vehicle;
 
 
 				$id_modelo = $auto->mode_cod;
@@ -562,6 +564,7 @@ function completarVeiculo(IDVehicle)
 
 			$id_tipo_veiculo = null;
 			$tipo_veiculo = null;
+			$tipo_do_veiculo = null;
 			$id_marca = null;
 			$nome_marca = null;
 			$id_modelo = null;
@@ -706,13 +709,25 @@ function completarVeiculo(IDVehicle)
 						?>
 						<option value=" "> </option>
 					</select>
-				<div class="error"></div>
+				<div class="error"></div> 
+				<div class="">
+					<div class="col-md-2" style="padding:0">
+						<label for="mod_veiculo">Modelo veículo:</label>
+							<br>
+						<input id="modeloVei" type="text" name="mod_veiculo" value="<?php echo $nome_modelo; ?>"/>
+					</div>
+					<div class="col-md-2" style="margin-left:-70px">
+						<label for="tipo_do_veiculo">Tipo de veículo:</label>
+							<br/>	
+				 		<input id="tipo_do_veiculo" type="text" name="tipo_do_veiculo" value="<?php echo $tipo_do_veiculo; ?>"/>
+						<div class="error"></div>
+					</div>
+					<div class="col-md-8"></div>
+				</div>
 
-				<label for="mod_veiculo">Modelo veículo:</label><br/>
-					
-				<input id="modeloVei" type="text" name="mod_veiculo" value="<?php echo $nome_modelo; ?>"/>
-				<div class="error"></div>
-
+				<br>
+				<br>
+				<br>
 				<label for="cor_veiculo">Cor do veículo: </label><br/>
 				<input id="cor_veiculo" type="text" name="cor_veiculo" value="<?php echo $cor_veio; ?>"/>		
 				<div class="error"></div>

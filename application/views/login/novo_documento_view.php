@@ -18,6 +18,9 @@ $().ready(function() {
 			},
 			destinoCarga: {
 				required: true
+			},
+			totalArrest: {
+				digits:true
 			}
 		},
 		messages: {
@@ -31,6 +34,9 @@ $().ready(function() {
 			},
 			destinoCarga: {
 				required: "Selecione o estado de destino..."
+			},
+			totalArrest: {
+				digits: "Somente numeros..." 
 			}
 		}
 	});
@@ -118,6 +124,7 @@ $().ready(function() {
 							    	<input type="radio" name="qualificacao" value="Ipl"  checked="true"/> IPL<br />
 									<input type="radio" name="qualificacao" value="Reportagem" /> Reportagem<br />
 									<input type="radio" name="qualificacao" value="Operacao" /> Operação<br />
+									<input type="radio" name="qualificacao" value="Release" /> Release<br />
 									<input type="radio" name="qualificacao" value="Outro" /> Outro
 								<div class="error"></div>
 							    
@@ -151,6 +158,10 @@ $().ready(function() {
 
 							    <label for="nomeOps">Nome da operação :</label><br/>
 							    <input name="nomeOps" value="<?php echo set_value('nomeOps'); ?>"/>
+							    <div class="error"></div>
+
+							    <label for="totalArrest">Quantidade de presos :</label><br/>
+							    <input id="totalArrest" name="totalArrest" value="<?php echo set_value('totalArre'); ?>"/>
 							    <div class="error"></div>					
 
 							    <label for="destinoCarga">Destino da apreensão :</label><br/>

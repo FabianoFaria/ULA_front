@@ -17,6 +17,9 @@ $().ready(function() {
 			},
 			destinoCarga: {
 				required: true
+			},
+			totalArrest: {
+				digits:true
 			}
 		},
 		messages: {
@@ -29,6 +32,9 @@ $().ready(function() {
 			},
 			destinoCarga: {
 				required: "Selecione o estado de destino..."
+			},
+			totalArrest: {
+				digits: "Somente numeros..."
 			}
 		}
 	});
@@ -133,6 +139,7 @@ $().ready(function() {
 				<input type="radio" name="qualificacao" value="Ipl" <?php if($doc->qualification == "Ipl"){echo "checked='true'";} ?> /> IPL<br />
 				<input type="radio" name="qualificacao" value="Reportagem" <?php if($doc->qualification == "Reportagem"){echo "checked='true'";} ?> /> Reportagem<br />
 				<input type="radio" name="qualificacao" value="Operacao" <?php if($doc->qualification == "Operacao"){echo "checked='true'";} ?> /> Operação <br />
+				<input type="radio" name="qualificacao" value="Release" <?php if($doc->qualification == "Release"){echo "checked='true'";} ?> /> Release <br />
 				<input type="radio" name="qualificacao" value="Outro" <?php if($doc->qualification == "Outro"){echo "checked='true'";} ?> /> Outro
 			<div class="error"><?php echo form_error('qualificacao'); ?></div>
 
@@ -177,6 +184,10 @@ $().ready(function() {
 
 			<label for="nomeOps">Nome da operação :</label><br/>
 			<input name="nomeOps" value="<?php echo  $doc->operation;  ?>"/>
+			<div class="error"><?php echo form_error('nomeOps'); ?></div>
+
+			<label for="totalArrest">Total de presos :</label><br/>
+			<input id="totalArrest" name="totalArrest" value="<?php echo  $doc->total_arrest;  ?>"/>
 			<div class="error"><?php echo form_error('nomeOps'); ?></div>
 
 			<label for="destinoCarga">Destino da apreensão :</label><br/>

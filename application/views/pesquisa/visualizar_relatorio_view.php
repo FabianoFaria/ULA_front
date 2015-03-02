@@ -378,6 +378,10 @@
                               $year3 = $dataEx3[0];
                               $dataFinal = $day3."/".$month3."/".$year3;
 
+                              if($dataFinal = "00/00/0000"){
+                                  $dataFinal = "";
+                              }
+
                     ?>
                         <div class="col-md-6 well">
 

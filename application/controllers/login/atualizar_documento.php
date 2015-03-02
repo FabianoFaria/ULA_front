@@ -82,6 +82,7 @@ class Atualizar_documento extends CI_Controller {
         $data['summary'] = strtoupper(strtr($this->input->post('resumoOps') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
         $data['operation'] = strtoupper(strtr($this->input->post('nomeOps') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
         $data['arrest_destination'] = $this->input->post('destinoCarga');
+        $data['total_arrest'] = $this->input->post('totalArrest');
         $data['UPDATE_BY'] = $user_name;
         $data['LAST_UPDATE'] = $dataAtualizacao;
         
@@ -147,7 +148,7 @@ class Atualizar_documento extends CI_Controller {
          $dataAuto['ROW_ID'] = $this->input->post('row_id');  
          $dataAuto['category'] = $this->input->post('cat_veiculo');          
          $dataAuto['model'] = $this->input->post('mod_veiculo');
-         $dataAuto['brand'] = $this->input->post('mark_veiculo');
+         $dataAuto['brand'] =  $this->input->post('mark_veiculo');
          $dataAuto['chassi'] =  strtoupper(strtr($this->input->post('chassi') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
          $dataAuto['renavan'] =  strtoupper(strtr($this->input->post('renavan') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
          $dataAuto['placa'] =  strtoupper(strtr($this->input->post('placa_n') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));

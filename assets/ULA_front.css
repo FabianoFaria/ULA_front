@@ -223,3 +223,45 @@ td {
 .lista-ipls{
 	min-height: 500px !important;
 }
+
+/***** CSS para a impressão de relatorio 2*****/
+
+.quebra_espaco_capa{
+	height: 5000px;
+}
+
+.bloco_capa {
+	background-color: #7e97ad;
+}
+
+.titulo_capa {
+	font-size: 85px;
+	font-family: calibri;
+	color: #ffffff;
+	text-align: center;
+
+}
+
+.sub_titulo_capa {
+	font-size: 45px;
+	font-family: calibri;
+	color: #7e97ad;
+}
+
+
+.data_ocorrencia {
+	font-family: arial;
+	font-size: 20px;
+	font-weight: bold;
+	color: #595959;
+}
+
+.texto_normal{
+	font-family: arial;
+	font-size: 16px;
+}
+
+.texto_categoria{
+	font-family: arial;
+
+}

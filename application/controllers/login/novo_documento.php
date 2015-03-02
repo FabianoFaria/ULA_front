@@ -106,6 +106,7 @@ class Novo_documento extends CI_Controller {
         $data['summary'] = strtoupper(strtr($this->input->post('resumoOps') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
         $data['operation'] =   strtoupper(strtr($this->input->post('nomeOps') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
         $data['arrest_destination'] = $this->input->post('destinoCarga');
+        $data['total_arrest'] = $this->input->post('totalArrest');
         $data['CREATED_BY'] = $user_name;
         $data['CREATED'] = $dataAtualizacao;
         $data['UPDATE_BY'] = $user_name;
@@ -247,8 +248,9 @@ class Novo_documento extends CI_Controller {
          $dataAuto['ID_vehicle'] = $this->input->post('id_auto');
          $dataAuto['ROW_ID'] = $this->input->post('row_id');  
          $dataAuto['category'] = $this->input->post('cat_veiculo');          
-         $dataAuto['model'] = $this->input->post('mod_veiculo');
+         $dataAuto['model'] = strtoupper(strtr($this->input->post('mod_veiculo') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
          $dataAuto['brand'] = $this->input->post('mark_veiculo');
+         $dataAuto['type_vehicle'] = strtoupper(strtr($this->input->post('tipo_do_veiculo') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
          $dataAuto['cor_veiculo'] = $this->input->post('cor_veiculo');
          $dataAuto['chassi'] = strtoupper(strtr($this->input->post('chassi') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ"));
          $dataAuto['renavan'] = strtoupper(strtr($this->input->post('renavan') ,"áéíóúâêôãõàèìòùç","ÁÉÍÓÚÂÊÔÃÕÀÈÌÒÙÇ")); 
