@@ -60,6 +60,7 @@
                     
         <?php
 
+            $totalPresosRelatorio = 0;
             $totalCaixaCigarrosApreendidos = 0;
 
 
@@ -90,7 +91,14 @@
                         <p>Força de segurança : <?php echo $ocorrencia['documento'][0]->forca_seguranca?></p>
                         <p>Nome da operação : <?php echo $ocorrencia['documento'][0]->operation?></p>
                         <p>Resumo da operação : <?php echo $ocorrencia['documento'][0]->summary?></p>
+                        <p>Total de presos : <?php echo $ocorrencia['documento'][0]->total_arrest?></p>
 
+                        <?php
+
+                          if($ocorrencia['documento'][0]->total_arrest != null){
+                              $totalPresosRelatorio = $totalPresosRelatorio + $ocorrencia['documento'][0]->total_arrest;
+                          }
+                        ?>
                     </div>
 
 
@@ -129,7 +137,14 @@
                       <h3>Endereço do depósito</h3>
                     </div>
                     <div class="col-md-6 well">
-                            
+                            <?php
+                              if($ocorrencia['endereco_deposito'][0]->tipo_deposito != null){
+                            ?>
+                            <p>Tipo de residência : <?php echo $ocorrencia['endereco_deposito'][0]->tipo_deposito ?></p>
+                            <?php
+                              }
+                            ?>
+
                             <p>Cidade da ocorrência : <?php echo $ocorrencia['endereco_deposito'][0]->nome_estado ?></p>
                             <p>Estado da ocorrência : <?php echo $ocorrencia['endereco_deposito'][0]->nome ?></p>
                             <p>Endereço : <?php echo $ocorrencia['endereco_deposito'][0]->address ?></p>
@@ -323,7 +338,7 @@
                         ?>
 
 
-                        
+                        <p>Característica do veículo : <?php echo $veiculos->type_vehicle ?></p>
                         <p>Placa : <?php echo $veiculos->placa ?> <?php echo $veiculos->cidade_nome ?> <?php echo $veiculos->uf_estado ?></p>
                         
                         <p>Placa Adicional : <?php echo $veiculos->placa_extra ?> <?php echo $procedenciaCityAdd; ?> <?php echo $procedenciaEstAdd; ?><p>
@@ -442,8 +457,34 @@
 
                 </div> <!-- Fim da div row imagens -->
 
+                <?php
 
+                    //var_dump($ocorrencia['imagens']);
+                    if($ocorrencia['anexos'][0] != ''){
+                    ?>
+                    <div class="col-md-12">
+                      <h3>Anexos :</h3>
+                    </div>
+                    <?php
+                    }
 
+                    foreach ($ocorrencia['anexos'] as $anexos) {   //$dataDocumento['imagens'] 
+                                        
+                            //var_dump($imagens);
+                      if($anexos != null){
+                    ?>
+                        <div class="col-md-6 well">
+
+                            <p>Nome do arquivo : </p>
+                            <a href="<?php echo base_url()."/uploads/".$anexos->location; ?>" target="_blank"><?php echo $anexos->nome_arquivo ?></a>
+                            <hr>
+
+                        </div>
+                     <?php
+                            }//fim do if
+                        } //Fim do foreach...
+
+                ?>
 
 
             </div>  <!-- Fim do col-md-12 well -->
@@ -463,13 +504,19 @@
                               <tr style='background-color: #EEE'>
                                   <th> Total de apreensões do período</th>
                                   <th>
-                                  </th>
+                                  </th> 
                               </tr>
                           </thead>    
                           <tbody>
-                              <tr>
-                                  <td>Presos  </td>
-                                  <td><?php echo $totalDetidos; ?></td>             
+                              <?php
+
+                                $totalPresosRecontados = $totalDetidos + ($totalDetidosDocumento[0]->totalPreso - $totalDetidosRedundantes[0]->totalPresoRedundate);
+
+                              ?>
+
+                               <tr>
+                                  <td>Total de presos </td>
+                                  <td><?php echo $totalPresosRecontados; ?></td>             
                               </tr>
 
                                <tr>
@@ -511,6 +558,61 @@
                      </table>
                  </div> <!-- Fim do col-md-6 -->
             </div>  <!-- Fim do col-md-12 well -->
+
+            <div class="row">
+              <div class="col-md-12 well">
+                  <h3>Acumulados do ano atual:</h3>
+                  <div class="col-md-6 tabela_acumulados">
+                       <!-- tabela separada com os totais de veiculos -->
+                     <table>
+                          <thead>
+                              <tr style='background-color: #EEE'>
+                                  <th> Total de acumulados</th>
+                                  <th>Presos</th>
+                                  <th>Veículos</th>
+                                  <th>Caixas de cigarros</th>
+                                  <th>Depósitos</th>
+                              </tr>
+                          </thead>    
+                          <tbody>
+                              <?php
+                              $totalPresosAcu = 0;
+                              $totalveiculos = 0;
+                              $totalcaixas = 0;
+                              $totalDepositos = 0;
+
+                               for($i = 1; $i <= 12; $i++ ){
+
+                                $totalPresosAcu = $totalPresosAcu + $acumuladosPresos[$i];
+                                $totalveiculos = $totalveiculos + $acumuladosVeiculos[$i][0]->totalVeiMes;
+                                $totalcaixas = $totalcaixas + $acumuladosCaixas[$i];
+                                $totalDepositos = $totalDepositos + $acumuladosDepositos[$i][0]->totalwrs;
+
+
+                              ?>
+                                <tr>
+                                  <td><?php echo strtoupper(strftime( '%B', strtotime('1980-'.$i.'-01') ) ); ?></td>
+                                  <td><?php echo $acumuladosPresos[$i]; //echo ($acumuladosPresos[$i][0]->totalPreso != null) ? $acumuladosPresos[$i][0]->totalPreso : "0"; ?></td>
+                                  <td><?php echo $acumuladosVeiculos[$i][0]->totalVeiMes; ?></td>
+                                  <td><?php echo $acumuladosCaixas[$i]; ?></td>
+                                  <td><?php echo $acumuladosDepositos[$i][0]->totalwrs; ?></td>           
+                              </tr>
+                              <?php
+                                }
+                              ?>
+                               <tr>
+                                  <td>Total :</td>
+                                  <td><?php echo $totalPresosAcu; ?></td>
+                                  <td><?php echo $totalveiculos; ?></td>
+                                  <td><?php echo  $totalcaixas; ?></td>
+                                  <td><?php echo $totalDepositos; ?></td>            
+                              </tr>
+                          </tbody>
+                     </table>
+                  </div>
+              </div>
+            </div>
+
 
             <br>
             

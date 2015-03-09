@@ -49,6 +49,14 @@
         <p>Tipo do veículo :<?php echo $extra[0]->tpve_nome;  ?></p>
         <p>Marca do veículo : <?php echo $extra[0]->marc_nome;  ?></p>
         <p>Modelo do veículo : <?php echo $extra[0]->model;  ?></p>
+        <?php
+            if($extra[0]->type_vehicle != null ){
+        ?>
+            <p>Característica do veículo : <?php echo $extra[0]->type_vehicle;  ?></p>
+        <?php
+            }
+
+        ?>
         <p>Placa :<?php echo $extra[0]->placa;  ?></p>
         <p>Placa adicional:<?php echo $extra[0]->placa_extra;  ?></p>
         <p>Placa adicional:<?php echo $extra[0]->placa_extra2;  ?></p>
@@ -124,6 +132,7 @@
                //$indec++;
             }
 
+            $totalPresosRelatorio = 0;
             $totalCaixaCigarrosApreendidos = 0;
 
             foreach ($conteudo as $ocorrencia) {
@@ -152,7 +161,13 @@
                         <p>Força de segurança : <?php echo $ocorrencia['documento'][0]->forca_seguranca?></p>
                         <p>Nome da operação : <?php echo $ocorrencia['documento'][0]->operation?></p>
                         <p>Resumo da operação : <?php echo $ocorrencia['documento'][0]->summary?></p>
+                        <p>Total de presos : <?php echo $ocorrencia['documento'][0]->total_arrest?></p>
+                        <?php
 
+                          if($ocorrencia['documento'][0]->total_arrest != null){
+                              $totalPresosRelatorio = $totalPresosRelatorio + $ocorrencia['documento'][0]->total_arrest;
+                          }
+                        ?>
                     </div>
 
 
@@ -193,6 +208,13 @@
 
                     <div class="col-md-6 col-sm-6 col-xs-6">
                             <h3>Endereço do depósito</h3>
+                            <?php
+                              if($ocorrencia['endereco_deposito'][0]->tipo_deposito != null){
+                            ?>
+                            <p>Tipo de residência : <?php echo $ocorrencia['endereco_deposito'][0]->tipo_deposito ?></p>
+                            <?php
+                              }
+                            ?>
                             <p>Cidade da ocorrência : <?php echo $ocorrencia['endereco_deposito'][0]->nome_estado ?></p>
                             <p>Estado da ocorrência : <?php echo $ocorrencia['endereco_deposito'][0]->nome ?></p>
                             <p>Endereço : <?php echo $ocorrencia['endereco_deposito'][0]->address ?></p>
@@ -349,10 +371,36 @@
 
                     ?>
 
-
-
-
                 </div> <!-- Fim da div row imagens -->
+
+                 <?php
+
+                    //var_dump($ocorrencia['imagens']);
+                    if($ocorrencia['anexos'][0] != ''){
+                    ?>
+                    <div class="col-md-12">
+                      <h3>Anexos :</h3>
+                    </div>
+                    <?php
+                    }
+
+                    foreach ($ocorrencia['anexos'] as $anexos) {   //$dataDocumento['imagens'] 
+                                        
+                            //var_dump($imagens);
+                      if($anexos != null){
+                    ?>
+                        <div class="col-md-6 well">
+
+                            <p>Nome do arquivo : </p>
+                            <a href="<?php echo base_url()."/uploads/".$anexos->location; ?>" target="_blank"><?php echo $anexos->nome_arquivo ?></a>
+                            <hr>
+
+                        </div>
+                     <?php
+                            }//fim do if
+                        } //Fim do foreach...
+
+                ?>
 
 
             </div>  <!-- Fim do col-md-12 well -->
@@ -363,11 +411,14 @@
                  <table>
                           <thead>
                               <tr style='background-color: #EEE'>
-                                  <th> Total de apreensões da relação</th>
+                                  <th> Total de apreensões da relação</th> 
                               </tr>
                           </thead>    
                           <tbody>
-
+                                <tr>
+                                  <td>Total de presos</td>
+                                  <td><?php echo $totalPresosRelatorio; ?></td>            
+                              </tr>
                                <tr>
                                   <td>Total de caixas de cigarro</td>
                                   <td><?php echo $totalCaixaCigarrosApreendidos; ?></td>            

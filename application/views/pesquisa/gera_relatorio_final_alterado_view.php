@@ -455,7 +455,7 @@
                       for($i = 0; $i < 1 ; $i++ ){ //count($conteudoPassado['endereco'])
                         if($conteudoPassado['endereco'][0]->address != '')
                         {
-                          $logradouro = ucfirst( mb_strtolower($conteudoPassado['endereco'][$i]->address));
+                          $logradouro = ucwords(mb_strtolower($conteudoPassado['endereco'][$i]->address));
                         }
                         else {
                           $logradouro = " ";
@@ -484,7 +484,7 @@
 
                         if($conteudoPassado['endereco'][0]->district != '')
                         {
-                          $bairroEnd = " no bairro ".ucfirst( mb_strtolower($conteudoPassado['endereco'][0]->district));
+                          $bairroEnd = " no bairro ".ucwords( mb_strtolower($conteudoPassado['endereco'][0]->district));
                         }else{
                           $bairroEnd = "";
                         }
@@ -526,15 +526,15 @@
                       //var_dump($conteudoPassado['endereco_deposito']);
                         if($conteudoPassado['endereco_deposito'][0]->tipo_deposito != null)
                         {
-                          $logradouroTypeDept = ucfirst(mb_strtolower($conteudoPassado['endereco_deposito'][0]->tipo_deposito))." na ";
+                          $logradouroTypeDept = ucwords(mb_strtolower($conteudoPassado['endereco_deposito'][0]->tipo_deposito))." na ";
                         }
-                        else {
-                          $logradouroTypeDept = " ";
+                        else { 
+                          $logradouroTypeDept = " "; 
                         }
 
                         if($conteudoPassado['endereco_deposito'][0]->address != '')
                         {
-                          $logradouroDept = $conteudoPassado['endereco_deposito'][0]->address;
+                          $logradouroDept = ucwords(mb_strtolower($conteudoPassado['endereco_deposito'][0]->address));
                         }
                         else {
                           $logradouroDept = " ";
@@ -556,14 +556,14 @@
 
                         if($conteudoPassado['endereco_deposito'][0]->district != '')
                         {
-                          $bairroDept = " no bairro ".ucfirst( mb_strtolower($conteudoPassado['endereco_deposito'][0]->district));
+                          $bairroDept = " no bairro ".ucwords( mb_strtolower($conteudoPassado['endereco_deposito'][0]->district));
                         }else{
                           $bairroDept = "";
                         }
 
                         if($conteudoPassado['endereco_deposito'][0]->nome != '')
                         {
-                          $cidadeDept = " na cidade de  ".ucfirst( mb_strtolower($conteudoPassado['endereco_deposito'][0]->nome));
+                          $cidadeDept = " na cidade de  ".ucwords( mb_strtolower($conteudoPassado['endereco_deposito'][0]->nome));
                         }else{
                           $cidadeDept = "";
                         }
@@ -897,9 +897,16 @@
                               </tr>
                           </thead>    
                           <tbody>
+
+                               <?php
+
+                                $totalPresosRecontados = $totalDetidos + ($totalDetidosDocumento[0]->totalPreso - $totalDetidosRedundantes[0]->totalPresoRedundate);
+
+                              ?>
+
                               <tr>
-                                  <td>Presos  </td>
-                                  <td><?php echo $totalPresosRelatorio; ?></td>              
+                                  <td>Presos </td>
+                                  <td><?php echo $totalPresosRecontados; ?></td>             
                               </tr>
                               
                               <tr>
@@ -944,6 +951,59 @@
                             
                   </tbody>
               </table> 
+
+              <br>
+              <br>
+
+              <div class="tabela_acumulados">
+                      <h3 class="texto_categoria">Acumulados do ano atual:</h3>
+                       <!-- tabela separada com os totais de veiculos -->
+                     <table>
+                          <thead>
+                              <tr style='background-color: #EEE'>
+                                  <th> Total de acumulados</th>
+                                  <th>Presos</th>
+                                  <th>Veículos</th>
+                                  <th>Caixas de cigarros</th>
+                                  <th>Depósitos</th>
+                              </tr>
+                          </thead>    
+                          <tbody>
+                              <?php
+                              $totalPresosAcu = 0;
+                              $totalveiculos = 0;
+                              $totalcaixas = 0;
+                              $totalDepositos = 0;
+
+                               for($i = 1; $i <= 12; $i++ ){
+
+                                $totalPresosAcu = $totalPresosAcu + $acumuladosPresos[$i];
+                                $totalveiculos = $totalveiculos + $acumuladosVeiculos[$i][0]->totalVeiMes;
+                                $totalcaixas = $totalcaixas + $acumuladosCaixas[$i];
+                                $totalDepositos = $totalDepositos + $acumuladosDepositos[$i][0]->totalwrs;
+
+
+                              ?>
+                                <tr>
+                                  <td><?php echo strtoupper(strftime( '%B', strtotime('1980-'.$i.'-01') ) ); ?></td>
+                                  <td><?php echo $acumuladosPresos[$i]; ?></td>
+                                  <td><?php echo $acumuladosVeiculos[$i][0]->totalVeiMes; ?></td>
+                                  <td><?php echo $acumuladosCaixas[$i]; ?></td>
+                                  <td><?php echo $acumuladosDepositos[$i][0]->totalwrs; ?></td>           
+                              </tr>
+                              <?php
+                                }
+                              ?>
+                               <tr>
+                                  <td>Total :</td>
+                                  <td><?php echo $totalPresosAcu; ?></td>
+                                  <td><?php echo $totalveiculos; ?></td>
+                                  <td><?php echo  $totalcaixas; ?></td>
+                                  <td><?php echo $totalDepositos; ?></td>            
+                              </tr>
+                          </tbody>
+                     </table>
+                  </div>
               
           
             <!-- Fim dos dados do relatorio  -->

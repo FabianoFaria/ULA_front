@@ -169,6 +169,11 @@ class Relatorios_gen extends CI_Controller {
         //var_dump($tipoVeiculos);
         $totalTempArray= array();
         $totaisArray = array( );
+
+        $totaisPresosArray = array();
+        $totaisVeiculosArray = array();
+        $totaisCaixasArray = array();
+        $totaisDepositosArray = array();
         
         //for para retornar o total de cada tipo de veiculo...
         foreach ($tipoVeiculos as $veiculos) {
@@ -178,6 +183,45 @@ class Relatorios_gen extends CI_Controller {
         }
         //var_dump($totaisArray);
         //die();
+
+
+         //Caulcular os acumulados do ano...
+
+        for($i = 1; $i <=12; $i++){
+            $indice = $i;
+
+            $presosComNome = $this->relatorio->load_presos_normais_mes($indice, $id_estado_dest);
+            $presosDeclarados = $this->relatorio->load_presos_mes($indice, $id_estado_dest);
+            $presosRedundantes = $this->relatorio->load_presos_redundantes_mes($indice, $id_estado_dest);
+
+            $totaisPresosArray[$indice] = $presosComNome + ($presosDeclarados[0]->totalPreso - $presosRedundantes[0]->totalPresoRedundate);
+            $totaisVeiculosArray[$indice] = $this->relatorio->load_veiculos_mes($indice, $id_estado_dest);
+            $totaisDepositosArray[$indice] = $this->relatorio->load_depositos_mes($indice, $id_estado_dest);
+
+            $caixasNormais = $this->relatorio->load_caixas_mes($indice, $id_estado_dest);
+            $caixasDeposito = $this->relatorio->load_caixas_wrs_mes($indice, $id_estado_dest);
+
+            //var_dump($caixasNormais);
+            //var_dump($caixasDeposito);
+
+            $totaisCaixasArray[$indice] = $caixasNormais[0]->qty + $caixasDeposito[0]->quantidade_deposito;
+        }
+
+        $dados['acumuladosPresos'] = $totaisPresosArray;
+
+        $dados['acumuladosVeiculos'] = $totaisVeiculosArray;
+
+        $dados['acumuladosCaixas'] = $totaisCaixasArray;
+
+        $dados['acumuladosDepositos'] = $totaisDepositosArray;
+
+        //Trás todos os presos normalmente
+        $dados['totalDetidos'] = $this->relatorio->total_detidos($dataDateI ,$dataDateF, $id_estado_dest);
+        //Trás todos os presos declarados no campo no documento...
+        $dados['totalDetidosDocumento'] = $this->relatorio->total_detidos_documento($dataDateI ,$dataDateF, $id_estado_dest);
+        //Trás todos os presos reduntdantes...
+        $dados['totalDetidosRedundantes'] = $this->relatorio->total_detidos_redundante($dataDateI ,$dataDateF, $id_estado_dest);
+
 
         $dados['totaisCategorias'] = $totaisArray;
 
@@ -194,8 +238,6 @@ class Relatorios_gen extends CI_Controller {
         $dados['totalCaminhao'] = $this->relatorio->total_veiculos_caminhao_relatorio($dataDateI ,$dataDateF, $id_estado_dest);
         
         $dados['totalOnibus'] = $this->relatorio->total_veiculos_onibus_relatorio($dataDateI ,$dataDateF ,$id_estado_dest);
-
-        $dados['totalDetidos'] = $this->relatorio->total_detidos($dataDateI ,$dataDateF ,$id_estado_dest); 
 
         $caixasCigarros = $this->relatorio->total_caixa_cigarros($dataDateI ,$dataDateF ,$id_estado_dest);
         $cigarrosWsr = $this->relatorio->total_caixa_cigarros_wrs($dataDateI ,$dataDateF ,$id_estado_dest);
@@ -254,19 +296,7 @@ class Relatorios_gen extends CI_Controller {
         $dataIni = $dataFinal1;
         $dataFim = $dataFinal2; 
 
-        /*
-            string '08/09/2014' (length=10)
-
-string '24/09/2014' (length=10)
-
-
-        */
-
-       // echo $dataIni;
-       // echo "</br>";
-       // echo $dataFim;
-       //die;
-
+       
         $dataRelatorio = $this->relatorio->load_documentos($dataIni ,$dataFim, $estadoDestino);
 
          //$caixasCigarros = $this->relatorio->total_veiculos_relatorio($dataIni ,$dataFim);
@@ -358,6 +388,17 @@ string '24/09/2014' (length=10)
             }
 
 
+            //Anexos do documento...
+
+            $lista_anexos = $this->relatorio->load_anexos_relatorio($data->ROW_ID);
+
+            //var_dump($lista_anexos);
+
+            if($lista_anexos != null){
+                $dataDocumento['anexos'] = $lista_anexos;
+            }else{
+                $dataDocumento['anexos'][0] = "";
+            }
 
             //Imagens da operação...
 
@@ -393,6 +434,10 @@ string '24/09/2014' (length=10)
         //var_dump($tipoVeiculos);
         $totalTempArray= array();
         $totaisArray = array( );
+        $totaisPresosArray = array();
+        $totaisVeiculosArray = array();
+        $totaisCaixasArray = array();
+        $totaisDepositosArray = array();
         
         //for para retornar o total de cada tipo de veiculo...
         foreach ($tipoVeiculos as $veiculos) {
@@ -402,6 +447,44 @@ string '24/09/2014' (length=10)
         }
         //var_dump($totaisArray);
         //die();
+
+        //Caulcular os acumulados do ano...
+
+        for($i = 1; $i <=12; $i++){
+            $indice = $i;
+
+            $presosComNome = $this->relatorio->load_presos_normais_mes($indice, $estadoDestino);
+            $presosDeclarados = $this->relatorio->load_presos_mes($indice, $estadoDestino);
+            $presosRedundantes = $this->relatorio->load_presos_redundantes_mes($indice, $estadoDestino);
+
+            $totaisPresosArray[$indice] = $presosComNome + ($presosDeclarados[0]->totalPreso - $presosRedundantes[0]->totalPresoRedundate);
+            //$totaisPresosArray[$indice] = $this->relatorio->load_presos_mes($indice, $estadoDestino);
+            $totaisVeiculosArray[$indice] = $this->relatorio->load_veiculos_mes($indice, $estadoDestino);
+            $totaisDepositosArray[$indice] = $this->relatorio->load_depositos_mes($indice, $estadoDestino);
+
+            $caixasNormais = $this->relatorio->load_caixas_mes($indice, $estadoDestino);
+            $caixasDeposito = $this->relatorio->load_caixas_wrs_mes($indice, $estadoDestino);
+
+            //var_dump($caixasNormais);
+            //var_dump($caixasDeposito);
+
+            $totaisCaixasArray[$indice] = $caixasNormais[0]->qty + $caixasDeposito[0]->quantidade_deposito;
+        }
+
+        //Trás todos os presos normalmente
+        $dados['totalDetidos'] = $this->relatorio->total_detidos($dataIni ,$dataFim, $estadoDestino);
+        //Trás todos os presos declarados no campo no documento...
+        $dados['totalDetidosDocumento'] = $this->relatorio->total_detidos_documento($dataIni ,$dataFim, $estadoDestino);
+        //Trás todos os presos reduntdantes...
+        $dados['totalDetidosRedundantes'] = $this->relatorio->total_detidos_redundante($dataIni ,$dataFim, $estadoDestino);
+
+        $dados['acumuladosPresos'] = $totaisPresosArray;
+
+        $dados['acumuladosVeiculos'] = $totaisVeiculosArray;
+
+        $dados['acumuladosCaixas'] = $totaisCaixasArray;
+
+        $dados['acumuladosDepositos'] = $totaisDepositosArray;
 
         $dados['totaisCategorias'] = $totaisArray;
         
@@ -418,9 +501,7 @@ string '24/09/2014' (length=10)
         
         $dados['totalCaminhao'] = $this->relatorio->total_veiculos_caminhao_relatorio($dataIni ,$dataFim, $estadoDestino);
         
-        $dados['totalOnibus'] = $this->relatorio->total_veiculos_onibus_relatorio($dataIni ,$dataFim, $estadoDestino);
-
-        $dados['totalDetidos'] = $this->relatorio->total_detidos($dataIni ,$dataFim, $estadoDestino); 
+        $dados['totalOnibus'] = $this->relatorio->total_veiculos_onibus_relatorio($dataIni ,$dataFim, $estadoDestino); 
 
         $caixasCigarros = $this->relatorio->total_caixa_cigarros($dataIni ,$dataFim, $estadoDestino);
         $cigarrosWsr = $this->relatorio->total_caixa_cigarros_wrs($dataIni ,$dataFim, $estadoDestino);
@@ -789,73 +870,6 @@ string '24/09/2014' (length=10)
 
               }
 
-      /*
-         /*
-                object(stdClass)[34]
-      public 'ID_main' => string '215' (length=3)
-      public 'ROW_ID' => string '123' (length=3)
-      public 'parent_id' => string '123' (length=3)
-      public 'parent_TBL' => string 'tbl_doct' (length=8)
-      public 'CHILD_ID' => string '16' (length=2)
-      public 'CHILD_TBL' => string 'tbl_contact' (length=11)
-      public 'UPDATED_BY' => string 'Niguem' (length=6)
-      public 'LAST_UPDATE' => string '2014-09-16 02:56:24' (length=19)
-      public 'CREATED_BY' => string 'qwe' (length=3)
-      public 'CREATED' => string '2014-09-13 20:31:18' (length=19)
-      public 'ID_contact' => string '16' (length=2)
-      public 'name' => string 'Individuo A' (length=11)
-      public 'CPF' => string '13609613726' (length=11)
-      public 'rg' => string '' (length=0)
-      public 'passport' => string '' (length=0)
-      public 'father' => string '' (length=0)
-      public 'mother' => string '' (length=0)
-      public 'birth_dt' => string '2014-09-09' (length=10)
-      public 'birth_city' => string '1743' (length=4)
-      public 'birth_state' => string '08' (length=2)
-      public 'birth_country' => string '33' (length=2)
-      public 'ADDR_PR_ID' => null
-      public 'phone_PR_ID' => null
-      public 'UPDATE_BY' => string 'qwe' (length=3)
-      public 'telefone' => string '' (length=0)
-      public 'marca_telefone' => string '' (length=0)
-      public 'modelo_telefone' => string '' (length=0)
-      public 'IMEI' => string '' (length=0)
-      public 'operadora' => string '' (length=0)
-      public 'deletado' => string '0' (length=1)
-      public 'Id_pais' => string '33' (length=2)
-      public 'nome_pais' => string 'Brasil' (length=6)
-      public 'country_name' => string 'BRAZIL' (length=6)
-      public 'id_estado' => string '08' (length=2)
-      public 'uf' => string 'ES' (length=2)
-      public 'nome_estado' => string 'EspÃ­rito Santo' (length=15)
-      public 'id' => string '1743' (length=4)
-      public 'estado' => string '08' (length=2)
-      public 'nome' => string 'Acioli' (length=6)
-
-
-        public 'ID_contact' => string '39' (length=2)
-      public 'name' => string 'Detido Abc' (length=10)
-      public 'CPF' => string '' (length=0)
-      public 'rg' => string '' (length=0)
-      public 'passport' => string '' (length=0)
-      public 'father' => string 'Pai do individuo' (length=16)
-      public 'mother' => string 'Mae do individuo' (length=16)
-      public 'birth_dt' => string '0000-00-00' (length=10)
-      public 'nome_pais' => string 'Brasil' (length=6)
-      public 'nome_estado' => null
-      public 'nome' => null
-
-      public 'ID_addr' => string '122' (length=3)
-      public 'address' => string 'EndereÃ§o Detido' (length=16)
-      public 'nunber' => string '123' (length=3)
-      public 'complement' => string '' (length=0)
-      public 'district' => string '' (length=0)
-
-      public 'end_pais' => string 'Brasil' (length=6)
-      public 'end_est' => string 'Pernambuco' (length=10)
-      public 'end_Cid' => null
-
-            */
 
         if($pessoas->nome != '')
         {

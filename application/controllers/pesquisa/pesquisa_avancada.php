@@ -357,6 +357,18 @@ class Pesquisa_avancada extends CI_Controller {
                 $dataDocumento['produto_armazens'][0] = "";
             }
 
+            //Anexos do documento...
+
+            $lista_anexos = $this->relatorio->load_anexos_relatorio($data->ROW_ID);
+
+            //var_dump($lista_anexos);
+
+            if($lista_anexos != null){
+                $dataDocumento['anexos'] = $lista_anexos;
+            }else{
+                $dataDocumento['anexos'][0] = "";
+            }
+
 
 
             //Imagens da operação...
@@ -514,7 +526,8 @@ class Pesquisa_avancada extends CI_Controller {
 
         ////////////////// Manda os dados gerados para serem tranformardos em .doc ///////////////////////
 
-       $htmlRelatorio =  $this->load->view('pesquisa/gera_relatorio_individual_view', $dados);
+       //$htmlRelatorio =  $this->load->view('pesquisa/gera_relatorio_individual_view', $dados);
+       $htmlRelatorio =  $this->load->view('pesquisa/gera_relatorio_individual_alterado_view', $dados);
       
 
       new Word($htmlRelatorio);

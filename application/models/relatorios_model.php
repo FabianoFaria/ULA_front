@@ -236,6 +236,17 @@ class Relatorios_model extends CI_Model {
         return $queryDoct->result();
     }
 
+    function load_anexos_relatorio($idRow)
+    {
+        $this->db->select('*');
+        $this->db->join('tbl_main','tbl_main.parent_id = tbl_doct.ROW_ID');
+        $this->db->join('tbl_anexos','tbl_anexos.ID_anexos = tbl_main.CHILD_ID');
+        $this->db->where('tbl_main.CHILD_TBL','tbl_anexos');
+        $this->db->where('tbl_doct.ROW_ID', $idRow);
+        $queryDoct = $this->db->get('tbl_doct');
+        return $queryDoct->result();
+    }
+
     function total_veiculos_relatorio($inicio, $final, $id_estado)
     {
 
@@ -423,6 +434,39 @@ class Relatorios_model extends CI_Model {
         return $query->num_rows();
     }
 
+    function total_detidos_documento($inicio, $final, $id_estado)
+    {
+        $this->db->select('sum(tbl_doct.total_arrest) as totalPreso');
+        $where = "tbl_doct.arrest_date BETWEEN '$inicio%' AND '$final%'";
+        $this->db->where($where);
+        if($id_estado != "")
+            {
+                $this->db->where('tbl_doct.arrest_destination', $id_estado);
+            }
+        $this->db->where('tbl_doct.status_doct','0');
+        $query = $this->db->get('tbl_doct');
+        return $query->result();
+    }
+
+    function total_detidos_redundante($inicio, $final, $id_estado)
+    {
+        $this->db->select('sum(tbl_doct.total_arrest) as totalPresoRedundate');
+        $this->db->join('tbl_main','tbl_doct.ROW_ID = tbl_main.parent_id', 'left');
+        $this->db->where('tbl_main.CHILD_TBL', 'tbl_contact');
+        $this->db->join('tbl_contact','tbl_contact.ID_contact = tbl_main.CHILD_ID', 'left');
+        $where = "tbl_doct.arrest_date BETWEEN '$inicio%' AND '$final%'";
+        $this->db->where($where);
+        if($id_estado != "")
+        {
+            $this->db->where('tbl_doct.arrest_destination', $id_estado);
+        }
+        $this->db->where('tbl_doct.status_doct','0');
+        $this->db->where('tbl_contact.deletado','0');
+        $this->db->where('tbl_contact.name !=',' ');
+        $query = $this->db->get('tbl_doct');
+        return $query->result();
+    }
+
     function total_ocorrencias($inicio, $final, $id_estado)
     {
         $this->db->select('*');
@@ -455,6 +499,180 @@ class Relatorios_model extends CI_Model {
         $this->db->where('tbl_doct.status_doct','0');
         $query = $this->db->get('tbl_doct');
         return $query->num_rows();  
+    }
+
+    /*Queryes para acumulados do ano... */
+
+    function load_presos_normais_mes($mes, $id_estado)
+    {
+        $year = date("Y");
+
+        $this->db->select('*');
+        $this->db->join('tbl_main','tbl_doct.ROW_ID = tbl_main.parent_id', 'left');
+        $this->db->where('tbl_main.CHILD_TBL', 'tbl_contact');
+        $this->db->join('tbl_contact','tbl_contact.ID_contact = tbl_main.CHILD_ID', 'left');
+        $where = 'MONTH(tbl_doct.arrest_date) = '.$mes;
+        $this->db->where($where);
+        $whereYear = 'YEAR(tbl_doct.arrest_date) = '.$year;
+        $this->db->where($whereYear);
+        if($id_estado != "")
+        {
+            $this->db->where('tbl_doct.arrest_destination', $id_estado);
+        }
+        $this->db->where('tbl_doct.status_doct','0');
+        $this->db->where('tbl_contact.deletado','0');
+        $this->db->where('tbl_contact.name !=',' ');
+        $query = $this->db->get('tbl_doct');
+        return $query->num_rows();
+    }
+
+    function load_presos_mes($mes, $id_estado)
+    {
+        $year = date("Y");
+
+        $this->db->select('sum(tbl_doct.total_arrest) as totalPreso');
+        $where = 'MONTH(tbl_doct.arrest_date) = '.$mes;
+        $this->db->where($where);
+        $whereYear = 'YEAR(tbl_doct.arrest_date) = '.$year;
+        $this->db->where($whereYear);
+        if($id_estado != "")
+            {
+                $this->db->where('tbl_doct.arrest_destination', $id_estado);
+            }
+        $this->db->where('tbl_doct.status_doct','0');
+        $query = $this->db->get('tbl_doct');
+        return $query->result();
+        /*
+        SELECT sum(tbl_doct.total_arrest) as totalPreso FROM tbl_doct 
+        WHERE MONTH(tbl_doct.arrest_date) = 2 
+        AND YEAR(tbl_doct.arrest_date) = 2015 
+        AND tbl_doct.status_doct = 0 
+        */
+
+    }
+
+    function load_presos_redundantes_mes($mes, $id_estado)
+    {
+        $year = date("Y");
+
+        $this->db->select('sum(tbl_doct.total_arrest) as totalPresoRedundate');
+        $this->db->join('tbl_main','tbl_doct.ROW_ID = tbl_main.parent_id', 'left');
+        $this->db->where('tbl_main.CHILD_TBL', 'tbl_contact');
+        $this->db->join('tbl_contact','tbl_contact.ID_contact = tbl_main.CHILD_ID', 'left');
+        $where = 'MONTH(tbl_doct.arrest_date) = '.$mes;
+        $this->db->where($where);
+        $whereYear = 'YEAR(tbl_doct.arrest_date) = '.$year;
+        $this->db->where($whereYear);
+        if($id_estado != "")
+        {
+            $this->db->where('tbl_doct.arrest_destination', $id_estado);
+        }
+        $this->db->where('tbl_doct.status_doct','0');
+        $this->db->where('tbl_contact.deletado','0');
+        $this->db->where('tbl_contact.name !=',' ');
+        $query = $this->db->get('tbl_doct');
+        return $query->result();
+    }
+
+    function load_veiculos_mes($mes, $id_estado)
+    {
+         $year = date("Y");
+
+         $this->db->select('count(tbl_vehicle.ID_vehicle) as totalVeiMes');
+         $this->db->join('tbl_main','tbl_doct.ROW_ID = tbl_main.parent_id');
+         $this->db->join('tbl_vehicle','tbl_vehicle.ID_vehicle = tbl_main.CHILD_ID');
+         $this->db->where('tbl_main.CHILD_TBL', 'tbl_vehicle');
+         $where = "MONTH(tbl_doct.arrest_date) = ".$mes;
+         $this->db->where($where);
+          $whereYear = "YEAR(tbl_doct.arrest_date) = ".$year;
+         $this->db->where($whereYear);
+         if($id_estado != "")
+            {
+                $this->db->where('tbl_doct.arrest_destination', $id_estado);
+            }
+         $this->db->where('tbl_doct.status_doct','0');
+         $query = $this->db->get('tbl_doct');
+         return $query->result();
+         /*
+            
+            SELECT count(tbl_vehicle.ID_vehicle) as totalVei 
+            FROM tbl_doct 
+            JOIN tbl_main ON tbl_doct.ROW_ID = tbl_main.parent_id
+            JOIN tbl_vehicle ON tbl_vehicle.ID_vehicle = tbl_main.CHILD_ID
+            WHERE tbl_main.CHILD_TBL = 'tbl_vehicle'
+            AND MONTH(tbl_doct.arrest_date) = 1
+            AND YEAR(tbl_doct.arrest_date) = 2015
+            AND tbl_doct.status_doct = 0
+
+        */
+    }
+
+    function load_caixas_mes($mes, $id_estado)
+    {
+        $year = date("Y");
+        $this->db->select('sum(tbl_haul.qty) as qty');
+        //$this->db->select_sum('tbl_haul.qty');
+        $this->db->join('tbl_main','tbl_doct.ROW_ID = tbl_main.parent_id');
+        $this->db->where('tbl_main.CHILD_TBL', 'tbl_haul');
+        $this->db->join('tbl_haul','tbl_haul.ID_HAUL = tbl_main.CHILD_ID');
+        $this->db->where('tbl_haul.product', '10');
+        $this->db->where('tbl_haul.unit', '7');
+        $where = "MONTH(tbl_doct.arrest_date) = ".$mes;
+        $this->db->where($where);
+        $whereYear = "YEAR(tbl_doct.arrest_date) = ".$year;
+        $this->db->where($whereYear);
+        if($id_estado != "")
+        {
+            $this->db->where('tbl_doct.arrest_destination', $id_estado);
+        }
+        $this->db->where('tbl_doct.status_doct','0');
+        $query = $this->db->get('tbl_doct');
+        return $query->result();   
+    }
+
+    function load_caixas_wrs_mes($mes, $id_estado)
+    {   
+        $year = date("Y");
+        $this->db->select('sum(tbl_wrs.quantidade_deposito) as quantidade_deposito');
+        //$this->db->select_sum('tbl_wrs.quantidade_deposito');
+        $this->db->join('tbl_main','tbl_doct.ROW_ID = tbl_main.parent_id');
+        $this->db->where('tbl_main.CHILD_TBL', 'tbl_wrs');
+        $this->db->join('tbl_wrs','tbl_wrs.ID_wrs = tbl_main.CHILD_ID');
+        $this->db->where('tbl_wrs.produto_deposito', '10');
+        $this->db->where('tbl_wrs.unidade_produto_deposito', '7');
+        $where = "MONTH(tbl_doct.arrest_date) = ".$mes;
+        $this->db->where($where);
+        $whereYear = "YEAR(tbl_doct.arrest_date) = ".$year;
+        $this->db->where($whereYear);
+        if($id_estado != "")
+        {
+            $this->db->where('tbl_doct.arrest_destination', $id_estado);
+        }
+        $this->db->where('tbl_doct.status_doct','0');
+        $query = $this->db->get('tbl_doct');
+        return $query->result();
+    }
+
+    function load_depositos_mes($mes, $id_estado)
+    {
+        $year = date("Y");
+
+        $this->db->select('count(tbl_wrs.ID_wrs) as totalwrs');
+        $this->db->join('tbl_main','tbl_doct.ROW_ID = tbl_main.parent_id');
+        $this->db->join('tbl_wrs','tbl_wrs.ID_wrs = tbl_main.CHILD_ID');
+        $this->db->where('tbl_main.CHILD_TBL', 'tbl_wrs');
+        $where = "MONTH(tbl_doct.arrest_date) = ".$mes."";
+        $this->db->where($where);
+        $whereYear = "YEAR(tbl_doct.arrest_date) = ".$year."";
+        if($id_estado != "")
+            {
+                $this->db->where('tbl_doct.arrest_destination', $id_estado);
+            }
+        $this->db->where('tbl_doct.status_doct','0');
+        $query = $this->db->get('tbl_doct');
+        return $query->result();
+
+
     }
 
 }
